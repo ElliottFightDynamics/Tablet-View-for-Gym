@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="F:\Bitbucket(golden_dev)\StrikeTec_Tablet\StrikeTecTablet\wheel\src\main\shaders"/></dataSet><dataSet config="debug"><source path="F:\Bitbucket(golden_dev)\StrikeTec_Tablet\StrikeTecTablet\wheel\src\debug\shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="F:\GitHub\StrikeTec\goldentablet\wheel\src\main\shaders"/></dataSet><dataSet config="debug"><source path="F:\GitHub\StrikeTec\goldentablet\wheel\src\debug\shaders"/></dataSet></merger>
