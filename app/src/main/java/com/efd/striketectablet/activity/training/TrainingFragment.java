@@ -10,6 +10,7 @@ import com.efd.striketectablet.R;
 
 public class TrainingFragment extends Fragment implements View.OnClickListener {
 
+
 //    private CustomTextView boxerNameView;
 //    private CustomTextView boxerMailView;
 //    private CustomTextView boxerReachView;
