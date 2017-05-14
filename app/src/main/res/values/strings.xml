@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">StrikeTec(Tablet)</string>
+
+    <!--profile fragment-->
+    <string name="edit_profile">EDIT PROFILE</string>
+    <string name="logout">LOGOUT</string>
+    <string name="total_timetrained">TOTAL TIME TRAINED</string>
+    <string name="total_daystrained">TOTAL DAYS TRAINED</string>
+    <string name="last_trained">LAST DATE TRAINED</string>
+
+    <string name="weight">WEIGHT</string>
+    <string name="height">HEIGHT</string>
+    <string name="gloves">GLOVES</string>
+    <string name="reach">REACH</string>
+
+    <string name="connectsensor">CONNECT SENSORS</string>
+    <string name="weight_spinner_prompt">Weight</string>
+    <string name="glove_type_spinner_prompt">Glove Type</string>
+    <string name="height_spinner_prompt">Height</string>
+    <string name="reach_spinner_prompt">Reach</string>
+
+    <string name="quick_start">Quick start</string>
+    <string name="round_traning">Round traning</string>
+
+    <string name="training_stats_title">TRAINING STATS</string>
+    <string name="training_title">TRAINING</string>
+    <string name="training_quality">TRAINING_QUALITY</string>
+    <string name="training_bestpunch">BEST PUNCH</string>
+    <string name="stats_damage">DAMAGE</string>
+    <string name="today_punches">PUNCHES</string>
+    <string name="today_time">TIME</string>
+    <string name="fatigue">FATIGUE</string>
+    <string name="punch_rank">PUNCH RANK</string>
+    <string name="common_stats">COMMON STATS</string>
+
+    <string name="left_sensor_hint">LEFT SENSOR ID</string>
+    <string name="right_sensor_hint">RIGHT SENSOR ID</string>
+    <string name="cancel">CANCEL</string>
+    <string name="ok">OK</string>
+</resources>
+

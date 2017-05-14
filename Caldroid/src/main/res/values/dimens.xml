@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="calendar_left_arrow_top_margin">10dp</dimen>
+    <dimen name="calendar_left_arrow_left_margin">10dp</dimen>
+
+    <dimen name="calendar_arrow_width">25dp</dimen>
+    <dimen name="calendar_arrow_height">23dp</dimen>
+
+    <dimen name="calendar_date_layout_height">40dp</dimen>
+
+    <dimen name="calendar_month_layout_height">40dp</dimen>
+    <dimen name="calendar_weekday_gridview">45dp</dimen>
+
+    <dimen name="calendar_date_layout_padding">10dp</dimen>
+    <item name="calendar_month_layout_space_weight" format="float" type="dimen">0</item>
+    <item name="calendar_month_layout_width_weight" format="float" type="dimen">10</item>
+    <item name="calendar_layout_spacing_weight" format="float" type="dimen">0.1</item>
+    <item name="calendar_layout_weight" format="float" type="dimen">9.8</item>
+
+</resources>

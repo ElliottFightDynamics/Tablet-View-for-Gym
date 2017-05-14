@@ -1,0 +1,78 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="5dp">
+
+        <com.efd.striketectablet.customview.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:text="@string/training_title"
+            android:textColor="@color/header_text_color_blue"
+            android:textSize="35sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/traning_menu_quick_start"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:clickable="true">
+
+            <TextView
+                android:id="@+id/menu_quick_start"
+                android:text="@string/quick_start"
+                style="@style/training_menu_title"/>
+
+            <ImageView
+                style="@style/training_menu_icon"
+                android:contentDescription="@null"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/separator"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/traning_menu_round_traning"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            >
+            <TextView
+                android:id="@+id/menu_round_traning"
+                android:text="@string/round_traning"
+                style="@style/training_menu_title"/>
+            <ImageView
+                style="@style/training_menu_icon"
+                android:contentDescription="@null"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/separator"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/separator"/>
+
+    </LinearLayout>
+
+</LinearLayout>
