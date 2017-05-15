@@ -46,7 +46,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/cell_height"
                 android:layout_marginTop="15dp">
 
                 <com.efd.striketectablet.customview.CustomTextView
@@ -57,7 +57,7 @@
                     android:gravity="center"
                     android:text="@string/training_quality"
                     android:textColor="@color/force_text_color"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/cell_textsize" />
 
                 <com.efd.striketectablet.customview.CustomTextView
                     android:layout_width="0dp"
@@ -68,7 +68,7 @@
                     android:gravity="center"
                     android:text="@string/training_bestpunch"
                     android:textColor="@color/orange"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/cell_textsize" />
 
                 <com.efd.striketectablet.customview.CustomTextView
                     android:layout_width="0dp"
@@ -79,7 +79,7 @@
                     android:gravity="center"
                     android:text="@string/today_punches"
                     android:textColor="@color/punches_text_color"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/cell_textsize"/>
 
             </LinearLayout>
 
@@ -149,12 +149,12 @@
                         android:layout_marginTop="10dp"
                         android:layout_below="@+id/percent"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="@dimen/cell_height"
                         android:background="@drawable/rectangle_bg"
                         android:gravity="center"
                         android:text="@string/fatigue"
                         android:textColor="@color/speed_text_color"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/cell_textsize" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -232,7 +232,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp">
+                        android:layout_height="@dimen/cell_height">
 
                         <!--<com.efd.striketectablet.customview.CustomTextView-->
                         <!--android:layout_width="0dp"-->
@@ -253,7 +253,7 @@
                             android:gravity="center"
                             android:text="@string/today_time"
                             android:textColor="@color/punches_text_color"
-                            android:textSize="16sp" />
+                            android:textSize="@dimen/cell_textsize" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -369,13 +369,13 @@
 
                     <com.efd.striketectablet.customview.CustomTextView
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="@dimen/cell_height"
                         android:layout_marginLeft="2dp"
                         android:background="@drawable/rectangle_bg"
                         android:gravity="center"
                         android:text="@string/stats_damage"
                         android:textColor="@color/punches_text_color"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/cell_textsize" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

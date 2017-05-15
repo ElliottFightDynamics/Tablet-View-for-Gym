@@ -40,6 +40,14 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden"/>
 
+        <activity android:name=".activity.training.TrainingPresetActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden"/>
+
+        <activity android:name=".activity.training.RoundTrainingActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden"/>
+
     </application>
 
 </manifest>

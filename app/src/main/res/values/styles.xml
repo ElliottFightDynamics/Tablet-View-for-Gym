@@ -13,13 +13,22 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="preset_btn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:textColor">@color/punches_text_color</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/trainingstats_btn_fill</item>
+    </style>
+
     <style name="dashboard_setting_label">
         <item name="android:layout_width">160dp</item>
         <item name="android:layout_height">45dp</item>
         <item name="android:textColor">@color/punches_text_color</item>
         <item name="android:textSize">20sp</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/small_btn_bg</item>
+        <item name="android:background">@drawable/btn_bg_fill</item>
     </style>
 
     <style name="dashboard_spinner">
@@ -29,6 +38,14 @@
         <item name="android:layout_marginTop">7dp</item>
         <item name="android:layout_marginBottom">7dp</item>
         <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="preset_label">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="dashboard_setting_stat_label">
@@ -57,6 +74,24 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:src">@drawable/menu_listitem_right_arrow_disabled</item>
         <item name="android:layout_marginEnd">30dp</item>
+    </style>
+
+
+    <style name="training_progress_stat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:textSize">@dimen/training_progress_stat_font_size</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="training_progress_stat_label">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:textSize">@dimen/training_progress_stat_label_font_size</item>
+        <item name="android:gravity">center</item>
+
     </style>
 
 

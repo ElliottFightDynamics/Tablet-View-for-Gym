@@ -78,7 +78,7 @@
                             android:background="@drawable/calendar_left_button_selector"
                             android:gravity="center_vertical" />
 
-                        <com.efd.customview.CustomTextViewMediumFont
+                        <com.efd.striketectablet.customview.CustomTextViewMediumFont
                             android:id="@+id/calendar_month_year_textview"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"

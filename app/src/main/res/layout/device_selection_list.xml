@@ -5,7 +5,7 @@
     android:background="@color/caldroid_transparent"
     android:orientation="vertical">
 
-    <com.efd.customview.CustomRadioButton
+    <com.efd.striketectablet.customview.CustomRadioButton
         android:id="@+id/deviceNameID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

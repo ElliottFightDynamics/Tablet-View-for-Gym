@@ -26,5 +26,29 @@
 
     <color name="advise_deactivecolor">#0f29f7ff</color>
     <color name="hint_color">#667076</color>
+    <color name="round_minsec">#06896c</color>
+    <color name="rest_minsec">#792f34</color>
+
+    <color name="totaltime">#31778f</color>
+    <color name="total_value">#53d9ff</color>
+    <color name="total_title">#0c121c</color>
+    <color name="preset_popup_bg">#0d1d26</color>
+    <color name="preset_selected_bg">#14303c</color>
+
+    <color name="rounds_unselect">#183b47</color>
+    <color name="rounds_select">#53d9ff</color>
+    <color name="round_select">#00ffba</color>
+    <color name="round_unselect">#0d4844</color>
+    <color name="rest_unselect">#382129</color>
+
+    <color name="prepare_select">#d9d5d5</color>
+    <color name="prepare_unselect">#7e7c7c</color>
+
+    <color name="progress_rest">#4b81be</color>
+    <color name="progress_prepare">#926f34</color>
+    <color name="progress_round">#058669</color>
+    <color name="progress_warning">#b03e40</color>
+
+    <color name="battery_color">#02c7cd</color>
 
 </resources>

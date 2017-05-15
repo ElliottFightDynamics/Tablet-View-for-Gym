@@ -59,6 +59,34 @@ public class PresetUtil {
             return min + ":" + sec;
     }
 
+    public static String changeSecondsToHours (int secs){
+        int hour = secs / 3600;
+        int min = (secs % 3600) / 60;
+        int sec = secs % 60;
+
+        String hourstr, minstr, secstr;
+
+        if (sec < 10){
+            secstr = "0" + sec;
+        }else {
+            secstr = String.valueOf(sec);
+        }
+
+        if (min < 10){
+            minstr = "0" + min;
+        }else {
+            minstr = String.valueOf(min);
+        }
+
+        if (hour < 10){
+            hourstr = "0" + hour;
+        }else {
+            hourstr = String.valueOf(hour);
+        }
+
+        return hourstr + ":" + minstr + ":" + secstr;
+    }
+
     //change secs to *:** format time
     public static String changeSecondsToMinutes(int secs){
         int min = secs / 60;

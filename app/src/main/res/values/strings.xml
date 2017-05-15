@@ -16,6 +16,7 @@
     <string name="connectsensor">CONNECT SENSORS</string>
     <string name="weight_spinner_prompt">Weight</string>
     <string name="glove_type_spinner_prompt">Glove Type</string>
+    <string name="gender_spinner_prompt">Gender</string>
     <string name="height_spinner_prompt">Height</string>
     <string name="reach_spinner_prompt">Reach</string>
 
@@ -37,5 +38,38 @@
     <string name="right_sensor_hint">RIGHT SENSOR ID</string>
     <string name="cancel">CANCEL</string>
     <string name="ok">OK</string>
+
+    <string name="title_activity_quick_start_set">QUICK START SETTINGS</string>
+    <string name="title_activity_round_training_set">ROUND SETTINGS</string>
+    <string name="min_sec">MIN:SEC</string>
+
+    <string name="rounds">ROUNDS</string>
+    <string name="round">ROUND</string>
+    <string name="rest">REST</string>
+    <string name="prepare">PREPARE</string>
+    <string name="warning">WARNING</string>
+    <string name="total_time">TOTAL TIME:</string>
+
+    <string name="start_training">START TRAINING</string>
+    <string name="round_training">ROUND TRAINING</string>
+    <string name="stop_training">STOP TRAINING</string>
+
+    <string name="battery_default_value">0%</string>
+
+    <string name="right_straight">RIGHT STRAIGHT</string>
+    <string name="left_straight">LEFT STRAIGHT</string>
+
+    <string name="avg">AVG</string>
+    <string name="max">MAX</string>
+    <string name="mph">MPH</string>
+    <string name="lbs">LBS</string>
+    <string name="lefthand">LEFT HAND</string>
+    <string name="righthand">RIGHT HAND</string>
+    <string name="leftkick">LEFT KICK</string>
+    <string name="rightkick">RIGHT KICK</string>
+
+    <string name="speed_label">SPEED (MPH)</string>
+    <string name="punchcount_label">PUNCH COUNT</string>
+    <string name="power_label">POWER (LBS)</string>
 </resources>
 

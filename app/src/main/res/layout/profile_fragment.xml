@@ -210,9 +210,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="25dp"
                     android:background="@drawable/line_bg"
-                    android:layout_weight="1"
                     />
 
 
@@ -311,7 +310,7 @@
 
                         <com.efd.striketectablet.customview.CustomTextView
                             style="@style/dashboard_setting_stat_label"
-                            android:text="LBS" />
+                            android:text="INCH" />
 
                     </LinearLayout>
 
