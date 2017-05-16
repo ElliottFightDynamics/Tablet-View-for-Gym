@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Caldroid/Caldroid.iml" filepath="$PROJECT_DIR$/Caldroid/Caldroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tablet-View-for-Gym.iml" filepath="$PROJECT_DIR$/Tablet-View-for-Gym.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wheel/wheel.iml" filepath="$PROJECT_DIR$/wheel/wheel.iml" />
+    </modules>
+  </component>
+</project>

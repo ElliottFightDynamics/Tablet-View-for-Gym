@@ -110,7 +110,7 @@ public class ProfileFragment extends Fragment  {
         final CustomButton cancelBtn, okBtn;
 
         leftIDView = (CustomEditText)dialog.findViewById(R.id.left_sensor_id);
-        rightIDView = (CustomEditText)dialog.findViewById(R.id.left_sensor_id);
+        rightIDView = (CustomEditText)dialog.findViewById(R.id.right_sensor_id);
 
         leftSearchBtn = (ImageView)dialog.findViewById(R.id.left_search);
         rightSearchBtn = (ImageView)dialog.findViewById(R.id.right_search);
@@ -153,11 +153,20 @@ public class ProfileFragment extends Fragment  {
                 mainActivityInstance.setCurrentLeftDevice(leftIDView.getText().toString().trim());
                 mainActivityInstance.setCurrentRightDevice(rightIDView.getText().toString().trim());
 
+                setBoxerIds();
+
                 dialog.dismiss();
             }
         });
 
         dialog.show();
+    }
+
+    private void setBoxerIds() {
+        if (!mainActivityInstance.isGuestBoxerActive()) {
+            mainActivityInstance.deviceLeft = leftIDView.getText().toString().trim();
+            mainActivityInstance.deviceRight = rightIDView.getText().toString().trim();
+        }
     }
 
     private void searchSensor(String leftDeviceAddress, String rightDeviceAddress, int requestCode) {
