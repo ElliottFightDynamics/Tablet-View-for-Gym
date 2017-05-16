@@ -742,10 +742,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void disconnectSensors(){
-//        MainActivity.leftDeviceConnectionManager.disconnect();
-//        MainActivity.rightDeviceConnectionManager.disconnect();
-//        rightHandConnectionThread = null;
-//        leftHandConnectionThread = null;
+        MainActivity.leftDeviceConnectionManager.disconnect();
+        MainActivity.rightDeviceConnectionManager.disconnect();
+        rightHandConnectionThread = null;
+        leftHandConnectionThread = null;
     }
 
     public boolean stopTraining() {
@@ -787,7 +787,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 JSONObject result = null;
                 result = MainActivity.db.trainingSessionSave(Integer.parseInt(userId), EFDConstants.TRAINING_TYPE_BOXER);
-                boxerName = checkboxerDetails.get("boxerName");
+                boxerName = "WES";
+                boxerStance = EFDConstants.TRADITIONAL;//checkboxerDetails.get("boxerName");
                 json = new JSONObject(result.toString());
                 JSONObject trainingData = json.getJSONObject("trainingData");
                 trainingSessionId = trainingData.getInt("trainingSessionId");
@@ -849,6 +850,7 @@ public class MainActivity extends AppCompatActivity {
 
             //start training
             startTraining();
+            Log.e("Super", "Start round training");
         }else {
             StatisticUtil.showToastMessage("Sensor is not connected  " + checkDeviceConnectionFlag);
         }
