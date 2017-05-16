@@ -22,7 +22,7 @@ public class EFDConstants {
 
     //-----------------------------File path------------------------------------
     private static final String ANDROID_DATA_DIRECTORY = "Android/data";
-    public static final String EFD_COMMON_DATA_DIRECTORY = Environment.getExternalStorageDirectory() + File.separator + ANDROID_DATA_DIRECTORY + File.separator + "com.efd.efdPhoneTraining";// MainActivity.context.getPackageName();
+    public static final String EFD_COMMON_DATA_DIRECTORY = Environment.getExternalStorageDirectory() + File.separator + ANDROID_DATA_DIRECTORY + File.separator + "com.efd.striketectablet";// MainActivity.context.getPackageName();
     public static final String APP_DIRECTORY = "EFD Training";
     public static final String SCREENSHOTS_DIRECTORY = "screenshots";
     public static final String CONFIG_DIRECTORY = "config";

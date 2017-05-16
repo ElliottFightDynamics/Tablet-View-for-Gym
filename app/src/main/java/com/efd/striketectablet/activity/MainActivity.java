@@ -103,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean isDeviceLeftConnectionFinish;
     private boolean isDeviceRightConnectionFinish;
     private int checkDeviceConnectionFlag = 0;
-    public String deviceLeft;
-    public String deviceRight;
+    public String deviceLeft = "";
+    public String deviceRight = "";
     public boolean leftSensorConnected = false;
     public boolean rightSensorConnected = false;
 
@@ -436,10 +436,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void checkUser() {
-        if (!db.isUserAvailable()) {
-            Log.d(TAG, "isUserAvailable" + db.isUserAvailable());
-            showAlert();
-        }
+//        if (!db.isUserAvailable()) {
+//            Log.d(TAG, "isUserAvailable" + db.isUserAvailable());
+//            showAlert();
+//        }
     }
 
     public void showAlert() {

@@ -6,5 +6,13 @@
     {
         "merged": "F:\\GitHub\\StrikeTec\\goldentablet\\wheel\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\wheel_bg.xml",
         "source": "F:\\GitHub\\StrikeTec\\goldentablet\\wheel\\build\\intermediates\\bundles\\debug\\res\\drawable\\wheel_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Striketec(tablet)\\Tablet-View-for-Gym\\wheel\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\wheel_val.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Striketec(tablet)\\Tablet-View-for-Gym\\wheel\\build\\intermediates\\bundles\\debug\\res\\drawable\\wheel_val.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Striketec(tablet)\\Tablet-View-for-Gym\\wheel\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\wheel_bg.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Striketec(tablet)\\Tablet-View-for-Gym\\wheel\\build\\intermediates\\bundles\\debug\\res\\drawable\\wheel_bg.xml"
     }
 ]
