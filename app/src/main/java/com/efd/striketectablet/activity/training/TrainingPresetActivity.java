@@ -267,7 +267,7 @@ public class TrainingPresetActivity extends FragmentActivity {
             startActivity(trainingIntent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }else {
-            Intent trainingIntent = new Intent(this, RoundTrainingActivity.class);
+            Intent trainingIntent = new Intent(this, QuickStartTrainingActivity.class);
             trainingIntent.putExtra("preset", presetDTO);
             startActivity(trainingIntent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

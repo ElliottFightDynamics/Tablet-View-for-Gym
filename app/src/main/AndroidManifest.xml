@@ -48,6 +48,10 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden"/>
 
+        <activity android:name=".activity.training.QuickStartTrainingActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden"/>
+
     </application>
 
 </manifest>

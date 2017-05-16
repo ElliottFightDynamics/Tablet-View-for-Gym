@@ -1,29 +1,39 @@
 package com.efd.striketectablet.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.efd.striketectablet.DTO.CalendarSummaryDTO;
+import com.efd.striketectablet.DTO.ProgressSummaryDTO;
+import com.efd.striketectablet.DTO.PunchCountSummaryDTO;
 import com.efd.striketectablet.DTO.PunchDataDTO;
 import com.efd.striketectablet.DTO.PunchHistoryGraphDataDetails;
+import com.efd.striketectablet.DTO.ResultSummaryDTO;
 import com.efd.striketectablet.DTO.TrainingBatteryLayoutDTO;
 import com.efd.striketectablet.DTO.TrainingBatteryVoltageDTO;
 import com.efd.striketectablet.DTO.TrainingConnectStatusDTO;
@@ -35,10 +45,13 @@ import com.efd.striketectablet.bluetooth.Connection.ConnectionManager;
 import com.efd.striketectablet.bluetooth.Connection.ConnectionThread;
 import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionConfig;
 import com.efd.striketectablet.database.DBAdapter;
+import com.efd.striketectablet.database.SendDataToWebService;
 import com.efd.striketectablet.mmaGlove.EffectivePunchMassCalculator;
 import com.efd.striketectablet.util.StatisticUtil;
 import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
+import com.efd.striketectablet.utilities.JSONParsers;
+import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 import com.efd.striketectablet.utilities.TrainingManager;
 import com.efd.striketectablet.utilities.TrainingTimer;
 import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
@@ -48,9 +61,17 @@ import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -116,6 +137,24 @@ public class MainActivity extends AppCompatActivity {
         return instance;
     }
 
+    private static boolean isSynchronizingWithServer = false;
+    public static boolean isAccessTokenValid = true;
+
+    public Timer timer;
+    SendDataToWebService sendDataObj;
+
+    public int month, year, day;
+
+    public static String boxersStance;
+
+    public static boolean isSynchronizingWithServer() {
+        return isSynchronizingWithServer;
+    }
+
+    public static void setSynchronizingWithServer(boolean isSynchronizingWithServer) {
+        MainActivity.isSynchronizingWithServer = isSynchronizingWithServer;
+    }
+
     public MainActivity() {
         flagForDevice = false;
         setGuestBoxerActive(false);
@@ -129,7 +168,36 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
+        initUI();
+
+        final SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        userId = sharedPreference.getString("userId", "");
+
+        if (TextUtils.isEmpty(userId))
+            userId = "1";
+
+        context = this;
+        liveMonitorDataMap = new HashMap<String, String>(); // For storing live monitor data when training
+        punchHistoryGraph = new LinkedList<PunchHistoryGraphDataDetails>();
+
         db = DBAdapter.getInstance(MainActivity.this);
+
+        isSynchronizingWithServer = false;
+        deleteCalendarSummaryBeforeTwoYears();
+
+        // Checking the user is present or not if not then flow goes to login
+        checkUser();
+
+        // To reset all null end_time values with proper end_time values
+        db.endAllPreviousTrainingSessions();
+
+        createOrUpdateSummaryTables();
+
+        sendDataObj = new SendDataToWebService();
+        startBackgroundThread();
+
+        // code to save boxers stance (traditional or non-traditional)
+        setBoxersStance();
 
         int theUserId = Integer.valueOf(userId);
         HashMap<String, String> usersBoxerDetails = MainActivity.db.getUsersBoxerDetails(theUserId);
@@ -137,8 +205,13 @@ public class MainActivity extends AppCompatActivity {
         double punchMassEffect = calculateBoxerPunchMassEffect(usersBoxerDetails);
         PunchDetectionConfig.getInstance().setPunchMassEff(punchMassEffect);
 
+        final Calendar c = Calendar.getInstance();
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
 
-        initUI();
+        setDeviceHandlers();
+
 
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (!mBluetoothAdapter.isEnabled()) {
@@ -147,6 +220,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         instance = this;
+    }
+
+    private void setDeviceHandlers() {
+        if (!trainingManager.isTrainingRunning()) {
+            MainActivity.rightDeviceConnectionManager = new ConnectionManager(mHandler);
+            MainActivity.leftDeviceConnectionManager = new ConnectionManager(mHandler);
+        }
     }
 
     public void reconnectSensor(View view) {
@@ -248,6 +328,222 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    public void createOrUpdateSummaryTables() {
+
+        createCalendarSummary();
+        createResultSummary(EFDConstants.SUMMARY_TYPE_MAX);
+        createResultSummary(EFDConstants.SUMMARY_TYPE_AVG);
+        createProgressSummary(EFDConstants.SUMMARY_TYPE_DAILY);
+        createProgressSummary(EFDConstants.SUMMARY_TYPE_WEEKLY);
+        createProgressSummary(EFDConstants.SUMMARY_TYPE_MONTHLY);
+        createPunchCountSummary();
+    }
+
+    /**
+     * Create or update calendar summary record once training is stopped
+     * gets called in onCreate() to update record if training is not stopped by user
+     */
+    public void createCalendarSummary() {
+
+        JSONObject calendarSummaryResult = db.trainingDataDetailsCalendarSummary(Long.parseLong(userId),
+                CommonUtils.getCurrentDateStringYMD(), 0, trainingSessionId == null ? 0 : trainingSessionId);
+
+        CalendarSummaryDTO calendarDTO = JSONParsers.parseCalendarResultJSON(calendarSummaryResult, Integer.parseInt(userId), CommonUtils.getCurrentDateStringYMD());
+
+        if (!calendarDTO.getTotalTrainingTime().equals(EFDConstants.DEFAULT_START_TIME)) {
+            if (db.isCalendarSummaryRecordExist(CommonUtils.getCurrentDateStringYMD(), Integer.parseInt(userId))) {
+                db.updateCalendarSummaryRecord(calendarDTO);
+            } else {
+                db.insertCalendarSummaryRecord(calendarDTO);
+            }
+        }
+    }
+
+    /**
+     * @param summaryType - max / avg
+     */
+    public void createResultSummary(String summaryType) {
+        JSONObject maxData = db.getTrainingResultData(userId, summaryType.toLowerCase(Locale.getDefault()));
+        ResultSummaryDTO resultSummaryDTO = JSONParsers.parseTrainingResultJSON(maxData, Integer.parseInt(userId), CommonUtils.getCurrentDateStringYMD(), summaryType);
+        if (db.isResultSummaryRecordExist(Integer.parseInt(userId), summaryType.toLowerCase(Locale.getDefault()))) {
+            db.updateResultSummaryRecord(resultSummaryDTO);
+        } else {
+            db.insertResultSummaryRecord(resultSummaryDTO);
+        }
+    }
+
+    /**
+     * Create or update calendar summary record once training is stopped
+     * gets called in onCreate() to update record if training is not stopped by user
+     */
+    public void createPunchCountSummary() {
+
+        Calendar calendar = Calendar.getInstance();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String endDate = df.format(calendar.getTime());
+        calendar.add(Calendar.DATE, -6);
+        String startDate = df.format(calendar.getTime());
+        int currentSessionId = (trainingSessionId != null) ? trainingSessionId : 0;
+
+        JSONObject punchCountSummaryResult = MainActivity.db.getPunchCountScreenDetails(userId, startDate, endDate, currentSessionId);
+
+        try {
+            if (punchCountSummaryResult.getBoolean("success")) {
+
+                PunchCountSummaryDTO punchCountSummaryDTO = JSONParsers.parsePunchCountSummaryResultJSON(
+                        punchCountSummaryResult.getJSONObject("punchCount"), userId, CommonUtils.getCurrentDateStringYMD());
+
+                if (null != punchCountSummaryDTO) {
+                    Integer id = db.isPunchCountSummaryRecordExist(userId);
+                    if (null != id) {
+                        punchCountSummaryDTO.setId(id);
+                        db.updatePunchCountRecord(punchCountSummaryDTO);
+                    } else {
+                        db.insertPunchCountRecord(punchCountSummaryDTO);
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createProgressSummary(String summaryType) {
+        // getTrainingProgressData() returns empty map if data does not exist, also it returns punch types thrown
+        // So, validate the result and process the data.
+
+        JSONObject jsonObject = new JSONObject(
+                db.getTrainingProgressData(userId, CommonUtils.calculatePastDate(CommonUtils.getCurrentDateStringYMD(),
+                        Integer.parseInt(summaryType), EFDConstants.MEASURE_DATE), CommonUtils.getCurrentDateStringYMD(),
+                        trainingSessionId == null ? 0 : trainingSessionId));
+
+        ProgressSummaryDTO progressSummaryDTO;
+
+        if (jsonObject.length() != 0) {
+            progressSummaryDTO = JSONParsers.parseProgressResultJSON(jsonObject, Integer.parseInt(userId), CommonUtils.getCurrentDateStringYMD(), summaryType);
+        } else {
+            progressSummaryDTO = new ProgressSummaryDTO(Integer.parseInt(userId), CommonUtils.getCurrentDateStringYMD(), summaryType, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        }
+
+        if (db.isProgressSummaryRecordExist(CommonUtils.getCurrentDateStringYMD(), Integer.parseInt(userId), summaryType.toLowerCase())) {
+            db.updateProgressSummaryRecord(progressSummaryDTO);
+        } else {
+            db.insertProgressSummaryRecord(progressSummaryDTO);
+        }
+
+    }
+
+
+    private void checkUser() {
+        if (!db.isUserAvailable()) {
+            Log.d(TAG, "isUserAvailable" + db.isUserAvailable());
+            showAlert();
+        }
+    }
+
+    public void showAlert() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(EFDConstants.DATABASE_NOT_FOUND_ERROR_MESSAGE);
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                logoutUser();
+            }
+        });
+        alertDialogBuilder.show();
+    }
+
+    public void logoutUser() {
+//        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//        SharedPreferences.Editor editor = settings.edit();
+//        /******** code to disconnect the current connected device ***********/
+//        if (trainingSessionId != null) {
+//            JSONObject result_Training_session_end = db.trainingSessionEnd(trainingSessionId);
+//
+//        }
+//
+//        timer.cancel();
+//        isSynchronizingWithServer = false;
+//        isAccessTokenValid = true;
+//        editor.remove(EFDConstants.KEY_USER_ID);
+//        editor.remove(EFDConstants.KEY_SERVER_USER_ID);
+//        editor.remove(EFDConstants.KEY_SECURE_ACCESS_TOKEN);
+//        editor.commit();
+//        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//        startActivity(intent);
+//        finish();
+    }
+
+    // changes for Local Storage start
+    // seconds -- check multiplication
+    long delay = 10 * EFDConstants.NUM_MILLISECONDS_IN_ONE_SECOND;        //	* EFDConstants.NUM_SECONDS_IN_ONE_MINUTE
+
+    // 1 minute -- check multiplication
+    long period = 1 * EFDConstants.NUM_SECONDS_IN_ONE_MINUTE * EFDConstants.NUM_MILLISECONDS_IN_ONE_SECOND;
+
+    private void startBackgroundThread() {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                if (CommonUtils.isOnline(getApplicationContext())) {
+                    // TODO: later see if this can be put in a separate class & implemented with @link{FutureTask}
+
+                    // Sync training data
+                    if (!isSynchronizingWithServer()) {
+                        sendDataObj.syncAllWhileDataFound();
+                    }
+
+                    // Delete past synced training data
+                    sendDataObj.deletePastSyncedRecords();
+
+                    // sync user information data
+                    sendDataObj.synchronizeUserInfoAfterEdit();
+                    if (!isAccessTokenValid) {
+                        showSessionExpiredAlertDialog();
+                    }
+                } else {
+                    Log.i(TAG, "Internet not available on phone....");
+                    isSynchronizingWithServer = false;
+                }
+            }
+        }, delay, period);
+    }
+
+    public void showSessionExpiredAlertDialog() {
+        //isAccessTokenValid = true;
+        timer.cancel();
+        try {
+            this.runOnUiThread(new Runnable() {
+                public void run() {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                    alertDialogBuilder
+                            .setMessage(EFDConstants.TRAINEE_SESSION_EXPIRED_ERROR)
+                            .setCancelable(false)
+                            .setPositiveButton("OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            logoutUser();
+                                        }
+                                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Delete calendar summary records of past two years
+     */
+    @SuppressLint("SimpleDateFormat")
+    private void deleteCalendarSummaryBeforeTwoYears() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedCurrentDate = dateFormat.format(new Date());
+        String beforeTwoYears = CommonUtils.calculatePastDate(formattedCurrentDate, EFDConstants.CALENDAR_SUMMARY_NUMBER_OF_YEARS, EFDConstants.MEASURE_YEAR);
+        db.deleteCalendarSummaryBeforeDate(beforeTwoYears);
+    }
 
     public void setDataToLiveMonitorMap(String liveMonitorData) {
         JSONObject punchDataJson = null;
@@ -628,6 +924,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void setGuestBoxerActive(boolean isGuestBoxerActive) {
         this.isGuestBoxerActive = isGuestBoxerActive;
+    }
+
+    /**
+     * code to get stance value from DB and store in boxersStance variable
+     */
+    public void setBoxersStance() {
+        HashMap<String, String> boxerDetails = MainActivity.db
+                .getBoxerDetails(Integer.valueOf(userId));
+        if (boxerDetails != null) {
+            MainActivity.boxersStance = boxerDetails.get("stance");
+        }
     }
 
     public double calculateBoxerPunchMassEffect(HashMap<String, String> boxerDetails) {
