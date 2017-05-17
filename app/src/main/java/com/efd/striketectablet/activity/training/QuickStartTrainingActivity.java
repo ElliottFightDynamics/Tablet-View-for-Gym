@@ -50,6 +50,9 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
     ImageView audioBtn;
 
     TextView avgSpeedView, avgForceView, maxSpeedView, maxForceView;
+    TextView leftavgSpeedView, leftavgForceView, leftmaxSpeedView, leftmaxForceView;
+    TextView rightavgSpeedView, rightavgForceView, rightmaxSpeedView, rightmaxForceView;
+
     RelativeLayout graphLayout, digitLayout;
     LinearLayout speedLayout, powerLayout;
 
@@ -79,9 +82,13 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
     private ArrayList<PunchHistoryGraphDataDetails> punchLists;
     private ArrayList<PunchDTO> punchDTOs;
 
+    private ArrayList<PunchDTO> leftpunchDTOS, rightpunchDTOS;
+
     private long trainingStartTime = 0L;
     private  long trainingEndTime = 0L;
     private float maxSpeed = 0f, avgSpeed = 0, maxForce = 0, avgForce = 0;
+    private float leftmaxSpeed = 0f, leftavgSpeed = 0, leftmaxForce = 0, leftavgForce = 0;
+    private float rightmaxSpeed = 0f, rightavgSpeed = 0, rightmaxForce = 0, rightavgForce = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +99,9 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         setContentView(R.layout.activity_quickstart_training);
         punchLists = new ArrayList<>();
         punchDTOs = new ArrayList<>();
+
+        leftpunchDTOS = new ArrayList<>();
+        rightpunchDTOS = new ArrayList<>();
 
         mainActivityInstance = MainActivity.getInstance();
 
@@ -139,6 +149,16 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         maxSpeedView = (TextView)findViewById(R.id.training_max_speed);
         maxForceView = (TextView)findViewById(R.id.training_max_force);
 
+        leftavgSpeedView = (TextView)findViewById(R.id.lh_avg_speed);
+        leftavgForceView = (TextView)findViewById(R.id.lh_avg_force);
+        leftmaxSpeedView = (TextView)findViewById(R.id.lh_max_speed);
+        leftmaxForceView = (TextView)findViewById(R.id.lh_max_force);
+
+        rightavgSpeedView = (TextView)findViewById(R.id.rh_avg_speed);
+        rightavgForceView = (TextView)findViewById(R.id.rh_avg_force);
+        rightmaxSpeedView = (TextView)findViewById(R.id.rh_max_speed);
+        rightmaxForceView = (TextView)findViewById(R.id.rh_max_force);
+
         chartView = (CurveChartView)findViewById(R.id.curvechart);
         chartView.setMaxXAxisValue(Integer.parseInt(PresetUtil.timerwitSecsList.get(presetDTO.getRound_time())) * 1000);
 
@@ -155,7 +175,6 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
             public void onClick(View v) {
                 if (!isSpeedGraph){
                     isSpeedGraph = true;
-//                    chartView.setIsSpeed(isSpeedGraph);
                     chartView.changeGraph(isSpeedGraph);
                 }
             }
@@ -288,10 +307,30 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         maxForceView.setText("0");
         maxSpeedView.setText("0");
 
+        leftavgSpeedView.setText("0");
+        leftavgForceView.setText("0");
+        leftmaxForceView.setText("0");
+        leftmaxSpeedView.setText("0");
+
+        rightavgSpeedView.setText("0");
+        rightavgForceView.setText("0");
+        rightmaxForceView.setText("0");
+        rightmaxSpeedView.setText("0");
+
         maxForce = 0f;
         avgForce = 0f;
         maxSpeed = 0f;
         avgSpeed = 0f;
+
+        leftmaxForce = 0f;
+        leftmaxSpeed = 0f;
+        leftavgForce = 0f;
+        leftavgSpeed = 0f;
+
+        rightmaxForce = 0f;
+        rightmaxSpeed = 0f;
+        rightavgForce = 0f;
+        rightavgSpeed = 0f;
     }
 
     private void playBoxingBell(){
@@ -304,10 +343,10 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
     private void startTraining(){
 
-//        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.leftSensorConnected){
-//            StatisticUtil.showToastMessage("Please connect with sensors");
-//            return;
-//        }
+        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.leftSensorConnected){
+            StatisticUtil.showToastMessage("Please connect with sensors");
+            return;
+        }
 
         if (currentStatus == -1){
             //prepare for round 1
@@ -341,9 +380,6 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
                 graphLayout.setVisibility(View.INVISIBLE);
                 digitLayout.setVisibility(View.VISIBLE);
 
-//                String text = PresetUtil.chagngeSecsToTime(currentTime) + " - STOP";
-//                startTrainingBtn.setText(text);
-
             }else if (currentStatus == 2){
                 //current is rest
                 startTrainingBtn.setText(getResources().getString(R.string.stop_training));
@@ -362,13 +398,14 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
         mainActivityInstance.stopRoundTraining();
         mainActivityInstance.stopTraining();
+        mainActivityInstance.createOrUpdateSummaryTables();
 
 //        if (mainActivityInstance.trainingManager.isTrainingRunning()) {
 //            JSONObject result_Training_session_end = MainActivity.db.trainingSessionEnd(mainActivityInstance.trainingSessionId);
 //            endTrainingSession(result_Training_session_end.toString());
 //
 //            // extract summary upon ending training session
-//            mainActivityInstance.createOrUpdateSummaryTables();
+
 //        }
     }
 
@@ -547,11 +584,45 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         punchDTO.setPower(currentForce);
         punchDTO.setSpeed(currentSpeed);
 
+        String hand = details.boxersHand.equalsIgnoreCase("L") ? "LEFT" : "RIGHT";
+
         speedValue.setText(details.punchSpeed);
         forceValue.setText(details.punchForce);
 
+
+
         maxForce = Math.max(maxForce, (float)currentForce);
         maxSpeed = Math.max(maxSpeed, (float) currentSpeed);
+
+        if (hand.equalsIgnoreCase("left")){
+            leftmaxForce = Math.max(leftmaxForce, (float)currentForce);
+            leftmaxSpeed = Math.max(leftmaxSpeed, (float) currentSpeed);
+
+            int leftpunchCount = leftpunchDTOS.size();
+            leftavgForce = (leftavgForce * leftpunchCount + currentForce) / (leftpunchCount + 1);
+            leftavgSpeed = (leftavgSpeed * leftpunchCount + currentSpeed) / (leftpunchCount + 1);
+
+            leftpunchDTOS.add(punchDTO);
+
+            leftavgSpeedView.setText(String.valueOf((int)leftavgSpeed));
+            leftavgForceView.setText(String.valueOf((int)leftavgForce));
+            leftmaxSpeedView.setText(String.valueOf((int)leftmaxSpeed));
+            leftmaxForceView.setText(String.valueOf((int)leftmaxForce));
+
+        }else if (hand.equalsIgnoreCase("right")){
+            rightmaxForce = Math.max(rightmaxForce, (float)currentForce);
+            rightmaxSpeed = Math.max(rightmaxSpeed, (float) currentSpeed);
+
+            int rightpunchCount = rightpunchDTOS.size();
+            rightavgForce = (avgForce * rightpunchCount + currentForce) / (rightpunchCount + 1);
+            rightavgSpeed = (avgSpeed * rightpunchCount + currentSpeed) / (rightpunchCount + 1);
+            rightpunchDTOS.add(punchDTO);
+
+            rightavgSpeedView.setText(String.valueOf((int)rightavgSpeed));
+            rightavgForceView.setText(String.valueOf((int)rightavgForce));
+            rightmaxSpeedView.setText(String.valueOf((int)rightmaxSpeed));
+            rightmaxForceView.setText(String.valueOf((int)rightmaxForce));
+        }
 
         int punchCount = punchDTOs.size();
         avgForce = (avgForce * punchCount + currentForce) / (punchCount + 1);
@@ -559,13 +630,11 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
         punchDTOs.add(punchDTO);
         punchCountView.setText(String.valueOf(punchDTOs.size()));
-
         avgSpeedView.setText(String.valueOf((int)avgSpeed));
         avgForceView.setText(String.valueOf((int)avgForce));
         maxSpeedView.setText(String.valueOf((int)maxSpeed));
         maxForceView.setText(String.valueOf((int)maxForce));
 
-        String hand = details.boxersHand.equalsIgnoreCase("L") ? "LEFT" : "RIGHT";
         String punchType = details.punchType;
 
         if (punchType.equalsIgnoreCase(EFDConstants.JAB_ABBREVIATION_TEXT)) {

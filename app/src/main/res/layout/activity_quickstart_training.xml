@@ -111,6 +111,7 @@
                                     android:orientation="vertical">
 
                                     <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                                        android:id="@+id/lh_avg_speed"
                                         android:layout_width="match_parent"
                                         android:layout_height="40dp"
                                         android:gravity="center"
@@ -138,6 +139,7 @@
                                     android:orientation="vertical">
 
                                     <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                                        android:id="@+id/lh_avg_force"
                                         android:layout_width="match_parent"
                                         android:layout_height="40dp"
                                         android:gravity="center"
@@ -200,7 +202,7 @@
                                     android:orientation="vertical">
 
                                     <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
-                                        android:id="@+id/customTextViewFontEfDigit"
+                                        android:id="@+id/lh_max_speed"
                                         android:layout_width="match_parent"
                                         android:layout_height="40dp"
                                         android:gravity="center"
@@ -228,6 +230,7 @@
                                     android:orientation="vertical">
 
                                     <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                                        android:id="@+id/lh_max_force"
                                         android:layout_width="match_parent"
                                         android:layout_height="40dp"
                                         android:gravity="center"
@@ -1131,6 +1134,7 @@
                                     android:orientation="vertical">
 
                                     <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                                        android:id="@+id/rh_avg_speed"
                                         android:layout_width="match_parent"
                                         android:layout_height="40dp"
                                         android:gravity="center"
@@ -1158,6 +1162,7 @@
                                     android:orientation="vertical">
 
                                     <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                                        android:id="@+id/rh_avg_force"
                                         android:layout_width="match_parent"
                                         android:layout_height="40dp"
                                         android:gravity="center"
@@ -1220,6 +1225,7 @@
                                     android:orientation="vertical">
 
                                     <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                                        android:id="@+id/rh_max_speed"
                                         android:layout_width="match_parent"
                                         android:layout_height="40dp"
                                         android:gravity="center"
@@ -1247,6 +1253,7 @@
                                     android:orientation="vertical">
 
                                     <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                                        android:id="@+id/rh_max_force"
                                         android:layout_width="match_parent"
                                         android:layout_height="40dp"
                                         android:gravity="center"
