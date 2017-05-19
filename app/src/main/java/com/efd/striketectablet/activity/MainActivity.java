@@ -37,6 +37,7 @@ import com.efd.striketectablet.DTO.ResultSummaryDTO;
 import com.efd.striketectablet.DTO.TrainingBatteryLayoutDTO;
 import com.efd.striketectablet.DTO.TrainingBatteryVoltageDTO;
 import com.efd.striketectablet.DTO.TrainingConnectStatusDTO;
+import com.efd.striketectablet.DTO.TrainingPunchDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.profile.ProfileFragment;
 import com.efd.striketectablet.activity.training.TrainingFragment;
@@ -589,9 +590,33 @@ public class MainActivity extends AppCompatActivity {
             }
 
             EventBus.getDefault().post(punchHistoryGraph.get(punchHistoryGraph.size() - 1));
+            savePunchInfotoDB(punchHistoryGraph.get(punchHistoryGraph.size() - 1));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void savePunchInfotoDB(PunchHistoryGraphDataDetails punchdetails){
+
+        String hand = punchdetails.boxersHand.equalsIgnoreCase("L") ? "LEFT" : "RIGHT";
+
+        String punchType = punchdetails.punchType;
+        String realpunchType = "";
+
+        if (punchType.equalsIgnoreCase(EFDConstants.JAB_ABBREVIATION_TEXT)) {
+            realpunchType = hand + " " + EFDConstants.JAB;
+        } else if (punchType.equalsIgnoreCase(EFDConstants.HOOK_ABBREVIATION_TEXT)) {
+            realpunchType = hand + " " + EFDConstants.HOOK;
+        } else if (punchType.equalsIgnoreCase(EFDConstants.STRAIGHT_ABBREVIATION_TEXT)) {
+            realpunchType = hand + " " + EFDConstants.STRAIGHT;
+        } else if (punchType.equalsIgnoreCase(EFDConstants.UPPERCUT_ABBREVIATION_TEXT)) {
+            realpunchType = hand + " " + EFDConstants.UPPERCUT;
+        } else if (punchType.equalsIgnoreCase(EFDConstants.UNRECOGNIZED_ABBREVIATION_TEXT)) {
+            realpunchType = hand + " " + EFDConstants.UNRECOGNIZED;
+        }
+
+        MainActivity.db.addPunchtoStats(new TrainingPunchDTO(realpunchType, Long.parseLong(punchdetails.punchSpeed),
+                Long.parseLong(punchdetails.punchForce), 0.33));
     }
 
 

@@ -87,7 +87,7 @@ public class PunchesRankAdapter extends ArrayAdapter<PunchesRankDTO> {
         viewHolder.punchtypeView.setText(rankDTO.punchtype);
         viewHolder.speedView.setText((int)rankDTO.avg_speed + " MPH");
         viewHolder.forceView.setText((int)rankDTO.avg_force + " LBS");
-        viewHolder.punchcountView.setText(rankDTO.punch_count + " PUNCHES");
+        viewHolder.punchcountView.setText(rankDTO.punch_count + "");
         viewHolder.punchEffectView.setText(rankDTO.punch_percent + " %");
 
         return convertView;

@@ -32,6 +32,7 @@ public class TrainingStatsFragment extends Fragment{
     View speedSelectView, forceSelectView, countSelectView, percentSelectView;
 
     CustomCircleView circlePercentView;
+    TextView activePercentView, inactivePercentView;
 
     private PunchesRankAdapter rankAdapter;
     private CommonStatsAdapter commonStatsAdapter;
@@ -40,6 +41,7 @@ public class TrainingStatsFragment extends Fragment{
     private ArrayList<String> keyLists, valueLists;
     private HashMap<String, String> valueHashMap;
     private int activeTime = 0, inactiveTime = 0;
+
 
     private int currentSelected = -1;
 
@@ -65,6 +67,9 @@ public class TrainingStatsFragment extends Fragment{
         keyLists = new ArrayList<>();
         valueLists = new ArrayList<>();
         valueHashMap = new HashMap<>();
+
+        activePercentView = (TextView)view.findViewById(R.id.active_percent);
+        inactivePercentView = (TextView)view.findViewById(R.id.inactive_percent);
 
         bestpunchSpeedView = (TextView)view.findViewById(R.id.bestpunch_speed);
         bestpunchForceView = (TextView)view.findViewById(R.id.bestpunch_force);
@@ -128,7 +133,10 @@ public class TrainingStatsFragment extends Fragment{
         circlePercentView.setDeactivePaint(getResources().getColor(R.color.advise_deactivecolor));
         circlePercentView.setStrokeWidth(18);
 
-        updateCirlceView(true, 320, 240);
+        circlePercentView.setActivePaint(getResources().getColor(R.color.force_text_color));
+        circlePercentView.setInnerPaint(getResources().getColor(R.color.speed_text_color));
+
+//        updateCirlceView(true, 320, 240);
 
         return view;
     }
@@ -144,6 +152,9 @@ public class TrainingStatsFragment extends Fragment{
         totalPunchesView.setText("0");
         activeTimeView.setText("00:00:00");
         inactiveTimeView.setText("00:00:00");
+        activePercentView.setText("0%");
+        inactivePercentView.setText("0");
+        updateCirlceView(true, 0, 0);
 
         initData();
 
@@ -175,6 +186,17 @@ public class TrainingStatsFragment extends Fragment{
             sumavgforce += punchTypeInfoDTOs.get(i).punchcount * punchTypeInfoDTOs.get(i).avgforce;
             sumactivetime += punchTypeInfoDTOs.get(i).totaltime;
         }
+
+        int activePercent = (int)(sumactivetime / totaltime * 100);
+        int inactivePercent = 100 - activePercent;
+
+        int activeAngle = (int)(sumactivetime / totaltime * 360);
+        int inactiveAngle = 360 - activeAngle;
+
+        activePercentView.setText(activePercent + "%");
+        inactivePercentView.setText(inactivePercent + "");
+
+        updateCirlceView(true, activeAngle, inactiveAngle);
 
         activeTimeView.setText(PresetUtil.changeSecondsToHours((int)sumactivetime));
         inactiveTimeView.setText(PresetUtil.changeSecondsToHours((int)(totaltime - sumactivetime)));
@@ -239,15 +261,15 @@ public class TrainingStatsFragment extends Fragment{
         circlePercentView.setInnerAngle(innerangle);
         circlePercentView.setInner(hasinner);
 
-        if (outerangle > 280)
-            circlePercentView.setActivePaint(getResources().getColor(R.color.force_text_color));
-        else
-            circlePercentView.setActivePaint(getResources().getColor(R.color.speed_text_color));
-
-        if (innerangle > 280)
-            circlePercentView.setInnerPaint(getResources().getColor(R.color.force_text_color));
-        else
-            circlePercentView.setInnerPaint(getResources().getColor(R.color.speed_text_color));
+//        if (outerangle > 280)
+//            circlePercentView.setActivePaint(getResources().getColor(R.color.force_text_color));
+//        else
+//            circlePercentView.setActivePaint(getResources().getColor(R.color.speed_text_color));
+//
+//        if (innerangle > 280)
+//            circlePercentView.setInnerPaint(getResources().getColor(R.color.force_text_color));
+//        else
+//            circlePercentView.setInnerPaint(getResources().getColor(R.color.speed_text_color));
 
         circlePercentView.invalidate();
     }

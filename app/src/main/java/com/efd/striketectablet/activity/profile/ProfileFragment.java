@@ -1,12 +1,16 @@
 package com.efd.striketectablet.activity.profile;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -34,6 +38,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment  {
+
+    private static final int LOCATION_PERMISSION = 101;
 
     private MainActivity mainActivityInstance;
 
@@ -182,6 +188,13 @@ public class ProfileFragment extends Fragment  {
     }
 
     private void searchSensor(String leftDeviceAddress, String rightDeviceAddress, int requestCode) {
+        int hasLocationPermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
+        if (hasLocationPermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSION);
+            return;
+        }
+
         if (!mainActivityInstance.trainingManager.isTrainingRunning()) {
             Intent intent = new Intent(mainActivityInstance, BluetoothScanActivity.class);
             intent.putExtra("deviceLeft", leftDeviceAddress);

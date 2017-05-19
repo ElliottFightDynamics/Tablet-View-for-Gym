@@ -989,7 +989,6 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
             saveMatchDataDetails(punchVFAData, sensorData, trainingId);
             savePunchPeakSummary(punchVFAData, punchDetails.getPeakPunchValueDetector(), trainingId);
 
-            MainActivity.db.addPunchtoStats(new TrainingPunchDTO(punchVFAData.getPunchType(), Math.round(punchVFAData.getVelocity()), Math.round(punchVFAData.getForce()), 0.33));
         }
 
         sendMatchData(punchVFAData);
