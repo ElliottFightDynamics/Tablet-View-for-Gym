@@ -12,6 +12,7 @@ import com.efd.striketectablet.DTO.DBTrainingPunchDataDTO;
 import com.efd.striketectablet.DTO.DBTrainingPunchDataPeakSummaryDTO;
 import com.efd.striketectablet.DTO.DBTrainingSessionDTO;
 import com.efd.striketectablet.DTO.SyncResponseDTO;
+import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionConfig;
 import com.efd.striketectablet.exception.EFDExceptionHandler;
 import com.efd.striketectablet.utilities.CommonUtils;
@@ -420,10 +421,10 @@ public class SendDataToWebService extends Activity {
                         synchronizeTrainingPunchDataPeakSummaryRecords();
                     }
                     //resetSyncFlagIfDataNotExist();
-//super                    MainActivity.isAccessTokenValid = true;
+                    MainActivity.isAccessTokenValid = true;
                 }
             } else {
-//super                MainActivity.isAccessTokenValid = false;
+                 MainActivity.isAccessTokenValid = false;
             }
         } catch (Exception e) {
             e.printStackTrace();

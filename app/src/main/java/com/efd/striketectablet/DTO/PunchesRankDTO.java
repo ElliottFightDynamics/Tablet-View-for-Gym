@@ -8,13 +8,15 @@ public class PunchesRankDTO implements Serializable{
     public double avg_speed;
     public double avg_force;
     public int punch_count;
+    public int punch_percent;
 
-    public PunchesRankDTO(String punchtype, double avg_speed, double avg_force, int punch_count) {
+    public PunchesRankDTO(String punchtype, double avg_speed, double avg_force, int punch_count, int punch_percent) {
         super();
         this.punchtype = punchtype;
         this.avg_speed = avg_speed;
         this.avg_force = avg_force;
         this.punch_count = punch_count;
+        this.punch_percent = punch_percent;
     }
 
     public PunchesRankDTO(){

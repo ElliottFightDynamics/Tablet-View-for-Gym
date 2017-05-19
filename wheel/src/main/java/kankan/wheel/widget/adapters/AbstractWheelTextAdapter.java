@@ -136,7 +136,6 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
     public void currentItem(int current) {
         this.currentPosition = current;
         notifyDataChangedEvent();
-        Log.e("Super", "current position = " + current);
     }
 
     /**
@@ -229,7 +228,6 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
                     configureTextView(textView);
                 }else {
                     if (currentPosition != -1) {
-                        Log.e("Super", "get item = " + currentPosition + "    " + index);
                         if (currentPosition == index ) {
                             setTextViewAttributes(textView, false);
                         } else {
@@ -244,9 +242,6 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
     }
 
     private void setTextViewAttributes(TextView textView, boolean deactive){
-
-        Log.e("Super", "textview = " + deactiveTextSize + "   " + activeTextSize + "   " + currentPosition);
-
         if (deactive){
             textView.setTextColor(deactiveTextColor);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, deactiveTextSize);
@@ -273,7 +268,6 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
      * @param view the text view to be configured
      */
     protected void configureTextView(TextView view) {
-        Log.e("Super", "TextView = " + textColor + "  " + textSize);
         view.setTextColor(textColor);
         view.setGravity(Gravity.CENTER);
         view.setTextSize(textSize);

@@ -4,6 +4,7 @@
     <!--profile fragment-->
     <string name="edit_profile">EDIT PROFILE</string>
     <string name="logout">LOGOUT</string>
+    <string name="deletedata">DELETE DATA</string>
     <string name="total_timetrained">TOTAL TIME TRAINED</string>
     <string name="total_daystrained">TOTAL DAYS TRAINED</string>
     <string name="last_trained">LAST DATE TRAINED</string>

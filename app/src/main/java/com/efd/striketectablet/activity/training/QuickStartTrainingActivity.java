@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.efd.striketectablet.DTO.PresetDTO;
 import com.efd.striketectablet.DTO.PunchDTO;
 import com.efd.striketectablet.DTO.PunchHistoryGraphDataDetails;
+import com.efd.striketectablet.DTO.TrainingPunchDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.customview.CurveChartView;
@@ -510,6 +511,37 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
                             currentTimeView.setText(PresetUtil.chagngeSecsToTime(currentTime));
                         }else {
                             currentTime--;
+//                            if (currentStatus == 1){
+//                                TrainingPunchDTO punchDTO = new TrainingPunchDTO();
+//                                if (currentTime % 5 == 0){
+//                                    punchDTO.setPunchtype("LEFT STRAIGHT");
+//                                    punchDTO.setSpeed(100);
+//                                    punchDTO.setForce(120);
+//                                    punchDTO.setPunchtime(0.5);
+//                                }else if (currentTime % 5 == 1){
+//                                    punchDTO.setPunchtype("RIGHT STRAIGHT");
+//                                    punchDTO.setSpeed(10);
+//                                    punchDTO.setForce(12);
+//                                    punchDTO.setPunchtime(0.4);
+//                                }else if (currentTime % 5 == 2){
+//                                    punchDTO.setPunchtype("LEFT JAB");
+//                                    punchDTO.setSpeed(1000);
+//                                    punchDTO.setForce(1200);
+//                                    punchDTO.setPunchtime(1d);
+//                                }else if (currentTime % 5 == 3){
+//                                    punchDTO.setPunchtype("RIGHT JAB");
+//                                    punchDTO.setSpeed(50);
+//                                    punchDTO.setForce(60);
+//                                    punchDTO.setPunchtime(0.5);
+//                                }else if (currentTime % 5 == 4){
+//                                    punchDTO.setPunchtype("LEFT UPPERCUT");
+//                                    punchDTO.setSpeed(200);
+//                                    punchDTO.setForce(520);
+//                                    punchDTO.setPunchtime(0.5);
+//                                }
+//
+//                                MainActivity.db.addPunchtoStats(punchDTO);
+//                            }
                             if (currentStatus == 1 && currentTime == Integer.parseInt(PresetUtil.warningList.get(presetDTO.getWarning()))){
                                 progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_warningbar));
                                 trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_warning));
@@ -563,6 +595,7 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mainActivityInstance.stopRoundTraining();
         stopProgressTimer();
     }
 

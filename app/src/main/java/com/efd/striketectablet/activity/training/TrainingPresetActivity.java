@@ -354,7 +354,7 @@ public class TrainingPresetActivity extends FragmentActivity {
         int resttime = Integer.parseInt(PresetUtil.timerwitSecsList.get(restPicker.getCurrentItem()));
         int preparetime = Integer.parseInt(PresetUtil.timerwitSecsList.get(currentPreparePosition));
 
-        String totalTime = PresetUtil.changeSecondsToHours(round * (roundtime + resttime + preparetime));
+        String totalTime = PresetUtil.changeSecondsToHours(round * (roundtime + resttime) + preparetime);
         totalTimeView.setText(totalTime);
     }
 
@@ -379,7 +379,6 @@ public class TrainingPresetActivity extends FragmentActivity {
         presetListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("Super", "item selected  position = " + position);
                 if (position == 0){
                     saveNewPreset();
                     dialog.dismiss();

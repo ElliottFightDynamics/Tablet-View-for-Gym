@@ -18,6 +18,8 @@ import com.efd.striketectablet.DTO.ProgressSummaryDTO;
 import com.efd.striketectablet.DTO.PunchCountSummaryDTO;
 import com.efd.striketectablet.DTO.ResultSummaryDTO;
 import com.efd.striketectablet.DTO.SyncResponseDTO;
+import com.efd.striketectablet.DTO.TrainingPunchDTO;
+import com.efd.striketectablet.DTO.TrainingStatsPunchTypeInfoDTO;
 import com.efd.striketectablet.util.StatisticUtil;
 import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
@@ -57,8 +59,6 @@ public class DBAdapter {
     // A string tag to display message in log file.
     private static final String TAG = "DBAdapter";
 
-    // A String DATABASE_NAME contains database EFD_TrainerApp_DB
-    private static final String DATABASE_NAME = EFDConstants.DATABASE_NAME;
 
     // *************training_data*******************
 
@@ -145,6 +145,10 @@ public class DBAdapter {
         return TRAINING_PUNCH_DATA_PEAK_SUMMARY_TABLE;
     }
 
+    // A String DATABASE_NAME contains database EFD_TrainerApp_DB
+    private static final String DATABASE_NAME = EFDConstants.DATABASE_NAME;
+
+
     // *************training_session*******************
 
     // A TRAINING_SESSION_TABLE initializing to training_session
@@ -229,6 +233,72 @@ public class DBAdapter {
     public static final String KEY_USER_ROLE_SYNC = "sync";
     public static final String KEY_USER_ROLE_SYNC_DATE = "sync_date";
     public static final String KEY_SERVER_USER_ROLE_ID = "server_id";
+
+    //super added 2 tables for training stats page
+
+    // ************** gym training_session *************
+    // A GYM TRAINING_DATA_TABLE initializing to gym training_data
+    private static final String GYM_TRAINING_SESSION_TABLE = "gym_training_session";
+
+    public static final String KEY_GYM_TRAINING_SESSION_ID = "id";
+    public static final String KEY_GYM_TRAINING_SESSION_TRAINING_SESSION_DATE = "gym_training_session_date";
+    public static final String KEY_GYM_TRAINING_SESSION_START_TIME = "start_time";
+    public static final String KEY_GYM_TRAINING_SESSION_END_TIME = "end_time";
+
+    public static String getGymTrainingSessionTable(){
+        return GYM_TRAINING_SESSION_TABLE;
+    }
+
+//     Query string for creating table GYM_TRAINING_SESSION_TABLE .
+    private static final String DATABASE_CREATE_GYM_TRAINING_SESSION = "create table "
+            + GYM_TRAINING_SESSION_TABLE
+            + " (id integer NOT NULL primary key autoincrement, "
+            + " gym_training_session_date text DEFAULT null, "
+            + " start_time integer default NULL, "
+            + " end_time integer default NULL); ";
+
+//    private static final String DATABASE_CREATE_GYM_TRAINING_SESSION = "create table "
+//            + GYM_TRAINING_SESSION_TABLE + " ( " + KEY_GYM_TRAINING_SESSION_ID + " integer NOT NULL primary key autoincrement, "
+//            + KEY_GYM_TRAINING_SESSION_TRAINING_SESSION_DATE + " text NOT NULL, "
+//            + KEY_GYM_TRAINING_SESSION_START_TIME + " integer DEFAULT NULL, "
+//            + KEY_GYM_TRAINING_SESSION_END_TIME + " integer DEFAULT NULL"
+//            + " );";
+
+    // **************gym training stats type infos ****************
+    // A GYM STAS DATA TABLE initializing
+    private static final String GYM_TRAINING_STATS_TABLE = "gym_training_stats";
+    public static final String KEY_GYM_TRAINING_STATS_ID = "id";
+    public static final String KEY_GYM_TRAINING_STATS_DATE = "punched_date";
+    public static final String KEY_GYM_TRAINING_STATS_PUNCH_TYPE = "punch_type";
+    public static final String KEY_GYM_TRAINING_STATS_AVG_SPEED = "avg_speed";
+    public static final String KEY_GYM_TRAINING_STATS_AVG_FORCE = "avg_force";
+    public static final String KEY_GYM_TRAINING_STATS_PUNCH_COUNT = "punch_count";
+    public static final String KEY_GYM_TRAINING_STATS_TOTAL_TIME = "total_time";
+
+    public static String getGymTrainingStatsTable(){
+        return GYM_TRAINING_STATS_TABLE;
+    }
+
+    // Query string for creating table GYM_TRAINING_STATS_TABLE .
+    private static final String DATABASE_CREATE_GYM_TRAINING_STATS = "create table "
+            + GYM_TRAINING_STATS_TABLE
+            + " (id integer NOT NULL primary key autoincrement, "
+            + " punch_type text DEFAULT NULL, "
+            + " punched_date text DEFAULT NULL, "
+            + " avg_speed double DEFAULT NULL, "
+            + " avg_force double DEFAULT NULL, "
+            + " punch_count integer(11) DEFAULT NULL, "
+            + " total_time double DEFAULT NULL);";
+
+//    private static final String DATABASE_CREATE_GYM_TRAINING_STATS = "create table "
+//            + GYM_TRAINING_STATS_TABLE
+//            + " (id integer NOT NULL primary key autoincrement, "
+//            + " punch_type text DEFAULT NULL, "
+//            + " punched_date text DEFAULT NULL, "
+//            + " avg_speed double DEFAULT NULL, "
+//            + " avg_force double DEFAULT NULL, "
+//            + " punch_count integer(11) DEFAULT NULL, "
+//            + " total_time double DEFAULT NULL;";
 
     // *************boxer_profile*******************
 
@@ -864,7 +934,9 @@ public class DBAdapter {
             db.execSQL(DATABASE_CREATE_USER_ACCESS);
             Log.d(TAG, "created table " + DATABASE_CREATE_USER_ACCESS);
 
-
+            //super added 2 create table
+            db.execSQL(DATABASE_CREATE_GYM_TRAINING_SESSION);
+            db.execSQL(DATABASE_CREATE_GYM_TRAINING_STATS);
         }
 
         /**
@@ -925,6 +997,10 @@ public class DBAdapter {
             db.execSQL("DROP TABLE IF EXISTS " + BOXER_PROFILE_TABLE);
 
             db.execSQL("DROP TABLE IF EXISTS " + USER_ACCESS_TABLE);
+
+            //super added 2 db create
+            db.execSQL("DROP TABLE IF EXISTS" + GYM_TRAINING_SESSION_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS" + GYM_TRAINING_STATS_TABLE);
 
             Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
                     + newVersion + ", which will destroy all old data");
@@ -1352,6 +1428,249 @@ public class DBAdapter {
                 values);
         return result;
     }
+
+    //super added this function for insert gym training session
+    /**
+     * Insert a gym training_session values into the database.
+     */
+    public long insertGymTrainingSession() {
+        DateFormat sessionDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        sessionDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        Date sessionDate = new Date();
+
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_GYM_TRAINING_SESSION_START_TIME, (int)(System.currentTimeMillis() / 1000));
+        values.put(KEY_GYM_TRAINING_SESSION_TRAINING_SESSION_DATE, sessionDateFormat.format(sessionDate));
+
+        long result = db.insert(GYM_TRAINING_SESSION_TABLE, null, values);
+        return result;
+    }
+
+    /**
+     * Checks for end_time null values in training_session & updates those with the last punch time if available else with the start_time.
+     *
+     * @return No. of rows updated
+     */
+    public int endAllPreviousGymTrainingSessions() {
+
+        // Select All Query
+        String sqlQuery = "SELECT * FROM " + GYM_TRAINING_SESSION_TABLE + " WHERE TRIM(" + KEY_GYM_TRAINING_SESSION_END_TIME + ")='' OR " + KEY_GYM_TRAINING_SESSION_END_TIME + " IS NULL;";
+
+        Cursor cursor = db.rawQuery(sqlQuery, null);
+
+        int updateResult = 0;
+
+        try {
+            int count = cursor.getCount();
+            if (count > 0) {
+                cursor.moveToFirst();
+            }
+            // Maintain list of elements for which end time is 0 or null
+            String startTime, endTime;
+            Cursor endTimeCursor;
+            ContentValues values;
+
+            for (int i = 0; i < count; i++) {
+                int id = cursor.getInt(0);
+
+                values = new ContentValues();
+                values.put(KEY_GYM_TRAINING_SESSION_END_TIME, (int)(System.currentTimeMillis() / 1000));
+                updateResult += db.update(GYM_TRAINING_SESSION_TABLE, values, KEY_GYM_TRAINING_SESSION_ID + " = " + id, null);
+                cursor.moveToNext();
+            }
+
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return updateResult;
+    }
+
+    public void deleteGymTrainingSession(){
+        String selectQuery = "SELECT * FROM " + GYM_TRAINING_SESSION_TABLE;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try {
+            int count = cursor.getCount();
+
+            if (count > 0) {
+                cursor.moveToFirst();
+            }
+
+            for (int i = 0; i < count; i++) {
+                db.delete(GYM_TRAINING_SESSION_TABLE, KEY_GYM_TRAINING_SESSION_ID + "=?" , new String[]{String.valueOf(cursor.getInt(cursor.getColumnIndex(KEY_GYM_TRAINING_STATS_ID)))});
+                cursor.moveToNext();
+            }
+
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+    }
+
+    public int getTodayTotalTime(){
+        int totaltime = 0;
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String formatteddate = simpleDateFormat.format(new Date());
+
+        String selectQuery = "SELECT * FROM " + GYM_TRAINING_SESSION_TABLE + " WHERE " + KEY_GYM_TRAINING_SESSION_TRAINING_SESSION_DATE + "='" + formatteddate + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try {
+            int count = cursor.getCount();
+
+            if (count > 0) {
+                cursor.moveToFirst();
+            }
+
+            for (int i = 0; i < count; i++) {
+                int startTime = cursor.getInt(cursor.getColumnIndex(KEY_GYM_TRAINING_SESSION_START_TIME));
+                int endTime = cursor.getInt(cursor.getColumnIndex(KEY_GYM_TRAINING_SESSION_END_TIME));
+
+                int duration = endTime - startTime;
+
+                totaltime += duration;
+
+                cursor.moveToNext();
+            }
+
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return totaltime;
+    }
+
+    //super added this function for insert training stats table when get punch info from sensor
+    public void addPunchtoStats(TrainingPunchDTO punchDTO){
+
+        DateFormat sessionDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        sessionDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + GYM_TRAINING_STATS_TABLE + " WHERE TRIM(" + KEY_GYM_TRAINING_STATS_PUNCH_TYPE + ")='"  + punchDTO.getPunchtype() +
+                "' AND " + KEY_GYM_TRAINING_STATS_DATE + "='" + sessionDateFormat.format(new Date()) + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+
+                updateGymTrainingStats(punchDTO, cursor);
+            } else
+                insertGymTrainingStats(punchDTO);
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+    }
+    public long insertGymTrainingStats(TrainingPunchDTO punchDTO) {
+        DateFormat sessionDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        sessionDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_GYM_TRAINING_STATS_PUNCH_TYPE, punchDTO.getPunchtype());
+        values.put(KEY_GYM_TRAINING_STATS_AVG_SPEED, punchDTO.getSpeed());
+        values.put(KEY_GYM_TRAINING_STATS_AVG_FORCE, punchDTO.getForce());
+        values.put(KEY_GYM_TRAINING_STATS_DATE, sessionDateFormat.format(new Date()));
+        values.put(KEY_GYM_TRAINING_STATS_PUNCH_COUNT, 1);
+        values.put(KEY_GYM_TRAINING_STATS_TOTAL_TIME, punchDTO.getPunchtime());
+
+        long result = db.insert(GYM_TRAINING_STATS_TABLE, null, values);
+        return result;
+    }
+
+    public void updateGymTrainingStats(TrainingPunchDTO punchDTO, Cursor cursor){
+        double avgspeed = cursor.getDouble(cursor.getColumnIndex(KEY_GYM_TRAINING_STATS_AVG_SPEED));
+        double avgforce = cursor.getDouble(cursor.getColumnIndex(KEY_GYM_TRAINING_STATS_AVG_FORCE));
+        double totaltime = cursor.getDouble(cursor.getColumnIndex(KEY_GYM_TRAINING_STATS_TOTAL_TIME));
+        int punchcount = cursor.getInt(cursor.getColumnIndex(KEY_GYM_TRAINING_STATS_PUNCH_COUNT));
+
+        avgspeed = ((avgspeed * punchcount) + punchDTO.getSpeed()) / (punchcount + 1);
+        avgforce = ((avgforce * punchcount) + punchDTO.getForce()) / (punchcount + 1);
+        totaltime = totaltime + punchDTO.getPunchtime();
+        punchcount = punchcount + 1;
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_GYM_TRAINING_STATS_AVG_SPEED, avgspeed);
+        values.put(KEY_GYM_TRAINING_STATS_AVG_FORCE, avgforce);
+        values.put(KEY_GYM_TRAINING_STATS_PUNCH_COUNT, punchcount);
+        values.put(KEY_GYM_TRAINING_STATS_TOTAL_TIME, totaltime);
+
+        db.update(GYM_TRAINING_STATS_TABLE, values, KEY_GYM_TRAINING_STATS_ID + " = " + cursor.getInt(cursor.getColumnIndex(KEY_GYM_TRAINING_STATS_ID)), null);
+    }
+
+    public void deleteGymTrainingStats(){
+        String selectQuery = "SELECT * FROM " + GYM_TRAINING_STATS_TABLE;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try {
+            int count = cursor.getCount();
+
+            if (count > 0) {
+                cursor.moveToFirst();
+            }
+
+            for (int i = 0; i < count; i++) {
+                db.delete(GYM_TRAINING_STATS_TABLE, KEY_GYM_TRAINING_STATS_ID + "=?", new String[]{String.valueOf(cursor.getInt(cursor.getColumnIndex(KEY_GYM_TRAINING_STATS_ID)))});
+                cursor.moveToNext();
+            }
+
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+    }
+
+
+    public ArrayList<TrainingStatsPunchTypeInfoDTO> getTrainingStats(){
+
+        DateFormat sessionDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        sessionDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        ArrayList<TrainingStatsPunchTypeInfoDTO> punchTypeInfoDTOs = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + GYM_TRAINING_STATS_TABLE + " WHERE " + KEY_GYM_TRAINING_STATS_DATE + "='" + sessionDateFormat.format(new Date()) + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try {
+            int count = cursor.getCount();
+            if (count > 0) {
+                cursor.moveToFirst();
+            }
+            // Maintain list of elements for which end time is 0 or null
+
+            for (int i = 0; i < count; i++) {
+                TrainingStatsPunchTypeInfoDTO punchTypeInfoDTO = new TrainingStatsPunchTypeInfoDTO();
+                punchTypeInfoDTO.punchtype = (cursor.getString(cursor.getColumnIndex(KEY_GYM_TRAINING_STATS_PUNCH_TYPE)));
+                punchTypeInfoDTO.avgspeed = (cursor.getDouble(cursor.getColumnIndex(KEY_GYM_TRAINING_STATS_AVG_SPEED)));
+                punchTypeInfoDTO.avgforce = (cursor.getDouble(cursor.getColumnIndex(KEY_GYM_TRAINING_STATS_AVG_FORCE)));
+                punchTypeInfoDTO.totaltime = (cursor.getDouble(cursor.getColumnIndex(KEY_GYM_TRAINING_STATS_TOTAL_TIME)));
+                punchTypeInfoDTO.punchcount = (cursor.getInt(cursor.getColumnIndex(KEY_GYM_TRAINING_STATS_PUNCH_COUNT)));
+
+                punchTypeInfoDTOs.add(punchTypeInfoDTO);
+
+                cursor.moveToNext();
+            }
+
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return punchTypeInfoDTOs;
+    }
+
 
     /**
      * Insert a training_session values into the database.

@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.efd.striketectablet.R;
@@ -40,6 +42,8 @@ public class ProfileFragment extends Fragment  {
     private CustomEditText leftIDView, rightIDView;
 
     CustomSpinnerAdapter weightAdpater, heightAdapter, gloveAdapter, reachAdapter;
+
+    RelativeLayout deleteBtn;
 
 
     private String leftDeviceAddress, rightDeviceAddress;
@@ -87,6 +91,14 @@ public class ProfileFragment extends Fragment  {
             @Override
             public void onClick(View v) {
                 showConnectSensorDialog();
+            }
+        });
+
+        deleteBtn = (RelativeLayout)view.findViewById(R.id.deletedatabtn);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivityInstance.deleteGymTrainingData();
             }
         });
 

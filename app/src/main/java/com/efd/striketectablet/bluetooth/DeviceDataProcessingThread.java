@@ -13,6 +13,7 @@ import com.efd.punch.PunchVFAData;
 import com.efd.punch.SensorBuffer;
 import com.efd.punch.SensorDataPackage;
 import com.efd.punch.SensorDataSample;
+import com.efd.striketectablet.DTO.TrainingPunchDTO;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.bluetooth.readerBean.PunchDetectedMap;
 import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionConfig;
@@ -987,6 +988,8 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
             savePunchData(punchVFAData, trainingId);
             saveMatchDataDetails(punchVFAData, sensorData, trainingId);
             savePunchPeakSummary(punchVFAData, punchDetails.getPeakPunchValueDetector(), trainingId);
+
+            MainActivity.db.addPunchtoStats(new TrainingPunchDTO(punchVFAData.getPunchType(), Math.round(punchVFAData.getVelocity()), Math.round(punchVFAData.getForce()), 0.33));
         }
 
         sendMatchData(punchVFAData);

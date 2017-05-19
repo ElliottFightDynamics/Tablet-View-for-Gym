@@ -68,6 +68,7 @@ public class PunchesRankAdapter extends ArrayAdapter<PunchesRankDTO> {
             viewHolder.speedView = (CustomTextView)convertView.findViewById(R.id.avg_speed);
             viewHolder.forceView = (CustomTextView)convertView.findViewById(R.id.avg_force);
             viewHolder.punchcountView = (CustomTextView)convertView.findViewById(R.id.punch_count);
+            viewHolder.punchEffectView = (CustomTextView)convertView.findViewById(R.id.punch_effective);
 
             convertView.setTag(viewHolder);
         }else {
@@ -84,9 +85,10 @@ public class PunchesRankAdapter extends ArrayAdapter<PunchesRankDTO> {
         PunchesRankDTO rankDTO = getItem(position);
         viewHolder.numView.setText((position + 1) + ".");
         viewHolder.punchtypeView.setText(rankDTO.punchtype);
-        viewHolder.speedView.setText(rankDTO.avg_speed + "MPH");
-        viewHolder.forceView.setText(rankDTO.avg_force + "LBS");
-        viewHolder.punchcountView.setText(rankDTO.punch_count + "HITS");
+        viewHolder.speedView.setText((int)rankDTO.avg_speed + " MPH");
+        viewHolder.forceView.setText((int)rankDTO.avg_force + " LBS");
+        viewHolder.punchcountView.setText(rankDTO.punch_count + " PUNCHES");
+        viewHolder.punchEffectView.setText(rankDTO.punch_percent + " %");
 
         return convertView;
     }
@@ -94,6 +96,6 @@ public class PunchesRankAdapter extends ArrayAdapter<PunchesRankDTO> {
     public static class ViewHolder {
 
         public LinearLayout parentView;
-        public CustomTextView numView, punchtypeView, speedView, forceView, punchcountView;
+        public CustomTextView numView, punchtypeView, speedView, forceView, punchcountView, punchEffectView;
     }
 }

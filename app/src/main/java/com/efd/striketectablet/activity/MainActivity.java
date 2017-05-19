@@ -181,6 +181,8 @@ public class MainActivity extends AppCompatActivity {
         punchHistoryGraph = new LinkedList<PunchHistoryGraphDataDetails>();
 
         db = DBAdapter.getInstance(MainActivity.this);
+        db.deleteGymTrainingSession();
+        db.deleteGymTrainingStats();
 
         isSynchronizingWithServer = false;
         deleteCalendarSummaryBeforeTwoYears();
@@ -220,6 +222,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         instance = this;
+    }
+
+    public void deleteGymTrainingData(){
+        MainActivity.db.deleteGymTrainingSession();
+        MainActivity.db.deleteGymTrainingStats();
     }
 
     private void setDeviceHandlers() {
@@ -787,6 +794,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 JSONObject result = null;
                 result = MainActivity.db.trainingSessionSave(Integer.parseInt(userId), EFDConstants.TRAINING_TYPE_BOXER);
+                MainActivity.db.insertGymTrainingSession();
                 boxerName = "WES";
                 boxerStance = EFDConstants.TRADITIONAL;//checkboxerDetails.get("boxerName");
                 json = new JSONObject(result.toString());
@@ -866,6 +874,7 @@ public class MainActivity extends AppCompatActivity {
             punchDataDTO.resetValues(0);
 
             endTrainingTime = EFDConstants.DEFAULT_START_TIME;
+            MainActivity.db.endAllPreviousGymTrainingSessions();
         }
     }
 

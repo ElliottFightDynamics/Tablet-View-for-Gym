@@ -64,27 +64,7 @@ public class PresetUtil {
         int min = (secs % 3600) / 60;
         int sec = secs % 60;
 
-        String hourstr, minstr, secstr;
-
-        if (sec < 10){
-            secstr = "0" + sec;
-        }else {
-            secstr = String.valueOf(sec);
-        }
-
-        if (min < 10){
-            minstr = "0" + min;
-        }else {
-            minstr = String.valueOf(min);
-        }
-
-        if (hour < 10){
-            hourstr = "0" + hour;
-        }else {
-            hourstr = String.valueOf(hour);
-        }
-
-        return hourstr + ":" + minstr + ":" + secstr;
+        return String.format("%02d", hour) + ":" + String.format("%02d", min) + ":" + String.format("%02d", sec);
     }
 
     //change secs to *:** format time
