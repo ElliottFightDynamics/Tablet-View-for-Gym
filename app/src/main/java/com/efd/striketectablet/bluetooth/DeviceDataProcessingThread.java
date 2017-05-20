@@ -92,6 +92,14 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
         }
     }
 
+    /*super added, update training info when round stats*/
+    public void updateTrainingInfo(String boxerName, String hand, String stance, Integer trainingId){
+        this.boxerName = boxerName;
+        this.hand = hand;
+        this.stance = stance;
+        this.trainingId = trainingId;
+    }
+
     @Override
     public void run() {
         try {
@@ -966,6 +974,15 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
 
     @Override
     public void punchOccurred(PunchDetails punchDetails) {
+
+        /**** super added this code ****
+         * this thread is alive evenif training is finished, so send data only when round starts**/
+        if (!mainActivityInstance.trainingManager.isTrainingRunning()) {
+            return;
+        }
+
+        /************************************/
+
         Log.d("~", "punchOccurred callback!");
         Log.d("~", "punchDetails: " + punchDetails.toString());
 
@@ -983,12 +1000,10 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
         sensorData.setMsgTime(sensorDataSample.getMsgTime());
         sensorData.setTemperature((short)sensorDataSample.getTemperature());
 
-
         if (!mainActivityInstance.isGuestBoxerActive()) {
             savePunchData(punchVFAData, trainingId);
             saveMatchDataDetails(punchVFAData, sensorData, trainingId);
             savePunchPeakSummary(punchVFAData, punchDetails.getPeakPunchValueDetector(), trainingId);
-
         }
 
         sendMatchData(punchVFAData);

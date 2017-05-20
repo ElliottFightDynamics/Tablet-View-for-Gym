@@ -32,6 +32,9 @@
     <string name="today_punches">PUNCHES</string>
     <string name="today_time">TIME</string>
     <string name="fatigue">FATIGUE</string>
+    <string name="activity_time">ACTIVITY TIME</string>
+    <string name="active_time">TOTAL ACTIVE TIME</string>
+    <string name="inactive_time">TOTAL INACTIVE TIME</string>
     <string name="punch_rank">PUNCH RANK</string>
     <string name="common_stats">COMMON STATS</string>
 

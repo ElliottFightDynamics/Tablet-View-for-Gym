@@ -96,17 +96,24 @@ public class ConnectionManager {
 
         // Cool, we are connected, so let's get rid of the connection thread
 
-        /*super commented this, connectionthread is not null until app is closed
+        /*super commented this, connectionthread should not be null until app is closed because sensor connection has to kept
         if (connectionThread != null) {
             connectionThread = null;
         }
         */
 
-        // Dispose of currently running thread for reading data
+        /* super commented this, app will create readerthread only when first training after app starts,
+        for next training app will update only training info like boxer name, boxer id, training id, ...
+         */
+//         Dispose of currently running thread for reading data
 //        disposeReaderThread();
 
-        readerThread = new ReaderThread(bluetoothSocket, uiHandler, this);
-        readerThread.start();
+        if (readerThread == null) {
+            readerThread = new ReaderThread(bluetoothSocket, uiHandler, this);
+            readerThread.start();
+        }else {
+            readerThread.updateTrainingInfo();
+        }
     }
 
     /**
@@ -115,10 +122,6 @@ public class ConnectionManager {
     public synchronized void disconnect() {
         Log.i(TAG, "Closing connections");
         disposeConnectionThread();
-        disposeReaderThread();
-    }
-
-    public void cancelReaderThread(){
         disposeReaderThread();
     }
 

@@ -194,7 +194,7 @@ public class TrainingStatsFragment extends Fragment{
         int inactiveAngle = 360 - activeAngle;
 
         activePercentView.setText(activePercent + "%");
-        inactivePercentView.setText(inactivePercent + "");
+        inactivePercentView.setText(inactivePercent + "%");
 
         updateCirlceView(true, activeAngle, inactiveAngle);
 

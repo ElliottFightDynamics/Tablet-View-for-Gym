@@ -902,13 +902,7 @@ public class MainActivity extends AppCompatActivity {
             trainingManager.stopTraining();
             stopTrainingTimer();
             stopTraining();
-            if (leftDeviceConnectionManager != null){
-                leftDeviceConnectionManager.cancelReaderThread();
-            }
 
-            if (rightDeviceConnectionManager != null){
-                rightDeviceConnectionManager.cancelReaderThread();
-            }
             trainingSessionId = null;
             punchHistoryGraph.clear();
 //            liveMonitorDataMap.clear();
@@ -952,13 +946,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String sensor = params[0];
-            if (TextUtils.isEmpty(sensor)){
+
+            if (sensor.equalsIgnoreCase("left")) {
                 startDeviceConnection(true);
+            }else if (sensor.equalsIgnoreCase("right")){
                 startDeviceConnection(false);
-            }else if (sensor.equals("left"))
-                startDeviceConnection(true);
-            else
+            }else {
+//                startDeviceConnection(true);
                 startDeviceConnection(false);
+            }
             return "Done!";
         }
 

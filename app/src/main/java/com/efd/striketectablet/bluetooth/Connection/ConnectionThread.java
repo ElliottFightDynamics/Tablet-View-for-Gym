@@ -133,7 +133,7 @@ public class ConnectionThread extends Thread {
      * Closes the connection made.
      */
     public void cancel() {
-        Log.d(TAG, "Closing connection");
+        Log.d(TAG, "connection thread Closing connection");
 
         try {
             bluetoothSocket.close();

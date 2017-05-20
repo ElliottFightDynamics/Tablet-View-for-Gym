@@ -96,13 +96,24 @@ public class ReaderThread extends Thread {
         dataProcessingThread = new Thread(this.deviceDataProcessingThread);
     }
 
+    /*super added, update training info when round stats*/
+    public void updateTrainingInfo(){
+        this.boxerName = bluetoothConnectionManager.getBoxerName();
+        this.boxerStance = bluetoothConnectionManager.getBoxerStance();
+        this.hand = bluetoothConnectionManager.getBoxerHand();
+        this.trainingDataId = bluetoothConnectionManager.getTrainingDataId();
+
+        deviceDataProcessingThread.updateTrainingInfo(boxerName, hand, boxerStance,  trainingDataId);
+
+    }
+
     /**
      * Method to run on its own thread for reading from the bluetooth device.
      */
     @Override
     public void run() {
 
-        Log.d(TAG, "BEGIN ReaderThread");
+        Log.d(TAG, "BEGIN ReaderThread " + trainingDataId);
 
         // Initiate data streaming from bluetooth device
         try {
@@ -129,7 +140,7 @@ public class ReaderThread extends Thread {
                 }
 
             } catch (Exception e) {
-                /* super commented this, don't disconnect device until app is closed
+//                 super commented this, don't disconnect device until app is closed
                 Log.e(TAG, "Failed to read data from device:-" + e);
                 Message msg = uiHandler.obtainMessage(MainActivity.MESSAGE_TOAST);
                 Bundle bundle = new Bundle();
@@ -138,7 +149,7 @@ public class ReaderThread extends Thread {
                 msg.setData(bundle);
                 uiHandler.sendMessage(msg);
                 bluetoothConnectionManager.disconnect();
-                */
+
                 break;
             }
         }
@@ -202,18 +213,19 @@ public class ReaderThread extends Thread {
     /**
      * Close the connection to the bluetooth device.
      */
+
     public void cancel() {
         Log.d(TAG, "Closing connection");
-        dataProcessingThread.stop();
-        close();
+
+//        close();
 
         //super comment
-//        try {
-//            close();
-//            connectionSocket.close();
-//        } catch (IOException e) {
-//            Log.e(TAG, "close() of connect socket failed", e);
-//        }
+        try {
+            close();
+            connectionSocket.close();
+        } catch (IOException e) {
+            Log.e(TAG, "close() of connect socket failed", e);
+        }
     }
 
     public void close() {
