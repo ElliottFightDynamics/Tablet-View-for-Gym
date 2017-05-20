@@ -153,7 +153,7 @@ public class TrainingStatsFragment extends Fragment{
         activeTimeView.setText("00:00:00");
         inactiveTimeView.setText("00:00:00");
         activePercentView.setText("0%");
-        inactivePercentView.setText("0");
+        inactivePercentView.setText("0%");
         updateCirlceView(true, 0, 0);
 
         initData();
