@@ -129,6 +129,7 @@ public class ReaderThread extends Thread {
                 }
 
             } catch (Exception e) {
+                /* super commented this, don't disconnect device until app is closed
                 Log.e(TAG, "Failed to read data from device:-" + e);
                 Message msg = uiHandler.obtainMessage(MainActivity.MESSAGE_TOAST);
                 Bundle bundle = new Bundle();
@@ -137,6 +138,7 @@ public class ReaderThread extends Thread {
                 msg.setData(bundle);
                 uiHandler.sendMessage(msg);
                 bluetoothConnectionManager.disconnect();
+                */
                 break;
             }
         }
@@ -202,13 +204,16 @@ public class ReaderThread extends Thread {
      */
     public void cancel() {
         Log.d(TAG, "Closing connection");
+        dataProcessingThread.stop();
+        close();
 
-        try {
-            close();
-            connectionSocket.close();
-        } catch (IOException e) {
-            Log.e(TAG, "close() of connect socket failed", e);
-        }
+        //super comment
+//        try {
+//            close();
+//            connectionSocket.close();
+//        } catch (IOException e) {
+//            Log.e(TAG, "close() of connect socket failed", e);
+//        }
     }
 
     public void close() {

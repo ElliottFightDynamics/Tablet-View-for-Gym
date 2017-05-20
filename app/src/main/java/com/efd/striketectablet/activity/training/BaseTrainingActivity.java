@@ -33,7 +33,6 @@ public class BaseTrainingActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(TrainingConnectStatusDTO connectStatusDTO) {
-        Log.e("Super", "3333333333 = " + connectStatusDTO.getResetConnectStatus());
         if (connectStatusDTO.getUpdateConnectStatus()){
             setDeviceConnectionState();
         }else {

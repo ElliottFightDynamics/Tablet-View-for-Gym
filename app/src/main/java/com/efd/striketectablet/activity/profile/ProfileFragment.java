@@ -3,6 +3,7 @@ package com.efd.striketectablet.activity.profile;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -173,6 +174,7 @@ public class ProfileFragment extends Fragment  {
 
                 setBoxerIds();
 
+                connectSensors();
                 dialog.dismiss();
             }
         });
@@ -184,6 +186,28 @@ public class ProfileFragment extends Fragment  {
         if (!mainActivityInstance.isGuestBoxerActive()) {
             mainActivityInstance.deviceLeft = leftIDView.getText().toString().trim();
             mainActivityInstance.deviceRight = rightIDView.getText().toString().trim();
+        }
+    }
+
+    private void connectSensors(){
+        if (mainActivityInstance.deviceLeft.equals(EFDConstants.BLANK_TEXT) && mainActivityInstance.deviceRight.equals(EFDConstants.BLANK_TEXT)) {
+            Toast.makeText(getActivity(), EFDConstants.DEVICE_ID_MUST_NOT_BE_BLANK, Toast.LENGTH_SHORT).show();
+        } else if (mainActivityInstance.deviceLeft.equalsIgnoreCase(mainActivityInstance.deviceRight)) {
+            Toast.makeText(getActivity(), EFDConstants.DEVICE_ID_MUST_NOT_BE_SAME, Toast.LENGTH_SHORT).show();
+        } else {
+            if (!mainActivityInstance.trainingManager.isTrainingRunning()) {
+                if ((mainActivityInstance.deviceLeft != null || mainActivityInstance.deviceRight != null)
+                        && (!mainActivityInstance.deviceLeft.equals(EFDConstants.BLANK_TEXT) || !mainActivityInstance.deviceRight.equals(EFDConstants.BLANK_TEXT))) {
+                    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                    if (!mBluetoothAdapter.isEnabled()) {
+                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        startActivityForResult(enableBtIntent, MainActivity.REQUEST_ENABLE_BT);
+                    }
+                    mainActivityInstance.new ShowLoaderTask(mainActivityInstance).execute("Connecting With Device...");
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), EFDConstants.DEVICE_ID_BLANK, Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
 

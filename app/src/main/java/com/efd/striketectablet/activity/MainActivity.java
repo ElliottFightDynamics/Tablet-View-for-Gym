@@ -61,6 +61,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -636,13 +637,18 @@ public class MainActivity extends AppCompatActivity {
 
                         isDeviceRightConnectionFinish = true;
                         checkDeviceConnectionFlag++;
+                        rightHandConnectionThread = null;
+                        rightSensorConnected = false;
                         initiateTraining();
+
                     } else if (msg.getData().getString("DeviceAddress").equals(CommonUtils.getMacAddress(deviceLeft))) {
 
                         EventBus.getDefault().post(new TrainingBatteryLayoutDTO(true, true));
 
                         isDeviceLeftConnectionFinish = true;
                         checkDeviceConnectionFlag++;
+                        leftHandConnectionThread = null;
+                        leftSensorConnected = false;
                         initiateTraining();
                     }
 
@@ -657,8 +663,10 @@ public class MainActivity extends AppCompatActivity {
 
                     if (msg.getData().getString("HAND").toString().equals("left")) {
                         leftHandBatteryVoltage = "";
+                        leftSensorConnected = false;
                     } else {
                         rightHandBatteryVoltage = "";
+                        rightSensorConnected = false;
                     }
 
                     EventBus.getDefault().post(new TrainingBatteryVoltageDTO(true, msg.getData().getString("HAND").toString(), ""));
@@ -744,9 +752,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void startDeviceConnection(boolean isLeft) {
         if (!isLeft)
-            MainActivity.rightDeviceConnectionManager.connect(CommonUtils.getMacAddress(deviceRight));
+            rightDeviceConnectionManager.connect(CommonUtils.getMacAddress(deviceRight));
         else
-            MainActivity.leftDeviceConnectionManager.connect(CommonUtils.getMacAddress(deviceLeft));
+            leftDeviceConnectionManager.connect(CommonUtils.getMacAddress(deviceLeft));
     }
 
     String boxerName = null, boxerStance = null;
@@ -893,10 +901,18 @@ public class MainActivity extends AppCompatActivity {
         if (trainingManager.isTrainingRunning()) {
             trainingManager.stopTraining();
             stopTrainingTimer();
+            stopTraining();
+            if (leftDeviceConnectionManager != null){
+                leftDeviceConnectionManager.cancelReaderThread();
+            }
+
+            if (rightDeviceConnectionManager != null){
+                rightDeviceConnectionManager.cancelReaderThread();
+            }
             trainingSessionId = null;
             punchHistoryGraph.clear();
-            liveMonitorDataMap.clear();
-            punchDataDTO.resetValues(0);
+//            liveMonitorDataMap.clear();
+//            punchDataDTO.resetValues(0);
 
             endTrainingTime = EFDConstants.DEFAULT_START_TIME;
             MainActivity.db.endAllPreviousGymTrainingSessions();
@@ -936,7 +952,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String sensor = params[0];
-            if (sensor.equals("left"))
+            if (TextUtils.isEmpty(sensor)){
+                startDeviceConnection(true);
+                startDeviceConnection(false);
+            }else if (sensor.equals("left"))
                 startDeviceConnection(true);
             else
                 startDeviceConnection(false);

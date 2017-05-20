@@ -344,7 +344,7 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
     private void startTraining(){
 
-        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.leftSensorConnected){
+        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
             StatisticUtil.showToastMessage("Please connect with sensors");
             return;
         }
@@ -567,31 +567,6 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         };
     }
 
-    public void endTrainingSession(String result) {
-
-        JSONObject json;
-        try {
-            json = new JSONObject(result);
-            if (json.getString("success").equals("true")) {
-                MainActivity.leftDeviceConnectionManager.disconnect();
-                MainActivity.rightDeviceConnectionManager.disconnect();
-                // stop training timer
-                mainActivityInstance.endTrainingTime = MainActivity.stopTrainingTimer();
-                resetConnectDeviceBg("right");
-                resetConnectDeviceBg("left");
-                MainActivity.leftHandBatteryVoltage = "";
-                MainActivity.rightHandBatteryVoltage = "";
-                mainActivityInstance.trainingSessionId = null;
-            } else {
-                Log.e("BagTrainingFragment ", "Error in calling web service");
-            }
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -689,12 +664,14 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
     @Override
     public void setDeviceConnectionState() {
-        if (mainActivityInstance.leftDeviceConnectionManager != null && mainActivityInstance.leftDeviceConnectionManager.readerThread != null) {
+//        if (mainActivityInstance.leftDeviceConnectionManager != null && mainActivityInstance.leftDeviceConnectionManager.readerThread != null) {
+        if (mainActivityInstance.leftSensorConnected) {
             leftSensorConnectionButton.setImageResource(R.drawable.green_btn);
             leftSensorConnectionLayout.setEnabled(false);
         }
 
-        if (mainActivityInstance.rightDeviceConnectionManager != null && mainActivityInstance.rightDeviceConnectionManager.readerThread != null) {
+//        if (mainActivityInstance.rightDeviceConnectionManager != null && mainActivityInstance.rightDeviceConnectionManager.readerThread != null) {
+        if (mainActivityInstance.rightSensorConnected) {
             rightSensorConnectionButton.setImageResource(R.drawable.green_btn);
             rightSensorConnectionLayout.setEnabled(false);
         }

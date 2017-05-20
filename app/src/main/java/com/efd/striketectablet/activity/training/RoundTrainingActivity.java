@@ -297,10 +297,10 @@ public class RoundTrainingActivity extends BaseTrainingActivity {
     }
 
     private void startTraining(){
-//        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.leftSensorConnected){
-//            StatisticUtil.showToastMessage("Please connect with sensors");
-//            return;
-//        }
+        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
+            StatisticUtil.showToastMessage("Please connect with sensors");
+            return;
+        }
 
         startTrainingBtn.setText(getResources().getString(R.string.stop_training));
 
@@ -542,12 +542,14 @@ public class RoundTrainingActivity extends BaseTrainingActivity {
     @Override
     public void setDeviceConnectionState() {
         super.setDeviceConnectionState();
-        if (mainActivityInstance.leftDeviceConnectionManager != null && mainActivityInstance.leftDeviceConnectionManager.readerThread != null) {
+//        if (mainActivityInstance.leftDeviceConnectionManager != null && mainActivityInstance.leftDeviceConnectionManager.readerThread != null) {
+        if (mainActivityInstance.leftSensorConnected) {
             leftSensorConnectionButton.setImageResource(R.drawable.green_btn);
             leftSensorConnectionLayout.setEnabled(false);
         }
 
-        if (mainActivityInstance.rightDeviceConnectionManager != null && mainActivityInstance.rightDeviceConnectionManager.readerThread != null) {
+//        if (mainActivityInstance.rightDeviceConnectionManager != null && mainActivityInstance.rightDeviceConnectionManager.readerThread != null) {
+        if (mainActivityInstance.rightSensorConnected) {
             rightSensorConnectionButton.setImageResource(R.drawable.green_btn);
             rightSensorConnectionLayout.setEnabled(false);
         }

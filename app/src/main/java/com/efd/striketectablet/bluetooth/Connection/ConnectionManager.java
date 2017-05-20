@@ -95,12 +95,15 @@ public class ConnectionManager {
         Log.d(TAG, "Connected to socket");
 
         // Cool, we are connected, so let's get rid of the connection thread
+
+        /*super commented this, connectionthread is not null until app is closed
         if (connectionThread != null) {
             connectionThread = null;
         }
+        */
 
         // Dispose of currently running thread for reading data
-        disposeReaderThread();
+//        disposeReaderThread();
 
         readerThread = new ReaderThread(bluetoothSocket, uiHandler, this);
         readerThread.start();
@@ -112,6 +115,10 @@ public class ConnectionManager {
     public synchronized void disconnect() {
         Log.i(TAG, "Closing connections");
         disposeConnectionThread();
+        disposeReaderThread();
+    }
+
+    public void cancelReaderThread(){
         disposeReaderThread();
     }
 
