@@ -1,4 +1,4 @@
-package com.efd.striketectablet.activity.training;
+package com.efd.striketectablet.activity.training.round;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
@@ -23,6 +23,7 @@ import com.efd.striketectablet.DTO.PunchDTO;
 import com.efd.striketectablet.DTO.PunchHistoryGraphDataDetails;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
+import com.efd.striketectablet.activity.training.BaseTrainingActivity;
 import com.efd.striketectablet.customview.CustomButton;
 import com.efd.striketectablet.customview.CustomTextView;
 import com.efd.striketectablet.customview.CustomTextViewFontEfDigit;

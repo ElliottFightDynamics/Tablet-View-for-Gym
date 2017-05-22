@@ -1,19 +1,20 @@
 package com.efd.striketectablet.activity.training;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PixelFormat;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -23,6 +24,9 @@ import android.widget.TextView;
 
 import com.efd.striketectablet.DTO.PresetDTO;
 import com.efd.striketectablet.R;
+import com.efd.striketectablet.activity.MainActivity;
+import com.efd.striketectablet.activity.training.quickstart.QuickStartTrainingActivity;
+import com.efd.striketectablet.activity.training.round.RoundTrainingActivity;
 import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
 import com.efd.striketectablet.adapter.PresetListAdapter;
 import com.efd.striketectablet.customview.CustomButton;
@@ -37,23 +41,21 @@ import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 
-public class TrainingPresetActivity extends FragmentActivity {
+public class TrainingPresetFragment extends Fragment {
 
-    private WheelView roundsPicker, roundPicker, restPicker;//, preparePicker, warningPicker;
-    ArrayWheelAdapter roundsAdapter, roundAdapter, restAdapter;//, prepareAdapter, warningAdapter;
-//    Spinner prepareSpinner, warningSpinner, genderSpinner, gloveTypeSpinner, weightSpinner;
-//    SpinnerAdapter prepareAdapter, warningAdapter, genderAdapter, gloveAdapter, weightAdpater;
+    private WheelView roundsPicker, roundPicker, restPicker;
+    ArrayWheelAdapter roundsAdapter, roundAdapter, restAdapter;
 
     Spinner   genderSpinner, gloveTypeSpinner, weightSpinner, heightSpinner;
     SpinnerAdapter genderAdapter, gloveAdapter, weightAdpater, heightAdapter;
 
-    TextView presetNameView, totalTimeView, prepareTimeView, warningTimeView, titleView;
+    TextView presetNameView, totalTimeView, prepareTimeView, warningTimeView ;
     RelativeLayout presetParent;
     LinearLayout prepareParent, warningParent;
 
     CustomButton startTrainingBtn;
 
-    ImageView backBtn;
+    View view;
 
     PresetDTO defaultPreset;
     ArrayList<PresetDTO> savedPreset;
@@ -63,29 +65,41 @@ public class TrainingPresetActivity extends FragmentActivity {
 
     private String type = "";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getWindow().setFormat(PixelFormat.TRANSLUCENT);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_training_preset);
+    MainActivity mainActivityInstance;
 
-        type = getIntent().getStringExtra("type");
+    private static Context mContext;
+    public static TrainingPresetFragment trainingPresetFragment;
+
+    public static Fragment newInstance(Context context, String type) {
+        mContext = context;
+        trainingPresetFragment = new TrainingPresetFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
+        trainingPresetFragment.setArguments(bundle);
+
+        return trainingPresetFragment;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.mainActivityInstance = (MainActivity) activity;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_training_preset, container, false);
+        type = getArguments().getString("type");
+
         initViews();
+
+        return view;
     }
 
     private void initViews(){
-
-        titleView = (TextView)findViewById(R.id.preset_title);
-
-        if (type.equalsIgnoreCase("round")){
-            titleView.setText(getResources().getString(R.string.title_activity_round_training_set));
-        }else {
-            titleView.setText(getResources().getString(R.string.title_activity_quick_start_set));
-        }
-
-        presetNameView = (CustomTextView)findViewById(R.id.preset_name);
-        presetParent = (RelativeLayout)findViewById(R.id.preset_parent);
+        presetNameView = (CustomTextView)view.findViewById(R.id.preset_name);
+        presetParent = (RelativeLayout)view.findViewById(R.id.preset_parent);
         presetParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,17 +107,9 @@ public class TrainingPresetActivity extends FragmentActivity {
             }
         });
 
-        backBtn = (ImageView)findViewById(R.id.btn_back);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         //set rounds picker
-        roundsPicker = (WheelView)findViewById(R.id.rounds_picker);
-        roundsAdapter = new ArrayWheelAdapter(this, PresetUtil.roundsList.toArray());
+        roundsPicker = (WheelView)view.findViewById(R.id.rounds_picker);
+        roundsAdapter = new ArrayWheelAdapter(mainActivityInstance, PresetUtil.roundsList.toArray());
         roundsAdapter.setItemResource(R.layout.item_wheel_rounds_text);
         roundsAdapter.setItemTextResource(R.id.text);
         roundsAdapter.setActiveTextColor(getResources().getColor(R.color.rounds_select));
@@ -114,8 +120,8 @@ public class TrainingPresetActivity extends FragmentActivity {
         roundsPicker.setVisibleItems(3);
 
         //set round time picker
-        roundPicker = (WheelView)findViewById(R.id.round_picker);
-        roundAdapter = new ArrayWheelAdapter(this, PresetUtil.timeList.toArray());
+        roundPicker = (WheelView)view.findViewById(R.id.round_picker);
+        roundAdapter = new ArrayWheelAdapter(mainActivityInstance, PresetUtil.timeList.toArray());
         roundAdapter.setItemResource(R.layout.item_wheel_rounds_text);
         roundAdapter.setItemTextResource(R.id.text);
         roundAdapter.setActiveTextColor(getResources().getColor(R.color.round_select));
@@ -126,8 +132,8 @@ public class TrainingPresetActivity extends FragmentActivity {
         roundPicker.setVisibleItems(3);
 
         //set rest picker
-        restPicker = (WheelView)findViewById(R.id.rest_picker);
-        restAdapter = new ArrayWheelAdapter(this, PresetUtil.timeList.toArray());
+        restPicker = (WheelView)view.findViewById(R.id.rest_picker);
+        restAdapter = new ArrayWheelAdapter(mainActivityInstance, PresetUtil.timeList.toArray());
         restAdapter.setItemResource(R.layout.item_wheel_rounds_text);
         restAdapter.setItemTextResource(R.id.text);
         restAdapter.setActiveTextColor(getResources().getColor(R.color.speed_text_color));
@@ -137,8 +143,8 @@ public class TrainingPresetActivity extends FragmentActivity {
         restPicker.setViewAdapter(restAdapter);
         restPicker.setVisibleItems(3);
 
-        prepareTimeView = (TextView)findViewById(R.id.prepare_time);
-        prepareParent = (LinearLayout)findViewById(R.id.prepare_parent);
+        prepareTimeView = (TextView)view.findViewById(R.id.prepare_time);
+        prepareParent = (LinearLayout)view.findViewById(R.id.prepare_parent);
         prepareParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,8 +152,8 @@ public class TrainingPresetActivity extends FragmentActivity {
             }
         });
 
-        warningParent = (LinearLayout)findViewById(R.id.warning_parent);
-        warningTimeView = (TextView)findViewById(R.id.warning_time);
+        warningParent = (LinearLayout)view.findViewById(R.id.warning_parent);
+        warningTimeView = (TextView)view.findViewById(R.id.warning_time);
         warningParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,48 +161,22 @@ public class TrainingPresetActivity extends FragmentActivity {
             }
         });
 
-
-//
-//        //set prepare picker
-//        preparePicker = (WheelView)findViewById(R.id.prepare_picker);
-//        prepareAdapter = new ArrayWheelAdapter(this, PresetUtil.timeList.toArray());
-//        prepareAdapter.setItemResource(R.layout.wheel_rest_text_item);
-//        prepareAdapter.setItemTextResource(R.id.text);
-//        prepareAdapter.setActiveTextColor(Color.parseColor(getResources().getString(R.string.prepare_select)));
-//        prepareAdapter.setDeactiveTextColor(Color.parseColor(getResources().getString(R.string.prepare_unselect)));
-//        prepareAdapter.setActiveTextSzie(45);
-//        prepareAdapter.setDeactiveTextSize(40);
-//        preparePicker.setViewAdapter(prepareAdapter);
-//        preparePicker.setVisibleItems(3);
-//
-//        //set warning picker
-//        warningPicker = (WheelView)findViewById(R.id.warning_picker);
-//        warningAdapter = new ArrayWheelAdapter(this, PresetUtil.timeList.toArray());
-//        warningAdapter.setItemResource(R.layout.wheel_rest_text_item);
-//        warningAdapter.setItemTextResource(R.id.text);
-//        warningAdapter.setActiveTextColor(Color.parseColor(getResources().getString(R.string.prepare_select)));
-//        warningAdapter.setDeactiveTextColor(Color.parseColor(getResources().getString(R.string.prepare_unselect)));
-//        warningAdapter.setActiveTextSzie(45);
-//        warningAdapter.setDeactiveTextSize(40);
-//        warningPicker.setViewAdapter(warningAdapter);
-//        warningPicker.setVisibleItems(3);
-
         //set weight spinner
-        weightSpinner = (Spinner)findViewById(R.id.weight_spinner);
-        weightAdpater = new CustomSpinnerAdapter(this, R.layout.custom_spinner_with_img, PresetUtil.weightList, EFDConstants.SPINNER_WHITE);
+        weightSpinner = (Spinner)view.findViewById(R.id.weight_spinner);
+        weightAdpater = new CustomSpinnerAdapter(mainActivityInstance, R.layout.custom_spinner_with_img, PresetUtil.weightList, EFDConstants.SPINNER_WHITE);
         weightSpinner.setAdapter(weightAdpater);
 
         //set glove spinner
-        gloveTypeSpinner = (Spinner)findViewById(R.id.glove_spinner);
-        gloveAdapter = new CustomSpinnerAdapter(this, R.layout.custom_spinner_with_img, PresetUtil.gloveList, EFDConstants.SPINNER_WHITE);
+        gloveTypeSpinner = (Spinner)view.findViewById(R.id.glove_spinner);
+        gloveAdapter = new CustomSpinnerAdapter(mainActivityInstance, R.layout.custom_spinner_with_img, PresetUtil.gloveList, EFDConstants.SPINNER_WHITE);
         gloveTypeSpinner.setAdapter(gloveAdapter);
 
         //set gender spinner
-        genderSpinner = (Spinner)findViewById(R.id.gender_spinner);
-        genderAdapter = new CustomSpinnerAdapter(this, R.layout.custom_spinner_with_img, PresetUtil.sexList, EFDConstants.SPINNER_WHITE);
+        genderSpinner = (Spinner)view.findViewById(R.id.gender_spinner);
+        genderAdapter = new CustomSpinnerAdapter(mainActivityInstance, R.layout.custom_spinner_with_img, PresetUtil.sexList, EFDConstants.SPINNER_WHITE);
         genderSpinner.setAdapter(genderAdapter);
 
-        totalTimeView = (CustomTextView)findViewById(R.id.total_time);
+        totalTimeView = (CustomTextView)view.findViewById(R.id.total_time);
 
         //set callback functions
         roundsPicker.addChangingListener(new OnWheelChangedListener() {
@@ -220,14 +200,7 @@ public class TrainingPresetActivity extends FragmentActivity {
             }
         });
 
-//        preparePicker.addChangingListener(new OnWheelChangedListener() {
-//            @Override
-//            public void onChanged(WheelView wheel, int oldValue, int newValue) {
-//                setTotalTime();
-//            }
-//        });
-
-        startTrainingBtn = (CustomButton)findViewById(R.id.training_start_button);
+        startTrainingBtn = (CustomButton)view.findViewById(R.id.training_start_button);
         startTrainingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -235,7 +208,7 @@ public class TrainingPresetActivity extends FragmentActivity {
             }
         });
 
-        savedPreset = SharedPreferencesUtils.getPresetList(this);
+        savedPreset = SharedPreferencesUtils.getPresetList(mainActivityInstance);
         defaultPreset = new PresetDTO("Preset 1", PresetUtil.roundsList.size() / 2, PresetUtil.timeList.size() / 2, PresetUtil.timeList.size() / 2, PresetUtil.timeList.size() / 2,
                 PresetUtil.warningTimewithSecList.size() / 2, PresetUtil.weightList.size() / 2, 0, 0);
 
@@ -262,15 +235,15 @@ public class TrainingPresetActivity extends FragmentActivity {
         presetDTO.setName("preset");
 
         if (type.equalsIgnoreCase("round")){
-            Intent trainingIntent = new Intent(this, RoundTrainingActivity.class);
+            Intent trainingIntent = new Intent(mainActivityInstance, RoundTrainingActivity.class);
             trainingIntent.putExtra("preset", presetDTO);
             startActivity(trainingIntent);
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }else {
-            Intent trainingIntent = new Intent(this, QuickStartTrainingActivity.class);
+            Intent trainingIntent = new Intent(mainActivityInstance, QuickStartTrainingActivity.class);
             trainingIntent.putExtra("preset", presetDTO);
             startActivity(trainingIntent);
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
     }
 
@@ -292,7 +265,7 @@ public class TrainingPresetActivity extends FragmentActivity {
     }
 
     private void showWheelPicker(final boolean isprepare){
-        final Dialog dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(mainActivityInstance);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.popup_prepare_warning_picker);
@@ -306,7 +279,7 @@ public class TrainingPresetActivity extends FragmentActivity {
         else
             dataList = PresetUtil.warningTimewithSecList;
 
-        ArrayWheelAdapter preparewarningAdapter = new ArrayWheelAdapter(this, dataList.toArray());
+        ArrayWheelAdapter preparewarningAdapter = new ArrayWheelAdapter(mainActivityInstance, dataList.toArray());
 
         preparewarningAdapter.setItemResource(R.layout.item_wheel_rounds_text);
         preparewarningAdapter.setItemTextResource(R.id.text);
@@ -359,7 +332,7 @@ public class TrainingPresetActivity extends FragmentActivity {
     }
 
     private void showSavedPresetDialog(){
-        final Dialog dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(mainActivityInstance);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         Window window = dialog.getWindow();
@@ -373,7 +346,7 @@ public class TrainingPresetActivity extends FragmentActivity {
         dialog.setContentView(R.layout.dialog_preset_popup);
 
         ListView presetListView = (ListView)dialog.findViewById(R.id.preset_listview);
-        final PresetListAdapter adapter = new PresetListAdapter(this, savedPreset, currentPresetPosition);
+        final PresetListAdapter adapter = new PresetListAdapter(mainActivityInstance, savedPreset, currentPresetPosition);
         presetListView.setAdapter(adapter);
 
         presetListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -407,14 +380,7 @@ public class TrainingPresetActivity extends FragmentActivity {
         presetDTO.setName("Preset " + String.valueOf(savedPreset.size() + 1));
 
         savedPreset.add(presetDTO);
-        SharedPreferencesUtils.savePresetLists(this, savedPreset);
+        SharedPreferencesUtils.savePresetLists(mainActivityInstance, savedPreset);
         presetNameView.setText(presetDTO.getName());
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-//        overridePendingTransition(R.anim.left_center, R.anim.center_right);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

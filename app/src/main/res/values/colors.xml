@@ -51,4 +51,7 @@
 
     <color name="battery_color">#02c7cd</color>
 
+    <color name="comboset_divider">#2f778f</color>
+    <color name="comboset_bg">#aa181e28</color>
+
 </resources>

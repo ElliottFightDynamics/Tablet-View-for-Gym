@@ -25,6 +25,7 @@
     <dimen name="training_progress_stat_title_font_size">18dp</dimen>
     <dimen name="training_progress_stat_font_size">28sp</dimen>
     <dimen name="training_progress_stat_label_font_size">20sp</dimen>
+    <dimen name="tab_textsize">18sp</dimen>
 
     <bool name="iTablet">false</bool>
 </resources>

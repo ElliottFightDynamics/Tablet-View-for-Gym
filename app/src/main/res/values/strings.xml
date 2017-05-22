@@ -76,5 +76,12 @@
     <string name="speed_label">SPEED (MPH)</string>
     <string name="punchcount_label">PUNCH COUNT</string>
     <string name="power_label">POWER (LBS)</string>
+
+    <string name="midrange">Mid-range</string>
+    <string name="shortrange">Short-range</string>
+    <string name="longrange">Long-range</string>
+    <string name="combo_share">Share</string>
+    <string name="combo_edit">Edit</string>
+    <string name="combo_delete">Delete</string>
 </resources>
 

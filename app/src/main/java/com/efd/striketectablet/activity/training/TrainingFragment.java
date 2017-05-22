@@ -4,21 +4,33 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.adapter.PresetListAdapter;
+import com.efd.striketectablet.adapter.TrainingTabPageAdapter;
 
 public class TrainingFragment extends Fragment {
 
     private MainActivity mainActivityInstance;
 
-    RelativeLayout quickstartLayout, roundLayout;
+//    RelativeLayout quickstartLayout, roundLayout;
     View view;
+    TextView quickstartView, timerView, combinationView, setView, scriptedView;
+    View quickstartHighlight, timerHighlight, combinationHighlight, setHighlight, scriptedHighlight;
+
+    ViewPager trainingViewPager;
+    TrainingTabPageAdapter pageAdapter;
+
+    private static FragmentManager fragmentManager;
 
     @Override
     public void onAttach(Activity activity) {
@@ -42,27 +54,194 @@ public class TrainingFragment extends Fragment {
     }
 
     private void initViews(){
-        quickstartLayout = (RelativeLayout)view.findViewById(R.id.traning_menu_quick_start);
-        roundLayout = (RelativeLayout)view.findViewById(R.id.traning_menu_round_traning);
+        quickstartView = (TextView)view.findViewById(R.id.quickstart);
+        timerView = (TextView)view.findViewById(R.id.timer);
+        combinationView = (TextView)view.findViewById(R.id.combination);
+        setView = (TextView)view.findViewById(R.id.set);
+        scriptedView = (TextView)view.findViewById(R.id.scripted);
 
-        quickstartLayout.setOnClickListener(new View.OnClickListener() {
+        quickstartHighlight = view.findViewById(R.id.quickstart_highlight);
+        timerHighlight = view.findViewById(R.id.timer_highlight);
+        combinationHighlight = view.findViewById(R.id.combination_highlight);
+        setHighlight = view.findViewById(R.id.set_highlight);
+        scriptedHighlight = view.findViewById(R.id.scripted_highlight);
+
+        trainingViewPager = (ViewPager)view.findViewById(R.id.training_viewpager);
+
+        fragmentManager = getChildFragmentManager();
+        pageAdapter = new TrainingTabPageAdapter(mainActivityInstance, fragmentManager);
+        trainingViewPager.setAdapter(pageAdapter);
+
+        quickstartView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent presetIntent = new Intent(getActivity(), TrainingPresetActivity.class);
-                presetIntent.putExtra("type", "quickstart");
-                startActivity(presetIntent);
-                mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                trainingViewPager.setCurrentItem(0);
             }
         });
 
-        roundLayout.setOnClickListener(new View.OnClickListener() {
+        timerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent presetIntent = new Intent(getActivity(), TrainingPresetActivity.class);
-                presetIntent.putExtra("type", "round");
-                startActivity(presetIntent);
-                mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                trainingViewPager.setCurrentItem(1);
             }
         });
+
+        combinationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trainingViewPager.setCurrentItem(2);
+            }
+        });
+
+        setView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trainingViewPager.setCurrentItem(3);
+            }
+        });
+
+        scriptedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trainingViewPager.setCurrentItem(4);
+            }
+        });
+
+//        trainingViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                updateTab(position);
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
+
+        trainingViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.e("Super", "position = " + position);
+                updateTab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        trainingViewPager.setCurrentItem(0);
+        updateTab(0);
+
+//        quickstartLayout = (RelativeLayout)view.findViewById(R.id.traning_menu_quick_start);
+//        roundLayout = (RelativeLayout)view.findViewById(R.id.traning_menu_round_traning);
+//
+//        quickstartLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent presetIntent = new Intent(getActivity(), TrainingPresetFragment.class);
+//                presetIntent.putExtra("type", "quickstart");
+//                startActivity(presetIntent);
+//                mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//            }
+//        });
+//
+//        roundLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent presetIntent = new Intent(getActivity(), TrainingPresetFragment.class);
+//                presetIntent.putExtra("type", "round");
+//                startActivity(presetIntent);
+//                mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//            }
+//        });
+    }
+
+    private void updateTab(int position){
+        switch (position) {
+            case 0:
+                Log.e("Super", "update tab position = " + 0);
+                quickstartView.setTextColor(getResources().getColor(R.color.white));
+                timerView.setTextColor(getResources().getColor(R.color.orange));
+                combinationView.setTextColor(getResources().getColor(R.color.orange));
+                setView.setTextColor(getResources().getColor(R.color.orange));
+                scriptedView.setTextColor(getResources().getColor(R.color.orange));
+
+                quickstartHighlight.setVisibility(View.VISIBLE);
+                timerHighlight.setVisibility(View.INVISIBLE);
+                combinationHighlight.setVisibility(View.INVISIBLE);
+                setHighlight.setVisibility(View.INVISIBLE);
+                scriptedHighlight.setVisibility(View.INVISIBLE);
+
+                break;
+            case 1:
+                Log.e("Super", "update tab position = " + 1);
+                quickstartView.setTextColor(getResources().getColor(R.color.orange));
+                timerView.setTextColor(getResources().getColor(R.color.white));
+                combinationView.setTextColor(getResources().getColor(R.color.orange));
+                setView.setTextColor(getResources().getColor(R.color.orange));
+                scriptedView.setTextColor(getResources().getColor(R.color.orange));
+
+                quickstartHighlight.setVisibility(View.INVISIBLE);
+                timerHighlight.setVisibility(View.VISIBLE);
+                combinationHighlight.setVisibility(View.INVISIBLE);
+                setHighlight.setVisibility(View.INVISIBLE);
+                scriptedHighlight.setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                Log.e("Super", "update tab position = " + 2);
+                quickstartView.setTextColor(getResources().getColor(R.color.orange));
+                timerView.setTextColor(getResources().getColor(R.color.orange));
+                combinationView.setTextColor(getResources().getColor(R.color.white));
+                setView.setTextColor(getResources().getColor(R.color.orange));
+                scriptedView.setTextColor(getResources().getColor(R.color.orange));
+
+                quickstartHighlight.setVisibility(View.INVISIBLE);
+                timerHighlight.setVisibility(View.INVISIBLE);
+                combinationHighlight.setVisibility(View.VISIBLE);
+                setHighlight.setVisibility(View.INVISIBLE);
+                scriptedHighlight.setVisibility(View.INVISIBLE);
+                break;
+            case 3:
+                Log.e("Super", "update tab position = " + 3);
+                quickstartView.setTextColor(getResources().getColor(R.color.orange));
+                timerView.setTextColor(getResources().getColor(R.color.orange));
+                combinationView.setTextColor(getResources().getColor(R.color.orange));
+                setView.setTextColor(getResources().getColor(R.color.white));
+                scriptedView.setTextColor(getResources().getColor(R.color.orange));
+
+                quickstartHighlight.setVisibility(View.INVISIBLE);
+                timerHighlight.setVisibility(View.INVISIBLE);
+                combinationHighlight.setVisibility(View.INVISIBLE);
+                setHighlight.setVisibility(View.VISIBLE);
+                scriptedHighlight.setVisibility(View.INVISIBLE);
+                break;
+            case 4:
+                Log.e("Super", "update tab position = " + 4);
+                quickstartView.setTextColor(getResources().getColor(R.color.orange));
+                timerView.setTextColor(getResources().getColor(R.color.orange));
+                combinationView.setTextColor(getResources().getColor(R.color.orange));
+                setView.setTextColor(getResources().getColor(R.color.orange));
+                scriptedView.setTextColor(getResources().getColor(R.color.white));
+
+                quickstartHighlight.setVisibility(View.INVISIBLE);
+                timerHighlight.setVisibility(View.INVISIBLE);
+                combinationHighlight.setVisibility(View.INVISIBLE);
+                setHighlight.setVisibility(View.INVISIBLE);
+                scriptedHighlight.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 }
