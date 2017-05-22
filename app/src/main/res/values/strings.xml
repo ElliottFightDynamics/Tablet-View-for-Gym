@@ -83,5 +83,7 @@
     <string name="combo_share">Share</string>
     <string name="combo_edit">Edit</string>
     <string name="combo_delete">Delete</string>
+
+    <string name="combination_insets">COMBINATIONS IN SETS</string>
 </resources>
 

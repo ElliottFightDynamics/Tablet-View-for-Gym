@@ -16,9 +16,12 @@ import android.view.WindowManager;
 import android.widget.ListView;
 
 import com.efd.striketectablet.DTO.ComboDTO;
+import com.efd.striketectablet.DTO.SetsDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.adapter.ComboListAdapter;
+import com.efd.striketectablet.adapter.SetDetailListAdapter;
+import com.efd.striketectablet.adapter.SetListAdapter;
 import com.efd.striketectablet.customview.CustomTextView;
 import com.efd.striketectablet.util.StatisticUtil;
 
@@ -27,14 +30,15 @@ import java.util.ArrayList;
 public class SetsFragment extends Fragment {
 
     View view;
-    ListView comboListView;
+    ListView setListView, setdetailListView;
 
     MainActivity mainActivityInstance;
 
-    ComboListAdapter comboAdapter;
+    SetListAdapter setAdapter;
+    SetDetailListAdapter detailListAdapter;
 
-
-    ArrayList<ComboDTO> comboDatas;
+    ArrayList<SetsDTO> setsDatas;
+    ArrayList<ComboDTO> comboDTOs;
 
     private static Context mContext;
     public static SetsFragment setsFragment;
@@ -54,9 +58,10 @@ public class SetsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_combination, container, false);
+        view = inflater.inflate(R.layout.fragment_sets, container, false);
 
-        comboDatas = new ArrayList<>();
+        setsDatas = new ArrayList<>();
+        comboDTOs = new ArrayList<>();
 
         initViews();
 
@@ -64,27 +69,41 @@ public class SetsFragment extends Fragment {
     }
 
     private void initViews(){
-        comboListView = (ListView)view.findViewById(R.id.combo_listview);
+        setListView = (ListView)view.findViewById(R.id.set_listview);
 
-        comboAdapter = new ComboListAdapter(mainActivityInstance, comboDatas);
-        comboListView.setAdapter(comboAdapter);
+        setAdapter = new SetListAdapter(mainActivityInstance, setsDatas, this);
+        setListView.setAdapter(setAdapter);
 
-        loadComboDatas();
+        setdetailListView = (ListView)view.findViewById(R.id.combo_listview);
+        detailListAdapter = new SetDetailListAdapter(mainActivityInstance, comboDTOs);
+        setdetailListView.setAdapter(detailListAdapter);
+
+        loadSetsData();
     }
 
-    private void loadComboDatas(){
-        //maybe combo datas will be saved in preferences
+    public void updateDetail(SetsDTO setsDTO){
+        if (comboDTOs.size() > 0){
+            comboDTOs.clear();
+        }
+
+        comboDTOs.addAll(setsDTO.getComboslists());
+        detailListAdapter.setData(comboDTOs);
+        detailListAdapter.notifyDataSetChanged();
+    }
+
+    private void loadSetsData(){
+        //maybe sets datas will be saved in preferences
         ArrayList<String> comboTypes = new ArrayList<>();
         comboTypes.add("1");
         comboTypes.add("2");
         comboTypes.add("SR");
         comboTypes.add("2");
         comboTypes.add("4");
-        comboTypes.add("SL");
+        comboTypes.add("6");
         comboTypes.add("7");
         comboTypes.add("5");
-        comboTypes.add("DL");
-        comboTypes.add("DR");
+        comboTypes.add("7");
+        comboTypes.add("4");
 
         ComboDTO comboDTO = new ComboDTO("Attack", comboTypes, 0);
         ComboDTO comboDTO1 = new ComboDTO("Crafty", comboTypes, 2);
@@ -97,17 +116,64 @@ public class SetsFragment extends Fragment {
         ComboDTO comboDTO8 = new ComboDTO("Custom2", comboTypes, 0);
         ComboDTO comboDTO9 = new ComboDTO("Custom3", comboTypes, 0);
 
-        comboDatas.add(comboDTO);
-        comboDatas.add(comboDTO1);
-        comboDatas.add(comboDTO2);
-        comboDatas.add(comboDTO3);
-        comboDatas.add(comboDTO4);
-        comboDatas.add(comboDTO5);
-        comboDatas.add(comboDTO6);
-        comboDatas.add(comboDTO7);
-        comboDatas.add(comboDTO8);
-        comboDatas.add(comboDTO9);
+        ArrayList<ComboDTO> comboArray = new ArrayList<>();
+        comboArray.add(comboDTO);
+        comboArray.add(comboDTO1);
+        comboArray.add(comboDTO2);
 
-        comboAdapter.notifyDataSetChanged();
+        ArrayList<ComboDTO> comboArray1 = new ArrayList<>();
+        comboArray1.add(comboDTO);
+        comboArray1.add(comboDTO2);
+        comboArray1.add(comboDTO5);
+        comboArray1.add(comboDTO6);
+        comboArray1.add(comboDTO3);
+
+        ArrayList<ComboDTO> comboArray2 = new ArrayList<>();
+        comboArray2.add(comboDTO6);
+        comboArray2.add(comboDTO8);
+        comboArray2.add(comboDTO7);
+
+        ArrayList<ComboDTO> comboArray3 = new ArrayList<>();
+        comboArray3.add(comboDTO);
+        comboArray3.add(comboDTO1);
+        comboArray3.add(comboDTO2);
+        comboArray3.add(comboDTO3);
+
+        ArrayList<ComboDTO> comboArray4 = new ArrayList<>();
+        comboArray4.add(comboDTO7);
+        comboArray4.add(comboDTO6);
+        comboArray4.add(comboDTO2);
+        comboArray4.add(comboDTO);
+
+        ArrayList<ComboDTO> comboArray5 = new ArrayList<>();
+        comboArray5.add(comboDTO);
+        comboArray5.add(comboDTO1);
+        comboArray5.add(comboDTO2);
+        comboArray5.add(comboDTO3);
+        comboArray5.add(comboDTO4);
+        comboArray5.add(comboDTO5);
+        comboArray5.add(comboDTO4);
+        comboArray5.add(comboDTO3);
+        comboArray5.add(comboDTO2);
+        comboArray5.add(comboDTO1);
+        comboArray5.add(comboDTO3);
+        comboArray5.add(comboDTO5);
+
+        SetsDTO setsDTO = new SetsDTO("Aggressor", comboArray);
+        SetsDTO setsDTO1 = new SetsDTO("Defensive", comboArray1);
+        SetsDTO setsDTO2 = new SetsDTO("Agressor", comboArray2);
+        SetsDTO setsDTO3 = new SetsDTO("Custom1", comboArray3);
+        SetsDTO setsDTO4 = new SetsDTO("Default Combination 1", comboArray4);
+        SetsDTO setsDTO5 = new SetsDTO("Custom3", comboArray5);
+
+        setsDatas.add(setsDTO);
+        setsDatas.add(setsDTO1);
+        setsDatas.add(setsDTO2);
+        setsDatas.add(setsDTO3);
+        setsDatas.add(setsDTO4);
+        setsDatas.add(setsDTO5);
+
+        setAdapter.setData(setsDatas);
+        setAdapter.notifyDataSetChanged();
     }
 }

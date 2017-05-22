@@ -53,5 +53,6 @@
 
     <color name="comboset_divider">#2f778f</color>
     <color name="comboset_bg">#aa181e28</color>
+    <color name="set_selectcolor">#0c2833</color>
 
 </resources>

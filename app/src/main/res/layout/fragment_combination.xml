@@ -1,16 +1,31 @@
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
 
     <ListView
         android:id="@+id/combo_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:scrollbars="none"
         android:listSelector="@color/transparent"
         android:divider="@color/transparent">
 
     </ListView>
 
-</RelativeLayout>
+    <com.efd.striketectablet.customview.CustomButton
+        android:id="@+id/training_start_button"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="@drawable/positive_big_btn"
+        android:gravity="center"
+        android:text="@string/start_training"
+        android:textColor="@color/black"
+        android:textSize="@dimen/button_textsize"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"/>
+
+</LinearLayout>

@@ -18,42 +18,46 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.efd.striketectablet.DTO.ComboDTO;
+import com.efd.striketectablet.DTO.SetsDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
-import com.efd.striketectablet.activity.training.combination.CombinationFragment;
+import com.efd.striketectablet.activity.training.sets.SetsFragment;
 import com.efd.striketectablet.customview.CustomTextView;
 import com.efd.striketectablet.util.StatisticUtil;
 
 import java.util.ArrayList;
 
-public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
+public class SetListAdapter extends ArrayAdapter<SetsDTO> {
 
     Context mContext;
     LayoutInflater inflater;
     MainActivity mainActivity;
+    SetsFragment setsFragment;
 
-    ArrayList<ComboDTO> comboLists;
+    ArrayList<SetsDTO> setLists;
     private SparseBooleanArray checkedList = new SparseBooleanArray();
 
+    private int currentPosition = 0;
 
-    public ComboListAdapter(Context context, ArrayList<ComboDTO> comboLists){
-        super(context, 0, comboLists);
+    public SetListAdapter(Context context, ArrayList<SetsDTO> setLists, SetsFragment setsFragment){
+        super(context, 0, setLists);
 
         mContext = context;
-        this.comboLists = comboLists;
+        this.setLists = setLists;
         this.mainActivity = (MainActivity)context;
+        this.setsFragment = setsFragment;
         inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setData(ArrayList<ComboDTO> comboLists){
-        this.comboLists = comboLists;
+    public void setData(ArrayList<SetsDTO> setLists){
+        this.setLists = setLists;
         initCheck();
     }
 
     @Nullable
     @Override
-    public ComboDTO getItem(int position) {
-        return comboLists.get(position);
+    public SetsDTO getItem(int position) {
+        return setLists.get(position);
     }
 
     @Override
@@ -68,51 +72,54 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
         final ViewHolder viewHolder;
 
         if (convertView == null){
-            convertView = inflater.inflate(R.layout.item_combolist, null);
+            convertView = inflater.inflate(R.layout.item_setlist, null);
             viewHolder = new ViewHolder();
-            viewHolder.parentView = (LinearLayout)convertView.findViewById(R.id.combo_parent);
-            viewHolder.comboNameView = (CustomTextView)convertView.findViewById(R.id.combo_name);
-            viewHolder.comboStringView = (CustomTextView)convertView.findViewById(R.id.combo_string);
-            viewHolder.comboRangeView = (CustomTextView)convertView.findViewById(R.id.combo_range);
-            viewHolder.settingsView = (ImageView)convertView.findViewById(R.id.combo_settings);
+            viewHolder.parentView = (LinearLayout)convertView.findViewById(R.id.set_parent);
+            viewHolder.setNameView = (CustomTextView)convertView.findViewById(R.id.set_name);
+            viewHolder.settingsView = (ImageView)convertView.findViewById(R.id.set_settings);
             viewHolder.checkView = (CheckedTextView)convertView.findViewById(R.id.checkbox);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
         }
 
-        final ComboDTO comboDTO = getItem(position);
+        final SetsDTO setsDTO = getItem(position);
 
-        if (position % 2 == 0){
-            viewHolder.parentView.setBackgroundColor(mContext.getResources().getColor(R.color.comboset_bg));
+        if (currentPosition == position){
+            viewHolder.parentView.setBackgroundColor(mContext.getResources().getColor(R.color.set_selectcolor));
+            setsFragment.updateDetail(setsDTO);
         }else {
             viewHolder.parentView.setBackgroundColor(mContext.getResources().getColor(R.color.transparent));
         }
 
-        viewHolder.comboNameView.setText(comboDTO.getName());
-        viewHolder.comboStringView.setText(comboDTO.getCombos());
+//        viewHolder.comboNameView.setText(comboDTO.getName());
+//        viewHolder.comboStringView.setText(comboDTO.getCombos());
+
+        viewHolder.setNameView.setText(setsDTO.getName());
 
         Boolean checked = checkedList.get(position);
         viewHolder.checkView.setChecked(checked);
 
-        if (comboDTO.getRange() == 0){
-            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.shortrange));
-        }else if(comboDTO.getRange() == 1){
-            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.midrange));
-        }else {
-            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.longrange));
-        }
+//        if (comboDTO.getRange() == 0){
+//            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.shortrange));
+//        }else if(comboDTO.getRange() == 1){
+//            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.midrange));
+//        }else {
+//            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.longrange));
+//        }
 
         viewHolder.settingsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSettings(comboDTO);
+                showSettings(setsDTO);
+
             }
         });
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                currentPosition = position;
                 toggleCheck(position);
             }
         });
@@ -123,7 +130,7 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
     public static class ViewHolder {
 
         public LinearLayout parentView;
-        public CustomTextView comboNameView, comboStringView, comboRangeView;
+        public CustomTextView setNameView;
         public ImageView settingsView;
         public CheckedTextView checkView;
     }
@@ -141,7 +148,7 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
     }
 
     private void initCheck(){
-        for (int i = 0; i< comboLists.size(); i++){
+        for (int i = 0; i< setLists.size(); i++){
             checkedList.put(i, false);
         }
     }
@@ -157,7 +164,7 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
 
     }
 
-    public void showSettings(final ComboDTO comboDTO){
+    public void showSettings(final SetsDTO setsDTO){
         final Dialog dialog = new Dialog(mainActivity);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
@@ -183,8 +190,8 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
         shareView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (comboDTO != null){
-                    StatisticUtil.showToastMessage("Share Combo: " + comboDTO.getName());
+                if (setsDTO != null){
+                    StatisticUtil.showToastMessage("Share Set: " + setsDTO.getName());
                 }else {
                     StatisticUtil.showToastMessage("Invalid Data");
                 }
@@ -196,8 +203,8 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
         editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (comboDTO != null){
-                    StatisticUtil.showToastMessage("Edit Combo: " + comboDTO.getName());
+                if (setsDTO != null){
+                    StatisticUtil.showToastMessage("Edit Set: " + setsDTO.getName());
                 }else {
                     StatisticUtil.showToastMessage("Invalid Data");
                 }
@@ -209,8 +216,8 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
         deleteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (comboDTO != null){
-                    StatisticUtil.showToastMessage("Delete Combo: " + comboDTO.getName());
+                if (setsDTO != null){
+                    StatisticUtil.showToastMessage("Delete Set: " + setsDTO.getName());
                 }else {
                     StatisticUtil.showToastMessage("Invalid Data");
                 }
