@@ -40,15 +40,15 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden"/>
 
-        <activity android:name=".activity.training.TrainingPresetActivity"
+        <!--<activity android:name=".activity.training.TrainingPresetActivity"-->
+            <!--android:screenOrientation="landscape"-->
+            <!--android:windowSoftInputMode="stateHidden"/>-->
+
+        <activity android:name=".activity.training.round.RoundTrainingActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden"/>
 
-        <activity android:name=".activity.training.RoundTrainingActivity"
-            android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden"/>
-
-        <activity android:name=".activity.training.QuickStartTrainingActivity"
+        <activity android:name=".activity.training.quickstart.QuickStartTrainingActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden"/>
 

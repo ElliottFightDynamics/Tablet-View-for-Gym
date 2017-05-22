@@ -1,9 +1,8 @@
-package com.efd.striketectablet.activity.training.combination;
+package com.efd.striketectablet.activity.training.sets;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,38 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 
 import com.efd.striketectablet.DTO.ComboDTO;
-import com.efd.striketectablet.DTO.PresetDTO;
-import com.efd.striketectablet.DTO.SetsDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
-import com.efd.striketectablet.activity.training.quickstart.QuickStartTrainingActivity;
-import com.efd.striketectablet.activity.training.round.RoundTrainingActivity;
 import com.efd.striketectablet.adapter.ComboListAdapter;
-import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
-import com.efd.striketectablet.adapter.PresetListAdapter;
-import com.efd.striketectablet.customview.CustomButton;
 import com.efd.striketectablet.customview.CustomTextView;
-import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.util.StatisticUtil;
-import com.efd.striketectablet.utilities.EFDConstants;
-import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 
-import kankan.wheel.widget.OnWheelChangedListener;
-import kankan.wheel.widget.WheelView;
-import kankan.wheel.widget.adapters.ArrayWheelAdapter;
-
-public class CombinationFragment extends Fragment {
+public class SetsFragment extends Fragment {
 
     View view;
     ListView comboListView;
@@ -58,12 +37,12 @@ public class CombinationFragment extends Fragment {
     ArrayList<ComboDTO> comboDatas;
 
     private static Context mContext;
-    public static CombinationFragment combinationFragment;
+    public static SetsFragment setsFragment;
 
     public static Fragment newInstance(Context context) {
         mContext = context;
-        combinationFragment = new CombinationFragment();
-        return combinationFragment;
+        setsFragment = new SetsFragment();
+        return setsFragment;
     }
 
     @Override
@@ -130,6 +109,5 @@ public class CombinationFragment extends Fragment {
         comboDatas.add(comboDTO9);
 
         comboAdapter.notifyDataSetChanged();
-
     }
 }

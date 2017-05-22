@@ -145,28 +145,6 @@ public class TrainingFragment extends Fragment {
         trainingViewPager.setCurrentItem(0);
         updateTab(0);
 
-//        quickstartLayout = (RelativeLayout)view.findViewById(R.id.traning_menu_quick_start);
-//        roundLayout = (RelativeLayout)view.findViewById(R.id.traning_menu_round_traning);
-//
-//        quickstartLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent presetIntent = new Intent(getActivity(), TrainingPresetFragment.class);
-//                presetIntent.putExtra("type", "quickstart");
-//                startActivity(presetIntent);
-//                mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-//            }
-//        });
-//
-//        roundLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent presetIntent = new Intent(getActivity(), TrainingPresetFragment.class);
-//                presetIntent.putExtra("type", "round");
-//                startActivity(presetIntent);
-//                mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-//            }
-//        });
     }
 
     private void updateTab(int position){
