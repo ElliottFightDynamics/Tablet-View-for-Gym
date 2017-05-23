@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.efd.striketectablet.util.ComboSetUtil;
 import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.util.StatisticUtil;
 
@@ -22,6 +23,7 @@ public class App extends MultiDexApplication {
         context = getApplicationContext();
         StatisticUtil.init(context);
         PresetUtil.init();
+        ComboSetUtil.init();
     }
 
     @Override

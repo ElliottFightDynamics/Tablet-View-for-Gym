@@ -85,5 +85,14 @@
     <string name="combo_delete">Delete</string>
 
     <string name="combination_insets">COMBINATIONS IN SETS</string>
+
+    <!--new combination activity-->
+    <string name="new_combination_title">NEW COMBINATION</string>
+    <string name="combination_name">COMNINATION NAME</string>
+    <string name="listofpunches">LIST OF PUNCHES</string>
+    <string name="addpunch">ADD PUNCH</string>
+    <string name="save">SAVE</string>
+    <string name="dialot_combotitle">CHOOSE PUNCH TO ADD:</string>
+
 </resources>
 

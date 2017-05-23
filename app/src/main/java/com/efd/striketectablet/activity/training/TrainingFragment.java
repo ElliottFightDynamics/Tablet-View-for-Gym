@@ -10,11 +10,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
+import com.efd.striketectablet.activity.training.combination.CombinationFragment;
+import com.efd.striketectablet.activity.training.combination.NewCombinationActivity;
+import com.efd.striketectablet.activity.training.sets.SetsFragment;
 import com.efd.striketectablet.adapter.PresetListAdapter;
 import com.efd.striketectablet.adapter.TrainingTabPageAdapter;
 
@@ -26,6 +30,7 @@ public class TrainingFragment extends Fragment {
     View view;
     TextView quickstartView, timerView, combinationView, setView, scriptedView;
     View quickstartHighlight, timerHighlight, combinationHighlight, setHighlight, scriptedHighlight;
+    ImageView plusBtn;
 
     ViewPager trainingViewPager;
     TrainingTabPageAdapter pageAdapter;
@@ -107,23 +112,6 @@ public class TrainingFragment extends Fragment {
             }
         });
 
-//        trainingViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                updateTab(position);
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
-
         trainingViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -142,9 +130,23 @@ public class TrainingFragment extends Fragment {
             }
         });
 
+        plusBtn = (ImageView)view.findViewById(R.id.addbtn);
+        plusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (trainingViewPager.getCurrentItem() == 2){
+                    CombinationFragment combinationFragment = CombinationFragment.combinationFragment;
+                    Intent newComboIntent = new Intent(getActivity(), NewCombinationActivity.class);
+                    startActivity(newComboIntent);
+                    mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);;
+                }else if (trainingViewPager.getCurrentItem() == 3){
+                    SetsFragment setsFragment = SetsFragment.setsFragment;
+                }
+            }
+        });
+
         trainingViewPager.setCurrentItem(0);
         updateTab(0);
-
     }
 
     private void updateTab(int position){
@@ -163,6 +165,7 @@ public class TrainingFragment extends Fragment {
                 setHighlight.setVisibility(View.INVISIBLE);
                 scriptedHighlight.setVisibility(View.INVISIBLE);
 
+                plusBtn.setVisibility(View.INVISIBLE);
                 break;
             case 1:
                 Log.e("Super", "update tab position = " + 1);
@@ -177,6 +180,8 @@ public class TrainingFragment extends Fragment {
                 combinationHighlight.setVisibility(View.INVISIBLE);
                 setHighlight.setVisibility(View.INVISIBLE);
                 scriptedHighlight.setVisibility(View.INVISIBLE);
+
+                plusBtn.setVisibility(View.INVISIBLE);
                 break;
             case 2:
                 Log.e("Super", "update tab position = " + 2);
@@ -191,6 +196,9 @@ public class TrainingFragment extends Fragment {
                 combinationHighlight.setVisibility(View.VISIBLE);
                 setHighlight.setVisibility(View.INVISIBLE);
                 scriptedHighlight.setVisibility(View.INVISIBLE);
+
+                plusBtn.setVisibility(View.VISIBLE);
+
                 break;
             case 3:
                 Log.e("Super", "update tab position = " + 3);
@@ -205,6 +213,8 @@ public class TrainingFragment extends Fragment {
                 combinationHighlight.setVisibility(View.INVISIBLE);
                 setHighlight.setVisibility(View.VISIBLE);
                 scriptedHighlight.setVisibility(View.INVISIBLE);
+
+                plusBtn.setVisibility(View.VISIBLE);
                 break;
             case 4:
                 Log.e("Super", "update tab position = " + 4);
@@ -219,6 +229,8 @@ public class TrainingFragment extends Fragment {
                 combinationHighlight.setVisibility(View.INVISIBLE);
                 setHighlight.setVisibility(View.INVISIBLE);
                 scriptedHighlight.setVisibility(View.VISIBLE);
+
+                plusBtn.setVisibility(View.INVISIBLE);
                 break;
         }
     }

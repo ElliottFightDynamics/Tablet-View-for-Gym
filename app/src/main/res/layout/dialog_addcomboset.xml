@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="30dp"
+    android:layout_marginBottom="90dp"
+    android:layout_marginTop="90dp"
+    android:background="@color/preset_popup_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/dialot_combotitle"
+        android:textColor="@color/punches_text_color"
+        android:textSize="30sp"/>
+
+    <ListView
+        android:layout_marginTop="20dp"
+        android:id="@+id/comboset_listview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none"
+        android:divider="#00000000">
+    </ListView>
+
+    <com.efd.striketectablet.customview.CustomTextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/cancel_btn"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="@string/cancel"
+        android:textColor="@color/white"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_bg"
+        android:textSize="25sp" />
+
+</LinearLayout>

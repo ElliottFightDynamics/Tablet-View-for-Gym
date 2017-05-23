@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.DTO.PresetDTO;
+import com.efd.striketectablet.DTO.SetsDTO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -18,6 +20,8 @@ public class SharedPreferencesUtils {
 
     public static final String PREFS = "prefs";
     public static final String PRESET = "preset";
+    public static final String COMBO = "combo";
+    public static final String SET = "set";
     public static final String BASE_URL = "base.url";
 
 
@@ -51,4 +55,49 @@ public class SharedPreferencesUtils {
             results = gson.fromJson(jsonString, type);
         return results;
     }
+
+    public static void saveCombinationList (Context context, ArrayList<ComboDTO> arrayList){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(arrayList);
+        sharedPreferences.edit().putString(COMBO, jsonString).commit();
+    }
+
+    public static ArrayList<ComboDTO> getSavedCombinationList (Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+
+        ArrayList<ComboDTO> results;
+
+        Type type = new TypeToken<ArrayList<ComboDTO>>(){}.getType();
+        String jsonString = sharedPreferences.getString(COMBO, "");
+        if (TextUtils.isEmpty(jsonString))
+            results = new ArrayList<>();
+        else
+            results = gson.fromJson(jsonString, type);
+        return results;
+    }
+
+    public static void saveSetList (Context context, ArrayList<SetsDTO> arrayList){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(arrayList);
+        sharedPreferences.edit().putString(SET, jsonString).commit();
+    }
+
+    public static ArrayList<SetsDTO> getSavedSetList (Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+
+        ArrayList<SetsDTO> results;
+        Type type = new TypeToken<ArrayList<SetsDTO>>(){}.getType();
+        String jsonString = sharedPreferences.getString(SET, "");
+        if (TextUtils.isEmpty(jsonString))
+            results = new ArrayList<>();
+        else
+            results = gson.fromJson(jsonString, type);
+        return results;
+    }
+
+
 }

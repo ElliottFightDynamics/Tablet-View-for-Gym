@@ -578,7 +578,6 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
     @Override
     public void finish() {
         super.finish();
-//        overridePendingTransition(R.anim.left_center, R.anim.center_right);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
