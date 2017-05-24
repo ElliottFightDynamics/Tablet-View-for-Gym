@@ -10,42 +10,43 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.R;
-import com.efd.striketectablet.activity.training.combination.NewCombinationActivity;
-import com.efd.striketectablet.customview.CustomTextView;
+import com.efd.striketectablet.activity.training.sets.NewSetRoutineActivity;
 import com.efd.striketectablet.util.ComboSetUtil;
+import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 
-public class EditPunchListAdapter extends ArrayAdapter<String> {
+public class EditNewSetRoutineListAdapter extends ArrayAdapter<Integer> {
 
     Context mContext;
     LayoutInflater inflater;
-    private ArrayList<String> keylist;
-    NewCombinationActivity combinationActivity;
-//
-    public EditPunchListAdapter(Context context, ArrayList<String> keylist){
-        super(context, 0, keylist);
+    private ArrayList<Integer> idLists;
+    NewSetRoutineActivity setRoutineActivity;
+
+    public EditNewSetRoutineListAdapter(Context context, ArrayList<Integer> idLists){
+        super(context, 0, idLists);
 
         mContext = context;
-        combinationActivity = (NewCombinationActivity)context;
-        this.keylist = keylist;
+        setRoutineActivity = (NewSetRoutineActivity)context;
+        this.idLists = idLists;
         inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setData (ArrayList<String> keylist){
-        this.keylist = keylist;
+    public void setData (ArrayList<Integer> positionLists){
+        this.idLists = positionLists;
     }
 
     @Override
     public int getCount() {
-        return keylist.size() ;
+        return idLists.size() ;
     }
 
     @Nullable
     @Override
-    public String getItem(int position) {
-        return keylist.get(position);
+    public Integer getItem(int position) {
+        return idLists.get(position);
     }
 
     @Override
@@ -60,10 +61,10 @@ public class EditPunchListAdapter extends ArrayAdapter<String> {
         final ViewHolder viewHolder;
 
         if (convertView == null){
-            convertView = inflater.inflate(R.layout.item_punchdetail, null);
+            convertView = inflater.inflate(R.layout.item_addcombo_list, null);
             viewHolder = new ViewHolder();
-            viewHolder.keyView = (TextView)convertView.findViewById(R.id.key);
-            viewHolder.nameView = (TextView)convertView.findViewById(R.id.name);
+            viewHolder.stringView = (TextView)convertView.findViewById(R.id.combo_string);
+            viewHolder.nameView = (TextView)convertView.findViewById(R.id.combo_name);
             viewHolder.divider = (ImageView)convertView.findViewById(R.id.divider);
             viewHolder.settings = (ImageView)convertView.findViewById(R.id.settings);
             convertView.setTag(viewHolder);
@@ -71,18 +72,20 @@ public class EditPunchListAdapter extends ArrayAdapter<String> {
             viewHolder = (ViewHolder)convertView.getTag();
         }
 
-        String key = getItem(position);
-        viewHolder.keyView.setText(key);
-        viewHolder.nameView.setText(ComboSetUtil.punchTypeMap.get(key));
+        int comboID = getItem(position);
+        ComboDTO comboDTO = ComboSetUtil.getComboDtowithID(comboID);
+
+        viewHolder.nameView.setText(comboDTO.getName());
+        viewHolder.stringView.setText(comboDTO.getCombos());
 
         viewHolder.settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                combinationActivity.showSettings(position);
+                setRoutineActivity.showSettings(position);
             }
         });
 
-        if (position == keylist.size() - 1){
+        if (position == idLists.size() - 1){
             viewHolder.divider.setVisibility(View.GONE);
         }else
             viewHolder.divider.setVisibility(View.VISIBLE);
@@ -92,7 +95,7 @@ public class EditPunchListAdapter extends ArrayAdapter<String> {
 
     public static class ViewHolder {
 
-        public TextView keyView, nameView;
+        public TextView nameView, stringView;
         public ImageView divider, settings;
     }
 }

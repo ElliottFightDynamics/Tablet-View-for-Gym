@@ -121,7 +121,6 @@ public class TrainingFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                Log.e("Super", "position = " + position);
                 updateTab(position);
             }
 
@@ -156,7 +155,6 @@ public class TrainingFragment extends Fragment {
     private void updateTab(int position){
         switch (position) {
             case 0:
-                Log.e("Super", "update tab position = " + 0);
                 quickstartView.setTextColor(getResources().getColor(R.color.white));
                 timerView.setTextColor(getResources().getColor(R.color.orange));
                 combinationView.setTextColor(getResources().getColor(R.color.orange));
@@ -172,7 +170,6 @@ public class TrainingFragment extends Fragment {
                 plusBtn.setVisibility(View.INVISIBLE);
                 break;
             case 1:
-                Log.e("Super", "update tab position = " + 1);
                 quickstartView.setTextColor(getResources().getColor(R.color.orange));
                 timerView.setTextColor(getResources().getColor(R.color.white));
                 combinationView.setTextColor(getResources().getColor(R.color.orange));
@@ -188,7 +185,6 @@ public class TrainingFragment extends Fragment {
                 plusBtn.setVisibility(View.INVISIBLE);
                 break;
             case 2:
-                Log.e("Super", "update tab position = " + 2);
                 quickstartView.setTextColor(getResources().getColor(R.color.orange));
                 timerView.setTextColor(getResources().getColor(R.color.orange));
                 combinationView.setTextColor(getResources().getColor(R.color.white));
@@ -205,7 +201,6 @@ public class TrainingFragment extends Fragment {
 
                 break;
             case 3:
-                Log.e("Super", "update tab position = " + 3);
                 quickstartView.setTextColor(getResources().getColor(R.color.orange));
                 timerView.setTextColor(getResources().getColor(R.color.orange));
                 combinationView.setTextColor(getResources().getColor(R.color.orange));
@@ -221,7 +216,6 @@ public class TrainingFragment extends Fragment {
                 plusBtn.setVisibility(View.VISIBLE);
                 break;
             case 4:
-                Log.e("Super", "update tab position = " + 4);
                 quickstartView.setTextColor(getResources().getColor(R.color.orange));
                 timerView.setTextColor(getResources().getColor(R.color.orange));
                 combinationView.setTextColor(getResources().getColor(R.color.orange));

@@ -4,8 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class SetsDTO implements Serializable{
+    private int id;
     private String name;
-    private ArrayList<Integer> comboPositionlists;
+    private ArrayList<Integer> comboIDLists;   //this is array of combination id
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -15,18 +24,19 @@ public class SetsDTO implements Serializable{
         this.name = name;
     }
 
-    public  ArrayList<Integer> getComboPositionlists() {
-        return comboPositionlists;
+    public  ArrayList<Integer> getComboIDLists() {
+        return comboIDLists;
     }
 
-    public void setComboPositionlists( ArrayList<Integer> comboPositionlists) {
-        this.comboPositionlists = comboPositionlists;
+    public void setComboIDLists( ArrayList<Integer> comboIDLists) {
+        this.comboIDLists = comboIDLists;
     }
 
-    public SetsDTO(String name, ArrayList<Integer> comboPositionlists) {
+    public SetsDTO(String name, ArrayList<Integer> comboIDLists, int id) {
         super();
+        this.id = id;
         this.name = name;
-        this.comboPositionlists = comboPositionlists;
+        this.comboIDLists = comboIDLists;
     }
 
     public SetsDTO(){

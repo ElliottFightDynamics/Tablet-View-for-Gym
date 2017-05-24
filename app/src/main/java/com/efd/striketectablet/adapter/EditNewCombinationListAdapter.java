@@ -10,47 +10,41 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.training.combination.NewCombinationActivity;
-import com.efd.striketectablet.activity.training.sets.NewSetRoutineActivity;
 import com.efd.striketectablet.util.ComboSetUtil;
-import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 
-public class EditComboListAdapter extends ArrayAdapter<Integer> {
+public class EditNewCombinationListAdapter extends ArrayAdapter<String> {
 
     Context mContext;
     LayoutInflater inflater;
-    private ArrayList<Integer> positionLists;
-    NewSetRoutineActivity setRoutineActivity;
-
-    ArrayList<ComboDTO> comboLists;
+    private ArrayList<String> keylist;
+    NewCombinationActivity combinationActivity;
 //
-    public EditComboListAdapter(Context context, ArrayList<Integer> positionLists){
-        super(context, 0, positionLists);
+    public EditNewCombinationListAdapter(Context context, ArrayList<String> keylist){
+        super(context, 0, keylist);
 
         mContext = context;
-        setRoutineActivity = (NewSetRoutineActivity)context;
-        this.positionLists = positionLists;
-        comboLists = SharedPreferencesUtils.getSavedCombinationList(setRoutineActivity);
+        combinationActivity = (NewCombinationActivity)context;
+        this.keylist = keylist;
         inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setData (ArrayList<Integer> positionLists){
-        this.positionLists = positionLists;
+    public void setData (ArrayList<String> keylist){
+        this.keylist = keylist;
     }
 
     @Override
     public int getCount() {
-        return positionLists.size() ;
+        return keylist.size() ;
     }
 
     @Nullable
     @Override
-    public Integer getItem(int position) {
-        return positionLists.get(position);
+    public String getItem(int position) {
+        return keylist.get(position);
     }
 
     @Override
@@ -65,10 +59,10 @@ public class EditComboListAdapter extends ArrayAdapter<Integer> {
         final ViewHolder viewHolder;
 
         if (convertView == null){
-            convertView = inflater.inflate(R.layout.item_combodetail, null);
+            convertView = inflater.inflate(R.layout.item_addpunch_list, null);
             viewHolder = new ViewHolder();
-            viewHolder.stringView = (TextView)convertView.findViewById(R.id.combo_string);
-            viewHolder.nameView = (TextView)convertView.findViewById(R.id.combo_name);
+            viewHolder.keyView = (TextView)convertView.findViewById(R.id.key);
+            viewHolder.nameView = (TextView)convertView.findViewById(R.id.name);
             viewHolder.divider = (ImageView)convertView.findViewById(R.id.divider);
             viewHolder.settings = (ImageView)convertView.findViewById(R.id.settings);
             convertView.setTag(viewHolder);
@@ -76,20 +70,18 @@ public class EditComboListAdapter extends ArrayAdapter<Integer> {
             viewHolder = (ViewHolder)convertView.getTag();
         }
 
-        int comboposition = getItem(position);
-        ComboDTO comboDTO = comboLists.get(comboposition);
-
-        viewHolder.nameView.setText(comboDTO.getName());
-        viewHolder.stringView.setText(comboDTO.getCombos());
+        String key = getItem(position);
+        viewHolder.keyView.setText(key);
+        viewHolder.nameView.setText(ComboSetUtil.punchTypeMap.get(key));
 
         viewHolder.settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setRoutineActivity.showSettings(position);
+                combinationActivity.showSettings(position);
             }
         });
 
-        if (position == positionLists.size() - 1){
+        if (position == keylist.size() - 1){
             viewHolder.divider.setVisibility(View.GONE);
         }else
             viewHolder.divider.setVisibility(View.VISIBLE);
@@ -99,7 +91,7 @@ public class EditComboListAdapter extends ArrayAdapter<Integer> {
 
     public static class ViewHolder {
 
-        public TextView nameView, stringView;
+        public TextView keyView, nameView;
         public ImageView divider, settings;
     }
 }

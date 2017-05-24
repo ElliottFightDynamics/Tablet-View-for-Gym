@@ -1,49 +1,21 @@
 package com.efd.striketectablet.activity.training.combination;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 
 import com.efd.striketectablet.DTO.ComboDTO;
-import com.efd.striketectablet.DTO.PresetDTO;
-import com.efd.striketectablet.DTO.SetsDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
-import com.efd.striketectablet.activity.training.quickstart.QuickStartTrainingActivity;
-import com.efd.striketectablet.activity.training.round.RoundTrainingActivity;
-import com.efd.striketectablet.adapter.ComboListAdapter;
-import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
-import com.efd.striketectablet.adapter.PresetListAdapter;
-import com.efd.striketectablet.customview.CustomButton;
-import com.efd.striketectablet.customview.CustomTextView;
-import com.efd.striketectablet.util.PresetUtil;
-import com.efd.striketectablet.util.StatisticUtil;
-import com.efd.striketectablet.utilities.EFDConstants;
+import com.efd.striketectablet.adapter.CombinationListAdapter;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
 import java.util.ArrayList;
-
-import kankan.wheel.widget.OnWheelChangedListener;
-import kankan.wheel.widget.WheelView;
-import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 
 public class CombinationFragment extends Fragment {
 
@@ -52,7 +24,7 @@ public class CombinationFragment extends Fragment {
 
     MainActivity mainActivityInstance;
 
-    ComboListAdapter comboAdapter;
+    CombinationListAdapter comboAdapter;
 
 
     ArrayList<ComboDTO> comboDatas;
@@ -87,7 +59,7 @@ public class CombinationFragment extends Fragment {
     private void initViews(){
         comboListView = (ListView)view.findViewById(R.id.combo_listview);
 
-        comboAdapter = new ComboListAdapter(mainActivityInstance, comboDatas);
+        comboAdapter = new CombinationListAdapter(mainActivityInstance, comboDatas);
         comboListView.setAdapter(comboAdapter);
     }
 

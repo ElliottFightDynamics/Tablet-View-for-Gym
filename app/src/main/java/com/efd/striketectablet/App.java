@@ -23,7 +23,7 @@ public class App extends MultiDexApplication {
         context = getApplicationContext();
         StatisticUtil.init(context);
         PresetUtil.init();
-        ComboSetUtil.init();
+        ComboSetUtil.init(context);
     }
 
     @Override

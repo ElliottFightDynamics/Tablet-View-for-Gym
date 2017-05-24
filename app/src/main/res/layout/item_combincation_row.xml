@@ -18,15 +18,23 @@
             android:layout_height="50dp"
             android:orientation="horizontal">
 
+            <!--<CheckedTextView-->
+                <!--android:id="@+id/checkbox"-->
+                <!--android:layout_width="25dp"-->
+                <!--android:layout_height="25dp"-->
+                <!--android:background="@drawable/checkbox"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:clickable="false"-->
+                <!--android:layout_marginRight="10dp"/>-->
+
             <com.efd.striketectablet.customview.CustomTextView
-                android:layout_marginLeft="10dp"
                 android:id="@+id/combo_name"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:textColor="@color/white"
-                android:textSize="25sp"
+                android:textSize="30sp"
                 android:text="Attack">
 
             </com.efd.striketectablet.customview.CustomTextView>
@@ -38,23 +46,23 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:textColor="@color/comboset_divider"
-                android:textSize="20sp"
+                android:textSize="25sp"
                 android:text="1-2-SR-2-3-2-5-6-3-2"/>
 
             <!--<com.efd.striketectablet.customview.CustomTextView-->
                 <!--android:id="@+id/combo_range"-->
                 <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="0.8"-->
+                <!--android:layout_weight="1"-->
                 <!--android:layout_height="match_parent"-->
                 <!--android:gravity="center_vertical|end"-->
                 <!--android:textColor="@color/comboset_divider"-->
-                <!--android:textSize="20sp"-->
+                <!--android:textSize="25sp"-->
                 <!--android:text="Short-range"/>-->
 
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/settings"
+            android:id="@+id/combo_settings"
             android:adjustViewBounds="true"
             android:layout_width="30dp"
             android:layout_height="30dp"

@@ -18,20 +18,19 @@ import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.DTO.SetsDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.activity.training.sets.NewSetRoutineActivity;
 import com.efd.striketectablet.activity.training.sets.SetsFragment;
 import com.efd.striketectablet.customview.CustomTextView;
-import com.efd.striketectablet.util.StatisticUtil;
+import com.efd.striketectablet.util.ComboSetUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 
-public class SetListAdapter extends ArrayAdapter<SetsDTO> {
+public class SetRoutineListAdapter extends ArrayAdapter<SetsDTO> {
 
     Context mContext;
     LayoutInflater inflater;
@@ -39,11 +38,10 @@ public class SetListAdapter extends ArrayAdapter<SetsDTO> {
     SetsFragment setsFragment;
 
     ArrayList<SetsDTO> setLists;
-    private SparseBooleanArray checkedList = new SparseBooleanArray();
 
     private int currentPosition = 0;
 
-    public SetListAdapter(Context context, ArrayList<SetsDTO> setLists, SetsFragment setsFragment){
+    public SetRoutineListAdapter(Context context, ArrayList<SetsDTO> setLists, SetsFragment setsFragment){
         super(context, 0, setLists);
 
         mContext = context;
@@ -55,7 +53,6 @@ public class SetListAdapter extends ArrayAdapter<SetsDTO> {
 
     public void setData(ArrayList<SetsDTO> setLists){
         this.setLists = setLists;
-        initCheck();
     }
 
     @Nullable
@@ -76,12 +73,11 @@ public class SetListAdapter extends ArrayAdapter<SetsDTO> {
         final ViewHolder viewHolder;
 
         if (convertView == null){
-            convertView = inflater.inflate(R.layout.item_setlist, null);
+            convertView = inflater.inflate(R.layout.item_setroutine_row, null);
             viewHolder = new ViewHolder();
             viewHolder.parentView = (LinearLayout)convertView.findViewById(R.id.set_parent);
             viewHolder.setNameView = (CustomTextView)convertView.findViewById(R.id.set_name);
             viewHolder.settingsView = (ImageView)convertView.findViewById(R.id.set_settings);
-            viewHolder.checkView = (CheckedTextView)convertView.findViewById(R.id.checkbox);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
@@ -96,26 +92,12 @@ public class SetListAdapter extends ArrayAdapter<SetsDTO> {
             viewHolder.parentView.setBackgroundColor(mContext.getResources().getColor(R.color.transparent));
         }
 
-//        viewHolder.comboNameView.setText(comboDTO.getName());
-//        viewHolder.comboStringView.setText(comboDTO.getCombos());
-
         viewHolder.setNameView.setText(setsDTO.getName());
-
-        Boolean checked = checkedList.get(position);
-        viewHolder.checkView.setChecked(checked);
-
-//        if (comboDTO.getRange() == 0){
-//            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.shortrange));
-//        }else if(comboDTO.getRange() == 1){
-//            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.midrange));
-//        }else {
-//            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.longrange));
-//        }
 
         viewHolder.settingsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSettings(position);
+                showSettings(setsDTO);
 
             }
         });
@@ -123,8 +105,10 @@ public class SetListAdapter extends ArrayAdapter<SetsDTO> {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentPosition = position;
-                toggleCheck(position);
+                if (currentPosition != position) {
+                    currentPosition = position;
+                    notifyDataSetChanged();
+                }
             }
         });
 
@@ -136,39 +120,13 @@ public class SetListAdapter extends ArrayAdapter<SetsDTO> {
         public LinearLayout parentView;
         public CustomTextView setNameView;
         public ImageView settingsView;
-        public CheckedTextView checkView;
     }
 
-    public ArrayList<Integer> getCheckedPositions() {
-        ArrayList<Integer> checkedPositions = new ArrayList<Integer>();
-
-        for (int i = 0; i < checkedList.size(); i++) {
-            if (checkedList.get(i)) {
-                checkedPositions.add(i);
-            }
-        }
-
-        return checkedPositions;
+    public int getCurrentPosition(){
+        return currentPosition;
     }
 
-    private void initCheck(){
-        for (int i = 0; i< setLists.size(); i++){
-            checkedList.put(i, false);
-        }
-    }
-
-    private void toggleCheck(int pos){
-        if (checkedList.get(pos)) {
-            checkedList.put(pos, false);
-        } else {
-            checkedList.put(pos, true);
-        }
-
-        notifyDataSetChanged();
-
-    }
-
-    public void showSettings(final int position){
+    public void showSettings(final SetsDTO setsDTO){
         final Dialog dialog = new Dialog(mainActivity);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
@@ -183,33 +141,18 @@ public class SetListAdapter extends ArrayAdapter<SetsDTO> {
         dialog.setContentView(R.layout.dialog_comboset);
 
         CustomTextView editView, deleteView;
-//        shareView = (CustomTextView)dialog.findViewById(R.id.combo_share);
-//        shareView.setText(mainActivity.getResources().getString(R.string.share));
         editView = (CustomTextView)dialog.findViewById(R.id.combo_edit);
         editView.setText(mainActivity.getResources().getString(R.string.edit));
 
         deleteView = (CustomTextView)dialog.findViewById(R.id.combo_delete);
         deleteView.setText(mainActivity.getResources().getString(R.string.delete));
 
-//        shareView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (setsDTO != null){
-//                    StatisticUtil.showToastMessage("Share Set: " + setsDTO.getName());
-//                }else {
-//                    StatisticUtil.showToastMessage("Invalid Data");
-//                }
-//
-//                dialog.dismiss();
-//            }
-//        });
-
         editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent editSetIntent = new Intent(mainActivity, NewSetRoutineActivity.class);
                 editSetIntent.putExtra(EFDConstants.EDIT_SETS, true);
-                editSetIntent.putExtra(EFDConstants.EDIT_SETPOSITION, position);
+                editSetIntent.putExtra(EFDConstants.EDIT_SETID, setsDTO.getId());
                 mainActivity.startActivity(editSetIntent);
                 mainActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
@@ -220,11 +163,12 @@ public class SetListAdapter extends ArrayAdapter<SetsDTO> {
         deleteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<SetsDTO> setsDTOs = SharedPreferencesUtils.getSavedSetList(mainActivity);
-                setsDTOs.remove(position);
-                SharedPreferencesUtils.saveSetList(mainActivity, setsDTOs);
 
-                setsDTOs.remove(position);
+                ComboSetUtil.deleteSetDto(setsDTO);
+                setLists.remove(setsDTO);
+
+                if (currentPosition >= setLists.size())
+                    currentPosition = 0;
                 notifyDataSetChanged();
 
                 dialog.dismiss();

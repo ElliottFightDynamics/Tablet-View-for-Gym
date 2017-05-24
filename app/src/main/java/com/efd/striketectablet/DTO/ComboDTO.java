@@ -4,10 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ComboDTO implements Serializable{
+    private int id;
     private String name;
     private String combos;
     private ArrayList<String> comboTypes;
-//    private int range;  //0: short-range, 1: middle-range, 2: long-range
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -42,8 +50,9 @@ public class ComboDTO implements Serializable{
 //        this.range = range;
 //    }
 
-    public ComboDTO(String name, ArrayList<String> comboTypes ){//}, int range) {
+    public ComboDTO(String name, ArrayList<String> comboTypes, int id ){//}, int range) {
         super();
+        this.id = id;
         this.name = name;
         this.comboTypes = comboTypes;
 //        this.range = range;

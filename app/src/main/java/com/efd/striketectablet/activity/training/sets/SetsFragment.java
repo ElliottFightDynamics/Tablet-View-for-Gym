@@ -1,30 +1,19 @@
 package com.efd.striketectablet.activity.training.sets;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ShareCompat;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ListView;
 
-import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.DTO.SetsDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
-import com.efd.striketectablet.adapter.ComboListAdapter;
-import com.efd.striketectablet.adapter.SetDetailListAdapter;
-import com.efd.striketectablet.adapter.SetListAdapter;
-import com.efd.striketectablet.customview.CustomTextView;
-import com.efd.striketectablet.util.StatisticUtil;
+import com.efd.striketectablet.adapter.SetRoutineCombinationListAdapter;
+import com.efd.striketectablet.adapter.SetRoutineListAdapter;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
 import java.util.ArrayList;
@@ -36,8 +25,8 @@ public class SetsFragment extends Fragment {
 
     MainActivity mainActivityInstance;
 
-    SetListAdapter setAdapter;
-    SetDetailListAdapter detailListAdapter;
+    SetRoutineListAdapter setAdapter;
+    SetRoutineCombinationListAdapter detailListAdapter;
 
     ArrayList<SetsDTO> setsDatas;
     ArrayList<Integer> comboDTOs;
@@ -73,11 +62,11 @@ public class SetsFragment extends Fragment {
     private void initViews(){
         setListView = (ListView)view.findViewById(R.id.set_listview);
 
-        setAdapter = new SetListAdapter(mainActivityInstance, setsDatas, this);
+        setAdapter = new SetRoutineListAdapter(mainActivityInstance, setsDatas, this);
         setListView.setAdapter(setAdapter);
 
         setdetailListView = (ListView)view.findViewById(R.id.combo_listview);
-        detailListAdapter = new SetDetailListAdapter(mainActivityInstance, comboDTOs);
+        detailListAdapter = new SetRoutineCombinationListAdapter(mainActivityInstance, comboDTOs);
         setdetailListView.setAdapter(detailListAdapter);
 
 
@@ -88,8 +77,12 @@ public class SetsFragment extends Fragment {
             comboDTOs.clear();
         }
 
-        comboDTOs.addAll(setsDTO.getComboPositionlists());
-        detailListAdapter.setData(comboDTOs);
+        if (setsDTO == null){
+            detailListAdapter.notifyDataSetChanged();
+            return;
+        }
+
+        comboDTOs.addAll(setsDTO.getComboIDLists());
         detailListAdapter.notifyDataSetChanged();
     }
 
@@ -101,6 +94,10 @@ public class SetsFragment extends Fragment {
 
         setsDatas.addAll(SharedPreferencesUtils.getSavedSetList(mainActivityInstance));
         setAdapter.notifyDataSetChanged();
+
+        if (setsDatas.size() == 0){
+            updateDetail(null);
+        }
     }
 
     @Override

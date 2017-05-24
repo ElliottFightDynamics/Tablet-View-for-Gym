@@ -20,8 +20,8 @@ import android.widget.TextView;
 
 import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.R;
-import com.efd.striketectablet.adapter.EditPunchListAdapter;
-import com.efd.striketectablet.adapter.PunchListAdapter;
+import com.efd.striketectablet.adapter.EditNewCombinationListAdapter;
+import com.efd.striketectablet.adapter.PopupPunchListAdapter;
 import com.efd.striketectablet.util.ComboSetUtil;
 import com.efd.striketectablet.util.StatisticUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
@@ -39,12 +39,12 @@ public class NewCombinationActivity extends AppCompatActivity {
 
     LinearLayout punchkeyParentView;
     ListView punchdetailListView;
-    EditPunchListAdapter detailAdapter;
+    EditNewCombinationListAdapter detailAdapter;
 
     ArrayList<String> punchKeyLists;
 
     boolean editmode = false;
-    int comboDtoIndex = -1;
+    int comboID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class NewCombinationActivity extends AppCompatActivity {
 
         editmode = getIntent().getBooleanExtra(EFDConstants.EDIT_COMBINATION, false);
         if (editmode){
-            comboDtoIndex = getIntent().getIntExtra(EFDConstants.EDIT_COMBOPOSITION, -1);
+            comboID = getIntent().getIntExtra(EFDConstants.EDIT_COMBOID, -1);
         }
 
         punchKeyLists = new ArrayList<>();
@@ -99,7 +99,7 @@ public class NewCombinationActivity extends AppCompatActivity {
         punchkeyParentView = (LinearLayout)findViewById(R.id.punck_key_parent);
         punchdetailListView = (ListView) findViewById(R.id.punch_detail);
 
-        detailAdapter = new EditPunchListAdapter(this, punchKeyLists);
+        detailAdapter = new EditNewCombinationListAdapter(this, punchKeyLists);
         punchdetailListView.setAdapter(detailAdapter);
 
         updateSaveBtn();
@@ -115,8 +115,6 @@ public class NewCombinationActivity extends AppCompatActivity {
     }
 
     private void saveCombination(){
-        ArrayList<ComboDTO> comboDTOs = SharedPreferencesUtils.getSavedCombinationList(this);
-
         if (TextUtils.isEmpty(comboName.getText().toString())){
             StatisticUtil.showToastMessage("Combincation name can't be empty");
             return;
@@ -127,22 +125,19 @@ public class NewCombinationActivity extends AppCompatActivity {
             return;
         }
 
-        ComboDTO comboDTO = new ComboDTO(comboName.getText().toString(), punchKeyLists);
-
         if (editmode){
-            comboDTOs.set(comboDtoIndex, comboDTO);
-            SharedPreferencesUtils.saveCombinationList(this, comboDTOs);
+            ComboDTO comboDTO = new ComboDTO(comboName.getText().toString(), punchKeyLists, comboID);
+            ComboSetUtil.updateComboDto(comboDTO);
         }else {
-            comboDTOs.add(comboDTO);
-            SharedPreferencesUtils.saveCombinationList(this, comboDTOs);
+            ComboDTO comboDTO = new ComboDTO(comboName.getText().toString(), punchKeyLists, SharedPreferencesUtils.increaseComboID(this));
+            ComboSetUtil.addComboDto(comboDTO);
         }
 
         finish();
     }
 
     private void loadComboDetail(){
-        ArrayList<ComboDTO> comboDTOs = SharedPreferencesUtils.getSavedCombinationList(this);
-        ComboDTO comboDTO = comboDTOs.get(comboDtoIndex);
+        ComboDTO comboDTO = ComboSetUtil.getComboDtowithID(comboID);
 
         if (comboDTO != null){
             comboName.setText(comboDTO.getName());
@@ -230,7 +225,7 @@ public class NewCombinationActivity extends AppCompatActivity {
     }
 
 //    private void addPunchDetailChildView(String key){
-//        final LinearLayout newLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.item_punchdetail, null);
+//        final LinearLayout newLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.item_addpunch_list, null);
 //        TextView keyView = (TextView)newLayout.findViewById(R.id.key);
 //        TextView nameView = (TextView)newLayout.findViewById(R.id.name);
 //
@@ -314,7 +309,7 @@ public class NewCombinationActivity extends AppCompatActivity {
 
         TextView cancelView = (TextView)dialog.findViewById(R.id.cancel_btn);
         final ListView punchListsView = (ListView)dialog.findViewById(R.id.comboset_listview);
-        final PunchListAdapter adapter = new PunchListAdapter(this, ComboSetUtil.keyLists);
+        final PopupPunchListAdapter adapter = new PopupPunchListAdapter(this, ComboSetUtil.keyLists);
         punchListsView.setAdapter(adapter);
 
         punchListsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

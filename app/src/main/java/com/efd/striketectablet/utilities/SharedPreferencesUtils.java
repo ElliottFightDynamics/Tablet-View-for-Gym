@@ -99,5 +99,21 @@ public class SharedPreferencesUtils {
         return results;
     }
 
+    public static int increaseComboID(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        int currentComboID = sharedPreferences.getInt(EFDConstants.COMBO_ID, 0);
+        currentComboID++;
+        sharedPreferences.edit().putInt(EFDConstants.COMBO_ID, currentComboID).commit();
 
+        return currentComboID;
+    }
+
+    public static int increaseSetID(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        int currentSetId = sharedPreferences.getInt(EFDConstants.SET_ID, 0);
+        currentSetId++;
+        sharedPreferences.edit().putInt(EFDConstants.SET_ID, currentSetId).commit();
+
+        return currentSetId;
+    }
 }

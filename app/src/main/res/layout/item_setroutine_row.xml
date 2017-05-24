@@ -18,16 +18,16 @@
             android:layout_height="50dp"
             android:orientation="horizontal">
 
-            <CheckedTextView
-                android:id="@+id/checkbox"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/checkbox"
-                android:layout_gravity="center_vertical"
-                android:clickable="false" />
+            <!--<CheckedTextView-->
+                <!--android:id="@+id/checkbox"-->
+                <!--android:layout_width="25dp"-->
+                <!--android:layout_height="25dp"-->
+                <!--android:background="@drawable/checkbox"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:clickable="false" />-->
 
             <com.efd.striketectablet.customview.CustomTextView
-                android:layout_marginLeft="10dp"
                 android:id="@+id/set_name"
                 android:layout_width="0dp"
                 android:layout_weight="1"

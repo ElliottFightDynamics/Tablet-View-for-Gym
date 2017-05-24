@@ -19,8 +19,9 @@ import android.widget.TextView;
 
 import com.efd.striketectablet.DTO.SetsDTO;
 import com.efd.striketectablet.R;
-import com.efd.striketectablet.adapter.AddComboListAdapter;
-import com.efd.striketectablet.adapter.EditComboListAdapter;
+import com.efd.striketectablet.adapter.PopupCombinationListAdapter;
+import com.efd.striketectablet.adapter.EditNewSetRoutineListAdapter;
+import com.efd.striketectablet.util.ComboSetUtil;
 import com.efd.striketectablet.util.StatisticUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
@@ -37,12 +38,12 @@ public class NewSetRoutineActivity extends AppCompatActivity {
 
 //    LinearLayout punchkeyParentView;
     ListView combodetailListView;
-    EditComboListAdapter detailAdapter;
+    EditNewSetRoutineListAdapter detailAdapter;
 
-    ArrayList<Integer> comboPositionLists;
+    ArrayList<Integer> comboIDLists;
 
     boolean editmode = false;
-    int setDtoIndex = -1;
+    int setID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +54,10 @@ public class NewSetRoutineActivity extends AppCompatActivity {
 
         editmode = getIntent().getBooleanExtra(EFDConstants.EDIT_SETS, false);
         if (editmode){
-            setDtoIndex = getIntent().getIntExtra(EFDConstants.EDIT_SETPOSITION, -1);
+            setID = getIntent().getIntExtra(EFDConstants.EDIT_SETID, -1);
         }
 
-        comboPositionLists = new ArrayList<>();
+        comboIDLists = new ArrayList<>();
 
         initViews();
     }
@@ -75,7 +76,7 @@ public class NewSetRoutineActivity extends AppCompatActivity {
         addcomboView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showComboListDialog(comboPositionLists.size(), false);
+                showComboListDialog(comboIDLists.size(), false);
             }
         });
 
@@ -99,7 +100,7 @@ public class NewSetRoutineActivity extends AppCompatActivity {
 
         combodetailListView = (ListView) findViewById(R.id.combination_list);
 
-        detailAdapter = new EditComboListAdapter(this, comboPositionLists);
+        detailAdapter = new EditNewSetRoutineListAdapter(this, comboIDLists);
         combodetailListView.setAdapter(detailAdapter);
 
         updateSaveBtn();
@@ -115,48 +116,39 @@ public class NewSetRoutineActivity extends AppCompatActivity {
     }
 
     private void saveSets(){
-        ArrayList<SetsDTO> setsDTOs = SharedPreferencesUtils.getSavedSetList(this);
 
         if (TextUtils.isEmpty(setName.getText().toString())){
             StatisticUtil.showToastMessage("Combincation name can't be empty");
             return;
         }
 
-        if (comboPositionLists.size() == 0){
+        if (comboIDLists.size() == 0){
             StatisticUtil.showToastMessage("please add more than 1 punch");
             return;
         }
 
-        SetsDTO setsDTO = new SetsDTO(setName.getText().toString(), comboPositionLists);
-
         if (editmode){
-            setsDTOs.set(setDtoIndex, setsDTO);
-            SharedPreferencesUtils.saveSetList(this, setsDTOs);
+            SetsDTO setsDTO = new SetsDTO(setName.getText().toString(), comboIDLists, setID);
+            ComboSetUtil.updateSetDto(setsDTO);
         }else {
-            setsDTOs.add(setsDTO);
-            SharedPreferencesUtils.saveSetList(this, setsDTOs);
+            SetsDTO setsDTO = new SetsDTO(setName.getText().toString(), comboIDLists, SharedPreferencesUtils.increaseSetID(this));
+            ComboSetUtil.addSetDto(setsDTO);
         }
 
         finish();
     }
 
     private void loadSetDetail(){
-        ArrayList<SetsDTO> setsDTOs = SharedPreferencesUtils.getSavedSetList(this);
-        SetsDTO setsDTO = setsDTOs.get(setDtoIndex);
+        SetsDTO setsDTO = ComboSetUtil.getSetDtowithID(setID);
 
         if (setsDTO != null){
             setName.setText(setsDTO.getName());
 
-            if (comboPositionLists != null && comboPositionLists.size() > 0){
-                comboPositionLists.clear();
+            if (comboIDLists != null && comboIDLists.size() > 0){
+                comboIDLists.clear();
             }
 
-            comboPositionLists.addAll(setsDTO.getComboPositionlists());
-
-//            for (int i = 0; i <setsDTO.getComboPositionlists().size(); i++){
-//                comboPositionLists.add(setsDTO.getComboPositionlists().get(i));
-////                addPunckKeyChildView(i, setsDTO.getComboPositionlists().get(i));
-//            }
+            comboIDLists.addAll(setsDTO.getComboIDLists());
 
             detailAdapter.notifyDataSetChanged();
 
@@ -165,7 +157,7 @@ public class NewSetRoutineActivity extends AppCompatActivity {
     }
 
     private void updateSaveBtn(){
-        if (comboPositionLists.size() > 0){
+        if (comboIDLists.size() > 0){
             saveBtn.setBackgroundResource(R.drawable.orange_btn_bg);
             saveBtn.setTextColor(getResources().getColor(R.color.orange));
         }else {
@@ -173,72 +165,6 @@ public class NewSetRoutineActivity extends AppCompatActivity {
             saveBtn.setTextColor(getResources().getColor(R.color.black));
         }
     }
-
-//    private void addPunckKeyChildView(int position, String key){
-//        final LinearLayout newLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.item_punchkey, null);
-//        TextView keyView = (TextView)newLayout.findViewById(R.id.key);
-//
-//        if (position == 0){
-//            keyView.setBackgroundResource(R.drawable.punchkey_bg_first);
-//
-//            if (punchKeyLists.size() > 1){
-//                LinearLayout nextChild = (LinearLayout)punchkeyParentView.getChildAt(position);
-//                TextView nextkeyView = (TextView)nextChild.findViewById(R.id.key);
-//                nextkeyView.setBackgroundResource(R.drawable.punchkey_bg_later);
-//            }
-//
-//        }else
-//            keyView.setBackgroundResource(R.drawable.punchkey_bg_later);
-//
-//
-//        keyView.setText(key);
-//
-//        punchkeyParentView.addView(newLayout, position);
-////        punchkeyParentView.addView(newLayout);
-//    }
-
-//    private void removePunchKeyChildView(int position){
-//        LinearLayout childLayout = (LinearLayout)punchkeyParentView.getChildAt(position);
-//
-//        if (position == 0){
-//            if (punchKeyLists.size() > 1){
-//                LinearLayout nextChild = (LinearLayout)punchkeyParentView.getChildAt(1);
-//                TextView keyView = (TextView)nextChild.findViewById(R.id.key);
-//                keyView.setBackgroundResource(R.drawable.punchkey_bg_first);
-//            }
-//        }
-//
-//        punchkeyParentView.removeView(childLayout);
-//    }
-
-//    private void updatePunchKeyChildView(int position, String key){
-//        LinearLayout childLayout = (LinearLayout)punchkeyParentView.getChildAt(position);
-//        TextView keyView = (TextView)childLayout.findViewById(R.id.key);
-//        keyView.setText(key);
-//
-////        final LinearLayout newLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.item_punchkey, null);
-////        TextView keyView = (TextView)newLayout.findViewById(R.id.key);
-////        if (punchKeyLists.size() > 1){
-////            keyView.setBackgroundResource(R.drawable.punchkey_bg_later);
-////        }else
-////            keyView.setBackgroundResource(R.drawable.punchkey_bg_first);
-////
-////        keyView.setText(key);
-////
-////        punchkeyParentView.addView(newLayout, position);
-////        punchkeyParentView.addView(newLayout);
-//    }
-
-//    private void addPunchDetailChildView(String key){
-//        final LinearLayout newLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.item_punchdetail, null);
-//        TextView keyView = (TextView)newLayout.findViewById(R.id.key);
-//        TextView nameView = (TextView)newLayout.findViewById(R.id.name);
-//
-//        keyView.setText(key);
-//        nameView.setText(ComboSetUtil.punchTypeMap.get(key));
-//
-//        punchdetailParentView.addView(newLayout);
-//    }
 
     public void showSettings(final int position){
         final Dialog dialog = new Dialog(this);
@@ -289,9 +215,8 @@ public class NewSetRoutineActivity extends AppCompatActivity {
         deleteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                comboPositionLists.remove(position);
+                comboIDLists.remove(position);
                 detailAdapter.notifyDataSetChanged();
-//                removePunchKeyChildView(position);
                 dialog.dismiss();
             }
         });
@@ -319,7 +244,7 @@ public class NewSetRoutineActivity extends AppCompatActivity {
         TextView cancelView = (TextView)dialog.findViewById(R.id.cancel_btn);
         final ListView comboListsView = (ListView)dialog.findViewById(R.id.comboset_listview);
 
-        final AddComboListAdapter adapter = new AddComboListAdapter(this, SharedPreferencesUtils.getSavedCombinationList(this));
+        final PopupCombinationListAdapter adapter = new PopupCombinationListAdapter(this, SharedPreferencesUtils.getSavedCombinationList(this));
         comboListsView.setAdapter(adapter);
 
         comboListsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -328,11 +253,9 @@ public class NewSetRoutineActivity extends AppCompatActivity {
                 dialog.dismiss();
 
                 if (replace){
-                    comboPositionLists.set(comboposition, position);
-//                    updatePunchKeyChildView(comboposition, key);
+                    comboIDLists.set(comboposition, SharedPreferencesUtils.getSavedCombinationList(NewSetRoutineActivity.this).get(position).getId());
                 }else {
-                    comboPositionLists.add(comboposition, position);
-//                    addPunckKeyChildView(comboposition, key);
+                    comboIDLists.add(comboposition, SharedPreferencesUtils.getSavedCombinationList(NewSetRoutineActivity.this).get(position).getId());
                 }
 
                 detailAdapter.notifyDataSetChanged();

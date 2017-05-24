@@ -19,28 +19,28 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.efd.striketectablet.DTO.ComboDTO;
+import com.efd.striketectablet.DTO.SetsDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
-import com.efd.striketectablet.activity.training.combination.CombinationFragment;
 import com.efd.striketectablet.activity.training.combination.NewCombinationActivity;
+import com.efd.striketectablet.activity.training.sets.SetsFragment;
 import com.efd.striketectablet.customview.CustomTextView;
-import com.efd.striketectablet.util.StatisticUtil;
+import com.efd.striketectablet.util.ComboSetUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 
-public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
+public class CombinationListAdapter extends ArrayAdapter<ComboDTO> {
 
     Context mContext;
     LayoutInflater inflater;
     MainActivity mainActivity;
 
     ArrayList<ComboDTO> comboLists;
-    private SparseBooleanArray checkedList = new SparseBooleanArray();
+    private int currentPosition = 0;
 
-
-    public ComboListAdapter(Context context, ArrayList<ComboDTO> comboLists){
+    public CombinationListAdapter(Context context, ArrayList<ComboDTO> comboLists){
         super(context, 0, comboLists);
 
         mContext = context;
@@ -51,7 +51,6 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
 
     public void setData(ArrayList<ComboDTO> comboLists){
         this.comboLists = comboLists;
-        initCheck();
     }
 
     @Nullable
@@ -72,14 +71,12 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
         final ViewHolder viewHolder;
 
         if (convertView == null){
-            convertView = inflater.inflate(R.layout.item_combolist, null);
+            convertView = inflater.inflate(R.layout.item_combincation_row, null);
             viewHolder = new ViewHolder();
             viewHolder.parentView = (LinearLayout)convertView.findViewById(R.id.combo_parent);
             viewHolder.comboNameView = (CustomTextView)convertView.findViewById(R.id.combo_name);
             viewHolder.comboStringView = (CustomTextView)convertView.findViewById(R.id.combo_string);
-//            viewHolder.comboRangeView = (CustomTextView)convertView.findViewById(R.id.combo_range);
             viewHolder.settingsView = (ImageView)convertView.findViewById(R.id.combo_settings);
-            viewHolder.checkView = (CheckedTextView)convertView.findViewById(R.id.checkbox);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
@@ -87,8 +84,8 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
 
         final ComboDTO comboDTO = getItem(position);
 
-        if (position % 2 == 0){
-            viewHolder.parentView.setBackgroundColor(mContext.getResources().getColor(R.color.comboset_bg));
+        if (currentPosition == position){
+            viewHolder.parentView.setBackgroundColor(mContext.getResources().getColor(R.color.set_selectcolor));
         }else {
             viewHolder.parentView.setBackgroundColor(mContext.getResources().getColor(R.color.transparent));
         }
@@ -96,32 +93,28 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
         viewHolder.comboNameView.setText(comboDTO.getName());
         viewHolder.comboStringView.setText(comboDTO.getCombos());
 
-        Boolean checked = checkedList.get(position);
-        viewHolder.checkView.setChecked(checked);
-
-//        if (comboDTO.getRange() == 0){
-//            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.shortrange));
-//        }else if(comboDTO.getRange() == 1){
-//            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.midrange));
-//        }else {
-//            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.longrange));
-//        }
-
         viewHolder.settingsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSettings(position);
+                showSettings(comboDTO);
             }
         });
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleCheck(position);
+                if (currentPosition != position) {
+                    currentPosition = position;
+                    notifyDataSetChanged();
+                }
             }
         });
 
         return convertView;
+    }
+
+    public int getCurrentPosition(){
+        return currentPosition;
     }
 
     public static class ViewHolder {
@@ -129,39 +122,9 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
         public LinearLayout parentView;
         public CustomTextView comboNameView, comboStringView;//, comboRangeView;
         public ImageView settingsView;
-        public CheckedTextView checkView;
     }
 
-    public ArrayList<Integer> getCheckedPositions() {
-        ArrayList<Integer> checkedPositions = new ArrayList<Integer>();
-
-        for (int i = 0; i < checkedList.size(); i++) {
-            if (checkedList.get(i)) {
-                checkedPositions.add(i);
-            }
-        }
-
-        return checkedPositions;
-    }
-
-    private void initCheck(){
-        for (int i = 0; i< comboLists.size(); i++){
-            checkedList.put(i, false);
-        }
-    }
-
-    private void toggleCheck(int pos){
-        if (checkedList.get(pos)) {
-            checkedList.put(pos, false);
-        } else {
-            checkedList.put(pos, true);
-        }
-
-        notifyDataSetChanged();
-
-    }
-
-    public void showSettings(final int position){
+    public void showSettings(final ComboDTO comboDTO){
         final Dialog dialog = new Dialog(mainActivity);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
@@ -176,33 +139,18 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
         dialog.setContentView(R.layout.dialog_comboset);
 
         final CustomTextView  editView, deleteView;
-//        shareView = (CustomTextView)dialog.findViewById(R.id.combo_share);
-//        shareView.setText(mainActivity.getResources().getString(R.string.share));
         editView = (CustomTextView)dialog.findViewById(R.id.combo_edit);
         editView.setText(mainActivity.getResources().getString(R.string.edit));
 
         deleteView = (CustomTextView)dialog.findViewById(R.id.combo_delete);
         deleteView.setText(mainActivity.getResources().getString(R.string.delete));
 
-//        shareView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (comboDTO != null){
-//                    StatisticUtil.showToastMessage("Share Combo: " + comboDTO.getName());
-//                }else {
-//                    StatisticUtil.showToastMessage("Invalid Data");
-//                }
-//
-//                dialog.dismiss();
-//            }
-//        });
-
         editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent editComboIntent = new Intent(mainActivity, NewCombinationActivity.class);
                 editComboIntent.putExtra(EFDConstants.EDIT_COMBINATION, true);
-                editComboIntent.putExtra(EFDConstants.EDIT_COMBOPOSITION, position);
+                editComboIntent.putExtra(EFDConstants.EDIT_COMBOID, comboDTO.getId());
                 mainActivity.startActivity(editComboIntent);
 
                 mainActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -214,14 +162,20 @@ public class ComboListAdapter extends ArrayAdapter<ComboDTO> {
         deleteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<ComboDTO> comboDTOs = SharedPreferencesUtils.getSavedCombinationList(mainActivity);
-                comboDTOs.remove(position);
-                SharedPreferencesUtils.saveCombinationList(mainActivity, comboDTOs);
+                ComboSetUtil.deleteComboDto(comboDTO);
 
-                comboLists.remove(position);
+                comboLists.remove(comboDTO);
+                if (currentPosition >= comboLists.size())
+                    currentPosition = 0;
+
                 notifyDataSetChanged();
-
                 dialog.dismiss();
+
+                //delete combo from set
+                ComboSetUtil.deleteComboFromAllSets(comboDTO);
+
+                if (SetsFragment.setsFragment != null)
+                    SetsFragment.setsFragment.onResume();
             }
         });
 
