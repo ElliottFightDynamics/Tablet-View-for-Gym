@@ -89,7 +89,7 @@
     <!--new combination activity-->
     <string name="new_combination_title">NEW COMBINATION</string>
     <string name="edit_combination_title">EDIT COMBINATION</string>
-    <string name="combination_name">COMNINATION NAME</string>
+    <string name="combination_name">COMBINATION NAME</string>
     <string name="listofpunches">LIST OF PUNCHES</string>
     <string name="addpunch">ADD PUNCH</string>
     <string name="save">SAVE</string>
@@ -98,13 +98,13 @@
 
     <!--edit comboset-->
     <string name="replace_punch">Replace punch</string>
-    <string name="replace_combo">Replace Combincation</string>
+    <string name="replace_combo">Replace Combination</string>
     <string name="insert_above">Insert above</string>
     <string name="insert_below">Insert below</string>
 
     <!--new set routine activity-->
     <string name="new_set_title">SET ROUTINE CREATE</string>
-    <string name="edit_set_title">SET ROUNTINE EDIT</string>
+    <string name="edit_set_title">SET ROUTINE EDIT</string>
     <string name="set_name">SET ROUTINE NAME</string>
     <string name="listofcombinations">LIST OF COMBINATIONS</string>
     <string name="addcombo">ADD COMBINATION</string>
