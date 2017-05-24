@@ -9,42 +9,41 @@
     android:background="@color/preset_popup_bg"
     android:orientation="vertical">
 
-    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--&gt;-->
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
 
-        <!--<com.efd.striketectablet.customview.CustomTextView-->
-            <!--android:id="@+id/combo_share"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="@string/share"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="25sp">-->
+        <com.efd.striketectablet.customview.CustomTextView
+            android:id="@+id/replace"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@string/replace_punch"
+            android:textColor="@color/white"
+            android:textSize="25sp">
 
-        <!--</com.efd.striketectablet.customview.CustomTextView>-->
+        </com.efd.striketectablet.customview.CustomTextView>
 
-        <!--<ImageView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:background="@drawable/separator"-->
-            <!--android:layout_alignParentBottom="true"/>-->
-    <!--</RelativeLayout>-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/separator"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-
-        android:background="@color/preset_selected_bg">
+        >
 
         <com.efd.striketectablet.customview.CustomTextView
-            android:id="@+id/combo_edit"
+            android:id="@+id/insert_above"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="@string/edit"
+            android:text="@string/insert_above"
             android:textColor="@color/white"
             android:textSize="25sp">
 
@@ -64,7 +63,31 @@
         >
 
         <com.efd.striketectablet.customview.CustomTextView
-            android:id="@+id/combo_delete"
+            android:id="@+id/insert_below"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@string/insert_below"
+            android:textColor="@color/white"
+            android:textSize="25sp">
+
+        </com.efd.striketectablet.customview.CustomTextView>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/separator"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
+
+        <com.efd.striketectablet.customview.CustomTextView
+            android:id="@+id/delete"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"

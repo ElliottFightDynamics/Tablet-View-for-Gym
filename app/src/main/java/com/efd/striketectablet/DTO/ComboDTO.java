@@ -7,7 +7,7 @@ public class ComboDTO implements Serializable{
     private String name;
     private String combos;
     private ArrayList<String> comboTypes;
-    private int range;  //0: short-range, 1: middle-range, 2: long-range
+//    private int range;  //0: short-range, 1: middle-range, 2: long-range
 
     public String getName() {
         return name;
@@ -34,19 +34,19 @@ public class ComboDTO implements Serializable{
         this.combos = getCombosFromComboTypes(comboTypes);
     }
 
-    public int getRange() {
-        return range;
-    }
+//    public int getRange() {
+//        return range;
+//    }
+//
+//    public void setRange(int range) {
+//        this.range = range;
+//    }
 
-    public void setRange(int range) {
-        this.range = range;
-    }
-
-    public ComboDTO(String name, ArrayList<String> comboTypes, int range) {
+    public ComboDTO(String name, ArrayList<String> comboTypes ){//}, int range) {
         super();
         this.name = name;
         this.comboTypes = comboTypes;
-        this.range = range;
+//        this.range = range;
         this.combos = getCombosFromComboTypes(comboTypes);
     }
 

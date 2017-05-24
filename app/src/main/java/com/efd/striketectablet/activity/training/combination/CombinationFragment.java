@@ -89,45 +89,20 @@ public class CombinationFragment extends Fragment {
 
         comboAdapter = new ComboListAdapter(mainActivityInstance, comboDatas);
         comboListView.setAdapter(comboAdapter);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
         loadComboDatas();
     }
 
     private void loadComboDatas(){
-        //maybe combo datas will be saved in preferences
-        ArrayList<String> comboTypes = new ArrayList<>();
-        comboTypes.add("1");
-        comboTypes.add("2");
-        comboTypes.add("SR");
-        comboTypes.add("2");
-        comboTypes.add("4");
-        comboTypes.add("SL");
-        comboTypes.add("7");
-        comboTypes.add("5");
-        comboTypes.add("DL");
-        comboTypes.add("DR");
 
-        ComboDTO comboDTO = new ComboDTO("Attack", comboTypes, 0);
-        ComboDTO comboDTO1 = new ComboDTO("Crafty", comboTypes, 2);
-        ComboDTO comboDTO2 = new ComboDTO("Left overs", comboTypes, 1);
-        ComboDTO comboDTO3 = new ComboDTO("Defensive", comboTypes, 2);
-        ComboDTO comboDTO4 = new ComboDTO("Movement", comboTypes, 0);
-        ComboDTO comboDTO5 = new ComboDTO("Super Banger", comboTypes, 2);
-        ComboDTO comboDTO6 = new ComboDTO("Nitro", comboTypes, 1);
-        ComboDTO comboDTO7 = new ComboDTO("Custom1", comboTypes, 1);
-        ComboDTO comboDTO8 = new ComboDTO("Custom2", comboTypes, 0);
-        ComboDTO comboDTO9 = new ComboDTO("Custom3", comboTypes, 0);
+        if (comboDatas != null && comboDatas.size() > 0)
+            comboDatas.clear();
 
-        comboDatas.add(comboDTO);
-        comboDatas.add(comboDTO1);
-        comboDatas.add(comboDTO2);
-        comboDatas.add(comboDTO3);
-        comboDatas.add(comboDTO4);
-        comboDatas.add(comboDTO5);
-        comboDatas.add(comboDTO6);
-        comboDatas.add(comboDTO7);
-        comboDatas.add(comboDTO8);
-        comboDatas.add(comboDTO9);
+        comboDatas.addAll(SharedPreferencesUtils.getSavedCombinationList(getActivity()));
 
         comboAdapter.notifyDataSetChanged();
 

@@ -56,6 +56,9 @@
         <activity android:name=".activity.training.combination.NewCombinationActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activity.training.sets.NewSetRoutineActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

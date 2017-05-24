@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class SetsDTO implements Serializable{
     private String name;
-    private ArrayList<ComboDTO> comboslists;
+    private ArrayList<Integer> comboPositionlists;
 
     public String getName() {
         return name;
@@ -15,18 +15,18 @@ public class SetsDTO implements Serializable{
         this.name = name;
     }
 
-    public  ArrayList<ComboDTO> getComboslists() {
-        return comboslists;
+    public  ArrayList<Integer> getComboPositionlists() {
+        return comboPositionlists;
     }
 
-    public void setComboslists( ArrayList<ComboDTO> comboslists) {
-        this.comboslists = comboslists;
+    public void setComboPositionlists( ArrayList<Integer> comboPositionlists) {
+        this.comboPositionlists = comboPositionlists;
     }
 
-    public SetsDTO(String name, ArrayList<ComboDTO> comboslists) {
+    public SetsDTO(String name, ArrayList<Integer> comboPositionlists) {
         super();
         this.name = name;
-        this.comboslists = comboslists;
+        this.comboPositionlists = comboPositionlists;
     }
 
     public SetsDTO(){

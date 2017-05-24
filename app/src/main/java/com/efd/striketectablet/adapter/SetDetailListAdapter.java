@@ -22,33 +22,35 @@ import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.customview.CustomTextView;
 import com.efd.striketectablet.util.StatisticUtil;
+import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 
-public class SetDetailListAdapter extends ArrayAdapter<ComboDTO> {
+public class SetDetailListAdapter extends ArrayAdapter<Integer> {
 
     Context mContext;
     LayoutInflater inflater;
     MainActivity mainActivity;
 
-    ArrayList<ComboDTO> comboLists;
+    ArrayList<Integer> comboLists;
 
-    public SetDetailListAdapter(Context context, ArrayList<ComboDTO> comboLists){
+    public SetDetailListAdapter(Context context, ArrayList<Integer> comboLists){
         super(context, 0, comboLists);
 
         mContext = context;
         this.comboLists = comboLists;
         this.mainActivity = (MainActivity)context;
+
         inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setData(ArrayList<ComboDTO> comboLists){
+    public void setData(ArrayList<Integer> comboLists){
         this.comboLists = comboLists;
     }
 
     @Nullable
     @Override
-    public ComboDTO getItem(int position) {
+    public Integer getItem(int position) {
         return comboLists.get(position);
     }
 
@@ -69,13 +71,15 @@ public class SetDetailListAdapter extends ArrayAdapter<ComboDTO> {
             viewHolder.parentView = (LinearLayout)convertView.findViewById(R.id.combo_parent);
             viewHolder.comboNameView = (CustomTextView)convertView.findViewById(R.id.combo_name);
             viewHolder.comboStringView = (CustomTextView)convertView.findViewById(R.id.combo_string);
-            viewHolder.comboRangeView = (CustomTextView)convertView.findViewById(R.id.combo_range);
+//            viewHolder.comboRangeView = (CustomTextView)convertView.findViewById(R.id.combo_range);
+            viewHolder.settingsView = (ImageView)convertView.findViewById(R.id.settings);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
         }
 
-        final ComboDTO comboDTO = getItem(position);
+        final Integer comboPosition = getItem(position);
+        ComboDTO comboDTO = SharedPreferencesUtils.getSavedCombinationList(mainActivity).get(comboPosition);
 
 //        if (position % 2 == 0){
 //            viewHolder.parentView.setBackgroundColor(mContext.getResources().getColor(R.color.comboset_bg));
@@ -86,13 +90,13 @@ public class SetDetailListAdapter extends ArrayAdapter<ComboDTO> {
         viewHolder.comboNameView.setText(comboDTO.getName());
         viewHolder.comboStringView.setText(comboDTO.getCombos());
 
-        if (comboDTO.getRange() == 0){
-            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.shortrange));
-        }else if(comboDTO.getRange() == 1){
-            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.midrange));
-        }else {
-            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.longrange));
-        }
+//        if (comboDTO.getRange() == 0){
+//            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.shortrange));
+//        }else if(comboDTO.getRange() == 1){
+//            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.midrange));
+//        }else {
+//            viewHolder.comboRangeView.setText(mContext.getResources().getString(R.string.longrange));
+//        }
 
         return convertView;
     }
@@ -100,7 +104,8 @@ public class SetDetailListAdapter extends ArrayAdapter<ComboDTO> {
     public static class ViewHolder {
 
         public LinearLayout parentView;
-        public CustomTextView comboNameView, comboStringView, comboRangeView;
+        public CustomTextView comboNameView, comboStringView;//, comboRangeView;
+        public ImageView settingsView;
     }
 }
 

@@ -7,25 +7,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.efd.striketectablet.R;
+import com.efd.striketectablet.activity.training.combination.NewCombinationActivity;
 import com.efd.striketectablet.customview.CustomTextView;
 import com.efd.striketectablet.util.ComboSetUtil;
 
 import java.util.ArrayList;
 
-public class PunchListAdapter extends ArrayAdapter<String> {
+public class EditPunchListAdapter extends ArrayAdapter<String> {
 
     Context mContext;
     LayoutInflater inflater;
     private ArrayList<String> keylist;
-    private int currentPresetPosition;
+    NewCombinationActivity combinationActivity;
 //
-    public PunchListAdapter(Context context, ArrayList<String> keylist){
+    public EditPunchListAdapter(Context context, ArrayList<String> keylist){
         super(context, 0, keylist);
 
         mContext = context;
-        this.currentPresetPosition = currentPresetPosition;
+        combinationActivity = (NewCombinationActivity)context;
         this.keylist = keylist;
         inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -57,24 +60,40 @@ public class PunchListAdapter extends ArrayAdapter<String> {
         final ViewHolder viewHolder;
 
         if (convertView == null){
-            convertView = inflater.inflate(R.layout.item_addpunch_popup_child, null);
+            convertView = inflater.inflate(R.layout.item_punchdetail, null);
             viewHolder = new ViewHolder();
-            viewHolder.nameView = (CustomTextView)convertView.findViewById(R.id.name);
+            viewHolder.keyView = (TextView)convertView.findViewById(R.id.key);
+            viewHolder.nameView = (TextView)convertView.findViewById(R.id.name);
+            viewHolder.divider = (ImageView)convertView.findViewById(R.id.divider);
+            viewHolder.settings = (ImageView)convertView.findViewById(R.id.settings);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
         }
 
         String key = getItem(position);
-        String content = key + " - " + ComboSetUtil.punchTypeMap.get(key);
-        viewHolder.nameView.setText(content);
+        viewHolder.keyView.setText(key);
+        viewHolder.nameView.setText(ComboSetUtil.punchTypeMap.get(key));
+
+        viewHolder.settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                combinationActivity.showSettings(position);
+            }
+        });
+
+        if (position == keylist.size() - 1){
+            viewHolder.divider.setVisibility(View.GONE);
+        }else
+            viewHolder.divider.setVisibility(View.VISIBLE);
 
         return convertView;
     }
 
     public static class ViewHolder {
 
-        public CustomTextView nameView;
+        public TextView keyView, nameView;
+        public ImageView divider, settings;
     }
 }
 

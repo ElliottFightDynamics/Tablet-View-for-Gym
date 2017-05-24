@@ -21,12 +21,12 @@
             android:src="@drawable/close" />
 
         <com.efd.striketectablet.customview.CustomTextView
-            android:id="@+id/combination_title"
+            android:id="@+id/set_routine_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center_vertical"
-            android:text="@string/new_combination_title"
+            android:text="@string/new_set_title"
             android:textColor="@color/header_text_color_blue"
             android:textSize="@dimen/title_textsize" />
 
@@ -61,10 +61,10 @@
             android:layout_alignParentBottom="true"/>
 
         <com.efd.striketectablet.customview.CustomEditText
-            android:id="@+id/combo_name"
+            android:id="@+id/set_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/combination_name"
+            android:hint="@string/set_name"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:gravity="center"
@@ -89,12 +89,12 @@
 
         <com.efd.striketectablet.customview.CustomTextView
             android:textColor="@color/punches_text_color"
-            android:layout_width="250dp"
+            android:layout_width="280dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_height="match_parent"
             android:background="@drawable/trainingstats_btn_fill"
-            android:text="@string/listofpunches"
+            android:text="@string/listofcombinations"
             android:textSize="25sp"
             android:gravity="center"
             android:layout_gravity="center_horizontal"/>
@@ -115,27 +115,26 @@
         android:orientation="vertical">
         
         <LinearLayout
-            android:id="@+id/punchlist_parent"
+            android:id="@+id/setlist_parent"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
             >
             
-            <LinearLayout
-                android:id="@+id/punck_key_parent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal"
-                >
-                
-            </LinearLayout>
+            <!--<LinearLayout-->
+                <!--android:id="@+id/punck_key_parent"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:orientation="horizontal"-->
+                <!--&gt;-->
+                <!---->
+            <!--</LinearLayout>-->
             
             <ListView
-                android:id="@+id/punch_detail"
-                android:layout_marginTop="20dp"
-                android:layout_width="500dp"
+                android:id="@+id/combination_list"
+                android:layout_width="600dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
@@ -144,13 +143,12 @@
         </LinearLayout>
 
         <com.efd.striketectablet.customview.CustomButton
-            android:layout_below="@+id/punchlist_parent"
-            android:id="@+id/add_punch"
+            android:id="@+id/add_combo"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:background="@drawable/positive_big_btn"
             android:gravity="center"
-            android:text="@string/addpunch"
+            android:text="@string/addcombo"
             android:textColor="@color/black"
             android:textSize="@dimen/button_textsize"
             android:layout_gravity="center_horizontal"

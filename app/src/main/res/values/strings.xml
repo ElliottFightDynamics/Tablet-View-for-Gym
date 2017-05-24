@@ -80,19 +80,35 @@
     <string name="midrange">Mid-range</string>
     <string name="shortrange">Short-range</string>
     <string name="longrange">Long-range</string>
-    <string name="combo_share">Share</string>
-    <string name="combo_edit">Edit</string>
-    <string name="combo_delete">Delete</string>
+    <string name="share">Share</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 
     <string name="combination_insets">COMBINATIONS IN SETS</string>
 
     <!--new combination activity-->
     <string name="new_combination_title">NEW COMBINATION</string>
+    <string name="edit_combination_title">EDIT COMBINATION</string>
     <string name="combination_name">COMNINATION NAME</string>
     <string name="listofpunches">LIST OF PUNCHES</string>
     <string name="addpunch">ADD PUNCH</string>
     <string name="save">SAVE</string>
-    <string name="dialot_combotitle">CHOOSE PUNCH TO ADD:</string>
+    <string name="dialog_combotitle">CHOOSE PUNCH TO ADD:</string>
+    <string name="dialog_settitle">CHOOSE COMBO TO ADD:</string>
+
+    <!--edit comboset-->
+    <string name="replace_punch">Replace punch</string>
+    <string name="replace_combo">Replace Combincation</string>
+    <string name="insert_above">Insert above</string>
+    <string name="insert_below">Insert below</string>
+
+    <!--new set routine activity-->
+    <string name="new_set_title">SET ROUTINE CREATE</string>
+    <string name="edit_set_title">SET ROUNTINE EDIT</string>
+    <string name="set_name">SET ROUTINE NAME</string>
+    <string name="listofcombinations">LIST OF COMBINATIONS</string>
+    <string name="addcombo">ADD COMBINATION</string>
+
 
 </resources>
 

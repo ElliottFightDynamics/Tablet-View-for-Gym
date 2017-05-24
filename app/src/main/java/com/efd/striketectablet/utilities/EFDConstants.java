@@ -270,4 +270,9 @@ public class EFDConstants {
     public static final int SPEED_MAX = 45;
     public static final int POWER_MAX = 1250;
     public static final int GRID_COUNT = 9;
+
+    public static final String EDIT_COMBINATION = "editcombination";
+    public static final String EDIT_SETS = "editsets";
+    public static final String EDIT_COMBOPOSITION = "editcomboposition";
+    public static final String EDIT_SETPOSITION = "editsetposition";
 }

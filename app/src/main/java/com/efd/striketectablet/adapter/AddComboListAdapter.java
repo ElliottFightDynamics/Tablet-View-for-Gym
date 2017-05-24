@@ -7,42 +7,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
+import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.customview.CustomTextView;
 import com.efd.striketectablet.util.ComboSetUtil;
 
 import java.util.ArrayList;
 
-public class PunchListAdapter extends ArrayAdapter<String> {
+public class AddComboListAdapter extends ArrayAdapter<ComboDTO> {
 
     Context mContext;
     LayoutInflater inflater;
-    private ArrayList<String> keylist;
-    private int currentPresetPosition;
-//
-    public PunchListAdapter(Context context, ArrayList<String> keylist){
-        super(context, 0, keylist);
+    private ArrayList<ComboDTO> comboLists;
+
+    public AddComboListAdapter(Context context, ArrayList<ComboDTO> comboLists){
+        super(context, 0, comboLists);
 
         mContext = context;
-        this.currentPresetPosition = currentPresetPosition;
-        this.keylist = keylist;
+        this.comboLists = comboLists;
         inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setData (ArrayList<String> keylist){
-        this.keylist = keylist;
+    public void setData (ArrayList<ComboDTO> comboLists){
+        this.comboLists = comboLists;
     }
 
     @Override
     public int getCount() {
-        return keylist.size() ;
+        return comboLists.size() ;
     }
 
     @Nullable
     @Override
-    public String getItem(int position) {
-        return keylist.get(position);
+    public ComboDTO getItem(int position) {
+        return comboLists.get(position);
     }
 
     @Override
@@ -57,24 +57,25 @@ public class PunchListAdapter extends ArrayAdapter<String> {
         final ViewHolder viewHolder;
 
         if (convertView == null){
-            convertView = inflater.inflate(R.layout.item_addpunch_popup_child, null);
+            convertView = inflater.inflate(R.layout.item_addcombo_popup_child, null);
             viewHolder = new ViewHolder();
-            viewHolder.nameView = (CustomTextView)convertView.findViewById(R.id.name);
+            viewHolder.nameView = (TextView)convertView.findViewById(R.id.combo_name);
+            viewHolder.stringView = (TextView)convertView.findViewById(R.id.combo_string);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
         }
 
-        String key = getItem(position);
-        String content = key + " - " + ComboSetUtil.punchTypeMap.get(key);
-        viewHolder.nameView.setText(content);
+        ComboDTO comboDTO = getItem(position);
+        viewHolder.nameView.setText(comboDTO.getName());
+        viewHolder.stringView.setText(comboDTO.getCombos());
 
         return convertView;
     }
 
     public static class ViewHolder {
 
-        public CustomTextView nameView;
+        public TextView nameView, stringView;
     }
 }
 

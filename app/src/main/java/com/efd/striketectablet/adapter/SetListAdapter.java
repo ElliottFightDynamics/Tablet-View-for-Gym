@@ -2,6 +2,7 @@ package com.efd.striketectablet.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,9 +22,12 @@ import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.DTO.SetsDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
+import com.efd.striketectablet.activity.training.sets.NewSetRoutineActivity;
 import com.efd.striketectablet.activity.training.sets.SetsFragment;
 import com.efd.striketectablet.customview.CustomTextView;
 import com.efd.striketectablet.util.StatisticUtil;
+import com.efd.striketectablet.utilities.EFDConstants;
+import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 
@@ -111,7 +115,7 @@ public class SetListAdapter extends ArrayAdapter<SetsDTO> {
         viewHolder.settingsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSettings(setsDTO);
+                showSettings(position);
 
             }
         });
@@ -164,7 +168,7 @@ public class SetListAdapter extends ArrayAdapter<SetsDTO> {
 
     }
 
-    public void showSettings(final SetsDTO setsDTO){
+    public void showSettings(final int position){
         final Dialog dialog = new Dialog(mainActivity);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
@@ -178,36 +182,36 @@ public class SetListAdapter extends ArrayAdapter<SetsDTO> {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_comboset);
 
-        CustomTextView shareView, editView, deleteView;
-        shareView = (CustomTextView)dialog.findViewById(R.id.combo_share);
-        shareView.setText(mainActivity.getResources().getString(R.string.combo_share));
+        CustomTextView editView, deleteView;
+//        shareView = (CustomTextView)dialog.findViewById(R.id.combo_share);
+//        shareView.setText(mainActivity.getResources().getString(R.string.share));
         editView = (CustomTextView)dialog.findViewById(R.id.combo_edit);
-        editView.setText(mainActivity.getResources().getString(R.string.combo_edit));
+        editView.setText(mainActivity.getResources().getString(R.string.edit));
 
         deleteView = (CustomTextView)dialog.findViewById(R.id.combo_delete);
-        deleteView.setText(mainActivity.getResources().getString(R.string.combo_delete));
+        deleteView.setText(mainActivity.getResources().getString(R.string.delete));
 
-        shareView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (setsDTO != null){
-                    StatisticUtil.showToastMessage("Share Set: " + setsDTO.getName());
-                }else {
-                    StatisticUtil.showToastMessage("Invalid Data");
-                }
-
-                dialog.dismiss();
-            }
-        });
+//        shareView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (setsDTO != null){
+//                    StatisticUtil.showToastMessage("Share Set: " + setsDTO.getName());
+//                }else {
+//                    StatisticUtil.showToastMessage("Invalid Data");
+//                }
+//
+//                dialog.dismiss();
+//            }
+//        });
 
         editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (setsDTO != null){
-                    StatisticUtil.showToastMessage("Edit Set: " + setsDTO.getName());
-                }else {
-                    StatisticUtil.showToastMessage("Invalid Data");
-                }
+                Intent editSetIntent = new Intent(mainActivity, NewSetRoutineActivity.class);
+                editSetIntent.putExtra(EFDConstants.EDIT_SETS, true);
+                editSetIntent.putExtra(EFDConstants.EDIT_SETPOSITION, position);
+                mainActivity.startActivity(editSetIntent);
+                mainActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
                 dialog.dismiss();
             }
@@ -216,11 +220,12 @@ public class SetListAdapter extends ArrayAdapter<SetsDTO> {
         deleteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (setsDTO != null){
-                    StatisticUtil.showToastMessage("Delete Set: " + setsDTO.getName());
-                }else {
-                    StatisticUtil.showToastMessage("Invalid Data");
-                }
+                ArrayList<SetsDTO> setsDTOs = SharedPreferencesUtils.getSavedSetList(mainActivity);
+                setsDTOs.remove(position);
+                SharedPreferencesUtils.saveSetList(mainActivity, setsDTOs);
+
+                setsDTOs.remove(position);
+                notifyDataSetChanged();
 
                 dialog.dismiss();
             }

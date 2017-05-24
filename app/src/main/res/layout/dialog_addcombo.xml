@@ -9,13 +9,14 @@
     android:background="@color/preset_popup_bg"
     android:orientation="vertical">
 
-    <TextView
+    <com.efd.striketectablet.customview.CustomTextView
+        android:id="@+id/titleview"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/dialot_combotitle"
+        android:text="@string/dialog_combotitle"
         android:textColor="@color/punches_text_color"
         android:textSize="30sp"/>
 
