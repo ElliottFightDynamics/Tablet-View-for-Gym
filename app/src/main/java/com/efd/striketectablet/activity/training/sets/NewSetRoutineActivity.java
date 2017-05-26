@@ -118,12 +118,12 @@ public class NewSetRoutineActivity extends AppCompatActivity {
     private void saveSets(){
 
         if (TextUtils.isEmpty(setName.getText().toString())){
-            StatisticUtil.showToastMessage("Combincation name can't be empty");
+            StatisticUtil.showToastMessage("Set name can't be empty");
             return;
         }
 
         if (comboIDLists.size() == 0){
-            StatisticUtil.showToastMessage("please add more than 1 punch");
+            StatisticUtil.showToastMessage("please add more than 1 Combo");
             return;
         }
 

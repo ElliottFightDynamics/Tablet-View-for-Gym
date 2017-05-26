@@ -273,9 +273,14 @@ public class EFDConstants {
 
     public static final String EDIT_COMBINATION = "editcombination";
     public static final String EDIT_SETS = "editsets";
-    public static final String EDIT_COMBOID = "editcomboposition";
-    public static final String EDIT_SETID = "editsetposition";
+    public static final String EDIT_WORKOUT = "editworkout";
+    public static final String EDIT_COMBOID = "editcomboid";
+    public static final String EDIT_SETID = "editsetid";
+    public static final String EDIT_WORKOUTID = "editworkoutid";
 
     public static final String COMBO_ID = "comboid";
     public static final String SET_ID = "setid";
+    public static final String WORKOUT_ID = "workoutid";
+
+
 }

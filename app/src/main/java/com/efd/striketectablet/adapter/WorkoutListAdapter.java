@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,52 +13,52 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.efd.striketectablet.DTO.SetsDTO;
+import com.efd.striketectablet.DTO.WorkoutDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.activity.training.sets.NewSetRoutineActivity;
 import com.efd.striketectablet.activity.training.sets.SetsFragment;
+import com.efd.striketectablet.activity.training.workout.NewWorkoutActivity;
 import com.efd.striketectablet.activity.training.workout.WorkoutFragment;
 import com.efd.striketectablet.customview.CustomTextView;
 import com.efd.striketectablet.util.ComboSetUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
-import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 
-public class SetRoutineListAdapter extends ArrayAdapter<SetsDTO> {
+public class WorkoutListAdapter extends ArrayAdapter<WorkoutDTO> {
 
     Context mContext;
     LayoutInflater inflater;
     MainActivity mainActivity;
-    SetsFragment setsFragment;
+    WorkoutFragment workoutFragment;
 
-    ArrayList<SetsDTO> setLists;
+    ArrayList<WorkoutDTO> workoutDTOs;
 
     private int currentPosition = 0;
 
-    public SetRoutineListAdapter(Context context, ArrayList<SetsDTO> setLists, SetsFragment setsFragment){
-        super(context, 0, setLists);
+    public WorkoutListAdapter(Context context, ArrayList<WorkoutDTO> workoutDTOs, WorkoutFragment workoutFragment){
+        super(context, 0, workoutDTOs);
 
         mContext = context;
-        this.setLists = setLists;
+        this.workoutDTOs = workoutDTOs;
         this.mainActivity = (MainActivity)context;
-        this.setsFragment = setsFragment;
+        this.workoutFragment = workoutFragment;
         inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setData(ArrayList<SetsDTO> setLists){
-        this.setLists = setLists;
+    public void setData(ArrayList<WorkoutDTO> workoutDTOs){
+        this.workoutDTOs = workoutDTOs;
     }
 
     @Nullable
     @Override
-    public SetsDTO getItem(int position) {
-        return setLists.get(position);
+    public WorkoutDTO getItem(int position) {
+        return workoutDTOs.get(position);
     }
 
     @Override
@@ -77,28 +76,28 @@ public class SetRoutineListAdapter extends ArrayAdapter<SetsDTO> {
             convertView = inflater.inflate(R.layout.item_setroutine_row, null);
             viewHolder = new ViewHolder();
             viewHolder.parentView = (LinearLayout)convertView.findViewById(R.id.set_parent);
-            viewHolder.setNameView = (CustomTextView)convertView.findViewById(R.id.set_name);
+            viewHolder.workoutNameView = (CustomTextView)convertView.findViewById(R.id.set_name);
             viewHolder.settingsView = (ImageView)convertView.findViewById(R.id.set_settings);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
         }
 
-        final SetsDTO setsDTO = getItem(position);
+        final WorkoutDTO workoutDTO = getItem(position);
 
         if (currentPosition == position){
             viewHolder.parentView.setBackgroundColor(mContext.getResources().getColor(R.color.set_selectcolor));
-            setsFragment.updateDetail(setsDTO);
+            workoutFragment.updateRound(workoutDTO);
         }else {
             viewHolder.parentView.setBackgroundColor(mContext.getResources().getColor(R.color.transparent));
         }
 
-        viewHolder.setNameView.setText(setsDTO.getName());
+        viewHolder.workoutNameView.setText(workoutDTO.getName());
 
         viewHolder.settingsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSettings(setsDTO);
+                showSettings(workoutDTO);
 
             }
         });
@@ -119,7 +118,7 @@ public class SetRoutineListAdapter extends ArrayAdapter<SetsDTO> {
     public static class ViewHolder {
 
         public LinearLayout parentView;
-        public CustomTextView setNameView;
+        public CustomTextView workoutNameView;
         public ImageView settingsView;
     }
 
@@ -127,7 +126,7 @@ public class SetRoutineListAdapter extends ArrayAdapter<SetsDTO> {
         return currentPosition;
     }
 
-    public void showSettings(final SetsDTO setsDTO){
+    public void showSettings(final WorkoutDTO workoutDTO){
         final Dialog dialog = new Dialog(mainActivity);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
@@ -151,9 +150,9 @@ public class SetRoutineListAdapter extends ArrayAdapter<SetsDTO> {
         editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent editSetIntent = new Intent(mainActivity, NewSetRoutineActivity.class);
-                editSetIntent.putExtra(EFDConstants.EDIT_SETS, true);
-                editSetIntent.putExtra(EFDConstants.EDIT_SETID, setsDTO.getId());
+                Intent editSetIntent = new Intent(mainActivity, NewWorkoutActivity.class);
+                editSetIntent.putExtra(EFDConstants.EDIT_WORKOUT, true);
+                editSetIntent.putExtra(EFDConstants.EDIT_WORKOUTID, workoutDTO.getId());
                 mainActivity.startActivity(editSetIntent);
                 mainActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
@@ -165,19 +164,14 @@ public class SetRoutineListAdapter extends ArrayAdapter<SetsDTO> {
             @Override
             public void onClick(View v) {
 
-                ComboSetUtil.deleteSetDto(setsDTO);
-                setLists.remove(setsDTO);
+                ComboSetUtil.deleteWorkoutDto(workoutDTO);
+                workoutDTOs.remove(workoutDTO);
 
-                if (currentPosition >= setLists.size())
+                if (currentPosition >= workoutDTOs.size())
                     currentPosition = 0;
                 notifyDataSetChanged();
 
                 dialog.dismiss();
-
-                ComboSetUtil.deleteSetFromAllWorkout(setsDTO);
-
-                if (WorkoutFragment.workoutFragment != null)
-                    WorkoutFragment.workoutFragment.onResume();
             }
         });
 

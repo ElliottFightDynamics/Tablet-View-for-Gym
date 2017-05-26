@@ -95,10 +95,12 @@
     <string name="save">SAVE</string>
     <string name="dialog_combotitle">CHOOSE PUNCH TO ADD:</string>
     <string name="dialog_settitle">CHOOSE COMBO TO ADD:</string>
+    <string name="dialog_workouttitle">CHOOSE SET TO ADD:</string>
 
     <!--edit comboset-->
     <string name="replace_punch">Replace punch</string>
     <string name="replace_combo">Replace Combination</string>
+    <string name="replace_set">Replace Set</string>
     <string name="insert_above">Insert above</string>
     <string name="insert_below">Insert below</string>
 
@@ -108,6 +110,15 @@
     <string name="set_name">SET ROUTINE NAME</string>
     <string name="listofcombinations">LIST OF COMBINATIONS</string>
     <string name="addcombo">ADD COMBINATION</string>
+
+    <string name="new_workout_title">NEW WORKOUT</string>
+    <string name="edit_workout_title">EDIT WORKOUT</string>
+    <string name="workout_name">WORKOUT NAME</string>
+    <string name="workoutplan">WORKOUT PLAN</string>
+    <string name="addset">ADD SET</string>
+    <string name="roundinworkout">ROUNDS IN WORKOUT</string>
+    <string name="setsinround">SETS IN ROUND</string>
+
 
 
 </resources>

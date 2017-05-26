@@ -20,6 +20,8 @@ import com.efd.striketectablet.activity.training.combination.CombinationFragment
 import com.efd.striketectablet.activity.training.combination.NewCombinationActivity;
 import com.efd.striketectablet.activity.training.sets.NewSetRoutineActivity;
 import com.efd.striketectablet.activity.training.sets.SetsFragment;
+import com.efd.striketectablet.activity.training.workout.NewWorkoutActivity;
+import com.efd.striketectablet.activity.training.workout.WorkoutFragment;
 import com.efd.striketectablet.adapter.PresetListAdapter;
 import com.efd.striketectablet.adapter.TrainingTabPageAdapter;
 
@@ -144,6 +146,11 @@ public class TrainingFragment extends Fragment {
                     Intent newSetIntent = new Intent(getActivity(), NewSetRoutineActivity.class);
                     startActivity(newSetIntent);
                     mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);;
+                }else if (trainingViewPager.getCurrentItem() == 4){
+                    WorkoutFragment workoutFragment = WorkoutFragment.workoutFragment;
+                    Intent newWorkoutIntent = new Intent(getActivity(), NewWorkoutActivity.class);
+                    startActivity(newWorkoutIntent);
+                    mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);;
                 }
             }
         });
@@ -228,7 +235,7 @@ public class TrainingFragment extends Fragment {
                 setHighlight.setVisibility(View.INVISIBLE);
                 scriptedHighlight.setVisibility(View.VISIBLE);
 
-                plusBtn.setVisibility(View.INVISIBLE);
+                plusBtn.setVisibility(View.VISIBLE);
                 break;
         }
     }

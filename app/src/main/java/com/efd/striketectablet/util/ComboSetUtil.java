@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.DTO.SetsDTO;
+import com.efd.striketectablet.DTO.WorkoutDTO;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
@@ -136,6 +137,45 @@ public class ComboSetUtil {
         SharedPreferencesUtils.saveSetList(mContext, setsDTOs);
     }
 
+    public static WorkoutDTO getWorkoutDtoWithID(int id){
+        ArrayList<WorkoutDTO> workoutDTOs = SharedPreferencesUtils.getSavedWorkouts(mContext);
+        for (int i = 0; i < workoutDTOs.size(); i++){
+            if (id == workoutDTOs.get(i).getId())
+                return workoutDTOs.get(i);
+        }
+
+        return null;
+    }
+
+    public static void updateWorkoutDto(WorkoutDTO workoutDTO){
+        ArrayList<WorkoutDTO> workoutDTOs = SharedPreferencesUtils.getSavedWorkouts(mContext);
+        for (int i = 0; i < workoutDTOs.size(); i++){
+            if (workoutDTO.getId() == workoutDTOs.get(i).getId()){
+                workoutDTOs.set(i, workoutDTO);
+                SharedPreferencesUtils.saveWorkoutList(mContext, workoutDTOs);
+                return;
+            }
+        }
+    }
+
+    public static void addWorkoutDto(WorkoutDTO workoutDTO){
+        ArrayList<WorkoutDTO> workoutDTOs = SharedPreferencesUtils.getSavedWorkouts(mContext);
+        workoutDTOs.add(workoutDTO);
+        SharedPreferencesUtils.saveWorkoutList(mContext, workoutDTOs);
+    }
+
+    public static void deleteWorkoutDto(WorkoutDTO workoutDTO){
+        ArrayList<WorkoutDTO> workoutDTOs = SharedPreferencesUtils.getSavedWorkouts(mContext);
+        for (int i = 0; i < workoutDTOs.size(); i++){
+            if (workoutDTO.getId() == workoutDTOs.get(i).getId()) {
+                workoutDTOs.remove(i);
+                continue;
+            }
+        }
+
+        SharedPreferencesUtils.saveWorkoutList(mContext, workoutDTOs);
+    }
+
     public static void deleteComboFromAllSets(ComboDTO comboDTO){
         ArrayList<SetsDTO> setsDTOs = SharedPreferencesUtils.getSavedSetList(mContext);
 
@@ -156,14 +196,54 @@ public class ComboSetUtil {
                 }
             }
 
-            if (newComboIDList.size() == 0){
-                //delete this set from set list
-            }else {
-                SetsDTO newSetDto = new SetsDTO(setsDTO.getName(), newComboIDList, setsDTO.getId());
-                newSetsDTOS.add(newSetDto);
-            }
+            SetsDTO newSetDto = new SetsDTO(setsDTO.getName(), newComboIDList, setsDTO.getId());
+            newSetsDTOS.add(newSetDto);
+
+//            if (newComboIDList.size() == 0){
+//                //delete this set from set list
+//            }else {
+//                SetsDTO newSetDto = new SetsDTO(setsDTO.getName(), newComboIDList, setsDTO.getId());
+//                newSetsDTOS.add(newSetDto);
+//            }
         }
 
         SharedPreferencesUtils.saveSetList(mContext, newSetsDTOS);
+    }
+
+    public static void deleteSetFromAllWorkout(SetsDTO setsDTO){
+        ArrayList<WorkoutDTO> workoutDTOs = SharedPreferencesUtils.getSavedWorkouts(mContext);
+
+        ArrayList<WorkoutDTO> newWorkoutDtos = new ArrayList<>();
+
+        for (int i = 0; i < workoutDTOs.size(); i++){
+            WorkoutDTO workoutDTO = workoutDTOs.get(i);
+            ArrayList<ArrayList<Integer>> newRoundSetLists = new ArrayList<>();
+
+            for (int j = 0; j < workoutDTO.getRoundcount(); j++){
+                ArrayList<Integer> setLists = workoutDTO.getRoundsetIDs().get(j);
+
+                if (!setLists.contains(setsDTO.getId())){
+                    newRoundSetLists.add(setLists);
+                    continue;
+                }
+
+                ArrayList<Integer> newSetLists = new ArrayList<>();
+
+                for (int k = 0; k < setLists.size(); k++){
+                    if (setLists.get(k) != setsDTO.getId()){
+                        newSetLists.add(setLists.get(k));
+                    }
+                }
+
+                newRoundSetLists.add(newSetLists);
+            }
+
+            WorkoutDTO newWorkoutDTO = new WorkoutDTO(workoutDTO.getId(), workoutDTO.getName(), workoutDTO.getRoundcount(),
+                    newRoundSetLists, workoutDTO.getRound(), workoutDTO.getRest(), workoutDTO.getPrepare(), workoutDTO.getWarning(), workoutDTO.getGlove());
+
+            newWorkoutDtos.add(newWorkoutDTO);
+        }
+
+        SharedPreferencesUtils.saveWorkoutList(mContext, newWorkoutDtos);
     }
 }

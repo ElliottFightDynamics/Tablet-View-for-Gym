@@ -38,10 +38,10 @@
 
         <View
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="18dp"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/left_arrow_line_bg"/>
+            android:background="@drawable/trainingstats_left_line"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -139,7 +139,7 @@
                 <com.efd.striketectablet.customview.CustomTextView
                     android:id="@+id/set"
                     style="@style/tab_item"
-                    android:text="SET ROUNTINES"
+                    android:text="SETS"
                     />
                 <View
                     android:id="@+id/set_highlight"
@@ -164,7 +164,7 @@
                 <com.efd.striketectablet.customview.CustomTextView
                     android:id="@+id/scripted"
                     style="@style/tab_item"
-                    android:text="SCRIPTED ROUNDS"
+                    android:text="WORKOUTS"
                     />
 
                 <View
@@ -180,10 +180,10 @@
 
         <View
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="18dp"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/right_arrow_line_bg"/>
+            android:background="@drawable/trainingstats_right_line"/>
 
     </LinearLayout>
 
