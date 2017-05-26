@@ -172,6 +172,7 @@ public class WorkoutFragment extends Fragment {
             return;
         }
 
+        workoutRoundListAdapter.setCurrentPosition(0);
         workoutRoundListAdapter.setWorkoutDTO(workoutDTO);
 
 //        workoutRoundListAdapter.setWorkoutDTO(workoutDTO);

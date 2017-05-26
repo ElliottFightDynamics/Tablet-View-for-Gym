@@ -44,6 +44,10 @@ public class WorkoutRoundListAdapter extends ArrayAdapter<Integer> {
         inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public void setCurrentPosition(int currentPosition){
+        this.currentPosition = currentPosition;
+    }
+
     public void setWorkoutDTO (WorkoutDTO workoutDTO){
         this.workoutDTO = workoutDTO;
     }
