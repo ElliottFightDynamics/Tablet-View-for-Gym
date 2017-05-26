@@ -164,10 +164,12 @@ public class WorkoutFragment extends Fragment {
         if (roundNums.size() > 0)
             roundNums.clear();
 
-        if (workoutDTO == null)
-            workoutRoundListAdapter.notifyDataSetChanged();
-
         updateTime(workoutDTO);
+
+        if (workoutDTO == null) {
+            workoutRoundListAdapter.notifyDataSetChanged();
+            return;
+        }
 
         workoutRoundListAdapter.setWorkoutDTO(workoutDTO);
 
@@ -202,6 +204,7 @@ public class WorkoutFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         loadWorkout();
     }
 }
