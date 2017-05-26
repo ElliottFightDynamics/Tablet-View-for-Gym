@@ -115,13 +115,13 @@
 
                 <com.efd.striketectablet.customview.CustomTextView
                     android:textColor="@color/punches_text_color"
-                    android:layout_width="250dp"
+                    android:layout_width="300dp"
 
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_bg_fill"
-                    android:text="@string/setsinround"
+                    android:text="@string/combinationsinround"
                     android:textSize="25sp"
                     android:gravity="center"
                     android:layout_gravity="center_horizontal"/>
@@ -135,14 +135,12 @@
 
             </LinearLayout>
 
-
-
             <ListView
                 android:layout_marginTop="10dp"
-                android:id="@+id/set_listview"
+                android:id="@+id/combo_listview"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:scrollbars="none"
                 android:listSelector="@color/transparent"
                 android:divider="@color/transparent">

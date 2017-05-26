@@ -210,36 +210,36 @@ public class ComboSetUtil {
         SharedPreferencesUtils.saveSetList(mContext, newSetsDTOS);
     }
 
-    public static void deleteSetFromAllWorkout(SetsDTO setsDTO){
+    public static void deleteComboFromAllWorkout(ComboDTO comboDTO){
         ArrayList<WorkoutDTO> workoutDTOs = SharedPreferencesUtils.getSavedWorkouts(mContext);
 
         ArrayList<WorkoutDTO> newWorkoutDtos = new ArrayList<>();
 
         for (int i = 0; i < workoutDTOs.size(); i++){
             WorkoutDTO workoutDTO = workoutDTOs.get(i);
-            ArrayList<ArrayList<Integer>> newRoundSetLists = new ArrayList<>();
+            ArrayList<ArrayList<Integer>> newRoundComboLists = new ArrayList<>();
 
             for (int j = 0; j < workoutDTO.getRoundcount(); j++){
-                ArrayList<Integer> setLists = workoutDTO.getRoundsetIDs().get(j);
+                ArrayList<Integer> comboLists = workoutDTO.getRoundsetIDs().get(j);
 
-                if (!setLists.contains(setsDTO.getId())){
-                    newRoundSetLists.add(setLists);
+                if (!comboLists.contains(comboDTO.getId())){
+                    newRoundComboLists.add(comboLists);
                     continue;
                 }
 
-                ArrayList<Integer> newSetLists = new ArrayList<>();
+                ArrayList<Integer> newComboLists = new ArrayList<>();
 
-                for (int k = 0; k < setLists.size(); k++){
-                    if (setLists.get(k) != setsDTO.getId()){
-                        newSetLists.add(setLists.get(k));
+                for (int k = 0; k < comboLists.size(); k++){
+                    if (comboLists.get(k) != comboDTO.getId()){
+                        newComboLists.add(comboLists.get(k));
                     }
                 }
 
-                newRoundSetLists.add(newSetLists);
+                newRoundComboLists.add(newComboLists);
             }
 
             WorkoutDTO newWorkoutDTO = new WorkoutDTO(workoutDTO.getId(), workoutDTO.getName(), workoutDTO.getRoundcount(),
-                    newRoundSetLists, workoutDTO.getRound(), workoutDTO.getRest(), workoutDTO.getPrepare(), workoutDTO.getWarning(), workoutDTO.getGlove());
+                    newRoundComboLists, workoutDTO.getRound(), workoutDTO.getRest(), workoutDTO.getPrepare(), workoutDTO.getWarning(), workoutDTO.getGlove());
 
             newWorkoutDtos.add(newWorkoutDTO);
         }

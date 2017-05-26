@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.DTO.SetsDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.training.combination.NewCombinationActivity;
@@ -22,33 +23,37 @@ public class EditNewWorkoutListAdapter extends ArrayAdapter<Integer> {
 
     Context mContext;
     LayoutInflater inflater;
-    private ArrayList<Integer> setIDList;
+    private ArrayList<Integer> comboIDList;
     NewWorkoutActivity workoutActivity;
     int roundposition;
 //
-    public EditNewWorkoutListAdapter(Context context, ArrayList<Integer> setIDList, int roundposition){
-        super(context, 0, setIDList);
+    public EditNewWorkoutListAdapter(Context context, ArrayList<Integer> comboIDList, int roundposition){
+        super(context, 0, comboIDList);
 
         mContext = context;
         workoutActivity = (NewWorkoutActivity)context;
-        this.setIDList = setIDList;
+        this.comboIDList = comboIDList;
         this.roundposition = roundposition;
         inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public void setRoundposition(int roundposition){
+        this.roundposition = roundposition;
+    }
+
     public void setData (ArrayList<Integer> keylist){
-        this.setIDList = keylist;
+        this.comboIDList = keylist;
     }
 
     @Override
     public int getCount() {
-        return setIDList.size() ;
+        return comboIDList.size() ;
     }
 
     @Nullable
     @Override
     public Integer getItem(int position) {
-        return setIDList.get(position);
+        return comboIDList.get(position);
     }
 
     @Override
@@ -73,9 +78,9 @@ public class EditNewWorkoutListAdapter extends ArrayAdapter<Integer> {
             viewHolder = (ViewHolder)convertView.getTag();
         }
 
-        int setid = getItem(position);
-        SetsDTO setsDTO = ComboSetUtil.getSetDtowithID(setid);
-        viewHolder.nameView.setText(setsDTO.getName());
+        int comboid = getItem(position);
+        ComboDTO comboDTO = ComboSetUtil.getComboDtowithID(comboid);
+        viewHolder.nameView.setText(comboDTO.getName());
 
         viewHolder.settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +89,7 @@ public class EditNewWorkoutListAdapter extends ArrayAdapter<Integer> {
             }
         });
 
-        if (position == setIDList.size() - 1){
+        if (position == comboIDList.size() - 1){
             viewHolder.divider.setVisibility(View.GONE);
         }else
             viewHolder.divider.setVisibility(View.VISIBLE);

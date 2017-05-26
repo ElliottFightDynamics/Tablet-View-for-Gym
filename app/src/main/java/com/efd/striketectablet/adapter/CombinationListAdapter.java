@@ -173,6 +173,7 @@ public class CombinationListAdapter extends ArrayAdapter<ComboDTO> {
 
                 //delete combo from set
                 ComboSetUtil.deleteComboFromAllSets(comboDTO);
+                ComboSetUtil.deleteComboFromAllWorkout(comboDTO);
 
                 if (SetsFragment.setsFragment != null)
                     SetsFragment.setsFragment.onResume();

@@ -7,7 +7,7 @@ public class WorkoutDTO implements Serializable{
     private int id;
     private String name;
     private int roundcount;
-    private ArrayList<ArrayList<Integer>> roundsetIDs;   //this is array of set id
+    private ArrayList<ArrayList<Integer>> roundcomboIDs;   //this is array of set id
     private int round;
     private int rest;
     private int prepare;
@@ -79,19 +79,19 @@ public class WorkoutDTO implements Serializable{
     }
 
     public  ArrayList<ArrayList<Integer>> getRoundsetIDs() {
-        return roundsetIDs;
+        return roundcomboIDs;
     }
 
     public void setRoundsetIDs(ArrayList<ArrayList<Integer>>  roundsetIDs) {
-        this.roundsetIDs = roundsetIDs;
+        this.roundcomboIDs = roundsetIDs;
     }
 
-    public WorkoutDTO(int id, String name, int roundcount, ArrayList<ArrayList<Integer>> roundsetIDs, int round, int rest, int prepare, int warning, int glove) {
+    public WorkoutDTO(int id, String name, int roundcount, ArrayList<ArrayList<Integer>> roundcomboIDs, int round, int rest, int prepare, int warning, int glove) {
         super();
         this.id = id;
         this.name = name;
         this.roundcount = roundcount;
-        this.roundsetIDs = roundsetIDs;
+        this.roundcomboIDs = roundcomboIDs;
         this.round = round;
         this.rest = rest;
         this.prepare = prepare;

@@ -27,6 +27,7 @@ import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
 import com.efd.striketectablet.adapter.PresetListAdapter;
+import com.efd.striketectablet.adapter.SetRoutineCombinationListAdapter;
 import com.efd.striketectablet.adapter.WorkoutListAdapter;
 import com.efd.striketectablet.adapter.WorkoutRoundListAdapter;
 import com.efd.striketectablet.adapter.WorkoutSetListAdapter;
@@ -47,16 +48,16 @@ public class WorkoutFragment extends Fragment {
     View view;
     TextView roundTimeView, restTimeView, preparTimeView, warningTimeView, glovesView, totalTimeView;
 
-    ListView workoutListView, roundListView, setListView;
+    ListView workoutListView, roundListView, comboListView;
     WorkoutListAdapter workoutListAdapter;
     WorkoutRoundListAdapter workoutRoundListAdapter;
-    WorkoutSetListAdapter workoutSetListAdapter;
+//    WorkoutSetListAdapter workoutSetListAdapter;
+
+    SetRoutineCombinationListAdapter workoutComboListAdapter;
 
     ArrayList<WorkoutDTO> workoutDTOs;
     ArrayList<Integer> roundNums;
-    ArrayList<Integer> setIDs;
-
-
+    ArrayList<Integer> comboIDs;
 
     MainActivity mainActivityInstance;
 
@@ -83,7 +84,7 @@ public class WorkoutFragment extends Fragment {
 
         workoutDTOs = new ArrayList<>();
         roundNums = new ArrayList<>();
-        setIDs = new ArrayList<>();
+        comboIDs = new ArrayList<>();
 
         initViews();
 
@@ -101,15 +102,15 @@ public class WorkoutFragment extends Fragment {
 
         workoutListView = (ListView)view.findViewById(R.id.workout_listview);
         roundListView = (ListView)view.findViewById(R.id.round_listview);
-        setListView = (ListView)view.findViewById(R.id.set_listview);
+        comboListView = (ListView)view.findViewById(R.id.combo_listview);
 
         workoutListAdapter = new WorkoutListAdapter(getActivity(), workoutDTOs, this);
         workoutRoundListAdapter = new WorkoutRoundListAdapter(getActivity(), roundNums, this);
-        workoutSetListAdapter = new WorkoutSetListAdapter(getActivity(), setIDs);
-
+//        workoutSetListAdapter = new WorkoutSetListAdapter(getActivity(), setIDs);
+        workoutComboListAdapter =  new SetRoutineCombinationListAdapter(mainActivityInstance, comboIDs);
         workoutListView.setAdapter(workoutListAdapter);
         roundListView.setAdapter(workoutRoundListAdapter);
-        setListView.setAdapter(workoutSetListAdapter);
+        comboListView.setAdapter(workoutComboListAdapter);
 
         updateTime(null);
     }
@@ -180,16 +181,16 @@ public class WorkoutFragment extends Fragment {
     }
 
     public void updateSet(WorkoutDTO workoutDTO, int position){
-        if (setIDs.size() > 0)
-            setIDs.clear();
+        if (comboIDs.size() > 0)
+            comboIDs.clear();
 
         if (workoutDTO == null)
-            workoutSetListAdapter.notifyDataSetChanged();
+            workoutComboListAdapter.notifyDataSetChanged();
 
         ArrayList<Integer> ids = workoutDTO.getRoundsetIDs().get(position);
-        setIDs.addAll(ids);
+        comboIDs.addAll(ids);
 
-        workoutSetListAdapter.notifyDataSetChanged();
+        workoutComboListAdapter.notifyDataSetChanged();
     }
 
     private ArrayList<Integer> generateRoundNumArray(int size){

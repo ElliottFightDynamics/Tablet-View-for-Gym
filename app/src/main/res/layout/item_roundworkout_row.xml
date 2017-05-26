@@ -49,10 +49,10 @@
         </ListView>
 
         <com.efd.striketectablet.customview.CustomTextView
-            android:id="@+id/addset"
+            android:id="@+id/add_combo"
             android:layout_width="180dp"
             android:layout_height="35dp"
-            android:text="@string/addset"
+            android:text="@string/addcombo"
             android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/punch_strokebg"

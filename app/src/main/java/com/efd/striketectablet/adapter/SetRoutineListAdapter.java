@@ -174,7 +174,7 @@ public class SetRoutineListAdapter extends ArrayAdapter<SetsDTO> {
 
                 dialog.dismiss();
 
-                ComboSetUtil.deleteSetFromAllWorkout(setsDTO);
+
 
                 if (WorkoutFragment.workoutFragment != null)
                     WorkoutFragment.workoutFragment.onResume();

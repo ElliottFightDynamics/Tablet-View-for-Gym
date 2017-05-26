@@ -5,11 +5,10 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -24,16 +23,13 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
-import com.efd.striketectablet.DTO.SetsDTO;
+import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.DTO.WorkoutDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
-import com.efd.striketectablet.adapter.EditNewSetRoutineListAdapter;
 import com.efd.striketectablet.adapter.EditNewWorkoutListAdapter;
 import com.efd.striketectablet.adapter.PopupCombinationListAdapter;
-import com.efd.striketectablet.adapter.PopupSetListAdapter;
 import com.efd.striketectablet.customview.CustomTextView;
-import com.efd.striketectablet.mmaGlove.Integrator;
 import com.efd.striketectablet.util.ComboSetUtil;
 import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.util.StatisticUtil;
@@ -77,11 +73,11 @@ public class NewWorkoutActivity extends AppCompatActivity {
     int currentPreparePosition = 0;
     int currentWarningPosition = 0;
 
-    ArrayList<ArrayList<Integer>> roundsetLists;
+    ArrayList<ArrayList<Integer>> roundcomboLists;
     ArrayList<EditNewWorkoutListAdapter> detailAdapterList;
     int currentRoundPosition = 0;
 
-    private ArrayList<SetsDTO> savedSets;
+    private ArrayList<ComboDTO> savedCombos;
     private ArrayList<ImageView> plusViewList;
 
     @Override
@@ -96,8 +92,8 @@ public class NewWorkoutActivity extends AppCompatActivity {
             workoutID = getIntent().getIntExtra(EFDConstants.EDIT_WORKOUTID, -1);
         }
 
-        savedSets = SharedPreferencesUtils.getSavedSetList(this);
-        roundsetLists = new ArrayList<>();
+        savedCombos = SharedPreferencesUtils.getSavedCombinationList(this);
+        roundcomboLists = new ArrayList<>();
         detailAdapterList = new ArrayList<>();
         plusViewList = new ArrayList<>();
 
@@ -194,23 +190,24 @@ public class NewWorkoutActivity extends AppCompatActivity {
 
     private void addNewRoundWorkflow(final int roundNum){
         if (roundNum > 0){
-            plusViewList.get(roundNum-1).setVisibility(View.INVISIBLE);
+//            plusViewList.get(roundNum-1).setVisibility(View.INVISIBLE);
+            plusViewList.get(roundNum-1).setImageResource(R.drawable.minus_active);
         }
         final LinearLayout newLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.item_roundworkout_row, null);
 
-        final ArrayList<Integer> setLists = new ArrayList<>();
-        roundsetLists.add(roundNum, setLists);
+        final ArrayList<Integer> comboLists = new ArrayList<>();
+        roundcomboLists.add(roundNum, comboLists);
 
-        TextView roundNameView, addSetView;
+        TextView roundNameView, addComboView;
         final ImageView plusView;
-        ListView setListView;
+        ListView comboListView;
 
         roundNameView = (TextView)newLayout.findViewById(R.id.roundname);
-        addSetView = (TextView)newLayout.findViewById(R.id.addset);
+        addComboView = (TextView)newLayout.findViewById(R.id.add_combo);
         plusView = (ImageView)newLayout.findViewById(R.id.addround);
-        setListView = (ListView)newLayout.findViewById(R.id.setlistview);
-        EditNewWorkoutListAdapter detailAdapter = new EditNewWorkoutListAdapter(NewWorkoutActivity.this, setLists, roundNum);
-        setListView.setAdapter(detailAdapter);
+        comboListView = (ListView)newLayout.findViewById(R.id.setlistview);
+        EditNewWorkoutListAdapter detailAdapter = new EditNewWorkoutListAdapter(NewWorkoutActivity.this, comboLists, roundNum);
+        comboListView.setAdapter(detailAdapter);
         detailAdapterList.add(roundNum, detailAdapter);
         plusViewList.add(plusView);
 
@@ -221,15 +218,20 @@ public class NewWorkoutActivity extends AppCompatActivity {
         plusView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentRoundPosition++;
-                addNewRoundWorkflow(currentRoundPosition);
+                if (roundNum < currentRoundPosition){
+                    //delete round
+                    removeRoundView(roundNum);
+                }else {
+                    currentRoundPosition++;
+                    addNewRoundWorkflow(currentRoundPosition);
+                }
             }
         });
 
-        addSetView.setOnClickListener(new View.OnClickListener() {
+        addComboView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSetListDialog(setLists.size(), false, roundNum);
+                showComboListDialog(comboLists.size(), false, roundNum);
             }
         });
 
@@ -243,6 +245,56 @@ public class NewWorkoutActivity extends AppCompatActivity {
                 horizontalScrollView.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
             }
         }, 100L);
+    }
+
+    private void removeRoundView(int roundNum){
+        //remove current round in parent layout
+        LinearLayout childLayout = (LinearLayout)workflowParent.getChildAt(roundNum);
+        workflowParent.removeView(childLayout);
+
+        roundcomboLists.remove(roundNum);
+        detailAdapterList.remove(roundNum);
+        plusViewList.remove(roundNum);
+
+        //update round view and data
+        for (int i = roundNum; i < currentRoundPosition ; i++){
+
+            Log.e("Super", "tmpi = " + i);
+            final int tmpI = i;
+            detailAdapterList.get(tmpI).setRoundposition(tmpI);
+
+            final ArrayList<Integer> comboLists = roundcomboLists.get(i);
+
+            LinearLayout tmpchild = (LinearLayout)workflowParent.getChildAt(i);
+            TextView roundNameView = (TextView)tmpchild.findViewById(R.id.roundname);
+            TextView addComboView = (TextView)tmpchild.findViewById(R.id.add_combo);
+            ImageView plusView = (ImageView)tmpchild.findViewById(R.id.addround) ;
+
+            addComboView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showComboListDialog(comboLists.size(), false, tmpI);
+                }
+            });
+
+            plusView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (tmpI < currentRoundPosition){
+                        //delete round
+                        removeRoundView(tmpI);
+                    }else {
+                        currentRoundPosition++;
+                        addNewRoundWorkflow(currentRoundPosition);
+                    }
+                }
+            });
+
+            roundNameView.setText("ROUND " + (tmpI + 1));
+        }
+
+        currentRoundPosition --;
+
     }
 
     private void showWheelPicker(final int type){
@@ -366,17 +418,17 @@ public class NewWorkoutActivity extends AppCompatActivity {
             return;
         }
 
-        if (roundsetLists.get(0).size() == 0){
-            StatisticUtil.showToastMessage("please add more than 1 Set");
+        if (roundcomboLists.get(0).size() == 0){
+            StatisticUtil.showToastMessage("please add more than 1 Combo");
             return;
         }
 
         if (editmode){
-            WorkoutDTO workoutDTO = new WorkoutDTO(workoutID, workoutName.getText().toString(), currentRoundPosition + 1, roundsetLists, currentRoundTimePosition, currentRestPosition,
+            WorkoutDTO workoutDTO = new WorkoutDTO(workoutID, workoutName.getText().toString(), currentRoundPosition + 1, roundcomboLists, currentRoundTimePosition, currentRestPosition,
                     currentPreparePosition, currentWarningPosition, gloveTypeSpinner.getSelectedItemPosition());
             ComboSetUtil.updateWorkoutDto(workoutDTO);
         }else {
-            WorkoutDTO workoutDTO = new WorkoutDTO(SharedPreferencesUtils.increaseSetID(this), workoutName.getText().toString(), currentRoundPosition + 1, roundsetLists, currentRoundTimePosition, currentRestPosition,
+            WorkoutDTO workoutDTO = new WorkoutDTO(SharedPreferencesUtils.increaseSetID(this), workoutName.getText().toString(), currentRoundPosition + 1, roundcomboLists, currentRoundTimePosition, currentRestPosition,
                     currentPreparePosition, currentWarningPosition, gloveTypeSpinner.getSelectedItemPosition());
 
             ComboSetUtil.addWorkoutDto(workoutDTO);
@@ -395,11 +447,12 @@ public class NewWorkoutActivity extends AppCompatActivity {
                 addNewRoundWorkflow(i);
             }
 
-            if (roundsetLists != null && roundsetLists.size() > 0){
-                roundsetLists.clear();
+            if (roundcomboLists != null && roundcomboLists.size() > 0){
+                roundcomboLists.clear();
             }
 
-            roundsetLists.addAll(workoutDTO.getRoundsetIDs());
+            roundcomboLists.addAll(workoutDTO.getRoundsetIDs());
+            currentRoundPosition = workoutDTO.getRoundcount() - 1;
 
             for (int i = 0; i < workoutDTO.getRoundcount(); i++){
                 detailAdapterList.get(i).setData(workoutDTO.getRoundsetIDs().get(i));
@@ -432,16 +485,22 @@ public class NewWorkoutActivity extends AppCompatActivity {
 //    }
 
     private void updatePlusBtn(int roundposition){
-        ArrayList<Integer> setLists = roundsetLists.get(roundposition);
+        ArrayList<Integer> comboLists = roundcomboLists.get(roundposition);
         ImageView plusView = plusViewList.get(roundposition);
 
-        if (setLists.size() > 0){
-            plusView.setImageResource(R.drawable.plus_active);
+        if (roundposition < currentRoundPosition){
+            plusView.setImageResource(R.drawable.minus_active);
             plusView.setEnabled(true);
         }else {
-            plusView.setImageResource(R.drawable.plus_inactive);
-            plusView.setEnabled(false);
+            if (comboLists.size() > 0){
+                plusView.setImageResource(R.drawable.plus_active);
+                plusView.setEnabled(true);
+            }else {
+                plusView.setImageResource(R.drawable.plus_inactive);
+                plusView.setEnabled(false);
+            }
         }
+
 
 //        if (comboIDLists.size() > 0){
 //            saveBtn.setBackgroundResource(R.drawable.orange_btn_bg);
@@ -476,7 +535,7 @@ public class NewWorkoutActivity extends AppCompatActivity {
         replaceView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSetListDialog(position, true, roundposition);
+                showComboListDialog(position, true, roundposition);
                 dialog.dismiss();
             }
         });
@@ -484,7 +543,7 @@ public class NewWorkoutActivity extends AppCompatActivity {
         insertaboveView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSetListDialog(position, false, roundposition);
+                showComboListDialog(position, false, roundposition);
                 dialog.dismiss();
             }
         });
@@ -492,7 +551,7 @@ public class NewWorkoutActivity extends AppCompatActivity {
         insertbelowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSetListDialog(position + 1, false, roundposition);
+                showComboListDialog(position + 1, false, roundposition);
                 dialog.dismiss();
             }
         });
@@ -501,22 +560,22 @@ public class NewWorkoutActivity extends AppCompatActivity {
         deleteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Integer> setids = roundsetLists.get(roundposition);
+                ArrayList<Integer> setids = roundcomboLists.get(roundposition);
                 setids.remove(position);
                 detailAdapterList.get(roundposition).notifyDataSetChanged();
                 dialog.dismiss();
 
                 updatePlusBtn(roundposition);
-                roundsetLists.set(roundposition, setids);
+                roundcomboLists.set(roundposition, setids);
             }
         });
 
         dialog.show();
     }
 
-    private void showSetListDialog(final int comboposition, final boolean replace, final int roundposition){
+    private void showComboListDialog(final int comboposition, final boolean replace, final int roundposition){
 
-        final ArrayList<Integer> setLists = roundsetLists.get(roundposition);
+        final ArrayList<Integer> comboLists = roundcomboLists.get(roundposition);
 
         final Dialog dialog = new Dialog(this);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -529,15 +588,16 @@ public class NewWorkoutActivity extends AppCompatActivity {
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog_addcombo);
+        dialog.setContentView(R.layout.dialog_addset);
 
         TextView titleView = (TextView)dialog.findViewById(R.id.titleview);
-        titleView.setText(getResources().getString(R.string.dialog_workouttitle));
+        titleView.setText(getResources().getString(R.string.dialog_settitle));
 
         TextView cancelView = (TextView)dialog.findViewById(R.id.cancel_btn);
         final ListView setListView = (ListView)dialog.findViewById(R.id.comboset_listview);
 
-        final PopupSetListAdapter adapter = new PopupSetListAdapter(this, savedSets);
+//        final PopupSetListAdapter adapter = new PopupSetListAdapter(this, savedSets);
+        final PopupCombinationListAdapter adapter = new PopupCombinationListAdapter(this, savedCombos);
         setListView.setAdapter(adapter);
 
         setListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -545,14 +605,14 @@ public class NewWorkoutActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 dialog.dismiss();
 
-                SetsDTO setsDTO = adapter.getItem(position);
+                ComboDTO comboDTO = adapter.getItem(position);
                 if (replace){
-                    setLists.set(comboposition, setsDTO.getId());
+                    comboLists.set(comboposition, comboDTO.getId());
                 }else {
-                    setLists.add(comboposition, setsDTO.getId());
+                    comboLists.add(comboposition, comboDTO.getId());
                 }
 
-                roundsetLists.set(roundposition, setLists);
+                roundcomboLists.set(roundposition, comboLists);
 
                 detailAdapterList.get(roundposition).notifyDataSetChanged();
 
