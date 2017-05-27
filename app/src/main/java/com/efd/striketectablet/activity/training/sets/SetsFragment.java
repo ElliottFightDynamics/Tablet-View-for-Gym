@@ -2,18 +2,22 @@ package com.efd.striketectablet.activity.training.sets;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.efd.striketectablet.DTO.SetsDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
+import com.efd.striketectablet.activity.training.ComboSetTrainingActivity;
 import com.efd.striketectablet.adapter.SetRoutineCombinationListAdapter;
 import com.efd.striketectablet.adapter.SetRoutineListAdapter;
+import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
 import java.util.ArrayList;
@@ -22,6 +26,7 @@ public class SetsFragment extends Fragment {
 
     View view;
     ListView setListView, setdetailListView;
+    Button starttrainingBtn;
 
     MainActivity mainActivityInstance;
 
@@ -69,8 +74,28 @@ public class SetsFragment extends Fragment {
         detailListAdapter = new SetRoutineCombinationListAdapter(mainActivityInstance, comboDTOs);
         setdetailListView.setAdapter(detailListAdapter);
 
-
+        starttrainingBtn = (Button)view.findViewById(R.id.training_start_button);
+        starttrainingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSetsTraining();
+            }
+        });
     }
+
+    private void startSetsTraining(){
+
+        if (setsDatas.size() == 0){
+            return;
+        }
+
+        Intent combosetIntent = new Intent(getActivity(), ComboSetTrainingActivity.class);
+        combosetIntent.putExtra(EFDConstants.TRAININGTYPE, EFDConstants.SETS);
+        combosetIntent.putExtra(EFDConstants.SET_ID, setAdapter.getItem(setAdapter.getCurrentPosition()).getId());
+        getActivity().startActivity(combosetIntent);
+        getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
 
     public void updateDetail(SetsDTO setsDTO){
         if (comboDTOs.size() > 0){

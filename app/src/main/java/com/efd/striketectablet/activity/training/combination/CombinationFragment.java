@@ -2,17 +2,21 @@ package com.efd.striketectablet.activity.training.combination;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
+import com.efd.striketectablet.activity.training.ComboSetTrainingActivity;
 import com.efd.striketectablet.adapter.CombinationListAdapter;
+import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
 import java.util.ArrayList;
@@ -21,6 +25,7 @@ public class CombinationFragment extends Fragment {
 
     View view;
     ListView comboListView;
+    Button starttrainingBtn;
 
     MainActivity mainActivityInstance;
 
@@ -61,6 +66,25 @@ public class CombinationFragment extends Fragment {
 
         comboAdapter = new CombinationListAdapter(mainActivityInstance, comboDatas);
         comboListView.setAdapter(comboAdapter);
+
+        starttrainingBtn = (Button)view.findViewById(R.id.training_start_button);
+        starttrainingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startCombinationTraining();
+            }
+        });
+    }
+
+    private void startCombinationTraining(){
+        if (comboDatas.size() == 0)
+            return;
+
+        Intent combosetIntent = new Intent(getActivity(), ComboSetTrainingActivity.class);
+        combosetIntent.putExtra(EFDConstants.TRAININGTYPE, EFDConstants.COMBINATION);
+        combosetIntent.putExtra(EFDConstants.COMBO_ID, comboAdapter.getItem(comboAdapter.getCurrentPosition()).getId());
+        getActivity().startActivity(combosetIntent);
+        getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override

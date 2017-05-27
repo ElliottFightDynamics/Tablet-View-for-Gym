@@ -119,6 +119,10 @@
     <string name="roundinworkout">ROUNDS IN WORKOUT</string>
     <string name="combinationsinround">COMBINATIONS IN ROUND</string>
 
+    <string name="title_combination">COMBINATION TRAINING</string>
+    <string name="title_sets">SET ROUTINE TRAINING</string>
+    <string name="title_workout">WORKOUT TRAINING</string>
+
 
 
 </resources>

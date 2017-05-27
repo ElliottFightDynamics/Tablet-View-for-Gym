@@ -1,4 +1,4 @@
-package com.efd.striketectablet.activity.training.quickstart;
+package com.efd.striketectablet.activity.training;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,15 +19,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.DTO.PresetDTO;
 import com.efd.striketectablet.DTO.PunchDTO;
 import com.efd.striketectablet.DTO.PunchHistoryGraphDataDetails;
-import com.efd.striketectablet.DTO.TrainingPunchDTO;
+import com.efd.striketectablet.DTO.SetsDTO;
+import com.efd.striketectablet.DTO.WorkoutDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
-import com.efd.striketectablet.activity.training.BaseTrainingActivity;
-import com.efd.striketectablet.customview.CurveChartView;
 import com.efd.striketectablet.customview.CustomButton;
+import com.efd.striketectablet.customview.CustomTextView;
+import com.efd.striketectablet.customview.CustomTextViewFontEfDigit;
+import com.efd.striketectablet.util.ComboSetUtil;
 import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.util.StatisticUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
@@ -38,32 +42,28 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class QuickStartTrainingActivity extends BaseTrainingActivity {
+public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
     ImageView backBtn;
+    TextView titleView;
     CustomButton startTrainingBtn;
-    public LinearLayout leftSensorConnectionLayout, rightSensorConnectionLayout;
-    TextView punchTypeView, trainingProgressStatus;
-    TextView speedValue, punchCountView, forceValue;
-    TextView currentTimeView;
-    ProgressBar progressBar;
-    CurveChartView chartView;
+    LinearLayout leftSensorConnectionLayout, rightSensorConnectionLayout;
+    CustomTextView punchTypeView, trainingProgressStatus;
+
+    LinearLayout comboNumParent;
+    LinearLayout comboResultParent;
 
     ImageView audioBtn;
 
     TextView avgSpeedView, avgForceView, maxSpeedView, maxForceView;
     TextView leftavgSpeedView, leftavgForceView, leftmaxSpeedView, leftmaxForceView;
     TextView rightavgSpeedView, rightavgForceView, rightmaxSpeedView, rightmaxForceView;
-
-    RelativeLayout graphLayout, digitLayout;
-    LinearLayout speedLayout, powerLayout;
+    TextView speedValue, punchCountView, forceValue;
 
     public ImageView leftSensorConnectionButton, rightSensorConnectionButton;
-    TextView leftHandBattery, rightHandBattery;
+    CustomTextView leftHandBattery, rightHandBattery;
     View leftHandBatteryView, rightHandBatteryView;
 
-
-    PresetDTO presetDTO;
     Timer progressTimer;
     TimerTask updateProgressTimerTask;
     private Handler mHandler;
@@ -77,13 +77,11 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
     private MediaPlayer bellplayer;
     private AudioManager audioManager;
-    private boolean isSpeedGraph = false;
 
     private MainActivity mainActivityInstance;
 
     private ArrayList<PunchHistoryGraphDataDetails> punchLists;
     private ArrayList<PunchDTO> punchDTOs;
-
     private ArrayList<PunchDTO> leftpunchDTOS, rightpunchDTOS;
 
     private long trainingStartTime = 0L;
@@ -92,28 +90,44 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
     private float leftmaxSpeed = 0f, leftavgSpeed = 0, leftmaxForce = 0, leftavgForce = 0;
     private float rightmaxSpeed = 0f, rightavgSpeed = 0, rightmaxForce = 0, rightavgForce = 0;
 
+    private String trainingtype;
+    private int comboid = -1, setid = -1, workoutid = -1;
+    private ComboDTO currentComboDTO;
+    private SetsDTO setDTO;
+    private WorkoutDTO workoutDTO;
+
+    private int maxview = 0;
+    private int currentComboIndex = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_comboset_training);
 
-        setContentView(R.layout.activity_quickstart_training);
+        trainingtype = getIntent().getStringExtra(EFDConstants.TRAININGTYPE);
+        if (trainingtype.equalsIgnoreCase(EFDConstants.COMBINATION)){
+            comboid = getIntent().getIntExtra(EFDConstants.COMBO_ID, -1);
+        }else if (trainingtype.equalsIgnoreCase(EFDConstants.SETS)){
+            setid = getIntent().getIntExtra(EFDConstants.SET_ID, -1);
+        }else if(trainingtype.equalsIgnoreCase(EFDConstants.WORKOUT)){
+            workoutid = getIntent().getIntExtra(EFDConstants.WORKOUT_ID, -1);
+        }
+
         punchLists = new ArrayList<>();
         punchDTOs = new ArrayList<>();
-
         leftpunchDTOS = new ArrayList<>();
         rightpunchDTOS = new ArrayList<>();
 
         mainActivityInstance = MainActivity.getInstance();
-
-        presetDTO = (PresetDTO)getIntent().getSerializableExtra("preset");
 
         initViews();
     }
 
     private void initViews(){
         mHandler = new Handler();
+        titleView = (TextView)findViewById(R.id.title);
         backBtn = (ImageView)findViewById(R.id.btn_back);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,28 +137,26 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         });
 
         startTrainingBtn = (CustomButton)findViewById(R.id.training_start_button);
-        leftHandBattery = (TextView) findViewById(R.id.left_sensor_battery);
-        rightHandBattery = (TextView) findViewById(R.id.right_sensor_battery);
-        leftHandBatteryView = findViewById(R.id.battery_life_left);
-        rightHandBatteryView = findViewById(R.id.battery_life_right);
 
         leftSensorConnectionLayout = (LinearLayout)findViewById(R.id.left_sensor_connection_layout);
         rightSensorConnectionLayout = (LinearLayout)findViewById(R.id.right_sensor_connection_layout);
-
+        leftHandBattery = (CustomTextView) findViewById(R.id.left_sensor_battery);
+        rightHandBattery = (CustomTextView) findViewById(R.id.right_sensor_battery);
+        leftHandBatteryView = findViewById(R.id.battery_life_left);
+        rightHandBatteryView = findViewById(R.id.battery_life_right);
         leftSensorConnectionButton = (ImageView)findViewById(R.id.left_connection_button);
         rightSensorConnectionButton = (ImageView)findViewById(R.id.right_connection_button);
 
-        punchTypeView = (TextView)findViewById(R.id.training_punchtype);
-        trainingProgressStatus = (TextView)findViewById(R.id.trainingprogress_status);
 
-        graphLayout = (RelativeLayout)findViewById(R.id.progress_graph);
-        digitLayout = (RelativeLayout)findViewById(R.id.progress_digit);
+        punchTypeView = (CustomTextView)findViewById(R.id.training_punchtype);
+        trainingProgressStatus = (CustomTextView)findViewById(R.id.trainingprogress_status);
 
-        graphLayout.setVisibility(View.VISIBLE);
-        digitLayout.setVisibility(View.INVISIBLE);
+        comboNumParent = (LinearLayout)findViewById(R.id.punch_type_parent);
+        comboResultParent = (LinearLayout)findViewById(R.id.punch_result_parent);
 
-        progressBar = (ProgressBar)findViewById(R.id.trainingprogressbar);
-        currentTimeView = (TextView)findViewById(R.id.trainingprogress_time);
+        speedValue = (TextView)findViewById(R.id.speed_value);
+        punchCountView = (TextView)findViewById(R.id.punch_value);
+        forceValue = (TextView)findViewById(R.id.power_value);
 
         avgSpeedView = (TextView)findViewById(R.id.training_avg_speed);
         avgForceView = (TextView)findViewById(R.id.training_avg_power);
@@ -160,38 +172,6 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         rightavgForceView = (TextView)findViewById(R.id.rh_avg_force);
         rightmaxSpeedView = (TextView)findViewById(R.id.rh_max_speed);
         rightmaxForceView = (TextView)findViewById(R.id.rh_max_force);
-
-        chartView = (CurveChartView)findViewById(R.id.curvechart);
-        chartView.setMaxXAxisValue(Integer.parseInt(PresetUtil.timerwitSecsList.get(presetDTO.getRound_time())) * 1000);
-
-        speedLayout = (LinearLayout)findViewById(R.id.training_speedlayout);
-        powerLayout = (LinearLayout)findViewById(R.id.training_powerlayout);
-
-        speedValue = (TextView)findViewById(R.id.speed_value);
-        punchCountView = (TextView)findViewById(R.id.punch_value);
-        forceValue = (TextView)findViewById(R.id.power_value);
-
-
-        speedLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isSpeedGraph){
-                    isSpeedGraph = true;
-                    chartView.changeGraph(isSpeedGraph);
-                }
-            }
-        });
-
-        powerLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isSpeedGraph){
-                    isSpeedGraph = false;
-//                    chartView.setIsSpeed(isSpeedGraph);
-                    chartView.changeGraph(isSpeedGraph);
-                }
-            }
-        });
 
         audioBtn = (ImageView)findViewById(R.id.audiobtn);
         audioBtn.setOnClickListener(new View.OnClickListener() {
@@ -210,8 +190,8 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         startTrainingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                tmpStart();
                 if (startTrainingBtn.getText().toString().equals(getResources().getString(R.string.start_training))){
-
                     startTraining();
                 }else {
                     startTrainingBtn.setText(getResources().getString(R.string.start_training));
@@ -219,6 +199,11 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
                 }
             }
         });
+
+        if (bellplayer == null)
+            bellplayer = MediaPlayer.create(this, R.raw.boxing_bell);
+
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         leftSensorConnectionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,18 +225,11 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
             }
         });
 
-
         resetConnectDeviceBg("right");
         resetConnectDeviceBg("left");
 
         setDeviceConnectionState();
-
-        if (bellplayer == null)
-            bellplayer = MediaPlayer.create(this, R.raw.boxing_bell);
-
         resetPunchDetails();
-
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -261,34 +239,6 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
                 setBatteryVoltage(MainActivity.rightHandBatteryVoltage);
             }
         }, 10);
-    }
-
-    private void connectSensor(boolean isLeft){
-            if (mainActivityInstance.deviceLeft.equals(EFDConstants.BLANK_TEXT) && mainActivityInstance.deviceRight.equals(EFDConstants.BLANK_TEXT)) {
-                Toast.makeText(QuickStartTrainingActivity.this, EFDConstants.DEVICE_ID_MUST_NOT_BE_BLANK_ERROR, Toast.LENGTH_SHORT).show();
-            } else if (mainActivityInstance.deviceLeft.equalsIgnoreCase(mainActivityInstance.deviceRight)) {
-                Toast.makeText(QuickStartTrainingActivity.this, EFDConstants.DEVICE_ID_MUST_NOT_BE_SAME, Toast.LENGTH_SHORT).show();
-            } else {
-                //code to clear punch history details after we have restarted a training
-                mainActivityInstance.punchDataDTO.resetValues(0);
-                mainActivityInstance.liveMonitorDataMap.clear();
-                mainActivityInstance.punchHistoryGraph.clear();
-                mainActivityInstance.endTrainingTime = EFDConstants.DEFAULT_START_TIME;
-
-                if ((mainActivityInstance.deviceLeft != null || mainActivityInstance.deviceRight != null) && (!EFDConstants.BLANK_TEXT.equals(mainActivityInstance.deviceLeft) || !EFDConstants.BLANK_TEXT.equals(mainActivityInstance.deviceRight))) {
-                    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-                    if (!mBluetoothAdapter.isEnabled()) {
-                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivityForResult(enableBtIntent, MainActivity.REQUEST_ENABLE_BT);
-                    }
-
-                    if (isLeft)
-                        mainActivityInstance.new ShowLoaderTask(this).execute("left");
-                    else
-                        mainActivityInstance.new ShowLoaderTask(this).execute("right");
-                }
-            }
-
     }
 
     public void resetPunchDetails(){
@@ -335,6 +285,250 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         rightavgSpeed = 0f;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setInfo();
+    }
+
+    private void setInfo(){
+        if (comboid != -1){
+            titleView.setText(getResources().getString(R.string.title_combination));
+            currentComboDTO = ComboSetUtil.getComboDtowithID(comboid);
+
+            initComboTrainingView();
+
+        }else if (setid != -1){
+            titleView.setText(getResources().getString(R.string.title_sets));
+            setDTO = ComboSetUtil.getSetDtowithID(setid);
+        }else if (workoutid != -1){
+            titleView.setText(getResources().getString(R.string.title_workout));
+            workoutDTO = ComboSetUtil.getWorkoutDtoWithID(workoutid);
+        }else {
+            titleView.setText("TRAINING");
+        }
+    }
+
+    private void initComboTrainingView(){
+        currentComboIndex = 0;
+        comboResultParent.removeAllViews();
+        comboNumParent.removeAllViews();
+
+        maxview = EFDConstants.MAX_NUM_FORPUNCH;//Math.max(EFDConstants.MAX_NUM_FORPUNCH, comboDTO.getComboTypes().size());
+
+        for (int i = 0; i < maxview; i++){
+            addPunchNumView(i);
+        }
+
+        for (int i = 0; i < currentComboDTO.getComboTypes().size(); i++){
+            addPunchResultView(i, currentComboDTO.getComboTypes().get(i));
+        }
+
+        //first 3 views has to be invisible
+//        int min = Math.min(4, currentComboDTO.getComboTypes().size());
+
+        int min = Math.max(0, 3 - currentComboIndex );
+        int max = Math.min(7, currentComboDTO.getComboTypes().size() - currentComboIndex + 3);
+
+        for (int i = 0; i < maxview; i++){
+            LinearLayout child = (LinearLayout)comboNumParent.getChildAt(i);
+            TextView keyView = (TextView)child.findViewById(R.id.key);
+
+            if (i < min){
+                child.setVisibility(View.INVISIBLE);
+            }else if (i < max){
+                child.setVisibility(View.VISIBLE);
+                keyView.setText(currentComboDTO.getComboTypes().get(currentComboIndex + i - 3));
+
+                if (i == max - 1){
+                    View divider = child.findViewById(R.id.combo_divider);
+                    divider.setVisibility(View.INVISIBLE);
+                }
+            }else {
+                child.setVisibility(View.INVISIBLE);
+            }
+        }
+
+//        for (int i = 0; i < maxview; i++){
+//            if (i < 3){
+//                comboNumParent.getChildAt(i).setVisibility(View.INVISIBLE);
+//            }else if (i < 3 + min){
+//                LinearLayout child = (LinearLayout)comboNumParent.getChildAt(i);
+//                TextView keyView = (TextView)child.findViewById(R.id.key);
+//                keyView.setText(currentComboDTO.getComboTypes().get(i - 3));
+//            }else {
+//                comboNumParent.getChildAt(i).setVisibility(View.INVISIBLE);
+//            }
+//        }
+
+        trainingProgressStatus.setText(ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(0)));
+        trainingProgressStatus.setTextColor(getResources().getColor(R.color.white));
+    }
+
+    private void addPunchResultView(int position, String key){
+        final LinearLayout newLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.item_training_punchresult, null);
+        TextView keyView = (TextView)newLayout.findViewById(R.id.key);
+
+        if (position == 0){
+            keyView.setBackgroundResource(R.drawable.next_punch_first);
+            keyView.setTextColor(getResources().getColor(R.color.white));
+        }else {
+            keyView.setBackgroundResource(R.drawable.punchkey_bg_later);
+        }
+
+        keyView.setText(key);
+
+        comboResultParent.addView(newLayout, position);
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)newLayout.getLayoutParams();
+        params.leftMargin = StatisticUtil.dpTopx(-3);
+        newLayout.setLayoutParams(params);
+    }
+
+    private void addPunchNumView(int position){
+        final LinearLayout newLayout = (LinearLayout)getLayoutInflater().inflate(R.layout.item_training_punchkey, null);
+        TextView keyView = (TextView)newLayout.findViewById(R.id.key);
+        View comboDivider = newLayout.findViewById(R.id.combo_divider);
+
+        keyView.setAlpha(1 - (float)(Math.abs(3 - position) * 0.32));
+        comboDivider.setAlpha(0.25f);
+        comboNumParent.addView(newLayout, position);
+
+        if (position == 3){
+            keyView.setTextSize(115);
+        }else {
+            keyView.setTextSize(80);
+        }
+
+        if (position == maxview - 1){
+            comboDivider.setVisibility(View.GONE);
+        }
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        newLayout.setLayoutParams(params);
+    }
+
+    int temp = 0;
+    private void tmpStart(){
+        temp++;
+        if (temp % 2 == 0){
+            updateView(true);
+        }else {
+            updateView(false);
+        }
+    }
+
+    private void updateView(boolean success){
+
+        if (currentComboIndex == currentComboDTO.getComboTypes().size() - 1){
+            //training is finished,
+            stopTraining();
+            //update num view
+            LinearLayout child = (LinearLayout)comboNumParent.getChildAt(3);
+            TextView keyView = (TextView)child.findViewById(R.id.key);
+            keyView.setTextSize(80);
+
+            LinearLayout resultChild = (LinearLayout)comboResultParent.getChildAt(currentComboIndex);
+            TextView resultkeyView = (TextView)resultChild.findViewById(R.id.key);
+
+            //update result view
+
+            if (currentComboIndex == 0){
+                if (success)
+                    resultkeyView.setBackgroundResource(R.drawable.punch_success_first);
+                else
+                    resultkeyView.setBackgroundResource(R.drawable.punch_fail_first);
+            }else {
+                if (success)
+                    resultkeyView.setBackgroundResource(R.drawable.punch_success_next);
+                else
+                    resultkeyView.setBackgroundResource(R.drawable.punch_fail_next);
+            }
+
+            resultkeyView.setTextColor(getResources().getColor(R.color.black));
+
+        }else {
+            currentComboIndex ++;
+
+            int min = Math.max(0, 3 - currentComboIndex );
+            int max = Math.min(7, currentComboDTO.getComboTypes().size() - currentComboIndex + 3);
+
+            for (int i = 0; i < maxview; i++){
+                LinearLayout child = (LinearLayout)comboNumParent.getChildAt(i);
+                TextView keyView = (TextView)child.findViewById(R.id.key);
+
+                if (i < min){
+                    child.setVisibility(View.INVISIBLE);
+                }else if (i < max){
+                    child.setVisibility(View.VISIBLE);
+                    keyView.setText(currentComboDTO.getComboTypes().get(currentComboIndex + i - 3));
+
+                    if (i == max - 1){
+                        View divider = child.findViewById(R.id.combo_divider);
+                        divider.setVisibility(View.INVISIBLE);
+                    }
+                }else {
+                    child.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            LinearLayout resultcurrentChild = (LinearLayout)comboResultParent.getChildAt(currentComboIndex - 1);
+            TextView resultcurrentkeyView = (TextView)resultcurrentChild.findViewById(R.id.key);
+
+            //update result view
+
+            if (currentComboIndex == 1){
+                if (success)
+                    resultcurrentkeyView.setBackgroundResource(R.drawable.punch_success_first);
+                else
+                    resultcurrentkeyView.setBackgroundResource(R.drawable.punch_fail_first);
+            }else {
+                if (success)
+                    resultcurrentkeyView.setBackgroundResource(R.drawable.punch_success_next);
+                else
+                    resultcurrentkeyView.setBackgroundResource(R.drawable.punch_fail_next);
+            }
+
+            resultcurrentkeyView.setTextColor(getResources().getColor(R.color.black));
+
+            //update next result view
+            LinearLayout resultnextChild = (LinearLayout)comboResultParent.getChildAt(currentComboIndex);
+            TextView resultnextkeyView = (TextView)resultnextChild.findViewById(R.id.key);
+
+            resultnextkeyView.setBackgroundResource(R.drawable.next_punch_next);
+            resultnextkeyView.setTextColor(getResources().getColor(R.color.white));
+
+            trainingProgressStatus.setText(ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(currentComboIndex)));
+        }
+    }
+
+    private void connectSensor(boolean isLeft){
+        if (mainActivityInstance.deviceLeft.equals(EFDConstants.BLANK_TEXT) && mainActivityInstance.deviceRight.equals(EFDConstants.BLANK_TEXT)) {
+            Toast.makeText(this, EFDConstants.DEVICE_ID_MUST_NOT_BE_BLANK_ERROR, Toast.LENGTH_SHORT).show();
+        } else if (mainActivityInstance.deviceLeft.equalsIgnoreCase(mainActivityInstance.deviceRight)) {
+            Toast.makeText(this, EFDConstants.DEVICE_ID_MUST_NOT_BE_SAME, Toast.LENGTH_SHORT).show();
+        } else {
+            //code to clear punch history details after we have restarted a training
+            mainActivityInstance.punchDataDTO.resetValues(0);
+            mainActivityInstance.liveMonitorDataMap.clear();
+            mainActivityInstance.punchHistoryGraph.clear();
+            mainActivityInstance.endTrainingTime = EFDConstants.DEFAULT_START_TIME;
+//                mainActivityInstance.getBagTrainingOneFragment().resetTrainingOnePageLiveData();
+            if ((mainActivityInstance.deviceLeft != null || mainActivityInstance.deviceRight != null) && (!EFDConstants.BLANK_TEXT.equals(mainActivityInstance.deviceLeft) || !EFDConstants.BLANK_TEXT.equals(mainActivityInstance.deviceRight))) {
+                BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                if (!mBluetoothAdapter.isEnabled()) {
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableBtIntent, MainActivity.REQUEST_ENABLE_BT);
+                }
+
+                if (isLeft)
+                    mainActivityInstance.new ShowLoaderTask(this).execute("left");
+                else
+                    mainActivityInstance.new ShowLoaderTask(this).execute("right");
+            }
+        }
+    }
+
     private void playBoxingBell(){
         if (audioEnabled) {
             int volume = audioManager.getStreamVolume(AudioManager.STREAM_NOTIFICATION);
@@ -344,71 +538,25 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
     }
 
     private void startTraining(){
+//        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
+//            StatisticUtil.showToastMessage("Please connect with sensors");
+//            return;
+//        }
 
-        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
-            StatisticUtil.showToastMessage("Please connect with sensors");
-            return;
-        }
-
-        if (currentStatus == -1){
-            //prepare for round 1
+        if (comboid != -1){
+            //this is combo training
+            startProgressTimer();
             startTrainingBtn.setText(getResources().getString(R.string.stop_training));
-            currentStatus = 0;
-            roundvalue = 1;
-            totalTime = 10; //Integer.parseInt(PresetUtil.timerwitSecsList.get(presetDTO.getPrepare()));
-            currentTime = totalTime;
-            trainingProgressStatus.setText("PREPARE");
-            progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_preparebar));
-            trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_prepare));
-            isSpeedGraph = false;
-
-            graphLayout.setVisibility(View.INVISIBLE);
-            digitLayout.setVisibility(View.VISIBLE);
-        }else {
-            if (currentStatus == 0){
-                //current is prepare
-                startTrainingBtn.setText(getResources().getString(R.string.stop_training));
-            }else if (currentStatus == 1){
-
-                totalTime = Integer.parseInt(PresetUtil.timerwitSecsList.get(presetDTO.getRest()));
-                currentTime = totalTime;
-                trainingProgressStatus.setText("REST");
-                currentStatus++;
-                progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_restbar));
-                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_rest));
-
-                startTrainingBtn.setText(getResources().getString(R.string.stop_training));
-
-                graphLayout.setVisibility(View.INVISIBLE);
-                digitLayout.setVisibility(View.VISIBLE);
-
-            }else if (currentStatus == 2){
-                //current is rest
-                startTrainingBtn.setText(getResources().getString(R.string.stop_training));
-            }
         }
-
-        progressBar.setMax(totalTime);
-        progressBar.setProgress(totalTime - currentTime);
-
-        startProgressTimer();
     }
 
     private void stopTraining(){
-        Log.e("Super", "Stop Training");
+
         stopProgressTimer();
 
+        startTrainingBtn.setText(getResources().getString(R.string.stop_training));
         mainActivityInstance.stopRoundTraining();
         mainActivityInstance.stopTraining();
-        mainActivityInstance.createOrUpdateSummaryTables();
-
-//        if (mainActivityInstance.trainingManager.isTrainingRunning()) {
-//            JSONObject result_Training_session_end = MainActivity.db.trainingSessionEnd(mainActivityInstance.trainingSessionId);
-//            endTrainingSession(result_Training_session_end.toString());
-//
-//            // extract summary upon ending training session
-
-//        }
     }
 
     public void startProgressTimer (){
@@ -431,137 +579,11 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (currentTime == 0){
-                            if (currentStatus == 0){
-                                //prepare is finished, go to round
-                                totalTime = Integer.parseInt(PresetUtil.timerwitSecsList.get(presetDTO.getRound_time()));
-                                currentTime = totalTime;
-                                trainingProgressStatus.setText("ROUND " + roundvalue);
-                                currentStatus++;
-                                progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_roundbar));
-                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
+                        currentTime++;
+                        String text = PresetUtil.chagngeSecsToTime(currentTime) + " - STOP";
 
-                                //round is starting
-                                playBoxingBell();
-
-                                chartView.setPunchDatas(isSpeedGraph, new ArrayList());
-
-                                graphLayout.setVisibility(View.VISIBLE);
-                                digitLayout.setVisibility(View.INVISIBLE);
-
-                                String text = PresetUtil.chagngeSecsToTime(currentTime) + " - STOP";
-                                startTrainingBtn.setText(text);
-
-                                trainingStartTime = System.currentTimeMillis();
-                                resetPunchDetails();
-                                mainActivityInstance.startRoundTraining();
-                            }
-                            else if (currentStatus == 1){
-                                //round is finished, go to rest
-                                totalTime = Integer.parseInt(PresetUtil.timerwitSecsList.get(presetDTO.getRest()));
-                                currentTime = totalTime;
-                                trainingProgressStatus.setText("REST");
-                                currentStatus++;
-                                progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_restbar));
-                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_rest));
-
-                                startTrainingBtn.setText(getResources().getString(R.string.stop_training));
-
-                                //round is finished
-                                playBoxingBell();
-                                graphLayout.setVisibility(View.INVISIBLE);
-                                digitLayout.setVisibility(View.VISIBLE);
-                                punchTypeView.setText("");
-                                mainActivityInstance.stopRoundTraining();
-
-                            }else if (currentStatus == 2){
-                                currentStatus++;
-                                if (roundvalue == Integer.parseInt(PresetUtil.roundsList.get(presetDTO.getRounds()))){
-                                    //training is finished
-                                    Toast.makeText(QuickStartTrainingActivity.this, "Training is finished", Toast.LENGTH_SHORT).show();
-                                    currentStatus = -1;
-                                    startTrainingBtn.setText(getResources().getString(R.string.start_training));
-                                    trainingProgressStatus.setText("");
-
-                                    stopProgressTimer();
-
-                                    mainActivityInstance.stopRoundTraining();
-                                }else {
-                                    roundvalue++;
-                                    totalTime = Integer.parseInt(PresetUtil.timerwitSecsList.get(presetDTO.getRound_time()));
-                                    currentTime = totalTime;
-                                    currentStatus = 1;
-                                    String text = PresetUtil.chagngeSecsToTime(currentTime) + " - STOP";
-                                    startTrainingBtn.setText(text);
-
-                                    trainingProgressStatus.setText("ROUND " + roundvalue);
-                                    progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_roundbar));
-                                    trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
-                                    chartView.setPunchDatas(isSpeedGraph, new ArrayList());
-                                    playBoxingBell();
-                                    trainingStartTime = System.currentTimeMillis();
-                                    resetPunchDetails();
-                                    mainActivityInstance.startRoundTraining();
-                                    graphLayout.setVisibility(View.VISIBLE);
-                                    digitLayout.setVisibility(View.INVISIBLE);
-                                }
-                            }
-
-                            progressBar.setProgress(0);
-                            progressBar.setMax(totalTime);
-                            currentTimeView.setText(PresetUtil.chagngeSecsToTime(currentTime));
-                        }else {
-                            currentTime--;
-//                            if (currentStatus == 1){
-//                                TrainingPunchDTO punchDTO = new TrainingPunchDTO();
-//                                if (currentTime % 5 == 0){
-//                                    punchDTO.setPunchtype("LEFT STRAIGHT");
-//                                    punchDTO.setSpeed(100);
-//                                    punchDTO.setForce(120);
-//                                    punchDTO.setPunchtime(0.5);
-//                                }else if (currentTime % 5 == 1){
-//                                    punchDTO.setPunchtype("RIGHT STRAIGHT");
-//                                    punchDTO.setSpeed(10);
-//                                    punchDTO.setForce(12);
-//                                    punchDTO.setPunchtime(0.4);
-//                                }else if (currentTime % 5 == 2){
-//                                    punchDTO.setPunchtype("LEFT JAB");
-//                                    punchDTO.setSpeed(1000);
-//                                    punchDTO.setForce(1200);
-//                                    punchDTO.setPunchtime(1d);
-//                                }else if (currentTime % 5 == 3){
-//                                    punchDTO.setPunchtype("RIGHT JAB");
-//                                    punchDTO.setSpeed(50);
-//                                    punchDTO.setForce(60);
-//                                    punchDTO.setPunchtime(0.5);
-//                                }else if (currentTime % 5 == 4){
-//                                    punchDTO.setPunchtype("LEFT UPPERCUT");
-//                                    punchDTO.setSpeed(200);
-//                                    punchDTO.setForce(520);
-//                                    punchDTO.setPunchtime(0.5);
-//                                }
-//
-//                                MainActivity.db.addPunchtoStats(punchDTO);
-//                            }
-                            if (currentStatus == 1 && currentTime == Integer.parseInt(PresetUtil.warningList.get(presetDTO.getWarning()))){
-                                progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_warningbar));
-                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_warning));
-                            }
-
-                            if (currentStatus == 1){
-                                if (currentTime == 0 || currentTime > totalTime - 2){
-
-                                }else {
-                                    chartView.setPunchDatas(isSpeedGraph, punchDTOs);
-                                }
-
-                                String text = PresetUtil.chagngeSecsToTime(currentTime) + " - STOP";
-                                startTrainingBtn.setText(text);
-                            }
-
-                            progressBar.setProgress(totalTime - currentTime);
-                            currentTimeView.setText(PresetUtil.chagngeSecsToTime(currentTime));
-                        }
+                        startTrainingBtn.setText(text);
+                        tmpStart();
                     }
                 });
             }
@@ -571,7 +593,6 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mainActivityInstance.stopRoundTraining();
         stopProgressTimer();
     }
 
@@ -583,6 +604,7 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
     @Override
     public void receivedPunchData(PunchHistoryGraphDataDetails details) {
+        super.receivedPunchData(details);
         punchLists.add(details);
 
         PunchDTO punchDTO = new PunchDTO();
@@ -596,7 +618,6 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
         speedValue.setText(details.punchSpeed);
         forceValue.setText(details.punchForce);
-
 
 
         maxForce = Math.max(maxForce, (float)currentForce);
@@ -656,21 +677,38 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         } else if (punchType.equalsIgnoreCase(EFDConstants.UNRECOGNIZED_ABBREVIATION_TEXT)) {
             setPunchTypeText(hand, EFDConstants.UNRECOGNIZED);
         }
+
     }
 
     private void setPunchTypeText(String hand, String punchType) {
-        punchTypeView.setText(hand + " " + punchType);
+        String detectedPunchType = hand + " " + punchType;
+        punchTypeView.setText(detectedPunchType);
+
+        String successString = ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(currentComboIndex));
+        if (successString.equalsIgnoreCase(EFDConstants.JAB) || successString.equalsIgnoreCase(EFDConstants.STRAIGHT)){
+            if (detectedPunchType.contains(successString)){
+                updateView(true);
+            }else
+                updateView(false);
+        }else {
+            if (detectedPunchType.equalsIgnoreCase(successString))
+                updateView(true);
+            else
+                updateView(false);
+        }
+
     }
+
 
     @Override
     public void setDeviceConnectionState() {
-//        if (mainActivityInstance.leftDeviceConnectionManager != null && mainActivityInstance.leftDeviceConnectionManager.readerThread != null) {
+        super.setDeviceConnectionState();
+
         if (mainActivityInstance.leftSensorConnected) {
             leftSensorConnectionButton.setImageResource(R.drawable.green_btn);
             leftSensorConnectionLayout.setEnabled(false);
         }
 
-//        if (mainActivityInstance.rightDeviceConnectionManager != null && mainActivityInstance.rightDeviceConnectionManager.readerThread != null) {
         if (mainActivityInstance.rightSensorConnected) {
             rightSensorConnectionButton.setImageResource(R.drawable.green_btn);
             rightSensorConnectionLayout.setEnabled(false);
@@ -679,6 +717,7 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
     @Override
     public void setBatteryVoltage(String batteryVoltage) {
+        super.setBatteryVoltage(batteryVoltage);
         if (!batteryVoltage.equals("")) {
             try {
                 JSONObject batteryJson = new JSONObject(batteryVoltage);
@@ -710,6 +749,7 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
     @Override
     public void handleBatteryLayoutClickable(boolean isLeft, boolean clickable) {
+        super.handleBatteryLayoutClickable(isLeft, clickable);
         if (isLeft){
             if (clickable){
                 leftSensorConnectionButton.setImageResource(R.drawable.red_btn);
@@ -731,6 +771,7 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
     @Override
     public void resetConnectDeviceBg(String hand) {
+        super.resetConnectDeviceBg(hand);
 
         if (hand.equals("right")) {
             rightSensorConnectionButton.setImageResource(R.drawable.red_btn);
@@ -743,6 +784,7 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
     @Override
     public void resetBatteryVoltage(String hand) {
+        super.resetBatteryVoltage(hand);
         if (hand.equals("left")) {
             leftHandBattery.setText("0%");
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);

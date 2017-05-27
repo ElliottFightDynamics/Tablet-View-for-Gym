@@ -269,7 +269,7 @@ public class EFDConstants {
 
     public static final int SPEED_MAX = 45;
     public static final int POWER_MAX = 1250;
-    public static final int GRID_COUNT = 9;
+    public static final int GRID_COUNT = 15;
 
     public static final String EDIT_COMBINATION = "editcombination";
     public static final String EDIT_SETS = "editsets";
@@ -282,5 +282,11 @@ public class EFDConstants {
     public static final String SET_ID = "setid";
     public static final String WORKOUT_ID = "workoutid";
 
+    public static final String TRAININGTYPE = "trainingtype";
+    public static final String COMBINATION = "combination";
+    public static final String SETS = "sets";
+    public static final String WORKOUT = "workout";
+
+    public static final int MAX_NUM_FORPUNCH = 7;
 
 }

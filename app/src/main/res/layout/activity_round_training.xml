@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.training.RoundTrainingActivity"
+    tools:context=".activity.training.round.RoundTrainingActivity"
     android:orientation="vertical"
     android:paddingLeft="30dp"
     android:paddingRight="30dp"
@@ -42,15 +42,15 @@
         android:background="@drawable/separator" />
 
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="260dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -74,7 +74,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="40dp"
@@ -283,7 +283,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="40dp"
@@ -481,8 +481,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 >
 
@@ -689,6 +688,22 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/training_punchtype"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:background="@drawable/punch_type_pg"
+                android:layout_gravity="center_horizontal"
+                android:textSize="25sp"
+                android:gravity="center"
+                android:textColor="@color/punches_text_color"
+                android:text="@string/right_straight" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@drawable/punch_type_bg" />
+
             <LinearLayout
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
@@ -706,8 +721,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="18"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
                         android:textColor="@color/speed_text_color"
                         android:gravity="center"
                         android:textSize="60sp"
@@ -737,8 +752,8 @@
                         android:id="@+id/punch_value"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
                         android:text="2067"
                         android:textColor="@color/punches_text_color"
                         android:gravity="center"
@@ -768,8 +783,8 @@
                         android:id="@+id/power_value"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
                         android:text="386"
                         android:textColor="@color/force_text_color"
                         android:gravity="center"
@@ -788,19 +803,8 @@
 
             </LinearLayout>
 
-            <com.efd.striketectablet.customview.CustomTextView
-                android:id="@+id/training_punchtype"
-                android:layout_marginTop="20dp"
-                android:layout_width="300dp"
-                android:layout_height="45dp"
-                android:background="@drawable/punch_type_pg"
-                android:layout_gravity="center_horizontal"
-                android:textSize="25sp"
-                android:gravity="center"
-                android:textColor="@color/punches_text_color"
-                android:text="@string/right_straight" />
-
             <RelativeLayout
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
@@ -810,15 +814,17 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:background="@drawable/trainingprogress_top" />
+
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@drawable/round_progress_top"/>
 
                         <ProgressBar
                             android:id="@+id/trainingprogressbar"
@@ -845,25 +851,25 @@
                             android:textColor="@color/white"
                             android:textSize="100sp" />
 
-                        <ImageView
-                            android:background="@drawable/progress_left"
-                            android:layout_width="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_height="100dp"/>
+                        <!--<ImageView-->
+                            <!--android:background="@drawable/progress_left"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:layout_height="100dp"/>-->
 
-                        <ImageView
-                            android:background="@drawable/progress_right"
-                            android:layout_width="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_height="100dp"/>
+                        <!--<ImageView-->
+                            <!--android:background="@drawable/progress_right"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:layout_alignParentRight="true"-->
+                            <!--android:layout_height="100dp"/>-->
 
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
-                        android:background="@drawable/trainingprogress_bottom" />
+                        android:background="@drawable/round_progress_bottom" />
 
                 </LinearLayout>
 
@@ -880,7 +886,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -1029,8 +1035,8 @@
         <LinearLayout
             android:layout_width="260dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -1054,7 +1060,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="40dp"
@@ -1263,7 +1269,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="40dp"

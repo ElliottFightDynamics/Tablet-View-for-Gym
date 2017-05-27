@@ -62,6 +62,9 @@
         <activity android:name=".activity.training.workout.NewWorkoutActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activity.training.ComboSetTrainingActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

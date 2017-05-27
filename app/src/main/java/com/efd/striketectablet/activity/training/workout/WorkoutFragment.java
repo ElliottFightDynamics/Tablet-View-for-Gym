@@ -3,6 +3,7 @@ package com.efd.striketectablet.activity.training.workout;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -25,6 +27,7 @@ import com.efd.striketectablet.DTO.PresetDTO;
 import com.efd.striketectablet.DTO.WorkoutDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
+import com.efd.striketectablet.activity.training.ComboSetTrainingActivity;
 import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
 import com.efd.striketectablet.adapter.PresetListAdapter;
 import com.efd.striketectablet.adapter.SetRoutineCombinationListAdapter;
@@ -47,6 +50,7 @@ public class WorkoutFragment extends Fragment {
 
     View view;
     TextView roundTimeView, restTimeView, preparTimeView, warningTimeView, glovesView, totalTimeView;
+    Button starttrainingBtn;
 
     ListView workoutListView, roundListView, comboListView;
     WorkoutListAdapter workoutListAdapter;
@@ -113,6 +117,26 @@ public class WorkoutFragment extends Fragment {
         comboListView.setAdapter(workoutComboListAdapter);
 
         updateTime(null);
+
+        starttrainingBtn = (Button)view.findViewById(R.id.training_start_button);
+        starttrainingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startWorkoutTraining();
+            }
+        });
+    }
+
+    private void startWorkoutTraining(){
+        if (workoutDTOs.size() == 0){
+            return;
+        }
+
+        Intent combosetIntent = new Intent(getActivity(), ComboSetTrainingActivity.class);
+        combosetIntent.putExtra(EFDConstants.TRAININGTYPE, EFDConstants.WORKOUT);
+        combosetIntent.putExtra(EFDConstants.WORKOUT_ID, workoutListAdapter.getItem(workoutListAdapter.getCurrentPosition()).getId());
+        getActivity().startActivity(combosetIntent);
+        getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     public void updateTime(WorkoutDTO workoutDTO){
