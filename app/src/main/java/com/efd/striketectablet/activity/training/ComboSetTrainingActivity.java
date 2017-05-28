@@ -50,8 +50,11 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     LinearLayout leftSensorConnectionLayout, rightSensorConnectionLayout;
     CustomTextView punchTypeView, trainingProgressStatus;
 
+    LinearLayout progressView;
     LinearLayout comboNumParent;
     LinearLayout comboResultParent;
+    LinearLayout nextcomboTip;
+    TextView nextComboTipContent;
 
     ImageView audioBtn;
 
@@ -97,6 +100,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     private WorkoutDTO workoutDTO;
 
     private int maxview = 0;
+    private int currentPunchIndex = 0;
     private int currentComboIndex = 0;
 
     @Override
@@ -151,8 +155,14 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
         punchTypeView = (CustomTextView)findViewById(R.id.training_punchtype);
         trainingProgressStatus = (CustomTextView)findViewById(R.id.trainingprogress_status);
 
+        progressView = (LinearLayout)findViewById(R.id.progress_view);
         comboNumParent = (LinearLayout)findViewById(R.id.punch_type_parent);
         comboResultParent = (LinearLayout)findViewById(R.id.punch_result_parent);
+        progressView.setVisibility(View.VISIBLE);
+
+        nextcomboTip = (LinearLayout)findViewById(R.id.next_combo_tip);
+        nextComboTipContent = (TextView)findViewById(R.id.next_combo);
+        nextcomboTip.setVisibility(View.INVISIBLE);
 
         speedValue = (TextView)findViewById(R.id.speed_value);
         punchCountView = (TextView)findViewById(R.id.punch_value);
@@ -295,12 +305,16 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
         if (comboid != -1){
             titleView.setText(getResources().getString(R.string.title_combination));
             currentComboDTO = ComboSetUtil.getComboDtowithID(comboid);
-
+            currentTime = 0;
             initComboTrainingView();
 
         }else if (setid != -1){
+            currentTime = 0;
             titleView.setText(getResources().getString(R.string.title_sets));
             setDTO = ComboSetUtil.getSetDtowithID(setid);
+            currentComboIndex = 0;
+            currentComboDTO = ComboSetUtil.getComboDtowithID(setDTO.getComboIDLists().get(0));
+            initComboTrainingView();
         }else if (workoutid != -1){
             titleView.setText(getResources().getString(R.string.title_workout));
             workoutDTO = ComboSetUtil.getWorkoutDtoWithID(workoutid);
@@ -310,7 +324,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     }
 
     private void initComboTrainingView(){
-        currentComboIndex = 0;
+        currentPunchIndex = 0;
         comboResultParent.removeAllViews();
         comboNumParent.removeAllViews();
 
@@ -327,8 +341,8 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
         //first 3 views has to be invisible
 //        int min = Math.min(4, currentComboDTO.getComboTypes().size());
 
-        int min = Math.max(0, 3 - currentComboIndex );
-        int max = Math.min(7, currentComboDTO.getComboTypes().size() - currentComboIndex + 3);
+        int min = Math.max(0, 3 - currentPunchIndex );
+        int max = Math.min(7, currentComboDTO.getComboTypes().size() - currentPunchIndex + 3);
 
         for (int i = 0; i < maxview; i++){
             LinearLayout child = (LinearLayout)comboNumParent.getChildAt(i);
@@ -338,7 +352,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                 child.setVisibility(View.INVISIBLE);
             }else if (i < max){
                 child.setVisibility(View.VISIBLE);
-                keyView.setText(currentComboDTO.getComboTypes().get(currentComboIndex + i - 3));
+                keyView.setText(currentComboDTO.getComboTypes().get(currentPunchIndex + i - 3));
 
                 if (i == max - 1){
                     View divider = child.findViewById(R.id.combo_divider);
@@ -418,22 +432,49 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
         }
     }
 
+    private void gotoNextCombo(){
+        currentPunchIndex  = 0;
+
+        if (currentComboIndex == setDTO.getComboIDLists().size() - 1){
+            stopTraining();
+        }else {
+            nextcomboTip.setVisibility(View.VISIBLE);
+            progressView.setVisibility(View.INVISIBLE);
+            ComboDTO comboDTO = ComboSetUtil.getComboDtowithID(setDTO.getComboIDLists().get(currentComboIndex + 1));
+
+            nextComboTipContent.setText(comboDTO.getCombos());
+
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    nextcomboTip.setVisibility(View.INVISIBLE);
+                    currentComboIndex ++;
+                    currentComboDTO = ComboSetUtil.getComboDtowithID(setDTO.getComboIDLists().get(currentComboIndex));
+                    progressView.setVisibility(View.VISIBLE);
+                    mainActivityInstance.trainingManager.startTraining();
+                    initComboTrainingView();
+                }
+            }, 1000);
+
+        }
+
+    }
+
     private void updateView(boolean success){
 
-        if (currentComboIndex == currentComboDTO.getComboTypes().size() - 1){
-            //training is finished,
-            stopTraining();
+        if (currentPunchIndex == currentComboDTO.getComboTypes().size() - 1){
+
             //update num view
             LinearLayout child = (LinearLayout)comboNumParent.getChildAt(3);
             TextView keyView = (TextView)child.findViewById(R.id.key);
             keyView.setTextSize(80);
 
-            LinearLayout resultChild = (LinearLayout)comboResultParent.getChildAt(currentComboIndex);
+            LinearLayout resultChild = (LinearLayout)comboResultParent.getChildAt(currentPunchIndex);
             TextView resultkeyView = (TextView)resultChild.findViewById(R.id.key);
 
             //update result view
 
-            if (currentComboIndex == 0){
+            if (currentPunchIndex == 0){
                 if (success)
                     resultkeyView.setBackgroundResource(R.drawable.punch_success_first);
                 else
@@ -447,11 +488,19 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
             resultkeyView.setTextColor(getResources().getColor(R.color.black));
 
-        }else {
-            currentComboIndex ++;
+            //training is finished,
+            if (comboid != -1) {
+                stopTraining();
+            }else if (setid != -1){
+                mainActivityInstance.trainingManager.stopTraining();
+                gotoNextCombo();
+            }
 
-            int min = Math.max(0, 3 - currentComboIndex );
-            int max = Math.min(7, currentComboDTO.getComboTypes().size() - currentComboIndex + 3);
+        }else {
+            currentPunchIndex ++;
+
+            int min = Math.max(0, 3 - currentPunchIndex );
+            int max = Math.min(7, currentComboDTO.getComboTypes().size() - currentPunchIndex + 3);
 
             for (int i = 0; i < maxview; i++){
                 LinearLayout child = (LinearLayout)comboNumParent.getChildAt(i);
@@ -461,7 +510,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                     child.setVisibility(View.INVISIBLE);
                 }else if (i < max){
                     child.setVisibility(View.VISIBLE);
-                    keyView.setText(currentComboDTO.getComboTypes().get(currentComboIndex + i - 3));
+                    keyView.setText(currentComboDTO.getComboTypes().get(currentPunchIndex + i - 3));
 
                     if (i == max - 1){
                         View divider = child.findViewById(R.id.combo_divider);
@@ -472,12 +521,12 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                 }
             }
 
-            LinearLayout resultcurrentChild = (LinearLayout)comboResultParent.getChildAt(currentComboIndex - 1);
+            LinearLayout resultcurrentChild = (LinearLayout)comboResultParent.getChildAt(currentPunchIndex - 1);
             TextView resultcurrentkeyView = (TextView)resultcurrentChild.findViewById(R.id.key);
 
             //update result view
 
-            if (currentComboIndex == 1){
+            if (currentPunchIndex == 1){
                 if (success)
                     resultcurrentkeyView.setBackgroundResource(R.drawable.punch_success_first);
                 else
@@ -492,13 +541,13 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
             resultcurrentkeyView.setTextColor(getResources().getColor(R.color.black));
 
             //update next result view
-            LinearLayout resultnextChild = (LinearLayout)comboResultParent.getChildAt(currentComboIndex);
+            LinearLayout resultnextChild = (LinearLayout)comboResultParent.getChildAt(currentPunchIndex);
             TextView resultnextkeyView = (TextView)resultnextChild.findViewById(R.id.key);
 
             resultnextkeyView.setBackgroundResource(R.drawable.next_punch_next);
             resultnextkeyView.setTextColor(getResources().getColor(R.color.white));
 
-            trainingProgressStatus.setText(ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(currentComboIndex)));
+            trainingProgressStatus.setText(ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(currentPunchIndex)));
         }
     }
 
@@ -543,7 +592,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 //            return;
 //        }
 
-        if (comboid != -1){
+        if (comboid != -1 || setid != -1){
             //this is combo training
             startProgressTimer();
             startTrainingBtn.setText(getResources().getString(R.string.stop_training));
@@ -684,7 +733,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
         String detectedPunchType = hand + " " + punchType;
         punchTypeView.setText(detectedPunchType);
 
-        String successString = ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(currentComboIndex));
+        String successString = ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(currentPunchIndex));
         if (successString.equalsIgnoreCase(EFDConstants.JAB) || successString.equalsIgnoreCase(EFDConstants.STRAIGHT)){
             if (detectedPunchType.contains(successString)){
                 updateView(true);

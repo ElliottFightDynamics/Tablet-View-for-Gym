@@ -827,6 +827,7 @@
                             android:layout_height="match_parent">
 
                             <LinearLayout
+                                android:id="@+id/progress_view"
                                 android:layout_marginTop="35dp"
                                 android:layout_marginBottom="25dp"
                                 android:layout_width="match_parent"
@@ -853,6 +854,39 @@
                                     android:gravity="center">
 
                                 </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/next_combo_tip"
+                                android:layout_marginTop="35dp"
+                                android:layout_marginBottom="25dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <com.efd.striketectablet.customview.CustomTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="NEXT:"
+                                    android:textColor="@color/punches_text_color"
+                                    android:textSize="80dp">
+
+                                </com.efd.striketectablet.customview.CustomTextView>
+
+                                <com.efd.striketectablet.customview.CustomTextView
+                                    android:id="@+id/next_combo"
+                                    android:layout_marginTop="-5dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="60dp"
+                                    android:gravity="center"
+                                    android:textColor="@color/punches_text_color"
+                                    android:alpha="0.8"
+                                    android:textSize="40sp">
+
+                                </com.efd.striketectablet.customview.CustomTextView>
 
                             </LinearLayout>
 
