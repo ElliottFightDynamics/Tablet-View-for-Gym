@@ -587,14 +587,15 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     }
 
     private void startTraining(){
-//        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
-//            StatisticUtil.showToastMessage("Please connect with sensors");
-//            return;
-//        }
+        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
+            StatisticUtil.showToastMessage("Please connect with sensors");
+            return;
+        }
 
         if (comboid != -1 || setid != -1){
             //this is combo training
             startProgressTimer();
+            mainActivityInstance.startRoundTraining();
             startTrainingBtn.setText(getResources().getString(R.string.stop_training));
         }
     }
@@ -632,7 +633,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                         String text = PresetUtil.chagngeSecsToTime(currentTime) + " - STOP";
 
                         startTrainingBtn.setText(text);
-                        tmpStart();
+//                        tmpStart();
                     }
                 });
             }

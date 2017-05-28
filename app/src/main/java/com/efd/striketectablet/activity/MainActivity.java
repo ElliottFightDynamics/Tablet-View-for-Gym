@@ -590,8 +590,9 @@ public class MainActivity extends AppCompatActivity {
                         new PunchHistoryGraphDataDetails(punchType.charAt(0) + EFDConstants.BLANK_TEXT, punchType.charAt(1) + EFDConstants.BLANK_TEXT, force, speed));
             }
 
-            EventBus.getDefault().post(punchHistoryGraph.get(punchHistoryGraph.size() - 1));
             savePunchInfotoDB(punchHistoryGraph.get(punchHistoryGraph.size() - 1));
+            EventBus.getDefault().post(punchHistoryGraph.get(punchHistoryGraph.size() - 1));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
