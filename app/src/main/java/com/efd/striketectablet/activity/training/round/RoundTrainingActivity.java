@@ -447,6 +447,7 @@ public class RoundTrainingActivity extends BaseTrainingActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mainActivityInstance.stopRoundTraining();
         stopProgressTimer();
     }
 

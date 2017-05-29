@@ -865,6 +865,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mainActivityInstance.stopRoundTraining();
         stopProgressCombosetTimer();
         stopProgressWorkoutTimer();
     }

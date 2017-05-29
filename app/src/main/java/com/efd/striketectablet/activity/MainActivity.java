@@ -618,7 +618,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         MainActivity.db.addPunchtoStats(new TrainingPunchDTO(realpunchType, Long.parseLong(punchdetails.punchSpeed),
-                Long.parseLong(punchdetails.punchForce), 0.33));
+                Long.parseLong(punchdetails.punchForce), 0.5));
     }
 
 
