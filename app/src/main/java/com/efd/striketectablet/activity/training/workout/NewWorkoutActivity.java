@@ -527,7 +527,7 @@ public class NewWorkoutActivity extends AppCompatActivity {
 
         final TextView replaceView, insertaboveView, insertbelowView, deleteView;
         replaceView = (TextView)dialog.findViewById(R.id.replace);
-        replaceView.setText(getResources().getString(R.string.replace_set));
+        replaceView.setText(getResources().getString(R.string.replace_combo));
         insertaboveView = (TextView)dialog.findViewById(R.id.insert_above);
         insertbelowView = (TextView)dialog.findViewById(R.id.insert_below);
         deleteView = (TextView)dialog.findViewById(R.id.delete);

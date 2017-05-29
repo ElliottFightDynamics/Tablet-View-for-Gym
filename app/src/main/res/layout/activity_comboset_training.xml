@@ -890,6 +890,28 @@
 
                             </LinearLayout>
 
+                            <RelativeLayout
+                                android:id="@+id/timer_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ProgressBar
+                                    android:id="@+id/trainingprogressbar"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:progressDrawable="@drawable/customprogress_roundbar" />
+
+                                <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                                    android:id="@+id/trainingprogress_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="100sp" />
+
+                            </RelativeLayout>
+
                         </RelativeLayout>
 
                         <View

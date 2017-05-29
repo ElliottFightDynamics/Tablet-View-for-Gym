@@ -20,13 +20,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.efd.striketectablet.DTO.ComboDTO;
-import com.efd.striketectablet.DTO.PresetDTO;
 import com.efd.striketectablet.DTO.PunchDTO;
 import com.efd.striketectablet.DTO.PunchHistoryGraphDataDetails;
 import com.efd.striketectablet.DTO.SetsDTO;
 import com.efd.striketectablet.DTO.WorkoutDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
+import com.efd.striketectablet.activity.training.round.RoundTrainingActivity;
 import com.efd.striketectablet.customview.CustomButton;
 import com.efd.striketectablet.customview.CustomTextView;
 import com.efd.striketectablet.customview.CustomTextViewFontEfDigit;
@@ -50,6 +50,11 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     LinearLayout leftSensorConnectionLayout, rightSensorConnectionLayout;
     CustomTextView punchTypeView, trainingProgressStatus;
 
+
+    CustomTextViewFontEfDigit currentTimeView;
+    ProgressBar progressBar;
+    RelativeLayout timerLayout;
+
     LinearLayout progressView;
     LinearLayout comboNumParent;
     LinearLayout comboResultParent;
@@ -67,14 +72,22 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     CustomTextView leftHandBattery, rightHandBattery;
     View leftHandBatteryView, rightHandBatteryView;
 
-    Timer progressTimer;
-    TimerTask updateProgressTimerTask;
+    Timer progressCombosetTimer, progressWorkoutTimer;
+    TimerTask updateProgressComboSetTimerTask, updateProgressWorkoutTimerTask;
     private Handler mHandler;
 
     private int currentStatus = -1;   //0: prepare, 1: round, 2: resting
     private int roundvalue = 0;
     private int totalTime = 0;
+
+    private int roundCount = 0;
+    private int roundTime = 0;
+    private int warningTime = 0;
+    private int prepareTime = 0;
+    private int restTime = 0;
+
     private int currentTime = 0;
+    private int currentProgressTime = 0;
 
     boolean audioEnabled = true;
 
@@ -95,13 +108,16 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
     private String trainingtype;
     private int comboid = -1, setid = -1, workoutid = -1;
+
     private ComboDTO currentComboDTO;
-    private SetsDTO setDTO;
+    private SetsDTO currentSetDTO;
     private WorkoutDTO workoutDTO;
 
     private int maxview = 0;
     private int currentPunchIndex = 0;
     private int currentComboIndex = 0;
+    private int currentSetIndex = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,10 +167,11 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
         leftSensorConnectionButton = (ImageView)findViewById(R.id.left_connection_button);
         rightSensorConnectionButton = (ImageView)findViewById(R.id.right_connection_button);
 
-
+        progressBar = (ProgressBar)findViewById(R.id.trainingprogressbar);
         punchTypeView = (CustomTextView)findViewById(R.id.training_punchtype);
         trainingProgressStatus = (CustomTextView)findViewById(R.id.trainingprogress_status);
-
+        timerLayout = (RelativeLayout)findViewById(R.id.timer_layout);
+        currentTimeView = (CustomTextViewFontEfDigit)findViewById(R.id.trainingprogress_time);
         progressView = (LinearLayout)findViewById(R.id.progress_view);
         comboNumParent = (LinearLayout)findViewById(R.id.punch_type_parent);
         comboResultParent = (LinearLayout)findViewById(R.id.punch_result_parent);
@@ -308,16 +325,36 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
             currentTime = 0;
             initComboTrainingView();
 
+            nextcomboTip.setVisibility(View.INVISIBLE);
+            timerLayout.setVisibility(View.INVISIBLE);
+
         }else if (setid != -1){
             currentTime = 0;
             titleView.setText(getResources().getString(R.string.title_sets));
-            setDTO = ComboSetUtil.getSetDtowithID(setid);
+            currentSetDTO = ComboSetUtil.getSetDtowithID(setid);
             currentComboIndex = 0;
-            currentComboDTO = ComboSetUtil.getComboDtowithID(setDTO.getComboIDLists().get(0));
+            currentComboDTO = ComboSetUtil.getComboDtowithID(currentSetDTO.getComboIDLists().get(0));
             initComboTrainingView();
+            nextcomboTip.setVisibility(View.INVISIBLE);
+            timerLayout.setVisibility(View.INVISIBLE);
         }else if (workoutid != -1){
+            currentTime = 0;
             titleView.setText(getResources().getString(R.string.title_workout));
             workoutDTO = ComboSetUtil.getWorkoutDtoWithID(workoutid);
+            currentComboIndex = 0;
+            currentComboDTO = ComboSetUtil.getComboDtowithID(workoutDTO.getRoundsetIDs().get(0).get(0));
+            roundCount = workoutDTO.getRoundcount();
+            roundTime = Integer.parseInt(PresetUtil.timerwitSecsList.get(workoutDTO.getRound()));
+            warningTime = Integer.parseInt(PresetUtil.timerwitSecsList.get(workoutDTO.getWarning()));
+            prepareTime = Integer.parseInt(PresetUtil.timerwitSecsList.get(workoutDTO.getPrepare()));
+            restTime = Integer.parseInt(PresetUtil.timerwitSecsList.get(workoutDTO.getRest()));
+
+            progressView.setVisibility(View.INVISIBLE);
+            nextcomboTip.setVisibility(View.INVISIBLE);
+            timerLayout.setVisibility(View.VISIBLE);
+
+            initComboTrainingView();
+            //startProgressWorkoutTimer();
         }else {
             titleView.setText("TRAINING");
         }
@@ -375,8 +412,10 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 //            }
 //        }
 
-        trainingProgressStatus.setText(ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(0)));
-        trainingProgressStatus.setTextColor(getResources().getColor(R.color.white));
+        if (workoutid == -1) {
+            trainingProgressStatus.setText(ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(0)));
+            trainingProgressStatus.setTextColor(getResources().getColor(R.color.white));
+        }
     }
 
     private void addPunchResultView(int position, String key){
@@ -424,40 +463,74 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
     int temp = 0;
     private void tmpStart(){
-        temp++;
-        if (temp % 2 == 0){
-            updateView(true);
-        }else {
-            updateView(false);
+        if (mainActivityInstance.trainingManager.isTrainingRunning()) {
+            temp++;
+            if (temp % 2 == 0) {
+                updateView(true);
+            } else {
+                updateView(false);
+            }
         }
     }
 
     private void gotoNextCombo(){
         currentPunchIndex  = 0;
+        int currentTrainingComboCount = 0;
 
-        if (currentComboIndex == setDTO.getComboIDLists().size() - 1){
-            stopTraining();
+        if (setid != -1){
+            currentTrainingComboCount = currentSetDTO.getComboIDLists().size();
+        }else if (workoutid != -1){
+            currentTrainingComboCount = workoutDTO.getRoundsetIDs().get(roundvalue - 1).size();
+            Log.e("Super", "current training combo count = " + currentTrainingComboCount);
+        }
+
+        if (currentComboIndex == currentTrainingComboCount - 1){
+            if (setid != -1) {
+                playBoxingBell();
+                stopTraining();
+            }else {
+                currentComboIndex = 0;
+                mainActivityInstance.trainingManager.stopTraining();
+            }
         }else {
             nextcomboTip.setVisibility(View.VISIBLE);
             progressView.setVisibility(View.INVISIBLE);
-            ComboDTO comboDTO = ComboSetUtil.getComboDtowithID(setDTO.getComboIDLists().get(currentComboIndex + 1));
 
-            nextComboTipContent.setText(comboDTO.getCombos());
+            if (setid != -1){
+                ComboDTO comboDTO = ComboSetUtil.getComboDtowithID(currentSetDTO.getComboIDLists().get(currentComboIndex + 1));
+                nextComboTipContent.setText(comboDTO.getCombos());
 
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    nextcomboTip.setVisibility(View.INVISIBLE);
-                    currentComboIndex ++;
-                    currentComboDTO = ComboSetUtil.getComboDtowithID(setDTO.getComboIDLists().get(currentComboIndex));
-                    progressView.setVisibility(View.VISIBLE);
-                    mainActivityInstance.trainingManager.startTraining();
-                    initComboTrainingView();
-                }
-            }, 1000);
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        nextcomboTip.setVisibility(View.INVISIBLE);
+                        currentComboIndex ++;
+                        currentComboDTO = ComboSetUtil.getComboDtowithID(currentSetDTO.getComboIDLists().get(currentComboIndex));
+                        progressView.setVisibility(View.VISIBLE);
+                        mainActivityInstance.trainingManager.startTraining();
+                        initComboTrainingView();
+                    }
+                }, 1000);
 
+            }else if (workoutid != -1){
+                ComboDTO comboDTO = ComboSetUtil.getComboDtowithID(workoutDTO.getRoundsetIDs().get(roundvalue - 1).get(currentComboIndex + 1));
+                nextComboTipContent.setText(comboDTO.getCombos());
+
+
+
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        nextcomboTip.setVisibility(View.INVISIBLE);
+                        currentComboIndex ++;
+                        currentComboDTO = ComboSetUtil.getComboDtowithID(workoutDTO.getRoundsetIDs().get(roundvalue - 1).get(currentComboIndex));
+                        progressView.setVisibility(View.VISIBLE);
+                        mainActivityInstance.trainingManager.startTraining();
+                        initComboTrainingView();
+                    }
+                }, 1000);
+            }
         }
-
     }
 
     private void updateView(boolean success){
@@ -490,12 +563,15 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
             //training is finished,
             if (comboid != -1) {
+                playBoxingBell();
                 stopTraining();
             }else if (setid != -1){
                 mainActivityInstance.trainingManager.stopTraining();
                 gotoNextCombo();
+            }else if (workoutid != -1){
+                mainActivityInstance.trainingManager.stopTraining();
+                gotoNextCombo();
             }
-
         }else {
             currentPunchIndex ++;
 
@@ -511,6 +587,12 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                 }else if (i < max){
                     child.setVisibility(View.VISIBLE);
                     keyView.setText(currentComboDTO.getComboTypes().get(currentPunchIndex + i - 3));
+
+                    if (i == 3){
+                        keyView.setTextSize(115);
+                    }else {
+                        keyView.setTextSize(80);
+                    }
 
                     if (i == max - 1){
                         View divider = child.findViewById(R.id.combo_divider);
@@ -547,7 +629,17 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
             resultnextkeyView.setBackgroundResource(R.drawable.next_punch_next);
             resultnextkeyView.setTextColor(getResources().getColor(R.color.white));
 
-            trainingProgressStatus.setText(ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(currentPunchIndex)));
+            if (resultnextkeyView.getText().toString().length() == 2){
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    updateView(true);
+                    }
+                }, 300);
+            }
+
+            if (workoutid == -1)
+                trainingProgressStatus.setText(ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(currentPunchIndex)));
         }
     }
 
@@ -594,36 +686,59 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
         if (comboid != -1 || setid != -1){
             //this is combo training
-            startProgressTimer();
+            startProgressCombosetTimer();
+            playBoxingBell();
             mainActivityInstance.startRoundTraining();
             startTrainingBtn.setText(getResources().getString(R.string.stop_training));
+        }else if (workoutid != -1){
+            if (currentStatus == -1){
+                startProgressCombosetTimer();
+                startProgressWorkoutTimer();
+                //prepare for round 1
+                currentStatus = 0;
+                roundvalue = 1;
+                totalTime = prepareTime;
+                currentProgressTime = totalTime;
+                trainingProgressStatus.setText("PREPARE");
+                progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_preparebar));
+                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_prepare));
+
+                nextcomboTip.setVisibility(View.INVISIBLE);
+                progressView.setVisibility(View.INVISIBLE);
+                timerLayout.setVisibility(View.VISIBLE);
+
+                progressBar.setMax(totalTime);
+                progressBar.setProgress(totalTime - currentProgressTime);
+            }
         }
     }
 
     private void stopTraining(){
 
-        stopProgressTimer();
+        stopProgressCombosetTimer();
+        stopProgressWorkoutTimer();
 
-        startTrainingBtn.setText(getResources().getString(R.string.stop_training));
+        startTrainingBtn.setText(getResources().getString(R.string.start_training));
         mainActivityInstance.stopRoundTraining();
         mainActivityInstance.stopTraining();
     }
 
-    public void startProgressTimer (){
-        progressTimer = new Timer();
-        initializeProgressTimerTask();
-        progressTimer.schedule(updateProgressTimerTask, 0, 1000);
+    public void startProgressCombosetTimer (){
+        progressCombosetTimer = new Timer();
+        initializeProgressCombosetTimerTask();
+        progressCombosetTimer.schedule(updateProgressComboSetTimerTask, 0, 1000);
     }
 
-    public void stopProgressTimer (){
-        if (progressTimer != null){
-            progressTimer.cancel();
-            progressTimer = null;
+    public void stopProgressCombosetTimer (){
+        if (progressCombosetTimer != null){
+            Log.e("Super", "stop combo timer");
+            progressCombosetTimer.cancel();
+            progressCombosetTimer = null;
         }
     }
 
-    public void initializeProgressTimerTask (){
-        updateProgressTimerTask = new TimerTask() {
+    public void initializeProgressCombosetTimerTask (){
+        updateProgressComboSetTimerTask = new TimerTask() {
             @Override
             public void run() {
                 mHandler.post(new Runnable() {
@@ -640,10 +755,115 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
         };
     }
 
+    public void startProgressWorkoutTimer (){
+        progressWorkoutTimer = new Timer();
+        initializeProgressWorkoutTimerTask();
+        progressWorkoutTimer.schedule(updateProgressWorkoutTimerTask, 0, 1000);
+    }
+
+    public void stopProgressWorkoutTimer (){
+        if (progressWorkoutTimer != null){
+            progressWorkoutTimer.cancel();
+            progressWorkoutTimer = null;
+        }
+    }
+
+    public void initializeProgressWorkoutTimerTask (){
+        updateProgressWorkoutTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (currentProgressTime == 0){
+                            if (currentStatus == 0){
+                                //prepare is finished, go to round
+                                totalTime = roundTime;
+                                currentProgressTime = totalTime;
+
+                                trainingProgressStatus.setText("ROUND " + roundvalue);
+                                currentStatus++;
+                                progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_roundbar));
+                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
+
+                                trainingStartTime = System.currentTimeMillis();
+                                resetPunchDetails();
+                                mainActivityInstance.startRoundTraining();
+
+                                progressView.setVisibility(View.VISIBLE);
+                                timerLayout.setVisibility(View.INVISIBLE);
+                                //round is starting
+                                playBoxingBell();
+                            }
+                            else if (currentStatus == 1){
+                                //round is finished, go to rest
+                                totalTime = restTime;
+                                currentProgressTime = totalTime;
+                                trainingProgressStatus.setText("REST");
+                                currentStatus++;
+                                progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_restbar));
+                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_rest));
+                                mainActivityInstance.stopRoundTraining();
+                                punchTypeView.setText("");
+
+                                nextcomboTip.setVisibility(View.INVISIBLE);
+                                progressView.setVisibility(View.INVISIBLE);
+                                timerLayout.setVisibility(View.VISIBLE);
+                                //round is finished
+                                playBoxingBell();
+                            }else if (currentStatus == 2){
+                                currentStatus++;
+                                if (roundvalue == roundCount){
+                                    //training is finished
+                                    Toast.makeText(ComboSetTrainingActivity.this, "Training is finished", Toast.LENGTH_SHORT).show();
+                                    currentStatus = -1;
+                                    startTrainingBtn.setText(getResources().getString(R.string.start_training));
+                                    trainingProgressStatus.setText("");
+                                    stopProgressWorkoutTimer();
+                                    stopProgressCombosetTimer();
+                                }else {
+                                    roundvalue++;
+                                    totalTime = roundTime;
+                                    currentProgressTime = totalTime;
+                                    currentStatus = 1;
+                                    trainingProgressStatus.setText("ROUND " + roundvalue);
+                                    progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_roundbar));
+                                    trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
+
+                                    trainingStartTime = System.currentTimeMillis();
+                                    resetPunchDetails();
+                                    mainActivityInstance.startRoundTraining();
+
+                                    progressView.setVisibility(View.VISIBLE);
+                                    timerLayout.setVisibility(View.INVISIBLE);
+
+                                    playBoxingBell();
+                                }
+                            }
+
+                            progressBar.setProgress(0);
+                            progressBar.setMax(totalTime);
+                            currentTimeView.setText(PresetUtil.chagngeSecsToTime(currentProgressTime));
+                        }else {
+                            currentProgressTime--;
+                            if (currentStatus == 1 && currentProgressTime == warningTime){
+                                progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_warningbar));
+                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_warning));
+                            }
+                            progressBar.setProgress(totalTime - currentProgressTime);
+                            currentTimeView.setText(PresetUtil.chagngeSecsToTime(currentProgressTime));
+                        }
+                    }
+                });
+            }
+        };
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopProgressTimer();
+        stopProgressCombosetTimer();
+        stopProgressWorkoutTimer();
     }
 
     @Override
