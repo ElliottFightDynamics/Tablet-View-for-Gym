@@ -23,6 +23,6 @@
         android:gravity="center"
         android:text="Set"
         android:textSize="20sp"
-        />
+        android:textColor="@color/white"/>
 
 </LinearLayout>

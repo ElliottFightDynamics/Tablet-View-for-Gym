@@ -489,7 +489,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                 playBoxingBell();
                 stopTraining();
             }else {
-                currentComboIndex = 0;
+
                 mainActivityInstance.trainingManager.stopTraining();
             }
         }else {
@@ -515,8 +515,6 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
             }else if (workoutid != -1){
                 ComboDTO comboDTO = ComboSetUtil.getComboDtowithID(workoutDTO.getRoundsetIDs().get(roundvalue - 1).get(currentComboIndex + 1));
                 nextComboTipContent.setText(comboDTO.getCombos());
-
-
 
                 mHandler.postDelayed(new Runnable() {
                     @Override
@@ -748,7 +746,8 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                         String text = PresetUtil.chagngeSecsToTime(currentTime) + " - STOP";
 
                         startTrainingBtn.setText(text);
-//                        tmpStart();
+                        if (currentTime % 3 == 0)
+                            tmpStart();
                     }
                 });
             }
@@ -829,6 +828,10 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                                     trainingProgressStatus.setText("ROUND " + roundvalue);
                                     progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_roundbar));
                                     trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
+
+                                    currentComboIndex = 0;
+                                    currentComboDTO = ComboSetUtil.getComboDtowithID(workoutDTO.getRoundsetIDs().get(roundvalue - 1).get(0));
+                                    initComboTrainingView();
 
                                     trainingStartTime = System.currentTimeMillis();
                                     resetPunchDetails();
