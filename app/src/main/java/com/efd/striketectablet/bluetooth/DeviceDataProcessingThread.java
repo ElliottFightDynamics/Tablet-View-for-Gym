@@ -977,7 +977,7 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
 
         /**** super added this code ****
          * this thread is alive evenif training is finished, so send data only when round starts**/
-        if (!mainActivityInstance.trainingManager.isTrainingRunning()) {
+        if (!mainActivityInstance.receivePunchable) {
             return;
         }
 

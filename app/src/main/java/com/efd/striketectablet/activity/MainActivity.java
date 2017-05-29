@@ -149,6 +149,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static String boxersStance;
 
+    public  boolean receivePunchable = false;
+
+
     public static boolean isSynchronizingWithServer() {
         return isSynchronizingWithServer;
     }
@@ -886,7 +889,7 @@ public class MainActivity extends AppCompatActivity {
         if (!trainingManager.isTrainingRunning()) {
             //set taskmanger traing value as true
             trainingManager.startTraining();
-
+            receivePunchable = true;
             //start training timer
             startTrainingTimer();
 
@@ -901,6 +904,7 @@ public class MainActivity extends AppCompatActivity {
     public void stopRoundTraining(){
         if (trainingManager.isTrainingRunning()) {
             trainingManager.stopTraining();
+            receivePunchable = false;
             stopTrainingTimer();
             stopTraining();
 

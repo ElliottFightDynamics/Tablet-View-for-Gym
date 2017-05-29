@@ -490,7 +490,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                 stopTraining();
             }else {
 
-                mainActivityInstance.trainingManager.stopTraining();
+                mainActivityInstance.receivePunchable = false;
             }
         }else {
             nextcomboTip.setVisibility(View.VISIBLE);
@@ -507,7 +507,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                         currentComboIndex ++;
                         currentComboDTO = ComboSetUtil.getComboDtowithID(currentSetDTO.getComboIDLists().get(currentComboIndex));
                         progressView.setVisibility(View.VISIBLE);
-                        mainActivityInstance.trainingManager.startTraining();
+                        mainActivityInstance.receivePunchable = true;
                         initComboTrainingView();
                     }
                 }, 1000);
@@ -523,7 +523,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                         currentComboIndex ++;
                         currentComboDTO = ComboSetUtil.getComboDtowithID(workoutDTO.getRoundsetIDs().get(roundvalue - 1).get(currentComboIndex));
                         progressView.setVisibility(View.VISIBLE);
-                        mainActivityInstance.trainingManager.startTraining();
+                        mainActivityInstance.receivePunchable = true;
                         initComboTrainingView();
                     }
                 }, 1000);
@@ -564,10 +564,10 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                 playBoxingBell();
                 stopTraining();
             }else if (setid != -1){
-                mainActivityInstance.trainingManager.stopTraining();
+                mainActivityInstance.receivePunchable = false;
                 gotoNextCombo();
             }else if (workoutid != -1){
-                mainActivityInstance.trainingManager.stopTraining();
+                mainActivityInstance.receivePunchable = false;
                 gotoNextCombo();
             }
         }else {
@@ -746,8 +746,8 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                         String text = PresetUtil.chagngeSecsToTime(currentTime) + " - STOP";
 
                         startTrainingBtn.setText(text);
-                        if (currentTime % 3 == 0)
-                            tmpStart();
+//                        if (currentTime % 3 == 0)
+//                            tmpStart();
                     }
                 });
             }
