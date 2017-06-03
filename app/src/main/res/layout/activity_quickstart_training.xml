@@ -35,15 +35,10 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/separator" />
-
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
 
         <LinearLayout
             android:layout_width="260dp"
@@ -55,8 +50,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
 
                 <com.efd.striketectablet.customview.CustomTextView
                     style="@style/preset_btn"
@@ -65,9 +59,9 @@
                     android:text="@string/lefthand" />
 
                 <LinearLayout
-                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
                     android:background="@drawable/info_bg">
 
                     <LinearLayout
@@ -99,9 +93,9 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_marginTop="3dp"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp">
 
                                 <LinearLayout
                                     android:layout_width="0dp"
@@ -190,9 +184,9 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_marginTop="3dp"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp">
 
                                 <LinearLayout
                                     android:layout_width="0dp"
@@ -261,11 +255,10 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                >
+                android:layout_marginTop="20dp"
+                android:layout_weight="1">
 
                 <com.efd.striketectablet.customview.CustomTextView
                     style="@style/preset_btn"
@@ -274,9 +267,9 @@
                     android:text="@string/leftkick" />
 
                 <LinearLayout
-                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
                     android:background="@drawable/info_bg">
 
                     <LinearLayout
@@ -308,9 +301,9 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_marginTop="3dp"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp">
 
                                 <LinearLayout
                                     android:layout_width="0dp"
@@ -397,9 +390,9 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_marginTop="3dp"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp">
 
                                 <LinearLayout
                                     android:layout_width="0dp"
@@ -469,10 +462,10 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <LinearLayout
@@ -481,14 +474,13 @@
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <com.efd.striketectablet.customview.CustomButton
                     android:id="@+id/training_start_button"
                     android:layout_width="350dp"
-                    android:layout_gravity="center_horizontal"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
                     android:background="@drawable/positive_very_big"
                     android:gravity="center"
                     android:text="@string/start_training"
@@ -499,11 +491,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bag_training_battery_layout_height"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -511,24 +503,24 @@
                     android:id="@+id/left_sensor_battery"
                     android:layout_width="30dp"
                     android:layout_height="wrap_content"
-                    android:gravity="start|top"
                     android:layout_gravity="start|top"
+                    android:gravity="start|top"
                     android:text="@string/battery_default_value"
                     android:textColor="@color/battery_color"
                     android:textSize="@dimen/battery_text_size" />
 
                 <RelativeLayout
                     android:id="@+id/battery_layout_left"
-                    android:layout_height="@dimen/bag_training_battery_icon_height"
                     android:layout_width="40dp"
+                    android:layout_height="@dimen/bag_training_battery_icon_height"
                     android:background="@drawable/battery_img">
 
                     <View
                         android:id="@+id/battery_life_left"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="@dimen/battery_fill_margin"
                         android:layout_marginEnd="@dimen/battery_fill_margin"
+                        android:layout_marginRight="@dimen/battery_fill_margin"
                         android:background="@color/battery_color" />
                 </RelativeLayout>
 
@@ -541,24 +533,24 @@
                     android:id="@+id/right_sensor_battery"
                     android:layout_width="30dp"
                     android:layout_height="wrap_content"
-                    android:gravity="start|top"
                     android:layout_gravity="start|top"
+                    android:gravity="start|top"
                     android:text="@string/battery_default_value"
                     android:textColor="@color/battery_color"
                     android:textSize="@dimen/battery_text_size" />
 
                 <RelativeLayout
                     android:id="@+id/battery_layout_right"
-                    android:layout_height="@dimen/bag_training_battery_icon_height"
                     android:layout_width="40dp"
+                    android:layout_height="@dimen/bag_training_battery_icon_height"
                     android:background="@drawable/battery_img">
 
                     <View
                         android:id="@+id/battery_life_right"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="@dimen/battery_fill_margin"
                         android:layout_marginEnd="@dimen/battery_fill_margin"
+                        android:layout_marginRight="@dimen/battery_fill_margin"
                         android:background="@color/battery_color" />
                 </RelativeLayout>
 
@@ -577,8 +569,7 @@
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="start"
-                    android:background="@drawable/sensor_reconnect_button_selector"
-                    >
+                    android:background="@drawable/sensor_reconnect_button_selector">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -666,13 +657,13 @@
                                 android:layout_weight="1" />
 
                             <ImageView
-                                android:adjustViewBounds="true"
                                 android:id="@+id/right_connection_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:src="@drawable/red_btn"
-                                android:contentDescription="@null" />
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@null"
+                                android:src="@drawable/red_btn" />
 
                             <View
                                 android:layout_width="match_parent"
@@ -691,23 +682,22 @@
                 android:id="@+id/training_punchtype"
                 android:layout_width="300dp"
                 android:layout_height="45dp"
-                android:background="@drawable/punch_type_pg"
                 android:layout_gravity="center_horizontal"
-                android:textSize="25sp"
+                android:background="@drawable/punch_type_pg"
                 android:gravity="center"
+                android:text="@string/right_straight"
                 android:textColor="@color/punches_text_color"
-                android:text="@string/right_straight" />
+                android:textSize="25sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:background="@drawable/punch_type_bg"
-                />
+                android:background="@drawable/punch_type_bg" />
 
             <LinearLayout
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
 
                 <LinearLayout
                     android:id="@+id/training_speedlayout"
@@ -720,22 +710,21 @@
                         android:id="@+id/speed_value"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="18"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:textColor="@color/speed_text_color"
                         android:gravity="center"
-                        android:textSize="60sp"
-                        />
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:text="18"
+                        android:textColor="@color/speed_text_color"
+                        android:textSize="60sp" />
 
                     <com.efd.striketectablet.customview.CustomTextView
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:background="@drawable/speed_bg"
+                        android:gravity="center"
                         android:text="@string/speed_label"
                         android:textColor="@color/speed_text_color"
-                        android:gravity="center"
-                        android:textSize="25sp"
-                        android:background="@drawable/speed_bg"/>
+                        android:textSize="25sp" />
 
                 </LinearLayout>
 
@@ -743,32 +732,31 @@
                     android:id="@+id/training_punchlayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
                         android:id="@+id/punch_value"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:paddingTop="5dp"
+                        android:gravity="center"
                         android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
                         android:text="2067"
                         android:textColor="@color/punches_text_color"
-                        android:gravity="center"
-                        android:textSize="60sp"
-                        />
+                        android:textSize="60sp" />
 
 
                     <com.efd.striketectablet.customview.CustomTextView
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:background="@drawable/punchcount_bg"
+                        android:gravity="center"
                         android:text="@string/punchcount_label"
                         android:textColor="@color/punches_text_color"
-                        android:gravity="center"
-                        android:textSize="25sp"
-                        android:background="@drawable/punchcount_bg"/>
+                        android:textSize="25sp" />
 
                 </LinearLayout>
 
@@ -783,36 +771,35 @@
                         android:id="@+id/power_value"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:paddingTop="5dp"
+                        android:gravity="center"
                         android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
                         android:text="386"
                         android:textColor="@color/force_text_color"
-                        android:gravity="center"
-                        android:textSize="60sp"
-                        />
+                        android:textSize="60sp" />
 
                     <com.efd.striketectablet.customview.CustomTextView
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:background="@drawable/power_bg"
+                        android:gravity="center"
                         android:text="@string/power_label"
                         android:textColor="@color/force_text_color"
-                        android:gravity="center"
-                        android:textSize="25sp"
-                        android:background="@drawable/power_bg"/>
+                        android:textSize="25sp" />
                 </LinearLayout>
 
             </LinearLayout>
 
             <RelativeLayout
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="20dp"
                 android:layout_weight="1">
 
                 <RelativeLayout
+                    android:id="@+id/progress_graph"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/progress_graph"
                     android:visibility="invisible">
 
                     <LinearLayout
@@ -823,8 +810,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="1"
-                            >
+                            android:layout_weight="1">
 
                             <com.efd.striketectablet.customview.CurveChartView
                                 android:id="@+id/curvechart"
@@ -840,13 +826,12 @@
                 <RelativeLayout
                     android:id="@+id/progress_digit"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@drawable/round_progress_top"/>
+                        android:background="@drawable/round_progress_top" />
 
 
                     <LinearLayout
@@ -855,9 +840,9 @@
                         android:orientation="vertical">
 
                         <!--<View-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="20dp"-->
-                            <!--android:background="@drawable/trainingprogress_top" />-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="20dp"-->
+                        <!--android:background="@drawable/trainingprogress_top" />-->
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -876,10 +861,10 @@
                                 android:layout_width="200dp"
                                 android:layout_height="30dp"
                                 android:layout_centerHorizontal="true"
-                                android:textSize="20sp"
                                 android:background="@drawable/trainingprogress_statusbg"
                                 android:gravity="center"
-                                android:text="PREPARE" />
+                                android:text="PREPARE"
+                                android:textSize="20sp" />
 
                             <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
                                 android:id="@+id/trainingprogress_time"
@@ -890,17 +875,17 @@
                                 android:textSize="100sp" />
 
                             <!--<ImageView-->
-                                <!--android:background="@drawable/progress_left"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_centerVertical="true"-->
-                                <!--android:layout_height="100dp"/>-->
+                            <!--android:background="@drawable/progress_left"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:layout_height="100dp"/>-->
 
                             <!--<ImageView-->
-                                <!--android:background="@drawable/progress_right"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_centerVertical="true"-->
-                                <!--android:layout_alignParentRight="true"-->
-                                <!--android:layout_height="100dp"/>-->
+                            <!--android:background="@drawable/progress_right"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:layout_alignParentRight="true"-->
+                            <!--android:layout_height="100dp"/>-->
 
                         </RelativeLayout>
 
@@ -915,9 +900,9 @@
                         android:id="@+id/audiobtn"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/audio_on"
+                        android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_alignParentBottom="true"/>
+                        android:src="@drawable/audio_on" />
 
                 </RelativeLayout>
 
@@ -940,31 +925,30 @@
                         android:background="@drawable/rectangle_bg"
                         android:gravity="center"
                         android:text="@string/avg"
-                        android:textSize="@dimen/cell_textsize"
-                        android:textColor="@color/punches_text_color" />
+                        android:textColor="@color/punches_text_color"
+                        android:textSize="@dimen/cell_textsize" />
 
                     <com.efd.striketectablet.customview.CustomTextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20dp"
-                        android:textSize="@dimen/cell_textsize"
                         android:layout_weight="1"
                         android:background="@drawable/rectangle_bg"
                         android:gravity="center"
                         android:text="@string/max"
-                        android:textColor="@color/speed_text_color" />
+                        android:textColor="@color/speed_text_color"
+                        android:textSize="@dimen/cell_textsize" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -977,10 +961,10 @@
                                 android:id="@+id/training_avg_speed"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:textSize="30sp"
-                                android:text="20.3"
                                 android:gravity="center"
-                                android:textColor="@color/punches_text_color" />
+                                android:text="20.3"
+                                android:textColor="@color/punches_text_color"
+                                android:textSize="30sp" />
 
                             <com.efd.striketectablet.customview.CustomTextView
                                 style="@style/training_progress_stat_label"
@@ -999,10 +983,10 @@
                                 android:id="@+id/training_avg_power"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:textSize="30sp"
                                 android:gravity="center"
                                 android:text="319"
-                                android:textColor="@color/punches_text_color" />
+                                android:textColor="@color/punches_text_color"
+                                android:textSize="30sp" />
 
                             <com.efd.striketectablet.customview.CustomTextView
                                 style="@style/training_progress_stat_label"
@@ -1015,9 +999,9 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_height="wrap_content">
+                        android:layout_weight="1">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -1028,11 +1012,11 @@
                             <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
                                 android:id="@+id/training_max_speed"
                                 android:layout_width="match_parent"
-                                android:gravity="center"
                                 android:layout_height="40dp"
-                                android:textSize="30sp"
+                                android:gravity="center"
                                 android:text="21.3"
-                                android:textColor="@color/speed_text_color" />
+                                android:textColor="@color/speed_text_color"
+                                android:textSize="30sp" />
 
                             <com.efd.striketectablet.customview.CustomTextView
                                 style="@style/training_progress_stat_label"
@@ -1051,10 +1035,10 @@
                                 android:id="@+id/training_max_force"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:textSize="30sp"
                                 android:gravity="center"
                                 android:text="478"
-                                android:textColor="@color/speed_text_color" />
+                                android:textColor="@color/speed_text_color"
+                                android:textSize="30sp" />
 
                             <com.efd.striketectablet.customview.CustomTextView
                                 style="@style/training_progress_stat_label"
@@ -1082,8 +1066,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
 
                 <com.efd.striketectablet.customview.CustomTextView
                     style="@style/preset_btn"
@@ -1092,9 +1075,9 @@
                     android:text="@string/righthand" />
 
                 <LinearLayout
-                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
                     android:background="@drawable/info_bg">
 
                     <LinearLayout
@@ -1126,9 +1109,9 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_marginTop="3dp"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp">
 
                                 <LinearLayout
                                     android:layout_width="0dp"
@@ -1217,9 +1200,9 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_marginTop="3dp"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp">
 
                                 <LinearLayout
                                     android:layout_width="0dp"
@@ -1288,11 +1271,10 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                >
+                android:layout_marginTop="20dp"
+                android:layout_weight="1">
 
                 <com.efd.striketectablet.customview.CustomTextView
                     style="@style/preset_btn"
@@ -1301,9 +1283,9 @@
                     android:text="@string/rightkick" />
 
                 <LinearLayout
-                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
                     android:background="@drawable/info_bg">
 
                     <LinearLayout
@@ -1335,9 +1317,9 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_marginTop="3dp"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp">
 
                                 <LinearLayout
                                     android:layout_width="0dp"
@@ -1424,9 +1406,9 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_marginTop="3dp"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp">
 
                                 <LinearLayout
                                     android:layout_width="0dp"
@@ -1495,5 +1477,10 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/separator" />
 
 </LinearLayout>
