@@ -9,6 +9,28 @@
         <attr name="hexagon_color" format="color" />
         <attr name="angle_coef" format="integer" />
         <attr name="fill" format="boolean" />
+        <attr name="hb_type" format="enum">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+            <enum name="none" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="HexagonImageButton">
+        <attr name="hib_hexagon_color" format="color" />
+        <attr name="hib_angle_coef" format="integer" />
+        <attr name="hib_fill" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="HexagonLayout">
+        <attr name="hrl_hexagon_color" format="color" />
+        <attr name="hrl_angle_coef" format="integer" />
+        <attr name="hrl_fill" format="boolean" />
+        <attr name="hrl_type" format="enum">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+            <enum name="none" value="2" />
+        </attr>
     </declare-styleable>
 
     <declare-styleable name="HexagonRadioButton">

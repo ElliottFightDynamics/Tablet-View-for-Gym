@@ -7,16 +7,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
-import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.efd.striketectablet.R;
 
-
-public class HexagonButton extends Button {
+public class HexagonLayout extends LinearLayout {
 
     private static final int LEFT = 0;
     private static final int RIGHT = 1;
@@ -24,43 +21,36 @@ public class HexagonButton extends Button {
 
     private Path hexagonPath;
     private Paint pathPaint;
-
     private int mColor;
     private int mCoef;
     private boolean fill;
     private int mType;
 
-    public HexagonButton(Context context) {
+    public HexagonLayout(Context context) {
         super(context);
         init(context, null);
     }
 
-    public HexagonButton(Context context, AttributeSet attrs) {
+    public HexagonLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public HexagonButton(Context context, AttributeSet attrs, int defStyle) {
+    public HexagonLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
 
     public void init(Context context, AttributeSet attrs) {
-        Typeface tf = null;
-        try {
-            tf = Typeface.createFromAsset(context.getAssets(), "fonts/BlenderPro-Book.otf");
-        } catch (Exception e) {
-            Log.e("TypeFace Error", "Could not get typeface: " + e.getMessage());
-        }
         mColor = Color.YELLOW;
         if (attrs != null) {
             TypedArray a = context.getTheme().obtainStyledAttributes(
-                    attrs, R.styleable.HexagonButton, 0, 0);
+                    attrs, R.styleable.HexagonLayout, 0, 0);
             try {
-                mColor = a.getColor(R.styleable.HexagonButton_hexagon_color, Color.YELLOW);
-                mCoef = a.getInt(R.styleable.HexagonButton_angle_coef, 33);
-                fill = a.getBoolean(R.styleable.HexagonButton_fill, true);
-                mType = a.getInt(R.styleable.HexagonButton_hb_type, NONE);
+                mColor = a.getColor(R.styleable.HexagonLayout_hrl_hexagon_color, Color.YELLOW);
+                mCoef = a.getInt(R.styleable.HexagonLayout_hrl_angle_coef, 33);
+                fill = a.getBoolean(R.styleable.HexagonLayout_hrl_fill, true);
+                mType = a.getInt(R.styleable.HexagonLayout_hrl_type, NONE);
                 if (mCoef > 100) {
                     mCoef = 100;
                 }
@@ -70,9 +60,7 @@ public class HexagonButton extends Button {
                 a.recycle();
             }
         }
-        setGravity(Gravity.CENTER);
         setBackground(null);
-        setTypeface(tf);
         init();
     }
 
@@ -85,7 +73,7 @@ public class HexagonButton extends Button {
         } else {
             this.pathPaint.setStyle(Paint.Style.STROKE);
         }
-        this.pathPaint.setStrokeWidth(5f);
+        this.pathPaint.setStrokeWidth(2f);
     }
 
     private void calculatePath() {
@@ -122,7 +110,6 @@ public class HexagonButton extends Button {
     @Override
     public void onDraw(Canvas c) {
         c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.OVERLAY);
-//        c.clipPath(hexagonPath, Region.Op.INTERSECT);
         c.drawPath(hexagonPath, pathPaint);
         super.onDraw(c);
     }

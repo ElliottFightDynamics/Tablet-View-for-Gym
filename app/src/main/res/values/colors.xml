@@ -23,6 +23,7 @@
     <color name="orange">#DFA542</color>
     <color name="num_textcolor">#232b35</color>
     <color name="list_odd_item">#1a232b</color>
+    <color name="login_hexagon">#0c232d</color>
 
     <color name="advise_deactivecolor">#0f29f7ff</color>
     <color name="hint_color">#667076</color>

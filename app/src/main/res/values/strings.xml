@@ -123,6 +123,16 @@
     <string name="title_sets">SET ROUTINE TRAINING</string>
     <string name="title_workout">WORKOUT TRAINING</string>
 
+    <string name="email">EMAIL</string>
+    <string name="pwd">PASSWORD</string>
+    <string name="login">LOGIN</string>
+    <string name="lostpwd">LOST PASSWORD</string>
+    <string name="notmember">NOT A MEMBER?</string>
+    <string name="register">REGISTER</string>
+
+    //login
+    <string name="error_email_field_required">Email is required.</string>
+    <string name="error_password_field_required">Password is required.</string>
 
 
 </resources>

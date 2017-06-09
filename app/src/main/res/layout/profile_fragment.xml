@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/background"
     android:padding="15dp">
@@ -57,7 +58,7 @@
 
                     <LinearLayout
                         android:layout_toRightOf="@+id/user_photo"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="20dp"
                         android:id="@+id/connectsensor"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
@@ -85,7 +86,7 @@
 
                     <LinearLayout
                         android:layout_toRightOf="@+id/user_photo"
-                        android:layout_marginTop="130dp"
+                        android:layout_marginTop="100dp"
                         android:id="@+id/totaltimetrained"
                         android:layout_width="380dp"
                         android:layout_height="30dp"
@@ -185,14 +186,14 @@
                             android:layout_gravity="center_vertical"/>
 
                     </LinearLayout>
-
-                    <com.efd.striketectablet.customview.HexagonImageView
+                    
+                    <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
                         android:id="@+id/user_photo"
-                        android:layout_width="260dp"
-                        android:layout_height="230dp"
+                        android:layout_width="229dp"
+                        android:layout_height="200dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/train1"
-                        android:visibility="visible"
+                        app:siShape="@drawable/profile_overlay"
                         android:layout_centerHorizontal="true"/>
 
                 </RelativeLayout>

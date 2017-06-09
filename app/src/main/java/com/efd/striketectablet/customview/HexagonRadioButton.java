@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.RadioButton;
 
 import com.efd.striketectablet.R;
@@ -64,8 +65,10 @@ public class HexagonRadioButton extends RadioButton {
                 a.recycle();
             }
         }
+        setGravity(Gravity.CENTER);
         setBackground(null);
         setButtonDrawable(null);
+        setBackgroundColor(getResources().getColor(android.R.color.transparent));
         setTypeface(tf);
         init();
     }
@@ -75,8 +78,9 @@ public class HexagonRadioButton extends RadioButton {
         this.selectorPath = new Path();
 
         this.mSelectedPaint = new Paint();
-        this.mSelectedPaint.setColor(Color.parseColor("#B3F4FF"));
+        this.mSelectedPaint.setColor(Color.parseColor("#235264"));
         this.mSelectedPaint.setStyle(Paint.Style.STROKE);
+        this.mSelectedPaint.setStrokeWidth(4f);
 
         this.mSelectorPaint = new Paint(this.mSelectedPaint);
         this.mSelectorPaint.setStyle(Paint.Style.FILL);
@@ -91,60 +95,77 @@ public class HexagonRadioButton extends RadioButton {
         float height = getMeasuredHeight();
         float corner = height * (33 / 100f);
 
+        this.hexagonPath.reset();
         if (mType == LEFT) {
-            this.hexagonPath.reset();
-            this.hexagonPath.moveTo(corner, 0);
-            this.hexagonPath.lineTo(width - corner, 0);
-            this.hexagonPath.lineTo(width, height / 2);
-            this.hexagonPath.lineTo(width - corner, height);
-            this.hexagonPath.lineTo(corner, height);
+            this.hexagonPath.moveTo(width, 0);
+            this.hexagonPath.lineTo(corner, 0);
             this.hexagonPath.lineTo(0, height / 2);
-            this.hexagonPath.close();
+            this.hexagonPath.lineTo(corner, height);
+            this.hexagonPath.lineTo(width, height);
         } else if (mType == MIDDLE) {
-            this.hexagonPath.reset();
-            this.hexagonPath.moveTo(corner, 0);
-            this.hexagonPath.lineTo(width - corner, 0);
-            this.hexagonPath.lineTo(width, height / 2);
-            this.hexagonPath.lineTo(width - corner, height);
-            this.hexagonPath.lineTo(corner, height);
-            this.hexagonPath.lineTo(0, height / 2);
-            this.hexagonPath.close();
+            this.hexagonPath.moveTo(0, 0);
+            this.hexagonPath.lineTo(width, 0);
+            this.hexagonPath.moveTo(width, height);
+            this.hexagonPath.lineTo(0, height);
         } else {
-            this.hexagonPath.reset();
-            this.hexagonPath.moveTo(corner, 0);
+            this.hexagonPath.moveTo(0, 0);
             this.hexagonPath.lineTo(width - corner, 0);
             this.hexagonPath.lineTo(width, height / 2);
             this.hexagonPath.lineTo(width - corner, height);
-            this.hexagonPath.lineTo(corner, height);
-            this.hexagonPath.lineTo(0, height / 2);
-            this.hexagonPath.close();
+            this.hexagonPath.lineTo(0, height);
+        }
+        if (mBorder != NONE) {
+            float dHeight = height * (40f / 100f);
+            float stY = (height - dHeight) / 2f;
+            float endY = height - stY;
+            if (mBorder == RIGHT) {
+                this.hexagonPath.moveTo(width, stY);
+                this.hexagonPath.lineTo(width, endY);
+            } else if (mBorder == LEFT) {
+                this.hexagonPath.moveTo(0, stY);
+                this.hexagonPath.lineTo(0, endY);
+            } else if (mBorder == BOTH) {
+                this.hexagonPath.moveTo(0, stY);
+                this.hexagonPath.lineTo(0, endY);
+                this.hexagonPath.moveTo(width, stY);
+                this.hexagonPath.lineTo(width, endY);
+            }
         }
 
         this.selectorPath.reset();
+        float selectorWidth = width / 13f;
+        float middle = width / 2;
+        float selectorHeight = 7f;
+        this.selectorPath.moveTo(middle - (selectorWidth / 2), 0);
+        this.selectorPath.lineTo(middle + (selectorWidth / 2), 0);
+        this.selectorPath.lineTo(middle + (selectorWidth / 2), selectorHeight);
+        this.selectorPath.lineTo(middle - (selectorWidth / 2), selectorHeight);
+        this.selectorPath.close();
+
+        this.selectorPath.moveTo(middle + (selectorWidth / 2), height);
+        this.selectorPath.lineTo(middle - (selectorWidth / 2), height);
+        this.selectorPath.lineTo(middle - (selectorWidth / 2), height - selectorHeight);
+        this.selectorPath.lineTo(middle + (selectorWidth / 2), height - selectorHeight);
+        this.selectorPath.close();
+
+        invalidate();
+    }
+
+    @Override
+    public void setChecked(boolean checked) {
+        super.setChecked(checked);
         if (isChecked()) {
-            float selectorWidth = width / 15f;
-            float middle = width / 2;
-            float selectorHeight = 5f;
-            this.selectorPath.moveTo(middle - (selectorWidth / 2), 0);
-            this.selectorPath.lineTo(middle + (selectorWidth / 2), 0);
-            this.selectorPath.lineTo(middle + (selectorWidth / 2), selectorHeight);
-            this.selectorPath.lineTo(middle - (selectorWidth / 2), selectorHeight);
-            this.selectorPath.close();
-
-            this.selectorPath.moveTo(middle + (selectorWidth / 2), height);
-            this.selectorPath.lineTo(middle - (selectorWidth / 2), height);
-            this.selectorPath.lineTo(middle - (selectorWidth / 2), height - selectorHeight);
-            this.selectorPath.lineTo(middle + (selectorWidth / 2), height - selectorHeight);
-            this.selectorPath.close();
+            setTextColor(getResources().getColor(R.color.white));
+        } else {
+            setTextColor(getResources().getColor(R.color.orange));
         }
-
         invalidate();
     }
 
     @Override
     public void onDraw(Canvas c) {
 //        c.clipPath(hexagonPath, Region.Op.INTERSECT);
-        c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.OVERLAY);
         c.drawPath(hexagonPath, mSelectedPaint);
         if (isChecked()) {
             c.drawPath(selectorPath, mSelectorPaint);

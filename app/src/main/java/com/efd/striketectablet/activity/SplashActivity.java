@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import com.efd.striketectablet.R;
+import com.efd.striketectablet.activity.credential.LoginActivity;
 import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
 
@@ -29,7 +30,7 @@ import java.io.OutputStream;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY_LENGTH = 2000;
+    private final int SPLASH_DISPLAY_LENGTH = 100;
     private static final int WRITE_PERMISSION = 144;
 
     @Override
@@ -39,6 +40,11 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
 
+    }
+
+    private void startLoginActivity(){
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        startActivity(loginIntent);
     }
 
     private void startMainActivity(){
@@ -79,7 +85,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startMainActivity();
+                startLoginActivity();
                 finish();
             }
         }, SPLASH_DISPLAY_LENGTH);

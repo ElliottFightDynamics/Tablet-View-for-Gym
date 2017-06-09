@@ -53,16 +53,23 @@
             android:name=".activity.training.quickstart.QuickStartTrainingActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activity.training.combination.NewCombinationActivity"
+        <activity
+            android:name=".activity.training.combination.NewCombinationActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activity.training.sets.NewSetRoutineActivity"
+        <activity
+            android:name=".activity.training.sets.NewSetRoutineActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activity.training.workout.NewWorkoutActivity"
+        <activity
+            android:name=".activity.training.workout.NewWorkoutActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activity.training.ComboSetTrainingActivity"
+        <activity
+            android:name=".activity.training.ComboSetTrainingActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activity.credential.LoginActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
     </application>
