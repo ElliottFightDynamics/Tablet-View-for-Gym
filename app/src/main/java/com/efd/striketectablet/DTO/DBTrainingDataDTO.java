@@ -10,6 +10,8 @@ public class DBTrainingDataDTO {
     String syncDate;
     Long serverID;
 
+
+
     public DBTrainingDataDTO(Integer id, Integer isLeftHand, Integer sessionID, Integer userID,
                              Integer sync, String syncDate, Long serverID) {
         super();

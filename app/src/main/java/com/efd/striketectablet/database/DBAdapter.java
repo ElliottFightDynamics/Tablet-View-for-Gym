@@ -53,6 +53,7 @@ public class DBAdapter {
     TimeZone utcTimeZone = TimeZone.getTimeZone("UTC");
 
 
+
     // A initialization for database version.
     private static final int DATABASE_VERSION = 4; //TODO:- Note- When ever you do changes/modification in your database. Please upgrade the version.
 

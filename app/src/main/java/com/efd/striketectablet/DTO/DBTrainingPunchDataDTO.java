@@ -12,6 +12,8 @@ public class DBTrainingPunchDataDTO {
     String syncDate;
     Long serverID;
 
+
+
     public DBTrainingPunchDataDTO(Integer id, Double maxForce, Double maxSpeed,
                                   String punchDataDate, String punchType, Integer trainingDataId,
                                   Integer sync, String syncDate, Long serverID) {

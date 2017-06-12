@@ -20,6 +20,7 @@ public class DBTrainingDataDetailsDTO {
     String syncDate;
     Long serverID;
 
+
     public DBTrainingDataDetailsDTO(Integer id, Integer ax, Integer ay, Integer az,
                                     Double currentForce, Double currentVelocity,
                                     String dataReceivedTime, Integer gx, Integer gy, Integer gz, Double headTrauma,
