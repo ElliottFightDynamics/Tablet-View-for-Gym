@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.efd.striketectablet.DTO.AuthenticationDTO;
+import com.efd.striketectablet.DTO.BoxerProfileDTO;
 import com.efd.striketectablet.DTO.CalendarSummaryDTO;
 import com.efd.striketectablet.DTO.DBTrainingDataDTO;
 import com.efd.striketectablet.DTO.DBTrainingDataDetailsDTO;
@@ -20,6 +22,7 @@ import com.efd.striketectablet.DTO.ResultSummaryDTO;
 import com.efd.striketectablet.DTO.SyncResponseDTO;
 import com.efd.striketectablet.DTO.TrainingPunchDTO;
 import com.efd.striketectablet.DTO.TrainingStatsPunchTypeInfoDTO;
+import com.efd.striketectablet.DTO.UserDTO;
 import com.efd.striketectablet.util.StatisticUtil;
 import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
@@ -29,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.lang.reflect.AccessibleObject;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -1254,6 +1258,33 @@ public class DBAdapter {
         return boxerDetails;
     }
 
+    public int insertUser(AuthenticationDTO authenticationDTO) {
+
+        UserDTO userDTO = authenticationDTO.getUser();
+
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_USER_VERSION, 1);
+        values.put(KEY_USER_ACCOUNT_EXPIRED, userDTO.getAccountExpired());
+        values.put(KEY_USER_ACCOUNT_LOCKED, userDTO.getAccountLocked());
+        values.put(KEY_USER_BOXERFIRSTNAME, userDTO.getFirstName());
+        values.put(KEY_USER_BOXERLASTNAME, userDTO.getLastName());
+        values.put(KEY_USER_DATE_OF_BIRTH, userDTO.getDateOfBirth());
+        values.put(KEY_USER_ENABLED, userDTO.getEnabled());
+        values.put(KEY_USER_GENDER, userDTO.getGender());
+        values.put(KEY_USER_PASSWORD, userDTO.getPassword());
+        values.put(KEY_USER_PASSWORD_EXPIRED, userDTO.getPasswordExpired());
+        values.put(KEY_USER_PHOTO, "");
+        values.put(KEY_USER_USERNAME, userDTO.getUsername());
+        values.put(KEY_USER_EMAIL_ID, userDTO.getEmailId());
+        values.put(KEY_USER_COUNTRY_ID, userDTO.getCountry().getId());
+        values.put(KEY_USER_ZIP_CODE, userDTO.getZipcode());
+        values.put(KEY_SERVER_USER_ID, userDTO.getId());
+        int result = (int) db.insert(USER_TABLE, null, values);
+        return result;
+    }
+
+
     public int insertUser(int version, int accountExpired,
                           int accountLocked, String firstName, String lastName, String bdate,
                           int enabled, String gender, String password, int passwordExpired,
@@ -1298,6 +1329,15 @@ public class DBAdapter {
         return result;
     }
 
+    public int insertUserAccessData(AuthenticationDTO authenticationDTO) {
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_USER_ACCESS_TOKEN, authenticationDTO.getSecureAccessToken());
+        values.put(KEY_USER_ACCESS_SERVER_ID, authenticationDTO.getUser().getId());
+        int result = (int) db.insert(USER_ACCESS_TABLE, null, values);
+        return result;
+    }
+
     /**
      * Insert a Boxer Profile values into the database.
      */
@@ -1319,6 +1359,31 @@ public class DBAdapter {
         values.put(KEY_BOXER_GLOVE_TYPE, gloveType);
         values.put(KEY_BOXER_SKILL_LEVEL, skillLevel);
         values.put(KEY_BOXER_SERVER_ID, boxerServerId);
+        int result = (int) db.insert(BOXER_PROFILE_TABLE, null, values);
+        return result;
+    }
+
+    /**
+     * Insert a Boxer Profile values into the database.
+     */
+    public int insertBoxerProfile(AuthenticationDTO authenticationDTO) {
+        BoxerProfileDTO boxerProfileDTO = authenticationDTO.getBoxerProfile();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_BOXER_VERSION, 1);
+        values.put(KEY_BOXER_CHEST, boxerProfileDTO.getChest());
+        values.put(KEY_BOXER_INSEAM, boxerProfileDTO.getInseam());
+        values.put(KEY_BOXER_LEFT_DEVICE, boxerProfileDTO.getLeftDevice());
+        values.put(KEY_BOXER_RIGHT_DEVICE, boxerProfileDTO.getRightDevice());
+        values.put(KEY_BOXER_REACH, boxerProfileDTO.getReach());
+        values.put(KEY_BOXER_STANCE, boxerProfileDTO.getStance());
+        values.put(KEY_BOXER_USER_ID, authenticationDTO.getUser().getId());
+        values.put(KEY_BOXER_WAIST, boxerProfileDTO.getWaist());
+        values.put(KEY_BOXER_WEIGHT, boxerProfileDTO.getWeight());
+        values.put(KEY_BOXER_HEIGHT, boxerProfileDTO.getHeight());
+        values.put(KEY_BOXER_GLOVE_TYPE, boxerProfileDTO.getGloveType());
+        values.put(KEY_BOXER_SKILL_LEVEL, boxerProfileDTO.getSkillLevel());
+        values.put(KEY_BOXER_SERVER_ID, authenticationDTO.getUser().getId());
         int result = (int) db.insert(BOXER_PROFILE_TABLE, null, values);
         return result;
     }
@@ -2817,6 +2882,40 @@ public class DBAdapter {
         return result;
     }
 
+
+    public int updateUser(AuthenticationDTO authenticationDTO, boolean sync) {
+
+        Date date = new Date();
+        Log.d(TAG, "*****updateUser Date:- " + date);
+        ContentValues values = new ContentValues();
+
+        UserDTO userDTO = authenticationDTO.getUser();
+
+        values.put(KEY_USER_VERSION, 1);
+        values.put(KEY_USER_ACCOUNT_EXPIRED, userDTO.getAccountExpired());
+        values.put(KEY_USER_ACCOUNT_LOCKED, userDTO.getAccountLocked());
+        values.put(KEY_USER_BOXERFIRSTNAME, userDTO.getFirstName());
+        values.put(KEY_USER_BOXERLASTNAME, userDTO.getLastName());
+        values.put(KEY_USER_DATE_OF_BIRTH, userDTO.getDateOfBirth());
+        values.put(KEY_USER_ENABLED, userDTO.getEnabled());
+        values.put(KEY_USER_GENDER, userDTO.getGender());
+        values.put(KEY_USER_PASSWORD, userDTO.getPassword());
+        values.put(KEY_USER_PASSWORD_EXPIRED, userDTO.getPasswordExpired());
+        values.put(KEY_USER_PHOTO, "");
+        values.put(KEY_USER_USERNAME, userDTO.getUsername());
+        values.put(KEY_USER_EMAIL_ID, userDTO.getEmailId());
+        values.put(KEY_USER_COUNTRY_ID, userDTO.getCountry().getId());
+        values.put(KEY_USER_ZIP_CODE, userDTO.getId());
+        values.put(KEY_USER_SYNC, sync);
+        values.put(KEY_USER_SYNC_DATE, dateFormat.format(date));    // TODO: check if this is required also check if sync flag needs to be updated
+        values.put(KEY_SERVER_USER_ID, userDTO.getId());
+        Log.d(TAG, "Database obj=-" + db);
+
+        // updating row
+        int result = db.update(USER_TABLE, values, KEY_USER_ID + " = " + userDTO.getId(), null);
+        return result;
+    }
+
     /**
      * update a User Access Data values from the database.
      */
@@ -2855,6 +2954,31 @@ public class DBAdapter {
         values.put(KEY_BOXER_SKILL_LEVEL, skillLevel);
         values.put(KEY_BOXER_SERVER_ID, boxerServerId);
         int result = (int) db.update(BOXER_PROFILE_TABLE, values, KEY_BOXER_USER_ID + " = " + userID, null);
+        return result;
+    }
+
+    /**
+     * update a Boxer Profile values from the database.
+     */
+    public int updateBoxerProfile(AuthenticationDTO authenticationDTO) {
+        BoxerProfileDTO boxerProfileDTO = authenticationDTO.getBoxerProfile();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_BOXER_VERSION, 1);
+        values.put(KEY_BOXER_CHEST, boxerProfileDTO.getChest());
+        values.put(KEY_BOXER_INSEAM, boxerProfileDTO.getInseam());
+        values.put(KEY_BOXER_LEFT_DEVICE, boxerProfileDTO.getLeftDevice());
+        values.put(KEY_BOXER_RIGHT_DEVICE, boxerProfileDTO.getRightDevice());
+        values.put(KEY_BOXER_REACH, boxerProfileDTO.getReach());
+        values.put(KEY_BOXER_STANCE, boxerProfileDTO.getStance());
+        values.put(KEY_BOXER_USER_ID, authenticationDTO.getUser().getId());
+        values.put(KEY_BOXER_WAIST, boxerProfileDTO.getWaist());
+        values.put(KEY_BOXER_WEIGHT, boxerProfileDTO.getWeight());
+        values.put(KEY_BOXER_HEIGHT, boxerProfileDTO.getHeight());
+        values.put(KEY_BOXER_GLOVE_TYPE, boxerProfileDTO.getGloveType());
+        values.put(KEY_BOXER_SKILL_LEVEL, boxerProfileDTO.getSkillLevel());
+        values.put(KEY_BOXER_SERVER_ID, authenticationDTO.getUser().getId());
+        int result = (int) db.update(BOXER_PROFILE_TABLE, values, KEY_BOXER_USER_ID + " = " + authenticationDTO.getUser().getId(), null);
         return result;
     }
 
