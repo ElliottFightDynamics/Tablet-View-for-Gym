@@ -960,7 +960,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
         String successString = ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(currentPunchIndex));
         if (successString.equalsIgnoreCase(EFDConstants.JAB) || successString.equalsIgnoreCase(EFDConstants.STRAIGHT)){
-            if (detectedPunchType.contains(successString)){
+            if (punchType.equalsIgnoreCase(successString)){
                 updateView(true);
             }else
                 updateView(false);
