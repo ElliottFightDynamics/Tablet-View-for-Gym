@@ -138,7 +138,8 @@ public class LoginActivity extends AppCompatActivity {
 //                                StatisticUtil.showToastMessage(authenticationDTO.getMessage());
 //                            }
                         } else {
-                            Log.e(TAG, "Login failed message = " + response.message());
+                            Log.e(TAG, "Login failed message = " +  response.message() + " \n\n  " + response.code() +  " \n \n " + response.headers() + "\n\n" +
+                            response.errorBody() + "\n\n" + response.raw());
                             CommonUtils.showAlertDialogWithActivityFinish(LoginActivity.this, EFDConstants.SERVER_ERROR);
                         }
                     }
