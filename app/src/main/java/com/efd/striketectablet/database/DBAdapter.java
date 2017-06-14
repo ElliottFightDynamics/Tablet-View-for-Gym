@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.efd.striketectablet.DTO.AuthenticationDTO;
-import com.efd.striketectablet.DTO.BoxerProfileDTO;
+import com.efd.striketectablet.DTO.responsedto.AuthenticationDTO;
+import com.efd.striketectablet.DTO.responsedto.BoxerProfileDTO;
 import com.efd.striketectablet.DTO.CalendarSummaryDTO;
 import com.efd.striketectablet.DTO.DBTrainingDataDTO;
 import com.efd.striketectablet.DTO.DBTrainingDataDetailsDTO;
@@ -22,7 +22,7 @@ import com.efd.striketectablet.DTO.ResultSummaryDTO;
 import com.efd.striketectablet.DTO.SyncResponseDTO;
 import com.efd.striketectablet.DTO.TrainingPunchDTO;
 import com.efd.striketectablet.DTO.TrainingStatsPunchTypeInfoDTO;
-import com.efd.striketectablet.DTO.UserDTO;
+import com.efd.striketectablet.DTO.responsedto.UserDTO;
 import com.efd.striketectablet.util.StatisticUtil;
 import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
@@ -32,7 +32,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.lang.reflect.AccessibleObject;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;

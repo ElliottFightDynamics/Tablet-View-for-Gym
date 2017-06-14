@@ -27,8 +27,10 @@
 
     <color name="advise_deactivecolor">#0f29f7ff</color>
     <color name="hint_color">#667076</color>
+    <color name="hint_color1">#193d4e</color>
     <color name="round_minsec">#06896c</color>
     <color name="rest_minsec">#792f34</color>
+    <color name="agreement_content_text_color">#a9a8a8</color>
 
     <color name="totaltime">#31778f</color>
     <color name="total_value">#53d9ff</color>

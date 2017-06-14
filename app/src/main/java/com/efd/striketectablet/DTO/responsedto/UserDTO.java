@@ -1,10 +1,7 @@
-package com.efd.striketectablet.DTO;
+package com.efd.striketectablet.DTO.responsedto;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserDTO implements Parcelable {
 

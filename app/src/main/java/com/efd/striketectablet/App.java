@@ -26,7 +26,7 @@ public class App extends MultiDexApplication {
         RetrofitSingleton.setApplication(this);
 
         StatisticUtil.init(context);
-        PresetUtil.init();
+        PresetUtil.init(context);
         ComboSetUtil.init(context);
     }
 

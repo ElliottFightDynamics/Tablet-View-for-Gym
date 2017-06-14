@@ -10,4 +10,13 @@ public class RestUrl {
 
     //credential url
     public static final String LOGIN = "user/traineeLogin";
+
+    //securite question list
+    public static final String QUESTION_LIST = "question/list";
+
+    //country list
+    public static final String COUNTRY_LIST = "country/list";
+
+    //registration
+    public static final String REGIST = "user/doTraineeRegistration";
 }

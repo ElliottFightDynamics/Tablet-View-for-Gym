@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:gravity="start"
-        android:padding="5dp"
+        android:padding="10dp"
         android:textColor="@color/caldroid_black"
-        android:textSize="30sp"/>
+        android:textSize="20sp"/>
 
 </RelativeLayout>

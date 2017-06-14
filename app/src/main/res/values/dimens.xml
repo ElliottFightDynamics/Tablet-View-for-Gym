@@ -27,5 +27,9 @@
     <dimen name="training_progress_stat_label_font_size">20sp</dimen>
     <dimen name="tab_textsize">18sp</dimen>
 
+    <dimen name="registration_agreement_title_text_size">25sp</dimen>
+    <dimen name="registration_agreement_content_text_size">20sp</dimen>
+    <dimen name="registration_textView_text_size">25sp</dimen>
+
     <bool name="iTablet">false</bool>
 </resources>

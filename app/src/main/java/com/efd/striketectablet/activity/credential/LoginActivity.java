@@ -12,25 +12,17 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.efd.striketectablet.DTO.AuthenticationDTO;
-import com.efd.striketectablet.DTO.BoxerProfileDTO;
-import com.efd.striketectablet.DTO.UserDTO;
+import com.efd.striketectablet.DTO.responsedto.AuthenticationDTO;
+import com.efd.striketectablet.DTO.responsedto.BoxerProfileDTO;
+import com.efd.striketectablet.DTO.responsedto.UserDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.api.RetrofitSingleton;
 import com.efd.striketectablet.database.DBAdapter;
 import com.efd.striketectablet.util.IndicatorCallback;
-import com.efd.striketectablet.util.StatisticUtil;
 import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -86,6 +78,29 @@ public class LoginActivity extends AppCompatActivity {
                 attemptLogin();
             }
         });
+        lostpwdBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startResetPwd();
+            }
+        });
+
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startRegisterActivity();
+            }
+        });
+    }
+
+    private void startRegisterActivity(){
+        Intent registerIntent = new Intent(this, RegisterActivity.class);
+        startActivity(registerIntent);
+    }
+
+    private void startResetPwd(){
+        Intent lostpwdIntent = new Intent(this, LostPasswordActivity.class);
+        startActivity(lostpwdIntent);
     }
 
     private void attemptLogin(){

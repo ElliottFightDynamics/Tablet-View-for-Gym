@@ -125,14 +125,63 @@
 
     <string name="email">EMAIL</string>
     <string name="pwd">PASSWORD</string>
+    <string name="repwd">RETYPE PASSWORD</string>
     <string name="login">LOGIN</string>
     <string name="lostpwd">LOST PASSWORD</string>
     <string name="notmember">NOT A MEMBER?</string>
     <string name="register">REGISTER</string>
 
-    //login
+    <!--login-->
     <string name="error_email_field_required">Email is required.</string>
     <string name="error_password_field_required">Password is required.</string>
+
+    <!--loast pwd-->
+    <string name="resetpwd_guide">TO RESET YOUR PASSWORD YOU NEED TO</string>
+    <string name="choose_secretquestion">CHOOSE SECRET QUESTION</string>
+    <string name="resetpwd">RESET PASSWORD</string>
+    <string name="reset_success">YOU HAVE BEEN SUCCESSFULLY ANSWERED YOUR\nSECRET QUESTION. YOUR NEW PASSWORD WAS SENT\nTO YOUR EMAIL.\n\nYOU WILL BE TRANSFERED TO YOUR PROFILE SCREEN.</string>
+    <string name="reset_fail">UNFORTUNATELY,\nYOUR ANSWER WAS NOT CORRECT.\nYOU ARE NOT LOGGED IN.\n\nPLEASE TRY AGAIN. YOU HAVE ONLY 3 ATTEMPTS</string>
+    <string name="reset_sentemail">YOUR NEW PASSWORD WAS SENT TO YOUR EMAIL.</string>
+    <string name="reset_continue">CONTINUE</string>
+    <string name="select_security_question_text">SELECT SECURITY QUESTION</string>
+    <string name="security_question_spinner_prompt">SECURITY QUESTION</string>
+
+    <!--register-->
+    <string name="register_guide">WE NEED SOME INFORMATION ABOUT YOU:</string>
+    <string name="fistname">FIRST NAME</string>
+    <string name="lastname">LAST NAME</string>
+    <string name="retype_pwd">RETYPE PASSWORD</string>
+    <string name="type_answer">TYPE YOUR SECREATE ANSWER</string>
+    <string name="accept_terms">YOU ACCEPT THE TERMS OF USE BY REGISTERING HERE</string>
+    <string name="terms1">YOUACCEPT THE</string>
+    <string name="terms2">TERMS OF USE</string>
+    <string name="terms3">BY REGISTERING HERE</string>
+    <string name="termsofuse">TERMS OF USE</string>
+
+    <string name="agreement">\nLICENSED APPLICATION END USER LICENSE AGREEMENT\n</string>
+    <string name="agreement_content0">Elliott Fight Dynamics LLC End-User License Agreement (“EULA”) is a legal agreement between  You and Elliott Fight Dynamics LLC ("EFD" or “We”), for use of the Licensed Application (“App”), including any associated software components, and incorporates EFD’s <a href="http://efdstriketec.com/terms-and-conditions/">Terms of Use </a> into this EULA. The App is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties. The App is licensed, not sold.  EFD reserves all rights not expressly granted to you herein.\n </string>
+    <string name="agreement_subtitle1">1. GRANT OF LICENSE\n</string>
+    <string name="agreement_content1">This License granted to You by EFD is limited to a non-exclusive and non-transferable license to use the App. You may not distribute or make the App available over a network where it could be used by multiple devices at the same time. You may not rent, lease, lend, sell, redistribute or sublicense the App. You may not copy (except as expressly permitted by this license and the Usage Rules), decompile, reverse engineer, disassemble, attempt to derive the source code of, modify, or create derivative works of the App, any updates, or any part thereof (except as and only to the extent any foregoing restriction is prohibited by applicable law or to the extent as may be permitted by the licensing terms governing use of any open sourced components included with the App). Any attempt to do so is a violation of the rights of the EFD. If You breach this restriction, You may be subject to prosecution and damages. You are solely responsible for any third party’s use of Your License.\n</string>
+    <string name="agreement_subtitle2">2. TERMINATION\n</string>
+    <string name="agreement_content2">You or We may terminate this Agreement at any time and for any reason by giving written notice to the other party. We may terminate Your License at any time, with or without cause. If We terminate your License without cause, we\'ll refund a prorated portion of your monthly prepayment. EFD won’t refund or reimburse you if there’s cause, like a violation of the EULA. When this License is terminated, you must destroy all copies of the App in your possession.\n</string>
+    <string name="agreement_subtitle3">3. COPYRIGHT\n</string>
+    <string name="agreement_content3">All content included as part of the App, such as text, graphics, logos, images, as well as the compilation thereof, and any software used in or on the App, is the property of EFD or its suppliers and protected by copyright and other laws that protect intellectual property and proprietary rights. You agree to observe and abide by all copyright and other proprietary notices, legends or other restrictions contained in any such content and will not make any changes thereto. This EULA grants you no rights to use such content. All rights not expressly granted are reserved by EFD.\n</string>
+    <string name="agreement_subtitle4">4. COMPLIANCE WITH RULES, APPLICABLE LAWS AND EXPORT\n</string>
+    <string name="agreement_content4">You represent and warrant that your use of the App will comply with all applicable laws, regulations and the EULA. The software that supports the App (the "Software") is subject to United States export controls. None of the Software may be downloaded or otherwise exported or re-exported in violation of United States export laws. You’re downloading and using the Software at your own risk.\n</string>
+    <string name="agreement_subtitle5">5. DATA COLLECTION AND USE\n</string>
+    <string name="agreement_content5">We may use, share or sell non-personally identifying information to a third party for any marketing purposes whatsoever. You may be given the opportunity to link to other sites that may use, collect or store certain information about you and you should read the applicable terms and conditions for such sites to determine how your information may or may not be used, collected or stored.\n</string>
+    <string name="agreement_subtitle6">6. THIRD PARTY MATERIALS AND SERVICES\n</string>
+    <string name="agreement_content6">This App may contain links to other websites ("Linked Sites"). The Linked Sites are not under the control of EFD and EFD is not responsible for the contents of any Linked Site, including without limitation any link contained in a Linked Site, or any changes or updates to a Linked Site. EFD is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement by EFD of the site or any association with its operators. Certain services made available via the App may be delivered by third party sites and organizations. By using any product, service or functionality originating from the App, you hereby acknowledge and consent that EFD may share such information and data with any third party with whom EFD has a contractual relationship to provide the requested product, service or functionality on behalf of You.\n</string>
+    <string name="agreement_subtitle7">7. LIMITATION OF LIABILITY\n</string>
+    <string name="agreement_content7">To the maximum extent permitted by law, you assume full responsibility for any loss that results from your use of the App, including any downloads of the App. EFD, its officers, managing members, members, directors, employees, agents and third parties (“Team”) won’t be liable for any indirect, punitive, special, or consequential damages under any circumstances, even if they’re based on negligence or we’ve been advised of the possibility of those damages. Our total liability for all claims made about the App or its use in any month will be no more than what you paid EFD for the Service the month before.\n</string>
+    <string name="agreement_subtitle8">8. NO WARRANTIES\n</string>
+    <string name="agreement_content8">To the maximum extent permitted by law, We provide the material on the App “as is”. That means EFD doesn’t provide warranties of any kind, either express or implied, including but not limited to warranties of merchantability and fitness for a particular purpose.\n</string>
+    <string name="agreement_subtitle9">9. INDEMNITY\n</string>
+    <string name="agreement_content9">You agree to indemnify, defend and hold harmless EFD, and its Team, for any losses, costs, liabilities and expenses (including reasonable attorneys\' fees) relating to or arising out of Your or a third parties use of or inability to use the App, any user postings made by you, your violation of any terms of this EULA or your violation of any rights of a third party, or your violation of any applicable laws, rules or regulations. EFD reserves the right, at its own cost, to assume the exclusive defense and control of any matter otherwise subject to indemnification by You, in which event you will fully cooperate with EFD in asserting any available defenses.\n</string>
+    <string name="agreement_subtitle10">10. DISPUTES\n</string>
+    <string name="agreement_content10">This EULA and the use of the App shall be subject to and governed by the laws of Texas, excluding its conflicts of law rules. Your use of the App may also be subject to other local, state, national, or international laws. Any dispute shall be submitted to confidential arbitration in Dallas, Texas, except that to the extent you have in any manner violated or threatened to violate our intellectual property rights, we may seek injunctive or other appropriate relief in any state or federal court in the State of Texas. To the fullest extent permitted by applicable law, no arbitration under this Agreement shall be joined to an arbitration involving any other party subject to this Agreement, whether through class action proceedings or otherwise. You agree that regardless of any statute or law to the contrary, any claim or cause of action arising out of, related to or connected with the use of the App or the EULA must be filed within one (1) year after such claim or cause of action arose or be forever banned.\n</string>
+    <string name="agreement_subtitle11">11. MISCELLANEOUS\n</string>
+    <string name="agreement_content11">You are responsible for any applicable charges and fees associated with any data plan fees or charges of any kind that may be required by your carrier when accessing or using the App. No delay or failure by EFD to enforce any right or provision of this EULA shall be considered a waiver thereof. This EULA will bind and inure to the benefit of any permitted successors and permitted assigns of the parties. If any provision of the EULA is determined to be invalid, illegal or unenforceable, the remaining provisions of this EULA will remain in full force, if the essential provisions of this EULA for each party remain, valid, legal, and enforceable. This EULA may only be amended in writing by EFD and You. If you do not agree to, or cannot comply with the EULA as amended, you must stop using the App.\n</string>
 
 
 </resources>

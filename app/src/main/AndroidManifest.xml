@@ -69,9 +69,19 @@
             android:name=".activity.training.ComboSetTrainingActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activity.credential.LoginActivity"
+        <activity
+            android:name=".activity.credential.LoginActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.credential.LostPasswordActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.credential.RegisterActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activity.credential.TermsofuseActivity"></activity>
     </application>
 
 </manifest>

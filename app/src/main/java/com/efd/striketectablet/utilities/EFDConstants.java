@@ -19,6 +19,16 @@ public class EFDConstants {
     public static final String DATE_FORMAT = "yyyy_MMM_dd_HH_mm_ss_SSS";
     public static final String DEFAULT_START_TIME = "00:00:00";
 
+    //country list
+    public static final String COUNTRY1 = "USA";
+
+    //question list
+    public static final String QUESTION1 = "What is the name of your favorite pet?";
+    public static final String QUESTION2 = "What is the name of the company where you held your first job?";
+    public static final String QUESTION3 = "What is your mother\'s maiden name?";
+    public static final String QUESTION4 = "What is your father\'s middle name?";
+    public static final String QUESTION5 = "What was the name of your high school?";
+
 
     //-----------------------------File path------------------------------------
     private static final String ANDROID_DATA_DIRECTORY = "Android/data";
@@ -249,6 +259,7 @@ public class EFDConstants {
     public static final int SPINNER_GREEN = 1;
     public static final int SPINNER_RED = 2;
     public static final int SPINNER_PUNCH = 3;
+    public static final int SPINNER_QUESTION = 4;
 
     //max, min value of preset
     public static final int ROUNDS_MIN = 1;
