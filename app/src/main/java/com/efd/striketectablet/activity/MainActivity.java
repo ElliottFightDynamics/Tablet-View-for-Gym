@@ -39,6 +39,7 @@ import com.efd.striketectablet.DTO.TrainingBatteryVoltageDTO;
 import com.efd.striketectablet.DTO.TrainingConnectStatusDTO;
 import com.efd.striketectablet.DTO.TrainingPunchDTO;
 import com.efd.striketectablet.R;
+import com.efd.striketectablet.activity.credential.LoginActivity;
 import com.efd.striketectablet.activity.profile.ProfileFragment;
 import com.efd.striketectablet.activity.training.TrainingFragment;
 import com.efd.striketectablet.activity.trainingstats.TrainingStatsFragment;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isGuestBoxerActive;
 
-    public String userId = "1";
+    public String userId ;
     public static DBAdapter db;
 
     public PunchDataDTO punchDataDTO = new PunchDataDTO();
@@ -176,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         initUI();
 
         final SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
-        userId = sharedPreference.getString("userId", "");
+        userId = sharedPreference.getString(EFDConstants.KEY_USER_ID, null);
 
         if (TextUtils.isEmpty(userId))
             userId = "1";
@@ -448,10 +449,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void checkUser() {
-//        if (!db.isUserAvailable()) {
-//            Log.d(TAG, "isUserAvailable" + db.isUserAvailable());
-//            showAlert();
-//        }
+        if (!db.isUserAvailable()) {
+            Log.d(TAG, "isUserAvailable" + db.isUserAvailable());
+            showAlert();
+        }
     }
 
     public void showAlert() {
@@ -466,24 +467,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logoutUser() {
-//        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//        SharedPreferences.Editor editor = settings.edit();
-//        /******** code to disconnect the current connected device ***********/
-//        if (trainingSessionId != null) {
-//            JSONObject result_Training_session_end = db.trainingSessionEnd(trainingSessionId);
-//
-//        }
-//
-//        timer.cancel();
-//        isSynchronizingWithServer = false;
-//        isAccessTokenValid = true;
-//        editor.remove(EFDConstants.KEY_USER_ID);
-//        editor.remove(EFDConstants.KEY_SERVER_USER_ID);
-//        editor.remove(EFDConstants.KEY_SECURE_ACCESS_TOKEN);
-//        editor.commit();
-//        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//        startActivity(intent);
-//        finish();
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = settings.edit();
+        /******** code to disconnect the current connected device ***********/
+        if (trainingSessionId != null) {
+            JSONObject result_Training_session_end = db.trainingSessionEnd(trainingSessionId);
+
+        }
+
+        timer.cancel();
+        isSynchronizingWithServer = false;
+        isAccessTokenValid = true;
+        editor.remove(EFDConstants.KEY_USER_ID);
+        editor.remove(EFDConstants.KEY_SERVER_USER_ID);
+        editor.remove(EFDConstants.KEY_SECURE_ACCESS_TOKEN);
+        editor.commit();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     // changes for Local Storage start

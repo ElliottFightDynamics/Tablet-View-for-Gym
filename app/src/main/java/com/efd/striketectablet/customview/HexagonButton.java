@@ -85,7 +85,7 @@ public class HexagonButton extends Button {
         } else {
             this.pathPaint.setStyle(Paint.Style.STROKE);
         }
-        this.pathPaint.setStrokeWidth(5f);
+        this.pathPaint.setStrokeWidth(2f);
     }
 
     private void calculatePath() {

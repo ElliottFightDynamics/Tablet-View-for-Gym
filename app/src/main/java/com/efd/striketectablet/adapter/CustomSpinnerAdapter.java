@@ -52,8 +52,10 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
             row = inflater.inflate(R.layout.custom_spinner_red, parent, false);
         else if (mKind == EFDConstants.SPINNER_PUNCH)
             row = inflater.inflate(R.layout.custom_spinner_punch, parent, false);
-        else if (mKind == EFDConstants.SPINNER_QUESTION)
-            row = inflater.inflate(R.layout.custom_spinner_question, parent, false);
+        else if (mKind == EFDConstants.SPINNER_DIGIT_ORANGE)
+            row = inflater.inflate(R.layout.custom_spinner_orange_digit, parent, false);
+        else if (mKind == EFDConstants.SPINNER_TEXT_ORANGE)
+            row = inflater.inflate(R.layout.custom_spinner_orange_text, parent, false);
 
         TextView label = (TextView) row.findViewById(R.id.custom_spinner_textView);
         label.setText(mObjects.get(position));

@@ -163,17 +163,17 @@ public class TrainingPresetFragment extends Fragment {
 
         //set weight spinner
         weightSpinner = (Spinner)view.findViewById(R.id.weight_spinner);
-        weightAdpater = new CustomSpinnerAdapter(mainActivityInstance, R.layout.custom_spinner_with_img, PresetUtil.weightList, EFDConstants.SPINNER_WHITE);
+        weightAdpater = new CustomSpinnerAdapter(mainActivityInstance, R.layout.custom_spinner_digit_with_img, PresetUtil.weightList, EFDConstants.SPINNER_WHITE);
         weightSpinner.setAdapter(weightAdpater);
 
         //set glove spinner
         gloveTypeSpinner = (Spinner)view.findViewById(R.id.glove_spinner);
-        gloveAdapter = new CustomSpinnerAdapter(mainActivityInstance, R.layout.custom_spinner_with_img, PresetUtil.gloveList, EFDConstants.SPINNER_WHITE);
+        gloveAdapter = new CustomSpinnerAdapter(mainActivityInstance, R.layout.custom_spinner_digit_with_img, PresetUtil.gloveList, EFDConstants.SPINNER_WHITE);
         gloveTypeSpinner.setAdapter(gloveAdapter);
 
         //set gender spinner
         genderSpinner = (Spinner)view.findViewById(R.id.gender_spinner);
-        genderAdapter = new CustomSpinnerAdapter(mainActivityInstance, R.layout.custom_spinner_with_img, PresetUtil.sexList, EFDConstants.SPINNER_WHITE);
+        genderAdapter = new CustomSpinnerAdapter(mainActivityInstance, R.layout.custom_spinner_digit_with_img, PresetUtil.sexList, EFDConstants.SPINNER_WHITE);
         genderSpinner.setAdapter(genderAdapter);
 
         totalTimeView = (CustomTextView)view.findViewById(R.id.total_time);

@@ -169,7 +169,7 @@ public class NewWorkoutActivity extends AppCompatActivity {
 
         //set glove spinner
         gloveTypeSpinner = (Spinner)findViewById(R.id.glove_spinner);
-        gloveAdapter = new CustomSpinnerAdapter(this, R.layout.custom_spinner_with_img, PresetUtil.gloveList, EFDConstants.SPINNER_WHITE);
+        gloveAdapter = new CustomSpinnerAdapter(this, R.layout.custom_spinner_digit_with_img, PresetUtil.gloveList, EFDConstants.SPINNER_WHITE);
         gloveTypeSpinner.setAdapter(gloveAdapter);
 
         totalTimeView = (TextView)findViewById(R.id.total_time);

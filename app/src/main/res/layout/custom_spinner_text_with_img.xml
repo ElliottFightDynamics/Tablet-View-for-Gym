@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/custom_spinner_with_img_relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <com.efd.striketectablet.customview.CustomTextView
+        android:id="@+id/custom_spinner_with_img_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="start"
+        android:padding="10dp"
+        android:textColor="@color/caldroid_black"
+        android:textSize="20sp"/>
+
+</RelativeLayout>

@@ -33,6 +33,9 @@ public class SplashActivity extends AppCompatActivity {
     private final int SPLASH_DISPLAY_LENGTH = 100;
     private static final int WRITE_PERMISSION = 144;
 
+    private String appVersion;
+    private String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,11 +48,13 @@ public class SplashActivity extends AppCompatActivity {
     private void startLoginActivity(){
         Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
+        finish();
     }
 
     private void startMainActivity(){
         Intent mainIntent = new Intent(this, MainActivity.class);
         startActivity(mainIntent);
+        finish();
     }
 
     @Override
@@ -62,6 +67,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        loadSharedPreference();
+
         int hasWriteContactsPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
@@ -72,6 +79,15 @@ public class SplashActivity extends AppCompatActivity {
         copyProperties();
     }
 
+    private void loadSharedPreference() {
+        final SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        // Obtain the sharedPreference, default to true if not available
+        userId = sharedPreference.getString(EFDConstants.KEY_USER_ID, null);
+        appVersion = sharedPreference.getString("appVersion", null);
+
+        Log.e("Super", "userid = " + userId + "    " + appVersion);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == WRITE_PERMISSION && grantResults.length > 0
@@ -80,20 +96,48 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    private void copyProperties() {
+    private void startMainActivityOrWelcome() {
+        if(userId == null){
+            Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
+            SplashActivity.this.startActivity(mainIntent);
+            finish();
+        }else {
+            Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+            SplashActivity.this.startActivity(mainIntent);
+            finish();
+        }
+    }
 
+    private void copyProperties() {
+        Log.e("Super", "copy propertiese");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startLoginActivity();
-                finish();
+                copyAssets(appVersion, SplashActivity.this);
+
+                if (userId != null) {
+                    startMainActivity();
+                } else {
+                    startLoginActivity();
+                }
             }
         }, SPLASH_DISPLAY_LENGTH);
-
-        copyAssets(SplashActivity.this);
     }
 
-    public void copyAssets(Context context) {
+//    private void copyProperties() {
+//        Log.e("Super", "copy propertise");
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                startMainActivity();
+//                finish();
+//            }
+//        }, SPLASH_DISPLAY_LENGTH);
+//
+//        copyAssets(appVersion, SplashActivity.this);
+//    }
+
+    public void copyAssets(String appVersion, Context context) {
 
         AssetManager assetManager = context.getAssets();
 
@@ -108,7 +152,15 @@ public class SplashActivity extends AppCompatActivity {
                 myDirectory.mkdirs();
             }
             File outFile = new File(EFDConstants.EFD_COMMON_DATA_DIRECTORY + File.separator + EFDConstants.CONFIG_DIRECTORY, EFDConstants.PROPERTIESFILEPATH);
-
+            if (!CommonUtils.getApplicationVersion(context).equals(appVersion)) {
+                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString("appVersion", CommonUtils.getApplicationVersion(context));
+                editor.commit();
+                if (outFile.exists()) {
+                    outFile.delete();
+                }
+            }
             if (!outFile.exists()) {
                 out = new FileOutputStream(outFile);
                 copyFile(in, out);
@@ -123,6 +175,37 @@ public class SplashActivity extends AppCompatActivity {
             Log.e("tag", "Failed to copy asset file: " + e);
         }
     }
+
+//    public void copyAssets(Context context) {
+//
+//        AssetManager assetManager = context.getAssets();
+//
+//        InputStream in = null;
+//        OutputStream out = null;
+//        try {
+//
+//            in = assetManager.open(EFDConstants.PROPERTIESFILEPATH);
+//
+//            File myDirectory = new File(EFDConstants.EFD_COMMON_DATA_DIRECTORY, EFDConstants.CONFIG_DIRECTORY);
+//            if (!myDirectory.exists()) {
+//                myDirectory.mkdirs();
+//            }
+//            File outFile = new File(EFDConstants.EFD_COMMON_DATA_DIRECTORY + File.separator + EFDConstants.CONFIG_DIRECTORY, EFDConstants.PROPERTIESFILEPATH);
+//
+//            if (!outFile.exists()) {
+//                out = new FileOutputStream(outFile);
+//                copyFile(in, out);
+//                out.flush();
+//                out.close();
+//                out = null;
+//            }
+//            in.close();
+//            in = null;
+//
+//        } catch (IOException e) {
+//            Log.e("tag", "Failed to copy asset file: " + e);
+//        }
+//    }
 
 
     private void copyFile(InputStream in, OutputStream out) throws IOException {

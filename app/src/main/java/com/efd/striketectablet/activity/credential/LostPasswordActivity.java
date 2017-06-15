@@ -49,7 +49,7 @@ public class LostPasswordActivity extends AppCompatActivity {
         });
 
         securitySpinner = (Spinner)findViewById(R.id.security_question_spinner);
-        securitySpinnerAdapter = new CustomSpinnerAdapter(this, R.layout.custom_spinner_with_img, PresetUtil.questionList, EFDConstants.SPINNER_QUESTION);
+        securitySpinnerAdapter = new CustomSpinnerAdapter(this, R.layout.custom_spinner_text_with_img, PresetUtil.questionList, EFDConstants.SPINNER_TEXT_ORANGE);
         securitySpinner.setAdapter(securitySpinnerAdapter);
 
         resetBtn = (Button)findViewById(R.id.reset_btn);

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.StaticLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.efd.striketectablet.DTO.responsedto.AuthenticationDTO;
 import com.efd.striketectablet.DTO.responsedto.RegisterResponseDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
@@ -64,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         securitySpinner = (Spinner)findViewById(R.id.security_question_spinner);
-        securitySpinnerAdapter = new CustomSpinnerAdapter(this, R.layout.custom_spinner_with_img, PresetUtil.questionList, EFDConstants.SPINNER_QUESTION);
+        securitySpinnerAdapter = new CustomSpinnerAdapter(this, R.layout.custom_spinner_text_with_img, PresetUtil.questionList, EFDConstants.SPINNER_TEXT_ORANGE);
         securitySpinner.setAdapter(securitySpinnerAdapter);
 
         firstnameView = (EditText)findViewById(R.id.fname);

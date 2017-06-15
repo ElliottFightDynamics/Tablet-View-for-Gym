@@ -41,24 +41,38 @@ public interface CredentialRest {
                                        @Field("rightDeviceSensorName") String rightDeviceSensorName,
                                        @Field("rightDeviceGeneration") String rightDeviceGeneration );
 
-//    @POST(AppConst.Url.DIGITS_LOGIN)
-//    Call<AuthenticationDto> digitsLogin(@Body Map<String, String> params);
-//
+    @FormUrlEncoded
+    @POST(RestUrl.UPDATE_USER)
+    Call<AuthenticationDTO> updateUser(@Field("userId") String userId,
+                                       @Field("firstName") String firstName,
+                                       @Field("lastName") String lastName,
+                                       @Field("stance") String stance,
+                                       @Field("gender") String gender,
+                                       @Field("dateOfBirth") String dateOfBirth,
+                                       @Field("weight") String weight,
+                                       @Field("reach") String reach,
+                                       @Field("skillLevel") String skillLevel,
+                                       @Field("height") String height,
+                                       @Field("gloveType") String gloveType,
+                                       @Field("emailId") String emailId,
+                                       @Field("secureAccessToken") String secureAccessToken );
+
 //    @FormUrlEncoded
-//    @POST(AppConst.Url.SIGNUP)
-//    Call<AuthenticationDto> signUp(@Field("email") String email,
-//                                   @Field("phone") String phone,
-//                                   @Field("username") String username,
-//                                   @Field("password") String password,
-//                                   @Field("fullName") String fullName,
-//                                   @Field("token") String token,
-//                                   @Field("appName") String appName,
-//                                   @Field("avatarUrl") String avatarUrl,
-//                                   @Field("deviceType") String deviceType,
-//                                   @Field("needsVerify") boolean needsVerify);
-//
-//    @FormUrlEncoded
-//    @POST(AppConst.Url.RESET_PASSWORD)
-//    Call<ResetPwdStatus> resetPassword(@Field("user") String user,
-//                                       @Field("appName") String appName);
+//    @POST(RestUrl.REGIST)
+//    Call<RegisterResponseDTO> register(@Field("firstName") String firstName,
+//                                       @Field("lastName") String lastName,
+//                                       @Field("username") String username,
+//                                       @Field("zipcode") String zipcode,
+//                                       @Field("countryId") String countryId,
+//                                       @Field("emailId") String emailId,
+//                                       @Field("password") String password,
+//                                       @Field("quesId") String quesId,
+//                                       @Field("answer") String answer,
+//                                       @Field("leftDevice") String leftDevice,
+//                                       @Field("rightDevice") String rightDevice,
+//                                       @Field("leftDeviceSensorName") String leftDeviceSensorName,
+//                                       @Field("leftDeviceGeneration") String leftDeviceGeneration,
+//                                       @Field("rightDeviceSensorName") String rightDeviceSensorName,
+//                                       @Field("rightDeviceGeneration") String rightDeviceGeneration );
+
 }

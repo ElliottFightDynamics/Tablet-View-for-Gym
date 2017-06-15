@@ -259,7 +259,8 @@ public class EFDConstants {
     public static final int SPINNER_GREEN = 1;
     public static final int SPINNER_RED = 2;
     public static final int SPINNER_PUNCH = 3;
-    public static final int SPINNER_QUESTION = 4;
+    public static final int SPINNER_DIGIT_ORANGE = 4;
+    public static final int SPINNER_TEXT_ORANGE = 5;
 
     //max, min value of preset
     public static final int ROUNDS_MIN = 1;
@@ -277,6 +278,14 @@ public class EFDConstants {
     public static final int WEIGHT_MIN = 50; //lbs
     public static final int WEIGHT_MAX = 350;
     public static final int WEIGHT_INTERVAL = 1;
+
+    public static final int HEIGHT_MIN = 50; //lbs
+    public static final int HEIGHT_MAX = 100;
+    public static final int HEIGHT_INTERVAL = 1;
+
+    public static final int REACH_MIN = 30;
+    public static final int REACH_MAX = 100;
+    public static final int REACH_INTERVAL = 1;
 
     public static final int SPEED_MAX = 45;
     public static final int POWER_MAX = 1250;

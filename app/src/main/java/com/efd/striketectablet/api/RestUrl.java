@@ -19,4 +19,7 @@ public class RestUrl {
 
     //registration
     public static final String REGIST = "user/doTraineeRegistration";
+
+    //update user  profile
+    public static final String UPDATE_USER = "user/updateUserInfo";
 }

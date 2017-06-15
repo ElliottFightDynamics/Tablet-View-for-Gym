@@ -59,4 +59,6 @@
     <color name="set_selectcolor">#0c2833</color>
     <color name="set_selectcolorinworkout">#183a48</color>
 
+    <color name="btn_color">#15303f</color>
+
 </resources>

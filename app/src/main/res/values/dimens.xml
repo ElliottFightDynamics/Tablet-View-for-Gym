@@ -30,6 +30,7 @@
     <dimen name="registration_agreement_title_text_size">25sp</dimen>
     <dimen name="registration_agreement_content_text_size">20sp</dimen>
     <dimen name="registration_textView_text_size">25sp</dimen>
+    <dimen name="boxer_view_line_margin">-9dp</dimen>
 
     <bool name="iTablet">false</bool>
 </resources>

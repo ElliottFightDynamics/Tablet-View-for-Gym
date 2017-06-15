@@ -183,6 +183,18 @@
     <string name="agreement_subtitle11">11. MISCELLANEOUS\n</string>
     <string name="agreement_content11">You are responsible for any applicable charges and fees associated with any data plan fees or charges of any kind that may be required by your carrier when accessing or using the App. No delay or failure by EFD to enforce any right or provision of this EULA shall be considered a waiver thereof. This EULA will bind and inure to the benefit of any permitted successors and permitted assigns of the parties. If any provision of the EULA is determined to be invalid, illegal or unenforceable, the remaining provisions of this EULA will remain in full force, if the essential provisions of this EULA for each party remain, valid, legal, and enforceable. This EULA may only be amended in writing by EFD and You. If you do not agree to, or cannot comply with the EULA as amended, you must stop using the App.\n</string>
 
+    <!--edit profile-->
+    <string name="editphoto">EDIT PHOTO</string>
+    <string name="addphoto">ADD PHOTO</string>
+    <string name="personal">Personal</string>
+    <string name="birthday">Birthday</string>
+    <string name="training">Training</string>
+    <string name="security">Security</string>
+    <string name="securityanswer">SECURITY ANSWER</string>
+    <string name="zipcode">ZIP CODE</string>
+
+    <string name="error_firstname_field_required">First name is required.</string>
+    <string name="error_lastname_field_required">Last name is required.</string>
 
 </resources>
 

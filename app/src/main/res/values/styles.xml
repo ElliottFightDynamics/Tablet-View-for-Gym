@@ -24,7 +24,7 @@
 
     <style name="dashboard_setting_label">
         <item name="android:layout_width">160dp</item>
-        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:textColor">@color/punches_text_color</item>
         <item name="android:textSize">20sp</item>
         <item name="android:gravity">center</item>

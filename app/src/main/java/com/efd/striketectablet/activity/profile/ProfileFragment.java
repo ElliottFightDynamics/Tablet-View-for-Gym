@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -31,8 +32,11 @@ import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
 import com.efd.striketectablet.bluetooth.BluetoothScanActivity;
 import com.efd.striketectablet.customview.CustomButton;
 import com.efd.striketectablet.customview.CustomEditText;
+import com.efd.striketectablet.customview.HexagonButton;
+import com.efd.striketectablet.customview.HexagonImageView;
 import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
+import com.github.siyamed.shapeimageview.mask.PorterShapeImageView;
 
 import org.json.JSONObject;
 
@@ -44,13 +48,27 @@ public class ProfileFragment extends Fragment  {
 
     private MainActivity mainActivityInstance;
 
-    private Spinner weightSpinner, heightSpinner, gloveSpinner, reachSpinner;
+//    private Spinner weightSpinner, heightSpinner, gloveSpinner, reachSpinner;
     private CustomButton connectBtn;
+
+    private TextView boxerNameView;
+    private TextView boxerMailView;
+    private TextView boxerReachView;
+    private TextView boxerGlovesView;
+    private TextView boxerHeightView;
+    private TextView boxerWeightView;
+    private TextView boxerDetailView;
+    private PorterShapeImageView mUserPhotoView;
+
+    private Button logoutBtn;
+
     private CustomEditText leftIDView, rightIDView;
 
-    CustomSpinnerAdapter weightAdpater, heightAdapter, gloveAdapter, reachAdapter;
+//    CustomSpinnerAdapter weightAdpater, heightAdapter, gloveAdapter, reachAdapter;
 
     RelativeLayout deleteBtn;
+
+    private TextView editProfileView;
 
 
     private String leftDeviceAddress, rightDeviceAddress;
@@ -72,26 +90,44 @@ public class ProfileFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
-        weightSpinner = (Spinner)view.findViewById(R.id.weight_spinner);
-        weightAdpater = new CustomSpinnerAdapter(getActivity(), R.layout.custom_spinner_with_img, PresetUtil.weightList, EFDConstants.SPINNER_WHITE);
-        weightSpinner.setAdapter(weightAdpater);
+//        weightSpinner = (Spinner)view.findViewById(R.id.weight_spinner);
+//        weightAdpater = new CustomSpinnerAdapter(getActivity(), R.layout.custom_spinner_with_img, PresetUtil.weightList, EFDConstants.SPINNER_WHITE);
+//        weightSpinner.setAdapter(weightAdpater);
+//
+//        heightSpinner = (Spinner)view.findViewById(R.id.height_spinner);
+//        heightAdapter = new CustomSpinnerAdapter(getActivity(), R.layout.custom_spinner_with_img, PresetUtil.weightList, EFDConstants.SPINNER_WHITE);
+//        heightSpinner.setAdapter(heightAdapter);
+//
+//        gloveSpinner = (Spinner)view.findViewById(R.id.glove_spinner);
+//        gloveAdapter = new CustomSpinnerAdapter(getActivity(), R.layout.custom_spinner_with_img, PresetUtil.gloveList, EFDConstants.SPINNER_WHITE);
+//        gloveSpinner.setAdapter(gloveAdapter);
+//
+//        reachSpinner = (Spinner)view.findViewById(R.id.reach_spinner);
+//        reachAdapter = new CustomSpinnerAdapter(getActivity(), R.layout.custom_spinner_with_img, PresetUtil.weightList, EFDConstants.SPINNER_WHITE);
+//        reachSpinner.setAdapter(reachAdapter);
+//
+//        weightSpinner.setSelection(PresetUtil.weightList.size() / 2);
+//        heightSpinner.setSelection(PresetUtil.weightList.size() / 2);
+//        gloveSpinner.setSelection(0);
+//        reachSpinner.setSelection(PresetUtil.weightList.size() / 2);
 
-        heightSpinner = (Spinner)view.findViewById(R.id.height_spinner);
-        heightAdapter = new CustomSpinnerAdapter(getActivity(), R.layout.custom_spinner_with_img, PresetUtil.weightList, EFDConstants.SPINNER_WHITE);
-        heightSpinner.setAdapter(heightAdapter);
+        boxerNameView = (TextView)view.findViewById(R.id.profile_name_view);
+        boxerMailView = (TextView)view.findViewById(R.id.mail_view);
+        boxerReachView = (TextView)view.findViewById(R.id.reach_view);
+        boxerGlovesView = (TextView)view.findViewById(R.id.gloves_view);
+        boxerHeightView = (TextView)view.findViewById(R.id.height_view);
+        boxerWeightView = (TextView)view.findViewById(R.id.weight_view);
+        boxerDetailView = (TextView)view.findViewById(R.id.details_text);
+        mUserPhotoView = (PorterShapeImageView) view.findViewById(R.id.user_photo);
+        mUserPhotoView.setImageResource(R.drawable.train1);
+        logoutBtn = (Button)view.findViewById(R.id.logoutbtn);
 
-        gloveSpinner = (Spinner)view.findViewById(R.id.glove_spinner);
-        gloveAdapter = new CustomSpinnerAdapter(getActivity(), R.layout.custom_spinner_with_img, PresetUtil.gloveList, EFDConstants.SPINNER_WHITE);
-        gloveSpinner.setAdapter(gloveAdapter);
-
-        reachSpinner = (Spinner)view.findViewById(R.id.reach_spinner);
-        reachAdapter = new CustomSpinnerAdapter(getActivity(), R.layout.custom_spinner_with_img, PresetUtil.weightList, EFDConstants.SPINNER_WHITE);
-        reachSpinner.setAdapter(reachAdapter);
-
-        weightSpinner.setSelection(PresetUtil.weightList.size() / 2);
-        heightSpinner.setSelection(PresetUtil.weightList.size() / 2);
-        gloveSpinner.setSelection(0);
-        reachSpinner.setSelection(PresetUtil.weightList.size() / 2);
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivityInstance.logoutUser();
+            }
+        });
 
         connectBtn = (CustomButton)view.findViewById(R.id.connect_button);
         connectBtn.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +145,21 @@ public class ProfileFragment extends Fragment  {
             }
         });
 
+        editProfileView = (TextView)view.findViewById(R.id.text_edit);
+        editProfileView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startEditProfileActivity();
+            }
+        });
+
         return view;
+    }
+
+    private void startEditProfileActivity(){
+        Intent editIntent = new Intent(getActivity(), EditProfileActivity.class);
+        startActivity(editIntent);
+        getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     public void showConnectSensorDialog(){
@@ -303,4 +353,30 @@ public class ProfileFragment extends Fragment  {
             }
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        init();
+    }
+
+    private void init(){
+        JSONObject user_info_jsonObj = MainActivity.db.trainingUserInfo(mainActivityInstance.userId);
+
+        try {
+            if (user_info_jsonObj != null && user_info_jsonObj.getString("success").equals("true")) {
+                JSONObject user_info_json = user_info_jsonObj.getJSONObject("userInfo");
+                boxerNameView.setText(user_info_json.getString("first_name") + " " + user_info_json.getString("last_name"));
+                boxerMailView.setText(user_info_json.getString("user_email"));
+                boxerHeightView.setText(user_info_json.getString("user_height"));
+                boxerWeightView.setText(user_info_json.getString("user_weight"));
+                boxerReachView.setText(user_info_json.getString("user_reach"));
+                boxerGlovesView.setText(user_info_json.getString("user_glove_type"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

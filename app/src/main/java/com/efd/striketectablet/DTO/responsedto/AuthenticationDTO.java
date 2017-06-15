@@ -6,6 +6,7 @@ import android.os.Parcelable;
 public class AuthenticationDTO implements Parcelable {
 
     private String success;
+    private String access;
     private String secureAccessToken;
     private String message;
     private UserDTO user;
@@ -15,6 +16,7 @@ public class AuthenticationDTO implements Parcelable {
 
     protected AuthenticationDTO(Parcel in) {
         this.success = in.readString();
+        this.access = in.readString();
         this.secureAccessToken = in.readString();
         this.message = in.readString();
         this.user = in.readParcelable(UserDTO.class.getClassLoader());
@@ -24,6 +26,7 @@ public class AuthenticationDTO implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(success);
+        dest.writeString(access);
         dest.writeString(secureAccessToken);
         dest.writeString(message);
         dest.writeParcelable(user, flags);
@@ -37,6 +40,15 @@ public class AuthenticationDTO implements Parcelable {
     public void setSuccess(String success){
         this.success = success;
     }
+
+    public String getAccess(){
+        return access;
+    }
+
+    public void setAccess(String access){
+        this.access = access;
+    }
+
 
     public String getSecureAccessToken(){
         return secureAccessToken;

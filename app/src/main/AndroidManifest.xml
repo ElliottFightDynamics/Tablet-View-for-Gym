@@ -81,7 +81,12 @@
             android:name=".activity.credential.RegisterActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activity.credential.TermsofuseActivity"></activity>
+        <activity android:name=".activity.credential.TermsofuseActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activity.profile.EditProfileActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
