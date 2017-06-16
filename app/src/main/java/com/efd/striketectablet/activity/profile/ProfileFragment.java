@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,7 +41,10 @@ import com.github.siyamed.shapeimageview.mask.PorterShapeImageView;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ProfileFragment extends Fragment  {
 
@@ -371,7 +375,38 @@ public class ProfileFragment extends Fragment  {
                 boxerHeightView.setText(user_info_json.getString("user_height"));
                 boxerWeightView.setText(user_info_json.getString("user_weight"));
                 boxerReachView.setText(user_info_json.getString("user_reach"));
-                boxerGlovesView.setText(user_info_json.getString("user_glove_type"));
+
+                if (user_info_json.getString("user_glove_type").equals("null"))
+                    boxerGlovesView.setText("MMA");
+                else
+                    boxerGlovesView.setText(user_info_json.getString("user_glove_type"));
+
+                String userBirthdate = user_info_json.getString("user_birthdate");
+
+
+                SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+
+                Date today = new Date();
+
+                Date date;
+                int todayyear, birthyear;
+
+                if (TextUtils.isEmpty(userBirthdate)) {
+                    date = new Date();
+                } else {
+                    date = formatter.parse(userBirthdate);
+                }
+
+                birthyear = Integer.parseInt((String) android.text.format.DateFormat.format("yyyy", date));
+                todayyear = Integer.parseInt((String) android.text.format.DateFormat.format("yyyy", today));
+
+                int age = (todayyear - birthyear) < 0? 0 : todayyear - birthyear;
+
+                String userStance = (user_info_json.get("user_stance").equals(EFDConstants.NON_TRADITIONAL)) ? EFDConstants.NON_TRADITIONAL_TEXT : EFDConstants.TRADITIONAL_TEXT;
+                String userSkillLevel = (user_info_json.get("user_skill_level").equals("null")) ? "" : user_info_json.getString("user_skill_level");
+
+                String detail = boxerNameView.getText().toString() + ", AGE " + age + ", " + userSkillLevel + ", " + userStance + " STANCE";
+                boxerDetailView.setText(detail);
             }
         } catch (Exception e) {
             e.printStackTrace();

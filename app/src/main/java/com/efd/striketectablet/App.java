@@ -8,6 +8,7 @@ import com.efd.striketectablet.api.RetrofitSingleton;
 import com.efd.striketectablet.util.ComboSetUtil;
 import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.util.StatisticUtil;
+import com.efd.striketectablet.util.StorageUtils;
 
 
 /**
@@ -25,6 +26,7 @@ public class App extends MultiDexApplication {
 
         RetrofitSingleton.setApplication(this);
 
+        StorageUtils.init(context);
         StatisticUtil.init(context);
         PresetUtil.init(context);
         ComboSetUtil.init(context);

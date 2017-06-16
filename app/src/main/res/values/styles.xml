@@ -28,7 +28,7 @@
         <item name="android:textColor">@color/punches_text_color</item>
         <item name="android:textSize">20sp</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/btn_bg_fill</item>
+        <item name="android:background">@drawable/btn_fill</item>
     </style>
 
     <style name="dashboard_spinner">

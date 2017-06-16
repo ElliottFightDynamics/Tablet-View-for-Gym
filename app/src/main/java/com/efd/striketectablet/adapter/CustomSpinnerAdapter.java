@@ -36,6 +36,12 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
         View row = inflater.inflate(mResource, parent, false);
         TextView label = (TextView) row.findViewById(R.id.custom_spinner_with_img_textView);
         label.setText(mObjects.get(position));
+
+        if (position %2 == 1){
+            label.setBackgroundColor(mContext.getResources().getColor(R.color.preset_selected_bg));
+        }else {
+            label.setBackgroundColor(mContext.getResources().getColor(R.color.preset_popup_bg));
+        }
         return row;
     }
 

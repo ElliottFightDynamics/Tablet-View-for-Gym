@@ -51,7 +51,7 @@
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/trainingstats_left_line" />
@@ -61,7 +61,7 @@
                 android:id="@+id/preset_parent"
                 android:layout_width="350dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/punch_type_pg"
+                android:background="@drawable/dropdown"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
@@ -84,7 +84,7 @@
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/trainingstats_right_line" />
@@ -413,7 +413,8 @@
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <com.efd.striketectablet.customview.CustomTextView
                     android:id="@+id/customTextView3"

@@ -143,7 +143,7 @@ public class PresetUtil {
                     if (response.body() != null) {
                         QuestionListDTO questionListDTO = response.body();
                         List<QuestionDTO> questionDTOs = questionListDTO.getQuestionList();
-                        Log.e("Super", "get question success");
+
 
                         for (int i = 0; i < questionDTOs.size(); i++) {
                             questionList.add(questionDTOs.get(i).getQuestionText());
@@ -152,12 +152,14 @@ public class PresetUtil {
 
                         Log.e("Super", "question list size = " + questionList.size());
                     } else {
+                        Log.e("Super", "response is null");
                     }
                 }
 
                 @Override
                 public void onFailure(Call<QuestionListDTO> call, Throwable t) {
                     super.onFailure(call, t);
+                    Log.e("Super", "question faile = ", t);
                 }
             });
         }else {
@@ -176,19 +178,23 @@ public class PresetUtil {
                     if (response.body() != null) {
                         CountryListDTO countryListDTO = response.body();
                         List<CountryDTO>  countryDTOs = countryListDTO.getCountryList();
-                        Log.e("Super", "get country success");
+
 
                         for (int i = 0; i < countryDTOs.size(); i++) {
                             countryList.add(countryDTOs.get(i).getName());
                             countryIDList.add(String.valueOf(countryDTOs.get(i).getId()));
                         }
+
+                        Log.e("Super", "coundtry list size = " + countryIDList.size());
                     } else {
+                        Log.e("Super", "response is null");
                     }
                 }
 
                 @Override
                 public void onFailure(Call<CountryListDTO> call, Throwable t) {
                     super.onFailure(call, t);
+                    Log.e("Super", "country faile = ", t);
                 }
             });
         }else {

@@ -88,7 +88,7 @@
                     android:layout_height="15dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="-10dp"
-                    android:background="@drawable/sensor_edit_id" />
+                    android:background="@drawable/edit_bg" />
 
                 <com.efd.striketectablet.customview.CustomEditText
                     android:id="@+id/lname"
@@ -110,7 +110,7 @@
                     android:layout_height="15dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="-10dp"
-                    android:background="@drawable/sensor_edit_id" />
+                    android:background="@drawable/edit_bg" />
 
                 <com.efd.striketectablet.customview.CustomEditText
                     android:id="@+id/email"
@@ -132,7 +132,7 @@
                     android:layout_height="15dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="-10dp"
-                    android:background="@drawable/sensor_edit_id" />
+                    android:background="@drawable/edit_bg" />
 
                 <com.efd.striketectablet.customview.CustomEditText
                     android:id="@+id/pwd"
@@ -154,7 +154,7 @@
                     android:layout_height="15dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="-10dp"
-                    android:background="@drawable/sensor_edit_id" />
+                    android:background="@drawable/edit_bg" />
 
 
                 <com.efd.striketectablet.customview.CustomEditText
@@ -177,7 +177,7 @@
                     android:layout_height="15dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="-10dp"
-                    android:background="@drawable/sensor_edit_id" />
+                    android:background="@drawable/edit_bg" />
 
                 <LinearLayout
                     android:layout_marginTop="25dp"
@@ -220,7 +220,7 @@
                     android:layout_height="15dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="-10dp"
-                    android:background="@drawable/sensor_edit_id" />
+                    android:background="@drawable/edit_bg" />
 
             </LinearLayout>
 

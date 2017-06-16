@@ -204,6 +204,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/btn_bg_fill"
                     android:gravity="center"
+                    android:textAllCaps="true"
                     android:text="GENNADY GOLOVKIN"
                     android:textColor="@color/punches_text_color"
                     android:textSize="30sp" />
@@ -249,6 +250,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:gravity="center"
+                    android:textAllCaps="true"
                     android:text="KAZAHSTAN, 32 YO, NOVICE, TRADITIONAL STYLE"
                     android:textColor="@color/white"
                     android:textSize="18sp" />

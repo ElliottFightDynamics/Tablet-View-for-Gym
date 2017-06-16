@@ -126,14 +126,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="150dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center|center_vertical"
-                        android:background="@drawable/trainingstats_btn_fill"
+                        android:background="@drawable/btn_fill"
                         android:orientation="horizontal">
 
                         <com.efd.striketectablet.customview.CustomTextView
@@ -184,7 +184,7 @@
                             android:layout_height="15dp"
                             android:layout_alignParentBottom="true"
                             android:layout_marginTop="-10dp"
-                            android:background="@drawable/sensor_edit_id" />
+                            android:background="@drawable/edit_bg" />
 
                     </LinearLayout>
 
@@ -214,7 +214,7 @@
                             android:layout_height="15dp"
                             android:layout_alignParentBottom="true"
                             android:layout_marginTop="-10dp"
-                            android:background="@drawable/sensor_edit_id" />
+                            android:background="@drawable/edit_bg" />
 
 
                     </LinearLayout>
@@ -273,7 +273,7 @@
                             android:layout_height="15dp"
                             android:layout_alignParentBottom="true"
                             android:layout_marginTop="-10dp"
-                            android:background="@drawable/sensor_edit_id" />
+                            android:background="@drawable/edit_bg" />
 
 
                     </LinearLayout>
@@ -281,16 +281,16 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="40dp"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="150dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center|center_vertical"
-                        android:background="@drawable/trainingstats_btn_fill"
+                        android:background="@drawable/btn_fill"
                         android:orientation="horizontal">
 
                         <com.efd.striketectablet.customview.CustomTextView
@@ -398,16 +398,16 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="40dp"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="150dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center|center_vertical"
-                        android:background="@drawable/trainingstats_btn_fill"
+                        android:background="@drawable/btn_fill"
                         android:orientation="horizontal">
 
                         <com.efd.striketectablet.customview.CustomTextView
@@ -601,8 +601,9 @@
                 <LinearLayout
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:orientation="horizontal">
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="150dp"
@@ -632,7 +633,8 @@
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="100dp">
+                    android:layout_marginRight="100dp"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -679,7 +681,7 @@
                             android:layout_height="15dp"
                             android:layout_alignParentBottom="true"
                             android:layout_marginTop="-10dp"
-                            android:background="@drawable/sensor_edit_id" />
+                            android:background="@drawable/edit_bg" />
 
 
                     </LinearLayout>
@@ -690,7 +692,8 @@
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="100dp">
+                    android:layout_marginRight="100dp"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -717,7 +720,7 @@
                             android:layout_height="15dp"
                             android:layout_alignParentBottom="true"
                             android:layout_marginTop="-10dp"
-                            android:background="@drawable/sensor_edit_id" />
+                            android:background="@drawable/edit_bg" />
 
 
                     </LinearLayout>

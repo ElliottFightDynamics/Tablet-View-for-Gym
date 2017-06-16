@@ -1,10 +1,17 @@
 package com.efd.striketectablet.activity.profile;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.net.Uri;
+import android.os.Build;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,6 +21,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,7 +41,9 @@ import com.efd.striketectablet.customview.CustomEditText;
 import com.efd.striketectablet.database.DBAdapter;
 import com.efd.striketectablet.util.IndicatorCallback;
 import com.efd.striketectablet.util.PresetUtil;
+import com.efd.striketectablet.util.SchemeType;
 import com.efd.striketectablet.util.StatisticUtil;
+import com.efd.striketectablet.util.StorageUtils;
 import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.github.siyamed.shapeimageview.mask.PorterShapeImageView;
@@ -42,10 +52,21 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import retrofit2.Call;
 import retrofit2.Response;
 
 public class EditProfileActivity extends AppCompatActivity {
+
+    public static final int IMAGE_REQUEST_CODE = 183;
 
     private static final String TAG = "Super";
 
@@ -166,19 +187,24 @@ public class EditProfileActivity extends AppCompatActivity {
         addPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPhotoDialog();
+                pickImage();
             }
         });
 
         editPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPhotoDialog();
+                pickImage();
             }
         });
     }
 
-    private void showPhotoDialog(){
+    private void pickImage(){
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, IMAGE_REQUEST_CODE);
+    }
+
+    private void showPhotoDialog(Uri imageUri){
         final Dialog dialog = new Dialog(this);
 
         Window window = dialog.getWindow();
@@ -198,8 +224,17 @@ public class EditProfileActivity extends AppCompatActivity {
         cancelBtn = (Button)dialog.findViewById(R.id.cancel_btn);
         okBtn = (Button)dialog.findViewById(R.id.ok_btn);
 
+        srcPhoto.setImageUriAsync(imageUri);
+
 //        srcPhoto.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.train1));
-        srcPhoto.setImageResource(R.drawable.train1);
+//        srcPhoto.setImageResource(R.drawable.train1);
+
+        srcPhoto.setOnCropImageCompleteListener(new CropImageView.OnCropImageCompleteListener() {
+            @Override
+            public void onCropImageComplete(CropImageView view, CropImageView.CropResult result) {
+                userPhoto.setImageBitmap(result.getBitmap());
+            }
+        });
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,8 +248,9 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 addPhoto.setVisibility(View.GONE);
                 editPhoto.setVisibility(View.VISIBLE);
-                Bitmap cropedImage = srcPhoto.getCroppedImage();
-                userPhoto.setImageBitmap(cropedImage);
+                srcPhoto.getCroppedImageAsync();
+//                Bitmap cropedImage = srcPhoto.getCroppedImage();
+//                userPhoto.setImageBitmap(cropedImage);
                 dialog.dismiss();
             }
         });
@@ -499,5 +535,94 @@ public class EditProfileActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ( resultCode == Activity.RESULT_OK && ((requestCode == IMAGE_REQUEST_CODE && data != null))){
+//            String imageFilePath = null;
+            Uri uri = data.getData();
+//            String uriScheme = uri.getScheme();
+//
+//            Log.e("Super", "URI = " + uri.getPath());
+//
+//            boolean isFromGoogleApp = uri.toString().startsWith(SchemeType.SCHEME_CONTENT_GOOGLE);
+//            boolean isKitKatAndUpper = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+//
+//            if (SchemeType.SCHEME_CONTENT.equalsIgnoreCase(uriScheme) && !isFromGoogleApp && !isKitKatAndUpper) {
+//                String[] filePathColumn;
+//
+//                filePathColumn = new String[]{MediaStore.Images.Media.DATA};
+//
+//
+//                Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
+//                if (cursor != null) {
+//                    if (cursor.getCount() > 0) {
+//                        cursor.moveToFirst();
+//                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                        imageFilePath = cursor.getString(columnIndex);
+//                        Log.e("Super", "image file path11111111111111 = " + imageFilePath);
+//                    }
+//                    cursor.close();
+//                }
+//            } else if (SchemeType.SCHEME_FILE.equalsIgnoreCase(uriScheme)) {
+//                imageFilePath = uri.getPath();
+//                Log.e("Super", "image file path2222222222222 = " + imageFilePath);
+//            } else {
+//                try {
+//                    imageFilePath = saveUriToFile(uri);
+//                }catch (Exception e){
+//
+//                }
+//
+//                Log.e("Super", "image file path333333333 = " + imageFilePath);
+//            }
+//
+//            Log.e("Super", "image file path = " + imageFilePath);
+//
+//            if (TextUtils.isEmpty(imageFilePath)) {
+//                StatisticUtil.showToastMessage("Pick image failed");
+//            }else {
+//
+//            }
+
+            showPhotoDialog(uri);
+        }
+    }
+
+    private String saveUriToFile(Uri uri) throws Exception {
+        ParcelFileDescriptor parcelFileDescriptor = getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+
+        InputStream inputStream = new FileInputStream(fileDescriptor);
+        BufferedInputStream bis = new BufferedInputStream(inputStream);
+
+        File parentDir = StorageUtils.getAppExternalDataDirectoryFile();
+        String fileName;//
+
+        fileName = "image" + String.valueOf(System.currentTimeMillis() + ".jpg");
+
+        File resultFile = new File(parentDir, fileName);
+
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(resultFile));
+
+        byte[] buf = new byte[2048];
+        int length;
+
+        try {
+            while ((length = bis.read(buf)) > 0) {
+                bos.write(buf, 0, length);
+            }
+        } catch (Exception e) {
+            throw new IOException("Can\'t save Storage API bitmap to a file!", e);
+        } finally {
+            parcelFileDescriptor.close();
+            bis.close();
+            bos.close();
+        }
+
+        return resultFile.getAbsolutePath();
     }
 }
