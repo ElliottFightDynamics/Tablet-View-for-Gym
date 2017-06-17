@@ -9,9 +9,6 @@ public class PresetDTO implements Serializable{
     private int rest;
     private int prepare;
     private int warning;
-    private int weight;
-    private int glove;
-    private int gender;
 
     public String getName() {
         return name;
@@ -61,31 +58,8 @@ public class PresetDTO implements Serializable{
         this.warning = warning;
     }
 
-    public int getGlove() {
-        return glove;
-    }
 
-    public void setGlove(int glove) {
-        this.glove = glove;
-    }
-
-    public int getGender() {
-        return gender;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    public PresetDTO (String name, int rounds, int round_time, int rest, int prepare, int warning, int weight, int glove, int gender ) {
+    public PresetDTO (String name, int rounds, int round_time, int rest, int prepare, int warning) {
         super();
         this.name = name;
         this.rounds = rounds;
@@ -93,9 +67,6 @@ public class PresetDTO implements Serializable{
         this.rest = rest;
         this.prepare = prepare;
         this.warning = warning;
-        this.weight = weight;
-        this.glove = glove;
-        this.gender = gender;
     }
 
     public PresetDTO(){

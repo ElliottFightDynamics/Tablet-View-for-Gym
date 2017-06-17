@@ -6,23 +6,22 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.activity.training.combination.CombinationFragment;
 import com.efd.striketectablet.activity.training.combination.NewCombinationActivity;
+import com.efd.striketectablet.activity.training.quickstart.QuickstartTrainingPresetFragment;
+import com.efd.striketectablet.activity.training.round.TrainingPresetFragment;
 import com.efd.striketectablet.activity.training.sets.NewSetRoutineActivity;
 import com.efd.striketectablet.activity.training.sets.SetsFragment;
 import com.efd.striketectablet.activity.training.workout.NewWorkoutActivity;
 import com.efd.striketectablet.activity.training.workout.WorkoutFragment;
-import com.efd.striketectablet.adapter.PresetListAdapter;
 import com.efd.striketectablet.adapter.TrainingTabPageAdapter;
 
 public class TrainingFragment extends Fragment {
@@ -84,6 +83,8 @@ public class TrainingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 trainingViewPager.setCurrentItem(0);
+                QuickstartTrainingPresetFragment.trainingPresetFragment.onResume();
+//                TrainingPresetFragment.trainingPresetFragment.onResume();
             }
         });
 
@@ -91,6 +92,9 @@ public class TrainingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 trainingViewPager.setCurrentItem(1);
+                TrainingPresetFragment.trainingPresetFragment.onResume();
+//                pageAdapter.getItem(1).onResume();
+//                TrainingPresetFragment.trainingPresetFragment.onResume();
             }
         });
 
@@ -175,6 +179,7 @@ public class TrainingFragment extends Fragment {
                 scriptedHighlight.setVisibility(View.INVISIBLE);
 
                 plusBtn.setVisibility(View.INVISIBLE);
+
                 break;
             case 1:
                 quickstartView.setTextColor(getResources().getColor(R.color.orange));
@@ -190,6 +195,7 @@ public class TrainingFragment extends Fragment {
                 scriptedHighlight.setVisibility(View.INVISIBLE);
 
                 plusBtn.setVisibility(View.INVISIBLE);
+
                 break;
             case 2:
                 quickstartView.setTextColor(getResources().getColor(R.color.orange));

@@ -1,4 +1,4 @@
-package com.efd.striketectablet.activity.training;
+package com.efd.striketectablet.activity.training.round;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,6 @@ import com.efd.striketectablet.DTO.PresetDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.activity.training.quickstart.QuickStartTrainingActivity;
-import com.efd.striketectablet.activity.training.round.RoundTrainingActivity;
 import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
 import com.efd.striketectablet.adapter.PresetListAdapter;
 import com.efd.striketectablet.customview.CustomButton;
@@ -34,6 +34,9 @@ import com.efd.striketectablet.customview.CustomTextView;
 import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -46,8 +49,8 @@ public class TrainingPresetFragment extends Fragment {
     private WheelView roundsPicker, roundPicker, restPicker;
     ArrayWheelAdapter roundsAdapter, roundAdapter, restAdapter;
 
-    Spinner   genderSpinner, gloveTypeSpinner, weightSpinner, heightSpinner;
-    SpinnerAdapter genderAdapter, gloveAdapter, weightAdpater, heightAdapter;
+    Spinner   genderSpinner, gloveTypeSpinner, weightSpinner;
+    SpinnerAdapter genderAdapter, gloveAdapter, weightAdpater;
 
     TextView presetNameView, totalTimeView, prepareTimeView, warningTimeView ;
     RelativeLayout presetParent;
@@ -56,6 +59,8 @@ public class TrainingPresetFragment extends Fragment {
     CustomButton startTrainingBtn;
 
     View view;
+
+    String userId;
 
     PresetDTO defaultPreset;
     ArrayList<PresetDTO> savedPreset;
@@ -208,9 +213,10 @@ public class TrainingPresetFragment extends Fragment {
             }
         });
 
-        savedPreset = SharedPreferencesUtils.getPresetList(mainActivityInstance);
         defaultPreset = new PresetDTO("Preset 1", PresetUtil.roundsList.size() / 2, PresetUtil.timeList.size() / 2, PresetUtil.timeList.size() / 2, PresetUtil.timeList.size() / 2,
-                PresetUtil.warningTimewithSecList.size() / 2, PresetUtil.weightList.size() / 2, 0, 0);
+                PresetUtil.warningTimewithSecList.size() / 2);
+
+        savedPreset = SharedPreferencesUtils.getPresetList(mainActivityInstance);
 
         if (savedPreset == null )
             savedPreset = new ArrayList<>();
@@ -220,7 +226,57 @@ public class TrainingPresetFragment extends Fragment {
         }else {
             showPresetInfo(defaultPreset);
         }
+
+//        userId = mainActivityInstance.userId;
+//
+//        JSONObject result_Training_UserInfo_display = MainActivity.db.trainingUserInfo(userId);
+//        showUserDetails(result_Training_UserInfo_display.toString());
     }
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.e("Super", "on resume = " + type);
+        savedPreset = SharedPreferencesUtils.getPresetList(mainActivityInstance);
+
+        if (savedPreset == null )
+            savedPreset = new ArrayList<>();
+
+        userId = mainActivityInstance.userId;
+
+        JSONObject result_Training_UserInfo_display = MainActivity.db.trainingUserInfo(userId);
+        showUserDetails(result_Training_UserInfo_display.toString());
+    }
+
+    private void showUserDetails(String result) {
+        JSONObject json;
+        try {
+            json = new JSONObject(result);
+            if (json.getString("success").equals("true")) {
+
+                JSONObject userInfoJsonObject = json.getJSONObject("userInfo");
+                String  userWeight, userGloveType;
+
+                userWeight = (userInfoJsonObject.get("user_weight").equals("0")) ? "" : userInfoJsonObject.getString("user_weight");
+                userGloveType = (userInfoJsonObject.get("user_glove_type").equals("null")) ? "" : userInfoJsonObject.getString("user_glove_type");
+
+                weightSpinner.setSelection(PresetUtil.getWeightPosition(userWeight));
+                gloveTypeSpinner.setSelection(PresetUtil.getGlovePosition(userGloveType));
+
+            } else {
+
+            }
+
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void startTraining(){
         PresetDTO presetDTO = new PresetDTO();
@@ -229,9 +285,6 @@ public class TrainingPresetFragment extends Fragment {
         presetDTO.setRest(restPicker.getCurrentItem());
         presetDTO.setPrepare(currentPreparePosition);
         presetDTO.setWarning(currentWarningPosition);
-        presetDTO.setWeight(weightSpinner.getSelectedItemPosition());
-        presetDTO.setGlove(gloveTypeSpinner.getSelectedItemPosition());
-        presetDTO.setGender(genderSpinner.getSelectedItemPosition());
         presetDTO.setName("preset");
 
         if (type.equalsIgnoreCase("round")){
@@ -255,9 +308,6 @@ public class TrainingPresetFragment extends Fragment {
         currentWarningPosition = presetDTO.getWarning();
         prepareTimeView.setText(PresetUtil.timeList.get(currentPreparePosition));
         warningTimeView.setText(PresetUtil.warningTimewithSecList.get(currentWarningPosition));
-        weightSpinner.setSelection(presetDTO.getWeight());
-        gloveTypeSpinner.setSelection(presetDTO.getGlove());
-        genderSpinner.setSelection(presetDTO.getGender());
 
         presetNameView.setText(presetDTO.getName());
 
@@ -374,9 +424,7 @@ public class TrainingPresetFragment extends Fragment {
         presetDTO.setRest(restPicker.getCurrentItem());
         presetDTO.setPrepare(currentPreparePosition);
         presetDTO.setWarning(currentWarningPosition);
-        presetDTO.setWeight(weightSpinner.getSelectedItemPosition());
-        presetDTO.setGlove(gloveTypeSpinner.getSelectedItemPosition());
-        presetDTO.setGender(genderSpinner.getSelectedItemPosition());
+
         presetDTO.setName("Preset " + String.valueOf(savedPreset.size() + 1));
 
         savedPreset.add(presetDTO);
