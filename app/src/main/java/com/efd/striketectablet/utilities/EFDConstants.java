@@ -263,6 +263,10 @@ public class EFDConstants {
     public static final int SPINNER_TEXT_ORANGE = 5;
 
     //max, min value of preset
+    public static final int GLOVE_MIN = 4;
+    public static final int GLOVE_MAX = 16;
+    public static final int GLOVE_INTERVAL = 2;
+
     public static final int ROUNDS_MIN = 1;
     public static final int ROUNDS_MAX = 12;
     public static final int ROUNDS_INTERVAL = 1;

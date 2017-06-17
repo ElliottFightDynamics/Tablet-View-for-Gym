@@ -439,8 +439,8 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
                                 trainingProgressStatus.setText("ROUND " + roundvalue);
                                 currentStatus++;
                                 progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_roundbar));
-                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
-
+//                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
+                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.white));
                                 //round is starting
                                 playBoxingBell();
 
@@ -496,7 +496,8 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
                                     trainingProgressStatus.setText("ROUND " + roundvalue);
                                     progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_roundbar));
-                                    trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
+//                                    trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
+                                    trainingProgressStatus.setTextColor(getResources().getColor(R.color.white));
                                     chartView.setPunchDatas(isSpeedGraph, new ArrayList());
                                     playBoxingBell();
                                     trainingStartTime = System.currentTimeMillis();

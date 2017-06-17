@@ -783,8 +783,8 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                                 trainingProgressStatus.setText("ROUND " + roundvalue);
                                 currentStatus++;
                                 progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_roundbar));
-                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
-
+//                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
+                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.white));
                                 trainingStartTime = System.currentTimeMillis();
                                 resetPunchDetails();
                                 mainActivityInstance.startRoundTraining();
@@ -827,8 +827,8 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                                     currentStatus = 1;
                                     trainingProgressStatus.setText("ROUND " + roundvalue);
                                     progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_roundbar));
-                                    trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
-
+//                                    trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
+                                    trainingProgressStatus.setTextColor(getResources().getColor(R.color.white));
                                     currentComboIndex = 0;
                                     currentComboDTO = ComboSetUtil.getComboDtowithID(workoutDTO.getRoundsetIDs().get(roundvalue - 1).get(0));
                                     initComboTrainingView();

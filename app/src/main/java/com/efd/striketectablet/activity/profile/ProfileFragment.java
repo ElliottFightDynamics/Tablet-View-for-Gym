@@ -381,31 +381,31 @@ public class ProfileFragment extends Fragment  {
                 else
                     boxerGlovesView.setText(user_info_json.getString("user_glove_type"));
 
-                String userBirthdate = user_info_json.getString("user_birthdate");
-
-
-                SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
-
-                Date today = new Date();
-
-                Date date;
-                int todayyear, birthyear;
-
-                if (TextUtils.isEmpty(userBirthdate)) {
-                    date = new Date();
-                } else {
-                    date = formatter.parse(userBirthdate);
-                }
-
-                birthyear = Integer.parseInt((String) android.text.format.DateFormat.format("yyyy", date));
-                todayyear = Integer.parseInt((String) android.text.format.DateFormat.format("yyyy", today));
-
-                int age = (todayyear - birthyear) < 0? 0 : todayyear - birthyear;
+//                String userBirthdate = user_info_json.getString("user_birthdate");
+//
+//
+//                SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+//
+//                Date today = new Date();
+//
+//                Date date;
+//                int todayyear, birthyear;
+//
+//                if (TextUtils.isEmpty(userBirthdate)) {
+//                    date = new Date();
+//                } else {
+//                    date = formatter.parse(userBirthdate);
+//                }
+//
+//                birthyear = Integer.parseInt((String) android.text.format.DateFormat.format("yyyy", date));
+//                todayyear = Integer.parseInt((String) android.text.format.DateFormat.format("yyyy", today));
+//
+//                int age = (todayyear - birthyear) < 0? 0 : todayyear - birthyear;
 
                 String userStance = (user_info_json.get("user_stance").equals(EFDConstants.NON_TRADITIONAL)) ? EFDConstants.NON_TRADITIONAL_TEXT : EFDConstants.TRADITIONAL_TEXT;
                 String userSkillLevel = (user_info_json.get("user_skill_level").equals("null")) ? "" : user_info_json.getString("user_skill_level");
 
-                String detail = boxerNameView.getText().toString() + ", AGE " + age + ", " + userSkillLevel + ", " + userStance + " STANCE";
+                String detail = userSkillLevel + ", " + userStance + " STANCE";
                 boxerDetailView.setText(detail);
             }
         } catch (Exception e) {

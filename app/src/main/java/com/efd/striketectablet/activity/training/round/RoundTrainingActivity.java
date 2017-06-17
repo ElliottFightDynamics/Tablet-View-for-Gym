@@ -372,8 +372,8 @@ public class RoundTrainingActivity extends BaseTrainingActivity {
                                 trainingProgressStatus.setText("ROUND " + roundvalue);
                                 currentStatus++;
                                 progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_roundbar));
-                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
-
+//                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
+                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.white));
                                 trainingStartTime = System.currentTimeMillis();
                                 resetPunchDetails();
                                 mainActivityInstance.startRoundTraining();
@@ -416,8 +416,8 @@ public class RoundTrainingActivity extends BaseTrainingActivity {
                                     currentStatus = 1;
                                     trainingProgressStatus.setText("ROUND " + roundvalue);
                                     progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_roundbar));
-                                    trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
-
+//                                    trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
+                                    trainingProgressStatus.setTextColor(getResources().getColor(R.color.white));
                                     trainingStartTime = System.currentTimeMillis();
                                     resetPunchDetails();
                                     mainActivityInstance.startRoundTraining();

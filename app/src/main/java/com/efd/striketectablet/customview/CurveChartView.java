@@ -123,7 +123,7 @@ public class CurveChartView extends View{
         tipLinePaint.setAlpha(220);
 
         tipTextPaint.setColor(Color.WHITE);
-        tipTextPaint.setTextSize(40f);
+        tipTextPaint.setTextSize(25f);
         tipTextPaint.setAntiAlias(true);
     }
 
@@ -291,11 +291,11 @@ public class CurveChartView extends View{
         String maxText, avgText;
 
         if (isSpeed){
-            maxText = "SPEED " + (int)maxY;
-            avgText = "SPEED " + average + " MPH";
+            maxText = "MAX SPEED " + (int)maxY + " MPH";
+            avgText = "AVG SPEED " + average + " MPH";
         }else {
-            maxText = "POWER " + (int)maxY;
-            avgText = "POWER " + average + " LBS";
+            maxText = "MAX POWER " + (int)maxY + " LBS";
+            avgText = "AVG POWER " + average + " LBS";
         }
 
         float tipLineY = totalHeight / scaledPoints.size();
@@ -341,7 +341,7 @@ public class CurveChartView extends View{
 
         maxtipRect.right =(int)(centerX + textWidth / 2) + 30;
         maxtipRect.left = (int)(maxtipRect.right - textWidth - 30);
-        maxtipRect.top = (int)(chartRect.top + 100);
+        maxtipRect.top = (int)(chartRect.top + 150);
         maxtipRect.bottom = (int)(maxtipRect.top + textHeight);
 
         maxtipRectF.set(maxtipRect);

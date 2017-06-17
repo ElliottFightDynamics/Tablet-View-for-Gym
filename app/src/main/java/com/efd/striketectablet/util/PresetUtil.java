@@ -46,10 +46,15 @@ public class PresetUtil {
 
 
     public static void init(Context context){
-        gloveList.add("MMA");
-        gloveList.add("12");
-        gloveList.add("14");
-        gloveList.add("16");
+//        gloveList.add("MMA");
+//        gloveList.add("12");
+//        gloveList.add("14");
+//        gloveList.add("16");
+
+        for (int i = EFDConstants.GLOVE_MIN; i <= EFDConstants.GLOVE_MAX ; i = i + EFDConstants.GLOVE_INTERVAL){
+            gloveList.add(String.valueOf(i));
+        }
+
 
         sexList.add("Male");
         sexList.add("Female");
