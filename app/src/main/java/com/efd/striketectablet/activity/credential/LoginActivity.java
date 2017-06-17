@@ -134,6 +134,8 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else{
             pwd = sha256(pwd);
+
+            Log.e("Super", "email = " + email + "    " + pwd);
             if (CommonUtils.isOnline(getApplicationContext())) {
                 RetrofitSingleton.CREDENTIAL_REST.login(email, pwd).enqueue(new IndicatorCallback<AuthenticationDTO>(this) {
                     @Override

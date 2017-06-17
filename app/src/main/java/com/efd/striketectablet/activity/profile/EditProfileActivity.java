@@ -221,6 +221,7 @@ public class EditProfileActivity extends AppCompatActivity {
         final Button cancelBtn, okBtn;
 
         srcPhoto = (CropImageView)dialog.findViewById(R.id.src_photo);
+        srcPhoto.setScaleType(CropImageView.ScaleType.CENTER_CROP);
         cancelBtn = (Button)dialog.findViewById(R.id.cancel_btn);
         okBtn = (Button)dialog.findViewById(R.id.ok_btn);
 

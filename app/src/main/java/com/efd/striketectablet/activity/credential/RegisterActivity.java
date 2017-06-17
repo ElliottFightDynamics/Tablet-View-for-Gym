@@ -97,8 +97,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void attemptRegister(){
         if (checkRegister()){
-            RetrofitSingleton.CREDENTIAL_REST.register(fname, lname, email, "12345", PresetUtil.countryIDList.get(0), email, pwd,
-                    PresetUtil.questionIDList.get(securitySpinner.getSelectedItemPosition()), answer, "", "", "", "", "", "").enqueue(new IndicatorCallback<RegisterResponseDTO>(this) {
+            Call call = RetrofitSingleton.CREDENTIAL_REST.register(fname, lname, email, "12345", PresetUtil.countryIDList.get(0), email, pwd,
+                    PresetUtil.questionIDList.get(securitySpinner.getSelectedItemPosition()), answer, "", "", "", "", "", "");
+            Log.e("Super", "call = " + call.request().body().toString());
+            Log.e("Super", "params = " + fname + "   " + lname + "   " + email +"  " + pwd);
+            call.enqueue(new IndicatorCallback<RegisterResponseDTO>(this) {
                 @Override
                 public void onResponse(Call<RegisterResponseDTO> call, Response<RegisterResponseDTO> response) {
                     super.onResponse(call, response);
