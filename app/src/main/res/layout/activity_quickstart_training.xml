@@ -796,35 +796,10 @@
                 android:layout_marginTop="20dp"
                 android:layout_weight="1">
 
-                <RelativeLayout
-                    android:id="@+id/progress_graph"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="invisible">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1">
-
-                            <com.efd.striketectablet.customview.CurveChartView
-                                android:id="@+id/curvechart"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/progress_digit"
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -849,12 +824,58 @@
                             android:layout_height="0dp"
                             android:layout_weight="1">
 
-                            <ProgressBar
-                                android:id="@+id/trainingprogressbar"
-                                style="?android:attr/progressBarStyleHorizontal"
+                            <RelativeLayout
+                                android:id="@+id/progress_digit"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ProgressBar
+                                    android:id="@+id/trainingprogressbar"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:progressDrawable="@drawable/customprogress_roundbar" />
+
+                                <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                                    android:id="@+id/trainingprogress_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="100sp" />
+
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/progress_graph"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:progressDrawable="@drawable/customprogress_roundbar" />
+                                android:visibility="invisible">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1">
+
+                                        <com.efd.striketectablet.customview.CurveChartView
+                                            android:id="@+id/curvechart"
+                                            android:layout_marginBottom="5dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+
 
                             <com.efd.striketectablet.customview.CustomTextView
                                 android:id="@+id/trainingprogress_status"
@@ -866,13 +887,7 @@
                                 android:text="PREPARE"
                                 android:textSize="20sp" />
 
-                            <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
-                                android:id="@+id/trainingprogress_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:textColor="@color/white"
-                                android:textSize="100sp" />
+
 
                             <!--<ImageView-->
                             <!--android:background="@drawable/progress_left"-->
