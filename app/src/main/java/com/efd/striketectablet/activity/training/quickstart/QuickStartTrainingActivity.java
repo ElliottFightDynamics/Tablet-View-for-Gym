@@ -64,8 +64,10 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
 
     PresetDTO presetDTO;
-    Timer progressTimer;
-    TimerTask updateProgressTimerTask;
+
+    Timer progressTimer, noroundTimer;
+    TimerTask updateProgressTimerTask, updatenoroundTimerTask;
+
     private Handler mHandler;
 
     private int currentStatus = -1;   //0: prepare, 1: round, 2: resting
@@ -92,6 +94,10 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
     private float leftmaxSpeed = 0f, leftavgSpeed = 0, leftmaxForce = 0, leftavgForce = 0;
     private float rightmaxSpeed = 0f, rightavgSpeed = 0, rightmaxForce = 0, rightavgForce = 0;
 
+    private boolean isRoundTraining = false;
+
+    private int defaultChartXTime = 30 * 1000; //this is for no round time
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +105,9 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_quickstart_training);
+
+        isRoundTraining = getIntent().getBooleanExtra(EFDConstants.ROUNDTRAINING, false);
+
         punchLists = new ArrayList<>();
         punchDTOs = new ArrayList<>();
 
@@ -107,7 +116,9 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 
         mainActivityInstance = MainActivity.getInstance();
 
-        presetDTO = (PresetDTO)getIntent().getSerializableExtra("preset");
+        if (isRoundTraining) {
+            presetDTO = (PresetDTO) getIntent().getSerializableExtra("preset");
+        }
 
         initViews();
     }
@@ -140,8 +151,13 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         graphLayout = (RelativeLayout)findViewById(R.id.progress_graph);
         digitLayout = (RelativeLayout)findViewById(R.id.progress_digit);
 
-        graphLayout.setVisibility(View.VISIBLE);
-        digitLayout.setVisibility(View.INVISIBLE);
+        if (isRoundTraining) {
+            graphLayout.setVisibility(View.INVISIBLE);
+            digitLayout.setVisibility(View.VISIBLE);
+        }else {
+            graphLayout.setVisibility(View.VISIBLE);
+            digitLayout.setVisibility(View.INVISIBLE);
+        }
 
         progressBar = (ProgressBar)findViewById(R.id.trainingprogressbar);
         currentTimeView = (TextView)findViewById(R.id.trainingprogress_time);
@@ -162,7 +178,6 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         rightmaxForceView = (TextView)findViewById(R.id.rh_max_force);
 
         chartView = (CurveChartView)findViewById(R.id.curvechart);
-        chartView.setMaxXAxisValue(Integer.parseInt(PresetUtil.timerwitSecsList.get(presetDTO.getRound_time())) * 1000);
 
         speedLayout = (LinearLayout)findViewById(R.id.training_speedlayout);
         powerLayout = (LinearLayout)findViewById(R.id.training_powerlayout);
@@ -350,53 +365,86 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
             return;
         }
 
-        if (currentStatus == -1){
-            //prepare for round 1
-            startTrainingBtn.setText(getResources().getString(R.string.stop_training));
-            currentStatus = 0;
-            roundvalue = 1;
-            totalTime = 10; //Integer.parseInt(PresetUtil.timerwitSecsList.get(presetDTO.getPrepare()));
-            currentTime = totalTime;
-            trainingProgressStatus.setText("PREPARE");
-            progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_preparebar));
-            trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_prepare));
-            isSpeedGraph = false;
-
-            graphLayout.setVisibility(View.INVISIBLE);
-            digitLayout.setVisibility(View.VISIBLE);
+        if (isRoundTraining) {
+            chartView.setMaxXAxisValue(Integer.parseInt(PresetUtil.timerwitSecsList.get(presetDTO.getRound_time())) * 1000);
         }else {
-            if (currentStatus == 0){
-                //current is prepare
-                startTrainingBtn.setText(getResources().getString(R.string.stop_training));
-            }else if (currentStatus == 1){
+            chartView.setMaxXAxisValue(defaultChartXTime);
+        }
 
-                totalTime = Integer.parseInt(PresetUtil.timerwitSecsList.get(presetDTO.getRest()));
+        if (isRoundTraining){
+            if (currentStatus == -1){
+                //prepare for round 1
+                startTrainingBtn.setText(getResources().getString(R.string.stop_training));
+                currentStatus = 0;
+                roundvalue = 1;
+                totalTime = 10; //Integer.parseInt(PresetUtil.timerwitSecsList.get(presetDTO.getPrepare()));
                 currentTime = totalTime;
-                trainingProgressStatus.setText("REST");
-                currentStatus++;
-                progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_restbar));
-                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_rest));
-
-                startTrainingBtn.setText(getResources().getString(R.string.stop_training));
+                trainingProgressStatus.setText("PREPARE");
+                progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_preparebar));
+                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_prepare));
+                isSpeedGraph = false;
 
                 graphLayout.setVisibility(View.INVISIBLE);
                 digitLayout.setVisibility(View.VISIBLE);
+            }else {
+                if (currentStatus == 0){
+                    //current is prepare
+                    startTrainingBtn.setText(getResources().getString(R.string.stop_training));
+                }else if (currentStatus == 1){
 
-            }else if (currentStatus == 2){
-                //current is rest
-                startTrainingBtn.setText(getResources().getString(R.string.stop_training));
+                    totalTime = Integer.parseInt(PresetUtil.timerwitSecsList.get(presetDTO.getRest()));
+                    currentTime = totalTime;
+                    trainingProgressStatus.setText("REST");
+                    currentStatus++;
+                    progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.customprogress_restbar));
+                    trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_rest));
+
+                    startTrainingBtn.setText(getResources().getString(R.string.stop_training));
+
+                    graphLayout.setVisibility(View.INVISIBLE);
+                    digitLayout.setVisibility(View.VISIBLE);
+
+                }else if (currentStatus == 2){
+                    //current is rest
+                    startTrainingBtn.setText(getResources().getString(R.string.stop_training));
+                }
             }
+
+            progressBar.setMax(totalTime);
+            progressBar.setProgress(totalTime - currentTime);
+
+            startProgressTimer();
+        }else {
+            playBoxingBell();
+            graphLayout.setVisibility(View.VISIBLE);
+            digitLayout.setVisibility(View.INVISIBLE);
+
+
+            chartView.setPunchDatas(isSpeedGraph, new ArrayList());
+
+            trainingProgressStatus.setText("NO ROUND");
+            trainingProgressStatus.setTextColor(getResources().getColor(R.color.speed_text_color));
+
+            trainingStartTime = System.currentTimeMillis();
+
+            resetPunchDetails();
+            startNoRoundTimer();
+            mainActivityInstance.startRoundTraining();
         }
-
-        progressBar.setMax(totalTime);
-        progressBar.setProgress(totalTime - currentTime);
-
-        startProgressTimer();
     }
 
     private void stopTraining(){
-        Log.e("Super", "Stop Training");
-        stopProgressTimer();
+
+        if (isRoundTraining) {
+            stopProgressTimer();
+
+
+        }else {
+            startTrainingBtn.setText(getResources().getString(R.string.start_training));
+            trainingProgressStatus.setText("");
+
+            stopNoRoundTimer();
+        }
 
         mainActivityInstance.stopRoundTraining();
         mainActivityInstance.stopTraining();
@@ -409,6 +457,59 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
 //            // extract summary upon ending training session
 
 //        }
+    }
+
+    public void startNoRoundTimer (){
+        currentTime = 0;
+        noroundTimer = new Timer();
+        initializeNoRoundTimerTask();
+        noroundTimer.schedule(updatenoroundTimerTask, 0, 1000);
+    }
+
+    public void stopNoRoundTimer (){
+        if (noroundTimer != null){
+            noroundTimer.cancel();
+            noroundTimer = null;
+        }
+    }
+
+    public void initializeNoRoundTimerTask (){
+        updatenoroundTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        currentTime++;
+                        String text = PresetUtil.chagngeSecsToTime(currentTime) + " - STOP";
+
+                        startTrainingBtn.setText(text);
+
+
+//                        if (mainActivityInstance.receivePunchable) {
+//                            PunchDTO punchDTO = new PunchDTO();
+//                            punchDTO.setTime((int)(System.currentTimeMillis() - trainingStartTime));
+//                            if (punchDTO.getTime() >= chartView.getMaxXAxisValue()){
+//                                chartView.setMaxXAxisValue(chartView.getMaxXAxisValue() + defaultChartXTime);
+//                            }
+//
+//
+//                            if (currentTime % 2 == 0){
+//                                punchDTO.setPower(100);
+//                                punchDTO.setSpeed(50);
+//                            }else {
+//                                punchDTO.setPower(10);
+//                                punchDTO.setSpeed(5);
+//                            }
+//
+//                            punchDTOs.add(punchDTO);
+//                        }
+
+                        chartView.setPunchDatas(isSpeedGraph, punchDTOs);
+                    }
+                });
+            }
+        };
     }
 
     public void startProgressTimer (){
@@ -592,6 +693,12 @@ public class QuickStartTrainingActivity extends BaseTrainingActivity {
         int currentForce = Integer.parseInt(details.punchForce);
         punchDTO.setPower(currentForce);
         punchDTO.setSpeed(currentSpeed);
+
+        if (!isRoundTraining){
+            if (punchDTO.getTime() >= chartView.getMaxXAxisValue()){
+                chartView.setMaxXAxisValue(chartView.getMaxXAxisValue() + defaultChartXTime);
+            }
+        }
 
         String hand = details.boxersHand.equalsIgnoreCase("L") ? "LEFT" : "RIGHT";
 

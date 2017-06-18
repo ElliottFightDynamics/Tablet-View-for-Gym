@@ -36,206 +36,273 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
-        <!--<View-->
+        <!--<ImageView-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="0.2"-->
+        <!--android:src="@drawable/training_left_image" />-->
+
+
+        <LinearLayout
+            android:id="@+id/tab_round"
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/round_selectbg"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/roundtextview"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="ROUNDS"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <!--<View-->
+            <!--android:layout_width="1dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:background="@color/comboset_divider"/>-->
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/noroundtextview"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="NO ROUNDS"
+                android:textColor="@color/orange"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <!--<ImageView-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="0.2"-->
+        <!--android:src="@drawable/training_right_image" />-->
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/round_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <!--<View-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="1dp"-->
             <!--android:background="@drawable/separator" />-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/trainingstats_left_line" />
-
-
-            <RelativeLayout
-                android:id="@+id/preset_parent"
-                android:layout_width="350dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/dropdown"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <com.efd.striketectablet.customview.CustomTextView
-                    android:id="@+id/preset_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="PRESET 1"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/button_preset_textsize" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/preset_dropdown" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/trainingstats_right_line" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
             <LinearLayout
-                android:layout_width="600dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_gravity="center_horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/trainingstats_left_line" />
+
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp">
+                    android:id="@+id/preset_parent"
+                    android:layout_width="350dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/dropdown"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
 
                     <com.efd.striketectablet.customview.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="40dp"
-                        android:text="ROUNDS"
-                        android:textColor="@color/punches_text_color"
-                        android:textSize="@dimen/button_textsize" />
+                        android:id="@+id/preset_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="PRESET 1"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/button_preset_textsize" />
 
                     <ImageView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="20dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="5dp"
-                        android:adjustViewBounds="true"
-                        android:background="@drawable/quickstart_line" />
-
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/preset_dropdown" />
                 </RelativeLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/trainingstats_right_line" />
+            </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.35"
-                        android:gravity="center">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                        <kankan.wheel.widget.WheelView
-                            android:id="@+id/rounds_picker"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            android:background="#000000" />
+                <LinearLayout
+                    android:layout_width="600dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="40dp"
+                            android:text="ROUNDS"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="@dimen/button_textsize" />
 
                         <ImageView
-                            android:id="@+id/close_preset"
-                            android:layout_width="25dp"
-                            android:layout_height="30dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/close" />
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="5dp"
+                            android:adjustViewBounds="true"
+                            android:background="@drawable/quickstart_line" />
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.6"
-                        android:orientation="vertical">
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:background="@drawable/preset_restbg">
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.35"
+                            android:gravity="center">
 
-                            <com.efd.striketectablet.customview.CustomTextView
+                            <kankan.wheel.widget.WheelView
+                                android:id="@+id/rounds_picker"
                                 android:layout_width="0dp"
-                                android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="TIME"
-                                android:textColor="@color/punches_text_color"
-                                android:textSize="@dimen/button_textsize" />
+                                android:layout_height="match_parent"
+                                android:background="#000000" />
 
-                            <com.efd.striketectablet.customview.CustomTextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="REST"
-                                android:textColor="@color/punches_text_color"
-                                android:textSize="@dimen/button_textsize" />
+                            <ImageView
+                                android:id="@+id/close_preset"
+                                android:layout_width="25dp"
+                                android:layout_height="30dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/close" />
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="10dp">
+                            android:layout_weight="0.6"
+                            android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <kankan.wheel.widget.WheelView
-                                    android:id="@+id/round_picker"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:background="#000000" />
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@drawable/preset_restbg">
 
                                 <com.efd.striketectablet.customview.CustomTextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="20dp"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="@string/min_sec"
-                                    android:textColor="@color/round_minsec"
-                                    android:textSize="@dimen/cell_textsize" />
+                                    android:text="TIME"
+                                    android:textColor="@color/punches_text_color"
+                                    android:textSize="@dimen/button_textsize" />
 
+                                <com.efd.striketectablet.customview.CustomTextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="REST"
+                                    android:textColor="@color/punches_text_color"
+                                    android:textSize="@dimen/button_textsize" />
 
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:layout_marginTop="10dp">
 
-                                <kankan.wheel.widget.WheelView
-                                    android:id="@+id/rest_picker"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:background="#000000" />
+                                    android:orientation="vertical">
 
-                                <com.efd.striketectablet.customview.CustomTextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="20dp"
-                                    android:gravity="center"
-                                    android:text="@string/min_sec"
-                                    android:textColor="@color/rest_minsec"
-                                    android:textSize="@dimen/cell_textsize" />
+                                    <kankan.wheel.widget.WheelView
+                                        android:id="@+id/round_picker"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:background="#000000" />
+
+                                    <com.efd.striketectablet.customview.CustomTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="20dp"
+                                        android:gravity="center"
+                                        android:text="@string/min_sec"
+                                        android:textColor="@color/round_minsec"
+                                        android:textSize="@dimen/cell_textsize" />
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <kankan.wheel.widget.WheelView
+                                        android:id="@+id/rest_picker"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:background="#000000" />
+
+                                    <com.efd.striketectablet.customview.CustomTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="20dp"
+                                        android:gravity="center"
+                                        android:text="@string/min_sec"
+                                        android:textColor="@color/rest_minsec"
+                                        android:textSize="@dimen/cell_textsize" />
+
+                                </LinearLayout>
 
                             </LinearLayout>
 
@@ -247,262 +314,291 @@
 
             </LinearLayout>
 
-        </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/separator" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/separator" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/prepare_parent"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.efd.striketectablet.customview.CustomTextView
+                        style="@style/preset_btn"
+                        android:text="@string/prepare" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginTop="7dp">
+
+                        <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                            android:id="@+id/prepare_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:editable="false"
+                            android:gravity="center"
+                            android:text="47:50"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/spinner_textsize"/>
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="@null"
+                            android:src="@drawable/spinner_arrow" />
+
+                    </RelativeLayout>
+
+                    <com.efd.striketectablet.customview.CustomTextView
+                        style="@style/preset_label"
+                        android:text="@string/min_sec" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/warning_parent"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:orientation="vertical">
+
+                    <com.efd.striketectablet.customview.CustomTextView
+                        style="@style/preset_btn"
+                        android:text="@string/warning" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginTop="7dp">
+
+                        <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                            android:id="@+id/warning_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:editable="false"
+                            android:gravity="center"
+                            android:text="47:50"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/spinner_textsize"/>
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="@null"
+                            android:src="@drawable/spinner_arrow" />
+
+                    </RelativeLayout>
+
+                    <com.efd.striketectablet.customview.CustomTextView
+                        style="@style/preset_label"
+                        android:text="@string/min_sec" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:orientation="vertical">
+
+                    <com.efd.striketectablet.customview.CustomTextView
+                        style="@style/preset_btn"
+                        android:text="WEIGHT" />
+
+                    <Spinner
+                        android:id="@+id/weight_spinner"
+                        style="@style/dashboard_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:prompt="@string/weight_spinner_prompt" />
+
+                    <com.efd.striketectablet.customview.CustomTextView
+                        style="@style/preset_label"
+                        android:text="LBS" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginStart="20dp"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <com.efd.striketectablet.customview.CustomTextView
+                        style="@style/preset_btn"
+                        android:text="GLOVES" />
+
+                    <Spinner
+                        android:id="@+id/glove_spinner"
+                        style="@style/dashboard_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:prompt="@string/glove_type_spinner_prompt" />
+
+                    <com.efd.striketectablet.customview.CustomTextView
+                        style="@style/preset_label"
+                        android:text="OZ" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginStart="20dp"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <com.efd.striketectablet.customview.CustomTextView
+                        android:id="@+id/customTextView3"
+                        style="@style/preset_btn"
+                        android:text="SEX" />
+
+                    <Spinner
+                        android:id="@+id/gender_spinner"
+                        style="@style/dashboard_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:prompt="@string/gender_spinner_prompt" />
+
+                    <com.efd.striketectablet.customview.CustomTextView
+                        style="@style/preset_label"
+                        android:text="GENDER" />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/left_arrow_line_bg"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <com.efd.striketectablet.customview.CustomButton
+                        android:layout_width="300dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/training_big_btn"
+                        android:gravity="center"
+                        android:layout_marginRight="-35dp"
+                        android:text="@string/total_time"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/button_textsize"
+                        android:layout_gravity="center_vertical"/>
+
+                    <com.efd.striketectablet.customview.CustomTextView
+                        android:id="@+id/total_time"
+                        android:layout_width="340dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/total_time_bg"
+                        android:text="3:48:15"
+                        android:textSize="65sp"
+                        android:gravity="center"
+                        android:textColor="@color/punches_text_color"/>
+
+                    <com.efd.striketectablet.customview.CustomButton
+                        android:id="@+id/training_start_button"
+                        android:layout_width="300dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="-35dp"
+                        android:background="@drawable/positive_big_btn"
+                        android:gravity="center"
+                        android:text="@string/start_training"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/button_textsize"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/right_arrow_line_bg"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/noround_parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/prepare_parent"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <com.efd.striketectablet.customview.CustomTextView
+                android:text="You have selected No Rounds"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="25sp"/>
 
-                <com.efd.striketectablet.customview.CustomTextView
-                    style="@style/preset_btn"
-                    android:text="@string/prepare" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginTop="7dp">
-
-                    <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
-                        android:id="@+id/prepare_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:editable="false"
-                        android:gravity="center"
-                        android:text="47:50"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/spinner_textsize"/>
-
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@null"
-                        android:src="@drawable/spinner_arrow" />
-
-                </RelativeLayout>
-
-                <com.efd.striketectablet.customview.CustomTextView
-                    style="@style/preset_label"
-                    android:text="@string/min_sec" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/warning_parent"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:orientation="vertical">
-
-                <com.efd.striketectablet.customview.CustomTextView
-                    style="@style/preset_btn"
-                    android:text="@string/warning" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginTop="7dp">
-
-                    <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
-                        android:id="@+id/warning_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:editable="false"
-                        android:gravity="center"
-                        android:text="47:50"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/spinner_textsize"/>
-
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@null"
-                        android:src="@drawable/spinner_arrow" />
-
-                </RelativeLayout>
-
-                <com.efd.striketectablet.customview.CustomTextView
-                    style="@style/preset_label"
-                    android:text="@string/min_sec" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="20dp"
-                android:orientation="vertical">
-
-                <com.efd.striketectablet.customview.CustomTextView
-                    style="@style/preset_btn"
-                    android:text="WEIGHT" />
-
-                <Spinner
-                    android:id="@+id/weight_spinner"
-                    style="@style/dashboard_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:prompt="@string/weight_spinner_prompt" />
-
-                <com.efd.striketectablet.customview.CustomTextView
-                    style="@style/preset_label"
-                    android:text="LBS" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginStart="20dp"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:orientation="vertical">
-
-                <com.efd.striketectablet.customview.CustomTextView
-                    style="@style/preset_btn"
-                    android:text="GLOVES" />
-
-                <Spinner
-                    android:id="@+id/glove_spinner"
-                    style="@style/dashboard_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:prompt="@string/glove_type_spinner_prompt" />
-
-                <com.efd.striketectablet.customview.CustomTextView
-                    style="@style/preset_label"
-                    android:text="OZ" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginStart="20dp"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <com.efd.striketectablet.customview.CustomTextView
-                    android:id="@+id/customTextView3"
-                    style="@style/preset_btn"
-                    android:text="SEX" />
-
-                <Spinner
-                    android:id="@+id/gender_spinner"
-                    style="@style/dashboard_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:prompt="@string/gender_spinner_prompt" />
-
-                <com.efd.striketectablet.customview.CustomTextView
-                    style="@style/preset_label"
-                    android:text="GENDER" />
-
-            </LinearLayout>
-
+            <com.efd.striketectablet.customview.CustomButton
+                android:id="@+id/noround_training_start_button"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/positive_big_btn"
+                android:text="@string/start_training"
+                android:textColor="@color/black"
+                android:textSize="@dimen/button_textsize"
+                android:layout_gravity="center_horizontal"/>
 
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+    </RelativeLayout>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/left_arrow_line_bg"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <com.efd.striketectablet.customview.CustomButton
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/training_big_btn"
-                    android:gravity="center"
-                    android:layout_marginRight="-35dp"
-                    android:text="@string/total_time"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/button_textsize"
-                    android:layout_gravity="center_vertical"/>
-
-                <com.efd.striketectablet.customview.CustomTextView
-                    android:id="@+id/total_time"
-                    android:layout_width="340dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/total_time_bg"
-                    android:text="3:48:15"
-                    android:textSize="65sp"
-                    android:gravity="center"
-                    android:textColor="@color/punches_text_color"/>
-
-                <com.efd.striketectablet.customview.CustomButton
-                    android:id="@+id/training_start_button"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="-35dp"
-                    android:background="@drawable/positive_big_btn"
-                    android:gravity="center"
-                    android:text="@string/start_training"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/button_textsize"
-                    android:layout_gravity="center_vertical"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/right_arrow_line_bg"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
 
 </LinearLayout>
 

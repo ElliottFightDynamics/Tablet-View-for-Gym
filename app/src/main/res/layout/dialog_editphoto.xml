@@ -37,26 +37,32 @@
         android:layout_gravity="center_horizontal"
         >
 
-        <com.efd.striketectablet.customview.CustomButton
+        <com.efd.striketectablet.customview.HexagonButton
             android:id="@+id/cancel_btn"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:background="@drawable/btn_bg"
+            android:gravity="center"
+            android:padding="1dp"
             android:text="@string/cancel"
+            android:textSize="25sp"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="25sp" />
+            app:fill="false"
+            app:hexagon_color="@color/btn_color"/>
 
-        <com.efd.striketectablet.customview.CustomButton
+        <com.efd.striketectablet.customview.HexagonButton
             android:id="@+id/ok_btn"
+            android:layout_marginLeft="30dp"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
-            android:background="@drawable/positive_btn_bg"
+            android:gravity="center"
+            android:padding="1dp"
             android:text="@string/ok"
+            android:textSize="25sp"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="25sp" />
+            app:fill="true"
+            app:hexagon_color="@color/orange"/>
 
     </LinearLayout>
 

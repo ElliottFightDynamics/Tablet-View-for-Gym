@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -49,6 +50,9 @@ public class QuickstartTrainingPresetFragment extends Fragment {
     private WheelView roundsPicker, roundPicker, restPicker;
     ArrayWheelAdapter roundsAdapter, roundAdapter, restAdapter;
 
+    LinearLayout roundTab, roundParent, noroundParent;
+    TextView roundView, noroundView;
+
     Spinner   genderSpinner, gloveTypeSpinner, weightSpinner;
     SpinnerAdapter genderAdapter, gloveAdapter, weightAdpater;
 
@@ -56,7 +60,7 @@ public class QuickstartTrainingPresetFragment extends Fragment {
     RelativeLayout presetParent;
     LinearLayout prepareParent, warningParent;
 
-    CustomButton startTrainingBtn;
+    Button startTrainingBtn, startnoroundTrainingBtn;
 
     View view;
 
@@ -67,6 +71,8 @@ public class QuickstartTrainingPresetFragment extends Fragment {
     int currentPresetPosition = 0;
     int currentPreparePosition = 0;
     int currentWarningPosition = 0;
+
+    boolean roundTraining = true;
 
     private String type = "";
 
@@ -103,6 +109,15 @@ public class QuickstartTrainingPresetFragment extends Fragment {
     }
 
     private void initViews(){
+
+        roundTab = (LinearLayout)view.findViewById(R.id.tab_round);
+        roundView = (TextView)view.findViewById(R.id.roundtextview);
+        noroundView = (TextView)view.findViewById(R.id.noroundtextview);
+        roundParent = (LinearLayout) view.findViewById(R.id.round_parent);
+        noroundParent = (LinearLayout)view.findViewById(R.id.noround_parent);
+
+        noroundParent.setVisibility(View.GONE);
+
         presetNameView = (CustomTextView)view.findViewById(R.id.preset_name);
         presetParent = (RelativeLayout)view.findViewById(R.id.preset_parent);
         presetParent.setOnClickListener(new View.OnClickListener() {
@@ -205,8 +220,30 @@ public class QuickstartTrainingPresetFragment extends Fragment {
             }
         });
 
-        startTrainingBtn = (CustomButton)view.findViewById(R.id.training_start_button);
+        roundView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectRoundView();
+            }
+        });
+
+        noroundView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectnoRoundView();
+            }
+        });
+
+        startTrainingBtn = (Button)view.findViewById(R.id.training_start_button);
         startTrainingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startTraining();
+            }
+        });
+
+        startnoroundTrainingBtn = (Button)view.findViewById(R.id.noround_training_start_button);
+        startnoroundTrainingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startTraining();
@@ -231,6 +268,30 @@ public class QuickstartTrainingPresetFragment extends Fragment {
 //
 //        JSONObject result_Training_UserInfo_display = MainActivity.db.trainingUserInfo(userId);
 //        showUserDetails(result_Training_UserInfo_display.toString());
+    }
+
+    private void selectRoundView(){
+        if (!roundTraining){
+            roundView.setTextColor(getResources().getColor(R.color.white));
+            noroundView.setTextColor(getResources().getColor(R.color.orange));
+            roundTraining = true;
+            roundTab.setBackgroundResource(R.drawable.round_selectbg);
+
+            noroundParent.setVisibility(View.GONE);
+            roundParent.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void selectnoRoundView(){
+        if (roundTraining){
+            roundView.setTextColor(getResources().getColor(R.color.orange));
+            noroundView.setTextColor(getResources().getColor(R.color.white));
+            roundTraining = false;
+            roundTab.setBackgroundResource(R.drawable.noround_select_bg);
+
+            noroundParent.setVisibility(View.VISIBLE);
+            roundParent.setVisibility(View.GONE);
+        }
     }
 
 
@@ -279,25 +340,37 @@ public class QuickstartTrainingPresetFragment extends Fragment {
 
 
     private void startTraining(){
-        PresetDTO presetDTO = new PresetDTO();
-        presetDTO.setRounds(roundsPicker.getCurrentItem());
-        presetDTO.setRound_time(roundPicker.getCurrentItem());
-        presetDTO.setRest(restPicker.getCurrentItem());
-        presetDTO.setPrepare(currentPreparePosition);
-        presetDTO.setWarning(currentWarningPosition);
-        presetDTO.setName("preset");
+        if (roundTraining) {
+            PresetDTO presetDTO = new PresetDTO();
+            presetDTO.setRounds(roundsPicker.getCurrentItem());
+            presetDTO.setRound_time(roundPicker.getCurrentItem());
+            presetDTO.setRest(restPicker.getCurrentItem());
+            presetDTO.setPrepare(currentPreparePosition);
+            presetDTO.setWarning(currentWarningPosition);
+            presetDTO.setName("preset");
 
-        if (type.equalsIgnoreCase("round")){
-            Intent trainingIntent = new Intent(mainActivityInstance, RoundTrainingActivity.class);
+            Intent trainingIntent = new Intent(getActivity(), QuickStartTrainingActivity.class);
             trainingIntent.putExtra("preset", presetDTO);
+            trainingIntent.putExtra(EFDConstants.ROUNDTRAINING, true);
             startActivity(trainingIntent);
             mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }else {
-            Intent trainingIntent = new Intent(mainActivityInstance, QuickStartTrainingActivity.class);
-            trainingIntent.putExtra("preset", presetDTO);
+            Intent trainingIntent = new Intent(getActivity(), QuickStartTrainingActivity.class);
+            trainingIntent.putExtra(EFDConstants.ROUNDTRAINING, false);
             startActivity(trainingIntent);
             mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
+//        if (type.equalsIgnoreCase("round")){
+//            Intent trainingIntent = new Intent(mainActivityInstance, RoundTrainingActivity.class);
+//            trainingIntent.putExtra("preset", presetDTO);
+//            startActivity(trainingIntent);
+//            mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//        }else {
+//            Intent trainingIntent = new Intent(mainActivityInstance, QuickStartTrainingActivity.class);
+//            trainingIntent.putExtra("preset", presetDTO);
+//            startActivity(trainingIntent);
+//            mainActivityInstance.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//        }
     }
 
     private void showPresetInfo (PresetDTO presetDTO){

@@ -313,4 +313,6 @@ public class EFDConstants {
 
     public static final int MAX_NUM_FORPUNCH = 7;
 
+    public static final String ROUNDTRAINING = "roundtraining";
+
 }

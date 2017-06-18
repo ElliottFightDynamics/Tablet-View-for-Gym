@@ -50,7 +50,7 @@ public class CurveChartView extends View{
     private static final float CURVE_LINE_WIDTH = 4f;
     private static final float HALF_TIP_HEIGHT = 16;
 
-    private float CURVE_STROKE_WIDTH = 4;
+    private float CURVE_STROKE_WIDTH = 2;
 
     private Context mContext;
     private boolean isSpeed;

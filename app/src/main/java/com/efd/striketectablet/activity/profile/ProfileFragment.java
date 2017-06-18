@@ -180,15 +180,15 @@ public class ProfileFragment extends Fragment  {
         dialog.setCancelable(false);
 
         ImageView leftSearchBtn, rightSearchBtn;
-        final CustomButton cancelBtn, okBtn;
+        final Button cancelBtn, okBtn;
 
         leftIDView = (CustomEditText)dialog.findViewById(R.id.left_sensor_id);
         rightIDView = (CustomEditText)dialog.findViewById(R.id.right_sensor_id);
 
         leftSearchBtn = (ImageView)dialog.findViewById(R.id.left_search);
         rightSearchBtn = (ImageView)dialog.findViewById(R.id.right_search);
-        cancelBtn = (CustomButton)dialog.findViewById(R.id.cancel_btn);
-        okBtn = (CustomButton)dialog.findViewById(R.id.ok_btn);
+        cancelBtn = (Button)dialog.findViewById(R.id.cancel_btn);
+        okBtn = (Button)dialog.findViewById(R.id.ok_btn);
 
         if (!mainActivityInstance.flagForDevice) {
             leftIDView.setText("");
