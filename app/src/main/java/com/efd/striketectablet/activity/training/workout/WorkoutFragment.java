@@ -134,7 +134,7 @@ public class WorkoutFragment extends Fragment {
 
         Intent combosetIntent = new Intent(getActivity(), ComboSetTrainingActivity.class);
         combosetIntent.putExtra(EFDConstants.TRAININGTYPE, EFDConstants.WORKOUT);
-        combosetIntent.putExtra(EFDConstants.WORKOUT_ID, workoutListAdapter.getItem(workoutListAdapter.getCurrentPosition()).getId());
+        combosetIntent.putExtra(EFDConstants.WORKOUT_ID, workoutListAdapter.getItem(workoutListAdapter.getCurrentPosition()));
         getActivity().startActivity(combosetIntent);
         getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }

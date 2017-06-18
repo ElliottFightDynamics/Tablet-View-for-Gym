@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.efd.striketectablet.customview.CustomTextView android:id="@+id/group_name"
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:text="Combo Set #1"
+    android:textColor="@color/punches_text_color"
+    android:textSize="20sp"
+    android:gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

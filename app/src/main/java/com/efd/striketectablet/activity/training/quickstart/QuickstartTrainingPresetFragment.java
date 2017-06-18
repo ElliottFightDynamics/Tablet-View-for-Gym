@@ -27,10 +27,8 @@ import android.widget.TextView;
 import com.efd.striketectablet.DTO.PresetDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
-import com.efd.striketectablet.activity.training.round.RoundTrainingActivity;
 import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
 import com.efd.striketectablet.adapter.PresetListAdapter;
-import com.efd.striketectablet.customview.CustomButton;
 import com.efd.striketectablet.customview.CustomTextView;
 import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
@@ -100,7 +98,7 @@ public class QuickstartTrainingPresetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_training_preset, container, false);
+        view = inflater.inflate(R.layout.fragment_training_quickstart_preset, container, false);
         type = getArguments().getString("type");
 
         initViews();

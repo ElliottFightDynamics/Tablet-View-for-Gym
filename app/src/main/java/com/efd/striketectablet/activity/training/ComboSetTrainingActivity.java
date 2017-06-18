@@ -23,6 +23,10 @@ import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.DTO.PunchDTO;
 import com.efd.striketectablet.DTO.PunchHistoryGraphDataDetails;
 import com.efd.striketectablet.DTO.SetsDTO;
+import com.efd.striketectablet.DTO.TrainingResultComboDTO;
+import com.efd.striketectablet.DTO.TrainingResultPunchDTO;
+import com.efd.striketectablet.DTO.TrainingResultSetDTO;
+import com.efd.striketectablet.DTO.TrainingResultWorkoutDTO;
 import com.efd.striketectablet.DTO.WorkoutDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
@@ -107,7 +111,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     private float rightmaxSpeed = 0f, rightavgSpeed = 0, rightmaxForce = 0, rightavgForce = 0;
 
     private String trainingtype;
-    private int comboid = -1, setid = -1, workoutid = -1;
+    private int comboid = -1, setid = -1;//, workoutid = -1;
 
     private ComboDTO currentComboDTO;
     private SetsDTO currentSetDTO;
@@ -117,6 +121,14 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     private int currentPunchIndex = 0;
     private int currentComboIndex = 0;
     private int currentSetIndex = 0;
+
+    private TrainingResultComboDTO resultComboDTO;
+    private TrainingResultSetDTO resultSetDTO;
+    private TrainingResultWorkoutDTO resultWorkoutDTO;
+
+    private ArrayList<TrainingResultPunchDTO> resultPunchList;
+    private ArrayList<TrainingResultComboDTO>  resultComboList;
+    private ArrayList<TrainingResultSetDTO>  resultRoundList;
 
 
     @Override
@@ -132,13 +144,17 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
         }else if (trainingtype.equalsIgnoreCase(EFDConstants.SETS)){
             setid = getIntent().getIntExtra(EFDConstants.SET_ID, -1);
         }else if(trainingtype.equalsIgnoreCase(EFDConstants.WORKOUT)){
-            workoutid = getIntent().getIntExtra(EFDConstants.WORKOUT_ID, -1);
+            workoutDTO = (WorkoutDTO)getIntent().getSerializableExtra(EFDConstants.WORKOUT_ID);
         }
 
         punchLists = new ArrayList<>();
         punchDTOs = new ArrayList<>();
         leftpunchDTOS = new ArrayList<>();
         rightpunchDTOS = new ArrayList<>();
+
+        resultPunchList = new ArrayList<>();
+        resultComboList = new ArrayList<>();
+        resultRoundList = new ArrayList<>();
 
         mainActivityInstance = MainActivity.getInstance();
 
@@ -337,10 +353,10 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
             initComboTrainingView();
             nextcomboTip.setVisibility(View.INVISIBLE);
             timerLayout.setVisibility(View.INVISIBLE);
-        }else if (workoutid != -1){
+        }else if (workoutDTO != null){
             currentTime = 0;
             titleView.setText(getResources().getString(R.string.title_workout));
-            workoutDTO = ComboSetUtil.getWorkoutDtoWithID(workoutid);
+//            workoutDTO = ComboSetUtil.getWorkoutDtoWithID(workoutid);
             currentComboIndex = 0;
             currentComboDTO = ComboSetUtil.getComboDtowithID(workoutDTO.getRoundsetIDs().get(0).get(0));
             roundCount = workoutDTO.getRoundcount();
@@ -412,7 +428,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 //            }
 //        }
 
-        if (workoutid == -1) {
+        if (workoutDTO == null) {
             trainingProgressStatus.setText(ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(0)));
             trainingProgressStatus.setTextColor(getResources().getColor(R.color.white));
         }
@@ -479,17 +495,19 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
         if (setid != -1){
             currentTrainingComboCount = currentSetDTO.getComboIDLists().size();
-        }else if (workoutid != -1){
+        }else if (workoutDTO != null){
             currentTrainingComboCount = workoutDTO.getRoundsetIDs().get(roundvalue - 1).size();
-            Log.e("Super", "current training combo count = " + currentTrainingComboCount);
         }
 
         if (currentComboIndex == currentTrainingComboCount - 1){
             if (setid != -1) {
                 playBoxingBell();
+                resultSetDTO = new TrainingResultSetDTO(currentSetDTO.getName(), resultComboList);
+                mainActivityInstance.receivePunchable = false;
                 stopTraining();
             }else {
-
+                resultSetDTO = new TrainingResultSetDTO("ROUND " + (roundvalue), resultComboList);
+                resultRoundList.add(resultSetDTO);
                 mainActivityInstance.receivePunchable = false;
             }
         }else {
@@ -512,7 +530,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                     }
                 }, 1000);
 
-            }else if (workoutid != -1){
+            }else if (workoutDTO != null){
                 ComboDTO comboDTO = ComboSetUtil.getComboDtowithID(workoutDTO.getRoundsetIDs().get(roundvalue - 1).get(currentComboIndex + 1));
                 nextComboTipContent.setText(comboDTO.getCombos());
 
@@ -562,11 +580,20 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
             //training is finished,
             if (comboid != -1) {
                 playBoxingBell();
+                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList);
+                mainActivityInstance.receivePunchable = false;
                 stopTraining();
+
+                //go to stats activity;
+//                startStatsActivity(2);
             }else if (setid != -1){
+                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList);
+                resultComboList.add(resultComboDTO);
                 mainActivityInstance.receivePunchable = false;
                 gotoNextCombo();
-            }else if (workoutid != -1){
+            }else if (workoutDTO != null){
+                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList);
+                resultComboList.add(resultComboDTO);
                 mainActivityInstance.receivePunchable = false;
                 gotoNextCombo();
             }
@@ -636,7 +663,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                 }, 300);
             }
 
-            if (workoutid == -1)
+            if (workoutDTO != null)
                 trainingProgressStatus.setText(ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(currentPunchIndex)));
         }
     }
@@ -688,7 +715,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
             playBoxingBell();
             mainActivityInstance.startRoundTraining();
             startTrainingBtn.setText(getResources().getString(R.string.stop_training));
-        }else if (workoutid != -1){
+        }else if (workoutDTO != null){
             if (currentStatus == -1){
                 startProgressCombosetTimer();
                 startProgressWorkoutTimer();
@@ -713,12 +740,45 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
     private void stopTraining(){
 
+        if (comboid != -1){
+            if (mainActivityInstance.receivePunchable){
+                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList);
+            }
+
+            mainActivityInstance.trainingresultComboDTO = resultComboDTO;
+            mainActivityInstance.showStats(1);
+//            startStatsActivity(2);
+        }else if (setid != -1){
+            if (mainActivityInstance.receivePunchable){
+                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList);
+                resultComboList.add(resultComboDTO);
+            }
+
+            mainActivityInstance.trainingResultSetDTO = resultSetDTO;
+            mainActivityInstance.showStats(2);
+//            startStatsActivity(3);
+        }else if (workoutDTO != null){
+            if (mainActivityInstance.receivePunchable) {
+                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList);
+                resultComboList.add(resultComboDTO);
+                resultSetDTO = new TrainingResultSetDTO("ROUND " + (roundvalue + 1), resultComboList);
+                resultRoundList.add(resultSetDTO);
+            }
+
+            resultWorkoutDTO = new TrainingResultWorkoutDTO(workoutDTO.getName(), resultRoundList);
+            mainActivityInstance.trainingResultWorkoutDTO = resultWorkoutDTO;
+            mainActivityInstance.showStats(3);
+//            startStatsActivity(4);
+        }
+
         stopProgressCombosetTimer();
         stopProgressWorkoutTimer();
 
         startTrainingBtn.setText(getResources().getString(R.string.start_training));
         mainActivityInstance.stopRoundTraining();
         mainActivityInstance.stopTraining();
+
+        finish();
     }
 
     public void startProgressCombosetTimer (){

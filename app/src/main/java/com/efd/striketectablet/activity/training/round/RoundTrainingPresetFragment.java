@@ -44,7 +44,7 @@ import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 
-public class TrainingPresetFragment extends Fragment {
+public class RoundTrainingPresetFragment extends Fragment {
 
     private WheelView roundsPicker, roundPicker, restPicker;
     ArrayWheelAdapter roundsAdapter, roundAdapter, restAdapter;
@@ -73,11 +73,11 @@ public class TrainingPresetFragment extends Fragment {
     MainActivity mainActivityInstance;
 
     private static Context mContext;
-    public static TrainingPresetFragment trainingPresetFragment;
+    public static RoundTrainingPresetFragment trainingPresetFragment;
 
     public static Fragment newInstance(Context context, String type) {
         mContext = context;
-        trainingPresetFragment = new TrainingPresetFragment();
+        trainingPresetFragment = new RoundTrainingPresetFragment();
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
         trainingPresetFragment.setArguments(bundle);
@@ -94,7 +94,7 @@ public class TrainingPresetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_training_preset, container, false);
+        view = inflater.inflate(R.layout.fragment_training_round_preset, container, false);
         type = getArguments().getString("type");
 
         initViews();

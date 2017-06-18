@@ -32,5 +32,8 @@
     <dimen name="registration_textView_text_size">25sp</dimen>
     <dimen name="boxer_view_line_margin">-9dp</dimen>
 
+    <item name="bag_training_top_line_weight" format="integer" type="dimen">4</item>
+    <dimen name="bag_training_top_line_height">4.5dp</dimen>
+
     <bool name="iTablet">false</bool>
 </resources>

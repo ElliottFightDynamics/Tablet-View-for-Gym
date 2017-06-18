@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -38,11 +37,15 @@ import com.efd.striketectablet.DTO.TrainingBatteryLayoutDTO;
 import com.efd.striketectablet.DTO.TrainingBatteryVoltageDTO;
 import com.efd.striketectablet.DTO.TrainingConnectStatusDTO;
 import com.efd.striketectablet.DTO.TrainingPunchDTO;
+import com.efd.striketectablet.DTO.TrainingResultComboDTO;
+import com.efd.striketectablet.DTO.TrainingResultSetDTO;
+import com.efd.striketectablet.DTO.TrainingResultWorkoutDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.credential.LoginActivity;
 import com.efd.striketectablet.activity.profile.ProfileFragment;
 import com.efd.striketectablet.activity.training.TrainingFragment;
-import com.efd.striketectablet.activity.trainingstats.TrainingStatsFragment;
+import com.efd.striketectablet.activity.trainingstats.fragment.TotalInfoStatsFragment;
+import com.efd.striketectablet.activity.trainingstats.fragment.TrainingStatsFragment;
 import com.efd.striketectablet.bluetooth.Connection.ConnectionManager;
 import com.efd.striketectablet.bluetooth.Connection.ConnectionThread;
 import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionConfig;
@@ -53,7 +56,6 @@ import com.efd.striketectablet.util.StatisticUtil;
 import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.JSONParsers;
-import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 import com.efd.striketectablet.utilities.TrainingManager;
 import com.efd.striketectablet.utilities.TrainingTimer;
 import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
@@ -62,7 +64,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -160,6 +161,11 @@ public class MainActivity extends AppCompatActivity {
     public static void setSynchronizingWithServer(boolean isSynchronizingWithServer) {
         MainActivity.isSynchronizingWithServer = isSynchronizingWithServer;
     }
+
+    public TrainingResultComboDTO trainingresultComboDTO;
+
+    public TrainingResultSetDTO trainingResultSetDTO;
+    public TrainingResultWorkoutDTO trainingResultWorkoutDTO;
 
     public MainActivity() {
         flagForDevice = false;
@@ -1159,11 +1165,11 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new ProfileFragment();
+                    return ProfileFragment.newInstance();
                 case 1:
-                    return new TrainingFragment();
+                    return TrainingFragment.newInstance();
                 case 2:
-                    return new TrainingStatsFragment();
+                    return TrainingStatsFragment.newInstance();
 
                 default:
                     return null;
@@ -1181,6 +1187,11 @@ public class MainActivity extends AppCompatActivity {
             return POSITION_NONE;
         }
 
+    }
+
+    public void showStats(int position){
+        viewPager.setCurrentItem(2);
+        TrainingStatsFragment.trainingStatsFragment.updateStatFragment(position);
     }
 
     @Override

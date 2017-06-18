@@ -44,5 +44,6 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
+    compile 'me.relex:circleindicator:1.2.2@aar'
     testCompile 'junit:junit:4.12'
 }

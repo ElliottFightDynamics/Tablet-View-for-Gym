@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="today_itembgcolor">#1a232b</color>
+
     <color name="header_text_color_blue">#29f7ff</color>
 
     <color name="force_text_color">#00ffba</color>

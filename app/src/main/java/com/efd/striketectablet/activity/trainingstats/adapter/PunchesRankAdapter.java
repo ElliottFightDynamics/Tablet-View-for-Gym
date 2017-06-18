@@ -1,4 +1,4 @@
-package com.efd.striketectablet.activity.trainingstats;
+package com.efd.striketectablet.activity.trainingstats.adapter;
 
 
 import android.content.Context;

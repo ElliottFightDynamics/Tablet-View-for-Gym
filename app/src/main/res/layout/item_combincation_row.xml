@@ -71,10 +71,10 @@
 
     </LinearLayout>
 
-    <ImageView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/separator"
+        android:layout_height="1dp"
+        android:background="@drawable/separator"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

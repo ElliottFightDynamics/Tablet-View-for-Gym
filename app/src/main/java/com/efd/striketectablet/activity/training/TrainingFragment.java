@@ -17,11 +17,12 @@ import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.activity.training.combination.CombinationFragment;
 import com.efd.striketectablet.activity.training.combination.NewCombinationActivity;
 import com.efd.striketectablet.activity.training.quickstart.QuickstartTrainingPresetFragment;
-import com.efd.striketectablet.activity.training.round.TrainingPresetFragment;
+import com.efd.striketectablet.activity.training.round.RoundTrainingPresetFragment;
 import com.efd.striketectablet.activity.training.sets.NewSetRoutineActivity;
 import com.efd.striketectablet.activity.training.sets.SetsFragment;
 import com.efd.striketectablet.activity.training.workout.NewWorkoutActivity;
 import com.efd.striketectablet.activity.training.workout.WorkoutFragment;
+import com.efd.striketectablet.activity.trainingstats.fragment.TrainingStatsFragment;
 import com.efd.striketectablet.adapter.TrainingTabPageAdapter;
 
 public class TrainingFragment extends Fragment {
@@ -38,6 +39,13 @@ public class TrainingFragment extends Fragment {
     TrainingTabPageAdapter pageAdapter;
 
     private static FragmentManager fragmentManager;
+
+    public static TrainingFragment trainingFragment;
+
+    public static Fragment newInstance() {
+        trainingFragment = new TrainingFragment();
+        return trainingFragment;
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -84,7 +92,7 @@ public class TrainingFragment extends Fragment {
             public void onClick(View v) {
                 trainingViewPager.setCurrentItem(0);
                 QuickstartTrainingPresetFragment.trainingPresetFragment.onResume();
-//                TrainingPresetFragment.trainingPresetFragment.onResume();
+//                RoundTrainingPresetFragment.trainingPresetFragment.onResume();
             }
         });
 
@@ -92,9 +100,9 @@ public class TrainingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 trainingViewPager.setCurrentItem(1);
-                TrainingPresetFragment.trainingPresetFragment.onResume();
+                RoundTrainingPresetFragment.trainingPresetFragment.onResume();
 //                pageAdapter.getItem(1).onResume();
-//                TrainingPresetFragment.trainingPresetFragment.onResume();
+//                RoundTrainingPresetFragment.trainingPresetFragment.onResume();
             }
         });
 

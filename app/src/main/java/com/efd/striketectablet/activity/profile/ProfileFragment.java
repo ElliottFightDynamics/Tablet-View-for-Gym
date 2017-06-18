@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
+import com.efd.striketectablet.activity.training.TrainingFragment;
 import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
 import com.efd.striketectablet.bluetooth.BluetoothScanActivity;
 import com.efd.striketectablet.customview.CustomButton;
@@ -78,6 +79,13 @@ public class ProfileFragment extends Fragment  {
     private String leftDeviceAddress, rightDeviceAddress;
     private boolean isLeftSearched = false;
     private boolean isRightSearched = false;
+
+    public static ProfileFragment profileFragment;
+
+    public static Fragment newInstance() {
+        profileFragment = new ProfileFragment();
+        return profileFragment;
+    }
 
     @Override
     public void onAttach(Activity activity) {

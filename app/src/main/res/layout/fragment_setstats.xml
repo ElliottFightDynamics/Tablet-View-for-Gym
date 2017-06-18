@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/today_stats"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <com.efd.striketectablet.customview.CustomTextView
+        android:id="@+id/set_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Combo Set #1"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:layout_gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:id="@+id/resultview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <ListView
+            android:id="@+id/combolistview"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:divider="@color/transparent"
+            android:listSelector="@color/transparent"
+            android:scrollbars="none">
+
+        </ListView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/setlistbg"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/trainingstats_left_line" />
+
+                <com.efd.striketectablet.customview.CustomTextView
+                    android:layout_width="300dp"
+                    android:layout_height="match_parent"
+
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/btn_bg_fill"
+                    android:gravity="center"
+                    android:text="RESULT"
+                    android:textColor="@color/punches_text_color"
+                    android:textSize="25sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/trainingstats_right_line" />
+
+            </LinearLayout>
+
+            <ListView
+                android:layout_marginTop="10dp"
+                android:id="@+id/punches_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/transparent"
+                android:listSelector="@color/transparent"
+                android:scrollbars="none">
+
+            </ListView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <!--<com.efd.striketectablet.customview.CustomTextView-->
+        <!--android:id="@+id/set_name"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Combo Set #1"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="20sp"-->
+        <!--android:layout_gravity="center_horizontal"/>-->
+    <!---->
+    <!---->
+
+    <!--<ExpandableListView-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:id="@+id/combolistview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:scrollbars="none"-->
+        <!--android:listSelector="@color/transparent"-->
+        <!--android:divider="@color/transparent">-->
+
+    <!--</ExpandableListView>-->
+
+</LinearLayout>

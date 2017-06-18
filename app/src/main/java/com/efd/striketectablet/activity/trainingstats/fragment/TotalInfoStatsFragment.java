@@ -1,4 +1,4 @@
-package com.efd.striketectablet.activity.trainingstats;
+package com.efd.striketectablet.activity.trainingstats.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,11 +11,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.efd.striketectablet.DTO.PunchesRankDTO;
-import com.efd.striketectablet.DTO.TrainingPunchDTO;
 import com.efd.striketectablet.DTO.TrainingStatsPunchTypeInfoDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
-import com.efd.striketectablet.customview.CurveChartView;
+import com.efd.striketectablet.activity.trainingstats.adapter.CommonStatsAdapter;
+import com.efd.striketectablet.activity.trainingstats.adapter.PunchesRankAdapter;
 import com.efd.striketectablet.customview.CustomCircleView;
 import com.efd.striketectablet.util.PresetUtil;
 
@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
-public class TrainingStatsFragment extends Fragment{
+public class TotalInfoStatsFragment extends Fragment{
 
     MainActivity mainActivityInstance;
 
@@ -46,6 +46,13 @@ public class TrainingStatsFragment extends Fragment{
     private int currentSelected = -1;
 
     TextView bestpunchSpeedView, bestpunchForceView, totalPunchesView, activeTimeView, inactiveTimeView, damageView;
+
+    public static TotalInfoStatsFragment totalInfoStatsFragment;
+
+    public static Fragment newInstance() {
+        totalInfoStatsFragment = new TotalInfoStatsFragment();
+        return totalInfoStatsFragment;
+    }
 
     @Override
     public void onAttach(Activity activity) {

@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.efd.striketectablet.activity.training.quickstart.QuickstartTrainingPresetFragment;
-import com.efd.striketectablet.activity.training.round.TrainingPresetFragment;
+import com.efd.striketectablet.activity.training.round.RoundTrainingPresetFragment;
 import com.efd.striketectablet.activity.training.combination.CombinationFragment;
 import com.efd.striketectablet.activity.training.workout.WorkoutFragment;
 import com.efd.striketectablet.activity.training.sets.SetsFragment;
@@ -25,7 +25,7 @@ public class TrainingTabPageAdapter extends FragmentPagerAdapter {
         if(position == 0) {
             f = QuickstartTrainingPresetFragment.newInstance(_context, "quickstart");
         } else if(position == 1) {
-            f = TrainingPresetFragment.newInstance(_context, "round");
+            f = RoundTrainingPresetFragment.newInstance(_context, "round");
         } else if(position == 2) {
             f = CombinationFragment.newInstance(_context);
         }else if (position == 3){
