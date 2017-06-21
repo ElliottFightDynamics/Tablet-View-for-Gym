@@ -4,8 +4,17 @@ import java.util.ArrayList;
 
 public class TrainingResultComboDTO {
 
+    private String time;
     private String comboname;
     private ArrayList<TrainingResultPunchDTO> punches;
+
+    public String getTime(){
+        return time;
+    }
+
+    public void setTime(String time){
+        this.time = time;
+    }
 
     public String getComboname(){
         return comboname;
@@ -25,10 +34,11 @@ public class TrainingResultComboDTO {
 
 
 
-    public TrainingResultComboDTO(String comboname, ArrayList<TrainingResultPunchDTO> punches) {
+    public TrainingResultComboDTO(String comboname, ArrayList<TrainingResultPunchDTO> punches, String time) {
         super();
         this.comboname = comboname;
         this.punches = punches;
+        this.time = time;
     }
 
     public TrainingResultComboDTO(){

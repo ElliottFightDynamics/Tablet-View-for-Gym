@@ -332,7 +332,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private void updateUserInfo(){
         int serverUserId = MainActivity.db.getServerID(Integer.valueOf(userId));
 
-        RetrofitSingleton.CREDENTIAL_REST.updateUser(String.valueOf(serverUserId), traineeFirstNameValue, traineeLastNameValue, stanceValue, genderValue, birthDate, weightCountValue,
+        RetrofitSingleton.USER_REST.updateUser(String.valueOf(serverUserId), traineeFirstNameValue, traineeLastNameValue, stanceValue, genderValue, birthDate, weightCountValue,
                 reachCountValue, traineeSkillLevelValue, traineeHeightValue, traineeGloveTypeValue, traineeEmail,CommonUtils.getAccessTokenValue(getApplicationContext())).enqueue(new IndicatorCallback<AuthenticationDTO>(this) {
             @Override
             public void onResponse(Call<AuthenticationDTO> call, Response<AuthenticationDTO> response) {

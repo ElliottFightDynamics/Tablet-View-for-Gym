@@ -100,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
             Call call = RetrofitSingleton.CREDENTIAL_REST.register(fname, lname, email, "12345", PresetUtil.countryIDList.get(0), email, pwd,
                     PresetUtil.questionIDList.get(securitySpinner.getSelectedItemPosition()), answer, "", "", "", "", "", "");
             Log.e("Super", "call = " + call.request().body().toString());
-            Log.e("Super", "params = " + fname + "   " + lname + "   " + email +"  " + pwd);
+            Log.e("Super", "params = " + fname + "   " + lname + "   " + email +"  " + pwd + "   " + PresetUtil.questionIDList.get(securitySpinner.getSelectedItemPosition()));
             call.enqueue(new IndicatorCallback<RegisterResponseDTO>(this) {
                 @Override
                 public void onResponse(Call<RegisterResponseDTO> call, Response<RegisterResponseDTO> response) {
@@ -118,6 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
                             StatisticUtil.showToastMessage(registerResponseDTO.getMessage());
                         }
                     } else {
+                        Log.e("Super", "message = " + response.message());
                         CommonUtils.showAlertDialogWithActivityFinish(RegisterActivity.this, EFDConstants.SERVER_ERROR);
                     }
                 }
@@ -125,6 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<RegisterResponseDTO> call, Throwable t) {
                     super.onFailure(call, t);
+                    Log.e("Super", "failed message = " + t);
                 }
             });
         }else {

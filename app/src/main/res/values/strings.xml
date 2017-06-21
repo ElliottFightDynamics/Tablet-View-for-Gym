@@ -125,6 +125,7 @@
 
     <string name="email">EMAIL</string>
     <string name="pwd">PASSWORD</string>
+
     <string name="repwd">RETYPE PASSWORD</string>
     <string name="login">LOGIN</string>
     <string name="lostpwd">LOST PASSWORD</string>
@@ -139,9 +140,11 @@
     <string name="resetpwd_guide">TO RESET YOUR PASSWORD YOU NEED TO</string>
     <string name="choose_secretquestion">CHOOSE SECRET QUESTION</string>
     <string name="resetpwd">RESET PASSWORD</string>
-    <string name="reset_success">YOU HAVE BEEN SUCCESSFULLY ANSWERED YOUR\nSECRET QUESTION. YOUR NEW PASSWORD WAS SENT\nTO YOUR EMAIL.\n\nYOU WILL BE TRANSFERED TO YOUR PROFILE SCREEN.</string>
+    <!--<string name="reset_success">YOU HAVE BEEN SUCCESSFULLY ANSWERED YOUR\nSECRET QUESTION. YOUR NEW PASSWORD WAS SENT\nTO YOUR EMAIL.\n\nYOU WILL BE TRANSFERED TO YOUR PROFILE SCREEN.</string>-->
+    <string name="reset_success">YOU HAVE BEEN SUCCESSFULLY ANSWERED YOUR\nSECRET QUESTION. PlEASE CLICK CONTINUE TO SET  \nNEW PASSWORD.</string>
     <string name="reset_fail">UNFORTUNATELY,\nYOUR ANSWER WAS NOT CORRECT.\nYOU ARE NOT LOGGED IN.\n\nPLEASE TRY AGAIN. YOU HAVE ONLY 3 ATTEMPTS</string>
     <string name="reset_sentemail">YOUR NEW PASSWORD WAS SENT TO YOUR EMAIL.</string>
+    <string name="reset_sentemailfailed">NEW PASSWORD CAN\'T SEND TO YOUR EMAIL.</string>
     <string name="reset_continue">CONTINUE</string>
     <string name="select_security_question_text">SELECT SECURITY QUESTION</string>
     <string name="security_question_spinner_prompt">SECURITY QUESTION</string>
@@ -195,6 +198,10 @@
 
     <string name="error_firstname_field_required">First name is required.</string>
     <string name="error_lastname_field_required">Last name is required.</string>
+
+    <string name="newpwd">Type New Password</string>
+    <string name="confirmpwd">Confirm New password</string>
+    <string name="changepwd">CHANGE PASSWORD</string>
 
 </resources>
 

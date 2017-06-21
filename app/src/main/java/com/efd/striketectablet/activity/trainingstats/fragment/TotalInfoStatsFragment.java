@@ -166,10 +166,10 @@ public class TotalInfoStatsFragment extends Fragment{
         initData();
 
         //set total time
-        int totaltime = MainActivity.db.getTodayTotalTime();
+        int totaltime = MainActivity.db.getTodayTotalTime("2016-00-00");
         valueLists.set(keyLists.indexOf("TRAINING TIME"), PresetUtil.changeSecondsToHours(totaltime));
 
-        ArrayList<TrainingStatsPunchTypeInfoDTO> punchTypeInfoDTOs = MainActivity.db.getTrainingStats();
+        ArrayList<TrainingStatsPunchTypeInfoDTO> punchTypeInfoDTOs = MainActivity.db.getTrainingStats("2014-33-22");
         if (punchTypeInfoDTOs.size() == 0){
             commonStatsAdapter.setData(keyLists, valueLists);
             commonStatsAdapter.notifyDataSetChanged();
@@ -284,7 +284,7 @@ public class TotalInfoStatsFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("Super", "traiing stats on resume");
+        Log.e("Super", "overview on resume");
         loadStatsInfo();
     }
 

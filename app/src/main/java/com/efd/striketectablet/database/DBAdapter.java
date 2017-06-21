@@ -239,6 +239,24 @@ public class DBAdapter {
     public static final String KEY_SERVER_USER_ROLE_ID = "server_id";
 
     //super added 2 tables for training stats page
+    //**************** training stats table *****************//
+    private static final String TRAINING_STATS_TABLE = "training_stats_table";
+    public static final String KEY_TRAINING_STATS_ID = "id";
+    public static final String KEY_TRAINING_STATS_TYPE = "trainingtype";//combo, sets, workout
+    public static final String KEY_TRAINING_STATS_TRAINING_RESULT = "trainingresult"; //result for combo, sets, workout
+    public static final String KEY_TRAINING_STATS_DATE_TIME = "datetime"; //yyyy-mm-dd
+
+    public static String getTrainingStatsTable() {
+        return TRAINING_STATS_TABLE;
+    }
+
+    private static final String DATABASE_CREATE_TRAINING_STATS_TABLE = "create table "
+            + TRAINING_STATS_TABLE
+            + " ( id integer NOT NULL primary key autoincrement, "
+            + " trainingtype text DEFAULT null, "
+            + " trainingresult text default NULL, "
+            + " datetime text default NULL);";
+
 
     // ************** gym training_session *************
     // A GYM TRAINING_DATA_TABLE initializing to gym training_data
@@ -939,6 +957,7 @@ public class DBAdapter {
             Log.d(TAG, "created table " + DATABASE_CREATE_USER_ACCESS);
 
             //super added 2 create table
+            db.execSQL(DATABASE_CREATE_TRAINING_STATS_TABLE);
             db.execSQL(DATABASE_CREATE_GYM_TRAINING_SESSION);
             db.execSQL(DATABASE_CREATE_GYM_TRAINING_STATS);
         }
@@ -1003,6 +1022,7 @@ public class DBAdapter {
             db.execSQL("DROP TABLE IF EXISTS " + USER_ACCESS_TABLE);
 
             //super added 2 db create
+            db.execSQL("DROP TABLE IF EXISTS" + TRAINING_STATS_TABLE);
             db.execSQL("DROP TABLE IF EXISTS" + GYM_TRAINING_SESSION_TABLE);
             db.execSQL("DROP TABLE IF EXISTS" + GYM_TRAINING_STATS_TABLE);
 
@@ -1495,6 +1515,52 @@ public class DBAdapter {
     }
 
     //super added this function for insert gym training session
+    //insert training stats
+    public long insertTrainingStats(String trainingtype, String trainingresult){
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        Date today = new Date();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_TRAINING_STATS_TYPE, trainingtype);
+        values.put(KEY_TRAINING_STATS_TRAINING_RESULT, trainingresult);
+        values.put(KEY_TRAINING_STATS_DATE_TIME, format.format(today));
+
+        long result = db.insert(TRAINING_STATS_TABLE, null, values);
+        return result;
+
+    }
+
+    public List<String> getTrainingStatswithtype(String type, String date){
+
+        List<String> trainingResult = new ArrayList<>();
+
+        String selectQuery = "SELECT * FROM " + TRAINING_STATS_TABLE + " WHERE TRIM(" + KEY_TRAINING_STATS_TYPE + ")='"  + type +
+                "' AND " + KEY_TRAINING_STATS_DATE_TIME + "='" + date + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try {
+            int count = cursor.getCount();
+
+            if (count > 0) {
+                cursor.moveToFirst();
+            }
+
+            for (int i = 0; i < count; i++) {
+                String result = cursor.getString(cursor.getColumnIndex(KEY_TRAINING_STATS_TRAINING_RESULT));
+                trainingResult.add(result);
+                cursor.moveToNext();
+            }
+
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return trainingResult;
+    }
     /**
      * Insert a gym training_session values into the database.
      */
@@ -1577,12 +1643,12 @@ public class DBAdapter {
         }
     }
 
-    public int getTodayTotalTime(){
+    public int getTodayTotalTime(String formatteddate){
         int totaltime = 0;
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        String formatteddate = simpleDateFormat.format(new Date());
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        String formatteddate = simpleDateFormat.format(new Date());
 
         String selectQuery = "SELECT * FROM " + GYM_TRAINING_SESSION_TABLE + " WHERE " + KEY_GYM_TRAINING_SESSION_TRAINING_SESSION_DATE + "='" + formatteddate + "'";
 
@@ -1698,14 +1764,14 @@ public class DBAdapter {
     }
 
 
-    public ArrayList<TrainingStatsPunchTypeInfoDTO> getTrainingStats(){
+    public ArrayList<TrainingStatsPunchTypeInfoDTO> getTrainingStats(String formatteddate){
 
-        DateFormat sessionDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        sessionDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        DateFormat sessionDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        sessionDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         ArrayList<TrainingStatsPunchTypeInfoDTO> punchTypeInfoDTOs = new ArrayList<>();
 
-        String selectQuery = "SELECT  * FROM " + GYM_TRAINING_STATS_TABLE + " WHERE " + KEY_GYM_TRAINING_STATS_DATE + "='" + sessionDateFormat.format(new Date()) + "'";
+        String selectQuery = "SELECT  * FROM " + GYM_TRAINING_STATS_TABLE + " WHERE " + KEY_GYM_TRAINING_STATS_DATE + "='" + formatteddate + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         try {

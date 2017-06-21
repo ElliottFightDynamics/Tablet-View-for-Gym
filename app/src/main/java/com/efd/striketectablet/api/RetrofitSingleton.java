@@ -17,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitSingleton {
 
     public static CredentialRest CREDENTIAL_REST;
+    public static UserRest USER_REST;
 
     private static App application;
     private static OkHttpClient httpClient = new OkHttpClient.Builder()
@@ -50,6 +51,7 @@ public class RetrofitSingleton {
     public static void setApplication(App application) {
         RetrofitSingleton.application = application;
         CREDENTIAL_REST = createService(CredentialRest.class);
+        USER_REST = createService(UserRest.class);
     }
 
 }

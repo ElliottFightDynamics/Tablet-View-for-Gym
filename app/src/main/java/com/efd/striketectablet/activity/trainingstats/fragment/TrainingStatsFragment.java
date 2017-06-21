@@ -5,20 +5,31 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.activity.trainingstats.adapter.TodayStatsPageAdapter;
+import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
+import com.efd.striketectablet.util.PresetUtil;
+import com.efd.striketectablet.utilities.EFDConstants;
+
+import java.util.Date;
 
 public class TrainingStatsFragment extends Fragment {
 
     private View view;
     TextView overviewView, combinationView, setView, scriptedView;
     View overviewHighlight, combinationHighlight, setHighlight, scriptedHighlight;
+
+    Spinner daySpinner, monthSpinner, yearSpinner;
+    CustomSpinnerAdapter dayAdapter, monthAdapter, yearAdapter;
 
     private ViewPager mViewPager;
     private TodayStatsPageAdapter pageAdapter;
@@ -34,6 +45,8 @@ public class TrainingStatsFragment extends Fragment {
         trainingStatsFragment = new TrainingStatsFragment();
         return trainingStatsFragment;
     }
+
+    private String currentSelectedDay;
 
 
     @Override
@@ -60,6 +73,18 @@ public class TrainingStatsFragment extends Fragment {
 
     private void initView(){
         fragmentManager = getChildFragmentManager();
+
+        daySpinner = (Spinner)view.findViewById(R.id.day_spinner);
+        dayAdapter = new CustomSpinnerAdapter(getActivity(), R.layout.custom_spinner_digit_with_img, PresetUtil.dayList, EFDConstants.SPINNER_DIGIT_ORANGE);
+        daySpinner.setAdapter(dayAdapter);
+
+        monthSpinner = (Spinner)view.findViewById(R.id.month_spinner);
+        monthAdapter = new CustomSpinnerAdapter(getActivity(), R.layout.custom_spinner_text_with_img, PresetUtil.threeCharMonthList, EFDConstants.SPINNER_TEXT_ORANGE);
+        monthSpinner.setAdapter(monthAdapter);
+
+        yearSpinner = (Spinner)view.findViewById(R.id.year_spinner);
+        yearAdapter = new CustomSpinnerAdapter(getActivity(), R.layout.custom_spinner_digit_with_img, PresetUtil.statYearList, EFDConstants.SPINNER_DIGIT_ORANGE);
+        yearSpinner.setAdapter(yearAdapter);
 
         overviewView = (TextView)view.findViewById(R.id.overview);
         combinationView = (TextView)view.findViewById(R.id.combination);
@@ -120,7 +145,61 @@ public class TrainingStatsFragment extends Fragment {
             }
         });
 
+        daySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                updateTrainingStats();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                updateTrainingStats();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                updateTrainingStats();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        showToday();
         updateTab(0);
+    }
+
+    private void showToday(){
+        Date date = new Date();
+
+        String year = ((String) android.text.format.DateFormat.format("yyyy", date));
+        String month = ((String) android.text.format.DateFormat.format("MMM", date));
+        String day = ((String) android.text.format.DateFormat.format("dd", date));
+
+        daySpinner.setSelection(PresetUtil.getDayPosition(day));
+        monthSpinner.setSelection(PresetUtil.getMonthPosition(month));
+        yearSpinner.setSelection(PresetUtil.getStatYearPosition(year));
+    }
+
+    private void updateTrainingStats(){
+        String currentDay = yearSpinner.getSelectedItem().toString() + "-" + monthSpinner.getSelectedItem().toString() + "-" + daySpinner.getSelectedItem().toString() ;
+        Log.e("Super", "selected day = " + currentDay);
     }
 
     public void updateStatFragment(int position){

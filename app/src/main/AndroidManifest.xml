@@ -78,6 +78,10 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:name=".activity.credential.ChangePasswordActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".activity.credential.RegisterActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateHidden" />

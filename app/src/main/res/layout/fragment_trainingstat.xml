@@ -17,6 +17,46 @@
         android:layout_marginRight="10dp"
         android:padding="5dp">
 
+        <LinearLayout
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <Spinner
+                android:id="@+id/year_spinner"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawSelectorOnTop="true"
+                android:gravity="left|center_vertical"
+                android:nextFocusDown="@+id/registration_accnt_setup_next_button"
+                android:prompt="@string/security_question_spinner_prompt" />
+
+            <Spinner
+                android:layout_marginLeft="30dp"
+                android:id="@+id/month_spinner"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawSelectorOnTop="true"
+                android:gravity="left|center_vertical"
+                android:nextFocusDown="@+id/registration_accnt_setup_next_button"
+                android:prompt="@string/security_question_spinner_prompt" />
+
+            <Spinner
+                android:layout_marginLeft="30dp"
+                android:id="@+id/day_spinner"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawSelectorOnTop="true"
+                android:gravity="left|center_vertical"
+                android:nextFocusDown="@+id/registration_accnt_setup_next_button"
+                android:prompt="@string/security_question_spinner_prompt" />
+
+        </LinearLayout>
+
         <com.efd.striketectablet.customview.CustomTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"

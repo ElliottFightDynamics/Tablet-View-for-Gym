@@ -1,16 +1,25 @@
 package com.efd.striketectablet.util;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.DTO.SetsDTO;
+import com.efd.striketectablet.DTO.TrainingResultComboDTO;
+import com.efd.striketectablet.DTO.TrainingResultSetDTO;
+import com.efd.striketectablet.DTO.TrainingResultWorkoutDTO;
 import com.efd.striketectablet.DTO.WorkoutDTO;
+import com.efd.striketectablet.database.DBAdapter;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by super on 10/05/2016.
@@ -245,5 +254,73 @@ public class ComboSetUtil {
         }
 
         SharedPreferencesUtils.saveWorkoutList(mContext, newWorkoutDtos);
+    }
+
+    public static ArrayList<TrainingResultComboDTO> getCombostatsforDay(DBAdapter dbAdapter, String formatteddate){
+        List<String> comboResults = dbAdapter.getTrainingStatswithtype(EFDConstants.TYPE_COMBO, formatteddate);
+        ArrayList<TrainingResultComboDTO> resultComboDTOs = new ArrayList<>();
+        Gson gson = new Gson();
+
+        for (int i = 0; i < comboResults.size(); i++){
+            TrainingResultComboDTO trainingResultComboDTO;
+            Type type = new TypeToken<TrainingResultComboDTO>(){}.getType();
+            trainingResultComboDTO = gson.fromJson(comboResults.get(i), type);
+
+            resultComboDTOs.add(trainingResultComboDTO);
+        }
+
+        return resultComboDTOs;
+    }
+
+    public static ArrayList<TrainingResultSetDTO> getSetstatsforDay(DBAdapter dbAdapter, String formatteddate){
+        List<String> setResults = dbAdapter.getTrainingStatswithtype(EFDConstants.TYPE_SET, formatteddate);
+
+        ArrayList<TrainingResultSetDTO> resultSetDTOs = new ArrayList<>();
+        Gson gson = new Gson();
+
+        for (int i = 0; i < setResults.size(); i++){
+            TrainingResultSetDTO trainingResultSetDTO;
+            Type type = new TypeToken<TrainingResultComboDTO>(){}.getType();
+            trainingResultSetDTO = gson.fromJson(setResults.get(i), type);
+
+            resultSetDTOs.add(trainingResultSetDTO);
+        }
+
+        return resultSetDTOs;
+    }
+
+    public static ArrayList<TrainingResultWorkoutDTO> getWorkoutstatsforDay(DBAdapter dbAdapter, String formatteddate){
+        List<String> workoutResults = dbAdapter.getTrainingStatswithtype(EFDConstants.TYPE_WORKOUT, formatteddate);
+
+        ArrayList<TrainingResultWorkoutDTO> resultWorkoutDTOs = new ArrayList<>();
+        Gson gson = new Gson();
+
+        for (int i = 0; i < workoutResults.size(); i++){
+            TrainingResultWorkoutDTO trainingResultWorkoutDTO;
+            Type type = new TypeToken<TrainingResultWorkoutDTO>(){}.getType();
+            trainingResultWorkoutDTO = gson.fromJson(workoutResults.get(i), type);
+
+            resultWorkoutDTOs.add(trainingResultWorkoutDTO);
+        }
+
+        return resultWorkoutDTOs;
+    }
+
+    public static void saveComboStats(DBAdapter dbAdapter, TrainingResultComboDTO comboresult){
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(comboresult);
+        dbAdapter.insertTrainingStats(EFDConstants.TYPE_COMBO, jsonString);
+    }
+
+    public static void saveSetStats(DBAdapter dbAdapter, TrainingResultSetDTO setresult){
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(setresult);
+        dbAdapter.insertTrainingStats(EFDConstants.TYPE_SET, jsonString);
+    }
+
+    public static void saveWorkStats(DBAdapter dbAdapter, TrainingResultWorkoutDTO workoutresult){
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(workoutresult);
+        dbAdapter.insertTrainingStats(EFDConstants.TYPE_WORKOUT, jsonString);
     }
 }

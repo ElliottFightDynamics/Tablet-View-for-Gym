@@ -40,7 +40,9 @@ public class PresetUtil {
     public static ArrayList<String> dayList = new ArrayList<>();
     public static ArrayList<String> monthList = new ArrayList<>();
     public static ArrayList<String> threeCharMonthList  = new ArrayList<>();
+    public static ArrayList<String> digitMonthList = new ArrayList<>();
     public static ArrayList<String> yearList = new ArrayList<>();
+    public static ArrayList<String> statYearList = new ArrayList<>();
     public static ArrayList<String> stanceList = new ArrayList<>();
     public static ArrayList<String> skillLeveList = new ArrayList<>();
 
@@ -103,8 +105,17 @@ public class PresetUtil {
         threeCharMonthList.add("Nov");
         threeCharMonthList.add("Dec");
 
+        for (int i = 1; i < 13; i++){
+            if (i < 10){
+                digitMonthList.add("0" + i);
+            }else {
+                digitMonthList.add(String.valueOf(i));
+            }
+        }
 
-
+        for (int i = 2016; i < 2020; i++){
+            statYearList.add(String.valueOf(i));
+        }
 
         getQuestionList(context);
         getCountryList(context);
@@ -376,6 +387,12 @@ public class PresetUtil {
         return 0;
     }
 
+    public static int getStatYearPosition(String statyear){
+        for (int i = 0; i < statYearList.size(); i++){
+            if (statyear.equalsIgnoreCase(statYearList.get(i)))
+                return i;
+        }
 
-
+        return 0;
+    }
 }

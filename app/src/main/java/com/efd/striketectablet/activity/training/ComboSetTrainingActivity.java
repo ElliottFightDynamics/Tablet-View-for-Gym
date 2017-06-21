@@ -502,11 +502,11 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
         if (currentComboIndex == currentTrainingComboCount - 1){
             if (setid != -1) {
                 playBoxingBell();
-                resultSetDTO = new TrainingResultSetDTO(currentSetDTO.getName(), resultComboList);
+                resultSetDTO = new TrainingResultSetDTO(currentSetDTO.getName(), resultComboList, String.valueOf(System.currentTimeMillis()));
                 mainActivityInstance.receivePunchable = false;
                 stopTraining();
             }else {
-                resultSetDTO = new TrainingResultSetDTO("ROUND " + (roundvalue), resultComboList);
+                resultSetDTO = new TrainingResultSetDTO("ROUND " + (roundvalue), resultComboList, String.valueOf(System.currentTimeMillis()));
                 resultRoundList.add(resultSetDTO);
                 mainActivityInstance.receivePunchable = false;
             }
@@ -580,19 +580,19 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
             //training is finished,
             if (comboid != -1) {
                 playBoxingBell();
-                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList);
+                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()) );
                 mainActivityInstance.receivePunchable = false;
                 stopTraining();
 
                 //go to stats activity;
 //                startStatsActivity(2);
             }else if (setid != -1){
-                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList);
+                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()));
                 resultComboList.add(resultComboDTO);
                 mainActivityInstance.receivePunchable = false;
                 gotoNextCombo();
             }else if (workoutDTO != null){
-                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList);
+                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()));
                 resultComboList.add(resultComboDTO);
                 mainActivityInstance.receivePunchable = false;
                 gotoNextCombo();
@@ -704,10 +704,10 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     }
 
     private void startTraining(){
-        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
-            StatisticUtil.showToastMessage("Please connect with sensors");
-            return;
-        }
+//        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
+//            StatisticUtil.showToastMessage("Please connect with sensors");
+//            return;
+//        }
 
         if (comboid != -1 || setid != -1){
             //this is combo training
@@ -742,31 +742,36 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
         if (comboid != -1){
             if (mainActivityInstance.receivePunchable){
-                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList);
+                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()));
             }
 
             mainActivityInstance.trainingresultComboDTO = resultComboDTO;
+            ComboSetUtil.saveComboStats(MainActivity.db, resultComboDTO);
             mainActivityInstance.showStats(1);
 //            startStatsActivity(2);
         }else if (setid != -1){
             if (mainActivityInstance.receivePunchable){
-                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList);
+                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()));
                 resultComboList.add(resultComboDTO);
             }
 
             mainActivityInstance.trainingResultSetDTO = resultSetDTO;
+            ComboSetUtil.saveSetStats(MainActivity.db, resultSetDTO);
             mainActivityInstance.showStats(2);
 //            startStatsActivity(3);
         }else if (workoutDTO != null){
             if (mainActivityInstance.receivePunchable) {
-                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList);
+                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()));
                 resultComboList.add(resultComboDTO);
-                resultSetDTO = new TrainingResultSetDTO("ROUND " + (roundvalue + 1), resultComboList);
+                resultSetDTO = new TrainingResultSetDTO("ROUND " + (roundvalue + 1), resultComboList, String.valueOf(System.currentTimeMillis()));
                 resultRoundList.add(resultSetDTO);
             }
 
-            resultWorkoutDTO = new TrainingResultWorkoutDTO(workoutDTO.getName(), resultRoundList);
+            resultWorkoutDTO = new TrainingResultWorkoutDTO(workoutDTO.getName(), resultRoundList, String.valueOf(System.currentTimeMillis()));
+
             mainActivityInstance.trainingResultWorkoutDTO = resultWorkoutDTO;
+            ComboSetUtil.saveWorkStats(MainActivity.db, resultWorkoutDTO);
+
             mainActivityInstance.showStats(3);
 //            startStatsActivity(4);
         }
@@ -806,8 +811,8 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                         String text = PresetUtil.chagngeSecsToTime(currentTime) + " - STOP";
 
                         startTrainingBtn.setText(text);
-//                        if (currentTime % 3 == 0)
-//                            tmpStart();
+                        if (currentTime % 1 == 0)
+                            tmpStart();
                     }
                 });
             }

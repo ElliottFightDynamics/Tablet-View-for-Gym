@@ -193,8 +193,8 @@ public class MainActivity extends AppCompatActivity {
         punchHistoryGraph = new LinkedList<PunchHistoryGraphDataDetails>();
 
         db = DBAdapter.getInstance(MainActivity.this);
-        db.deleteGymTrainingSession();
-        db.deleteGymTrainingStats();
+//        db.deleteGymTrainingSession();
+//        db.deleteGymTrainingStats();
 
         isSynchronizingWithServer = false;
         deleteCalendarSummaryBeforeTwoYears();

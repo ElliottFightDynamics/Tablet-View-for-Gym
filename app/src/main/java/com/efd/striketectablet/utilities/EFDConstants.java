@@ -315,4 +315,7 @@ public class EFDConstants {
 
     public static final String ROUNDTRAINING = "roundtraining";
 
+    public static final String TYPE_COMBO = "combo";
+    public static final String TYPE_SET = "set";
+    public static final String TYPE_WORKOUT = "workout";
 }
