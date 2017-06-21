@@ -511,6 +511,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                 mainActivityInstance.receivePunchable = false;
             }
         }else {
+            resultPunchList = new ArrayList<>();
             nextcomboTip.setVisibility(View.VISIBLE);
             progressView.setVisibility(View.INVISIBLE);
 
@@ -1001,34 +1002,39 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
         String punchType = details.punchType;
 
         if (punchType.equalsIgnoreCase(EFDConstants.JAB_ABBREVIATION_TEXT)) {
-            setPunchTypeText(hand, EFDConstants.JAB);
+            setPunchTypeText(hand, EFDConstants.JAB, currentSpeed, currentForce);
         } else if (punchType.equalsIgnoreCase(EFDConstants.HOOK_ABBREVIATION_TEXT)) {
-            setPunchTypeText(hand, EFDConstants.HOOK);
+            setPunchTypeText(hand, EFDConstants.HOOK, currentSpeed, currentForce);
         } else if (punchType.equalsIgnoreCase(EFDConstants.STRAIGHT_ABBREVIATION_TEXT)) {
-            setPunchTypeText(hand, EFDConstants.STRAIGHT);
+            setPunchTypeText(hand, EFDConstants.STRAIGHT, currentSpeed, currentForce);
         } else if (punchType.equalsIgnoreCase(EFDConstants.UPPERCUT_ABBREVIATION_TEXT)) {
-            setPunchTypeText(hand, EFDConstants.UPPERCUT);
+            setPunchTypeText(hand, EFDConstants.UPPERCUT, currentSpeed, currentForce);
         } else if (punchType.equalsIgnoreCase(EFDConstants.UNRECOGNIZED_ABBREVIATION_TEXT)) {
-            setPunchTypeText(hand, EFDConstants.UNRECOGNIZED);
+            setPunchTypeText(hand, EFDConstants.UNRECOGNIZED, currentSpeed, currentForce);
         }
 
     }
 
-    private void setPunchTypeText(String hand, String punchType) {
+    private void setPunchTypeText(String hand, String punchType, int speed, int force) {
         String detectedPunchType = hand + " " + punchType;
         punchTypeView.setText(detectedPunchType);
 
         String successString = ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(currentPunchIndex));
         if (successString.equalsIgnoreCase(EFDConstants.JAB) || successString.equalsIgnoreCase(EFDConstants.STRAIGHT)){
             if (punchType.equalsIgnoreCase(successString)){
+                resultPunchList.add(new TrainingResultPunchDTO(detectedPunchType, currentComboDTO.getComboTypes().get(currentPunchIndex), speed, force, true));
                 updateView(true);
             }else
+                resultPunchList.add(new TrainingResultPunchDTO(detectedPunchType, currentComboDTO.getComboTypes().get(currentPunchIndex), speed, force, false));
                 updateView(false);
         }else {
-            if (detectedPunchType.equalsIgnoreCase(successString))
+            if (detectedPunchType.equalsIgnoreCase(successString)) {
+                resultPunchList.add(new TrainingResultPunchDTO(detectedPunchType, currentComboDTO.getComboTypes().get(currentPunchIndex), speed, force, true));
                 updateView(true);
-            else
+            }else {
+                resultPunchList.add(new TrainingResultPunchDTO(detectedPunchType, currentComboDTO.getComboTypes().get(currentPunchIndex), speed, force, false));
                 updateView(false);
+            }
         }
 
     }
