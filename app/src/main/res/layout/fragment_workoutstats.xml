@@ -22,154 +22,151 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="10dp"
-        >
+        android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/round_listview"
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:listSelector="@color/transparent"
-            android:divider="@color/transparent">
-
-        </ListView>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="0.7"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/round_listbg"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="15dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/left_arrow_line_bg"/>
-
-                <com.efd.striketectablet.customview.CustomTextView
-                    android:textColor="@color/punches_text_color"
-                    android:layout_width="250dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/btn_bg_fill"
-                    android:text="COMBOS"
-                    android:textSize="25sp"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"/>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="15dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/right_arrow_line_bg"/>
-
-            </LinearLayout>
-
-            <ListView
-                android:layout_marginTop="10dp"
-                android:id="@+id/combo_listview"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:scrollbars="none"
-                android:listSelector="@color/transparent"
-                android:divider="@color/transparent">
-
-            </ListView>
-
-        </LinearLayout>
+        <Spinner
+            android:id="@+id/workout_spinner"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:drawSelectorOnTop="true"
+            android:gravity="left|center_vertical"
+            android:nextFocusDown="@+id/registration_accnt_setup_next_button"
+            android:prompt="@string/security_question_spinner_prompt"
+            android:layout_gravity="center_horizontal"/>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/setlistbg"
-            android:padding="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="15dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/left_arrow_line_bg"/>
-
-                <com.efd.striketectablet.customview.CustomTextView
-                    android:textColor="@color/punches_text_color"
-                    android:layout_width="300dp"
-
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/btn_bg_fill"
-                    android:text="RESULT"
-                    android:textSize="25sp"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"/>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="15dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/right_arrow_line_bg"/>
-
-            </LinearLayout>
+            >
 
             <ListView
-                android:layout_marginTop="10dp"
-                android:id="@+id/punches_listview"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.2"
+                android:id="@+id/round_listview"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"
+                android:layout_height="match_parent"
                 android:scrollbars="none"
                 android:listSelector="@color/transparent"
                 android:divider="@color/transparent">
 
             </ListView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.9"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/round_listbg"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/left_arrow_line_bg"/>
+
+                    <com.efd.striketectablet.customview.CustomTextView
+                        android:textColor="@color/punches_text_color"
+                        android:layout_width="250dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/btn_bg_fill"
+                        android:text="COMBOS"
+                        android:textSize="25sp"
+                        android:gravity="center"
+                        android:layout_gravity="center_horizontal"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/right_arrow_line_bg"/>
+
+                </LinearLayout>
+
+                <ListView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/combo_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="none"
+                    android:listSelector="@color/transparent"
+                    android:divider="@color/transparent">
+
+                </ListView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.9"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/setlistbg"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/left_arrow_line_bg"/>
+
+                    <com.efd.striketectablet.customview.CustomTextView
+                        android:textColor="@color/punches_text_color"
+                        android:layout_width="300dp"
+
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/btn_bg_fill"
+                        android:text="RESULT"
+                        android:textSize="25sp"
+                        android:gravity="center"
+                        android:layout_gravity="center_horizontal"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="15dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/right_arrow_line_bg"/>
+
+                </LinearLayout>
+
+                <ListView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/punches_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.2"
+                    android:scrollbars="none"
+                    android:listSelector="@color/transparent"
+                    android:divider="@color/transparent">
+
+                </ListView>
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
-
-    <!--<com.efd.striketectablet.customview.CustomTextView-->
-        <!--android:id="@+id/workout_name"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Combo Set #1"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:textSize="20sp"-->
-        <!--android:layout_gravity="center_horizontal"/>-->
-
-    <!--<ExpandableListView-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:id="@+id/roundlistview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:scrollbars="none"-->
-        <!--android:listSelector="@color/transparent"-->
-        <!--android:divider="@color/transparent">-->
-
-    <!--</ExpandableListView>-->
 
 </LinearLayout>

@@ -63,8 +63,7 @@ public class WorkoutSetListAdapter extends ArrayAdapter<Integer> {
             viewHolder = new ViewHolder();
             viewHolder.parentView = (LinearLayout)convertView.findViewById(R.id.combo_parent);
             viewHolder.setNameView = (CustomTextView)convertView.findViewById(R.id.combo_name);
-//            viewHolder.comboStringView = (CustomTextView)convertView.findViewById(R.id.combo_string);
-//            viewHolder.settingsView = (ImageView)convertView.findViewById(R.id.settings);
+            viewHolder.punchkeysView = (CustomTextView)convertView.findViewById(R.id.punch_keys);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
@@ -74,7 +73,8 @@ public class WorkoutSetListAdapter extends ArrayAdapter<Integer> {
         SetsDTO setsDTO = ComboSetUtil.getSetDtowithID(setID);
         if (setsDTO != null)
             viewHolder.setNameView.setText(setsDTO.getName());
-//        viewHolder.comboStringView.setText(comboDTO.getCombos());
+
+        viewHolder.punchkeysView.setVisibility(View.GONE);
 
         return convertView;
     }
@@ -82,8 +82,7 @@ public class WorkoutSetListAdapter extends ArrayAdapter<Integer> {
     public static class ViewHolder {
 
         public LinearLayout parentView;
-        public CustomTextView setNameView;//, comboStringView;//, comboRangeView;
-//        public ImageView settingsView;
+        public CustomTextView setNameView, punchkeysView;
     }
 }
 

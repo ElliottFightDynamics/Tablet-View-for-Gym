@@ -19,6 +19,7 @@ import com.efd.striketectablet.activity.trainingstats.fragment.ComboStatsFragmen
 import com.efd.striketectablet.activity.trainingstats.fragment.SetStatsFragment;
 import com.efd.striketectablet.activity.trainingstats.fragment.WorkoutStatsFragment;
 import com.efd.striketectablet.customview.CustomTextView;
+import com.efd.striketectablet.util.ComboSetUtil;
 
 import java.util.ArrayList;
 
@@ -77,8 +78,7 @@ public class TrainingResultCombosAdapter extends ArrayAdapter<TrainingResultComb
             viewHolder = new ViewHolder();
             viewHolder.parentView = (LinearLayout)convertView.findViewById(R.id.combo_parent);
             viewHolder.roundNameView = (CustomTextView)convertView.findViewById(R.id.combo_name);
-//            viewHolder.comboStringView = (CustomTextView)convertView.findViewById(R.id.combo_string);
-//            viewHolder.settingsView = (ImageView)convertView.findViewById(R.id.settings);
+            viewHolder.punchkeysView = (CustomTextView)convertView.findViewById(R.id.punch_keys);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
@@ -87,8 +87,6 @@ public class TrainingResultCombosAdapter extends ArrayAdapter<TrainingResultComb
         TrainingResultComboDTO resultComboDTO = getItem(position);
 
         final String comboName = resultComboDTO.getComboname();
-
-        Log.e("Super", "comboname = " + comboName);
 
         if (currentPosition == position){
             viewHolder.parentView.setBackgroundColor(mContext.getResources().getColor(R.color.set_selectcolorinworkout));
@@ -105,6 +103,7 @@ public class TrainingResultCombosAdapter extends ArrayAdapter<TrainingResultComb
 
 
         viewHolder.roundNameView.setText(comboName);
+        viewHolder.punchkeysView.setText(ComboSetUtil.getPunchkeyDetail(resultComboDTO));
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +121,7 @@ public class TrainingResultCombosAdapter extends ArrayAdapter<TrainingResultComb
     public static class ViewHolder {
 
         public LinearLayout parentView;
-        public CustomTextView roundNameView;//, comboStringView;//, comboRangeView;
+        public CustomTextView roundNameView, punchkeysView;//, comboStringView;//, comboRangeView;
 //        public ImageView settingsView;
     }
 }

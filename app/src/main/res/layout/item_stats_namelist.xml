@@ -15,31 +15,49 @@
             android:layout_margin="10dp"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+
+                <com.efd.striketectablet.customview.CustomTextView
+                    android:id="@+id/combo_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:text="Attack">
+
+                </com.efd.striketectablet.customview.CustomTextView>
+
+                <com.efd.striketectablet.customview.CustomTextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/punch_keys"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="35dp"
+                    android:gravity="center_vertical|end"
+                    android:textColor="@color/punches_text_color"
+                    android:textSize="16sp"
+                    android:text="">
+
+                </com.efd.striketectablet.customview.CustomTextView>
+
+            </LinearLayout>
 
             <com.efd.striketectablet.customview.CustomTextView
                 android:layout_marginLeft="10dp"
-                android:id="@+id/combo_name"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:id="@+id/time"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/white"
-                android:textSize="25sp"
-                android:text="Attack">
-
-            </com.efd.striketectablet.customview.CustomTextView>
-
-
-            <com.efd.striketectablet.customview.CustomTextView
-                android:layout_marginLeft="20dp"
-                android:id="@+id/punch_keys"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|end"
                 android:textColor="@color/punches_text_color"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:text="">
 
             </com.efd.striketectablet.customview.CustomTextView>

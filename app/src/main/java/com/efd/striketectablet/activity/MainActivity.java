@@ -1191,6 +1191,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void showStats(int position){
         viewPager.setCurrentItem(2);
+        TrainingStatsFragment.trainingStatsFragment.showToday();
         TrainingStatsFragment.trainingStatsFragment.updateStatFragment(position);
     }
 

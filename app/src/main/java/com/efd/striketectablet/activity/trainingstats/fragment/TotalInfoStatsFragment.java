@@ -19,6 +19,7 @@ import com.efd.striketectablet.activity.trainingstats.adapter.PunchesRankAdapter
 import com.efd.striketectablet.customview.CustomCircleView;
 import com.efd.striketectablet.util.PresetUtil;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -149,6 +150,7 @@ public class TotalInfoStatsFragment extends Fragment{
     }
 
     private void loadStatsInfo(){
+        String currentDay = TrainingStatsFragment.trainingStatsFragment.getCurrentSelectedDay();
         if (keyLists != null && keyLists.size() > 0)
             keyLists.clear();
         if (valueLists != null && valueLists.size() > 0)
@@ -166,10 +168,10 @@ public class TotalInfoStatsFragment extends Fragment{
         initData();
 
         //set total time
-        int totaltime = MainActivity.db.getTodayTotalTime("2016-00-00");
+        int totaltime = MainActivity.db.getTodayTotalTime(currentDay);
         valueLists.set(keyLists.indexOf("TRAINING TIME"), PresetUtil.changeSecondsToHours(totaltime));
 
-        ArrayList<TrainingStatsPunchTypeInfoDTO> punchTypeInfoDTOs = MainActivity.db.getTrainingStats("2014-33-22");
+        ArrayList<TrainingStatsPunchTypeInfoDTO> punchTypeInfoDTOs = MainActivity.db.getTrainingStats(currentDay);
         if (punchTypeInfoDTOs.size() == 0){
             commonStatsAdapter.setData(keyLists, valueLists);
             commonStatsAdapter.notifyDataSetChanged();
@@ -450,4 +452,20 @@ public class TotalInfoStatsFragment extends Fragment{
             return (int) (rhs.punchcount - lhs.punchcount);
         }
     };
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

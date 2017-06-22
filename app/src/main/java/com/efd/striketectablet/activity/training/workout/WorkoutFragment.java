@@ -40,6 +40,7 @@ import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import kankan.wheel.widget.OnWheelChangedListener;
@@ -232,6 +233,22 @@ public class WorkoutFragment extends Fragment {
         super.onResume();
 
         loadWorkout();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

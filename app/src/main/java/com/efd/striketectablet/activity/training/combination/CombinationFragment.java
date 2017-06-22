@@ -19,6 +19,7 @@ import com.efd.striketectablet.adapter.CombinationListAdapter;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class CombinationFragment extends Fragment {
@@ -102,5 +103,21 @@ public class CombinationFragment extends Fragment {
 
         comboAdapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -77,8 +77,7 @@ public class TrainingResultRoundListAdapter extends ArrayAdapter<TrainingResultS
             viewHolder = new ViewHolder();
             viewHolder.parentView = (LinearLayout)convertView.findViewById(R.id.combo_parent);
             viewHolder.roundNameView = (CustomTextView)convertView.findViewById(R.id.combo_name);
-//            viewHolder.comboStringView = (CustomTextView)convertView.findViewById(R.id.combo_string);
-//            viewHolder.settingsView = (ImageView)convertView.findViewById(R.id.settings);
+            viewHolder.punchkeysView = (CustomTextView)convertView.findViewById(R.id.punch_keys);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
@@ -95,7 +94,7 @@ public class TrainingResultRoundListAdapter extends ArrayAdapter<TrainingResultS
 
 
         viewHolder.roundNameView.setText(trainingResultSetDTO.getSetname());
-//        viewHolder.comboStringView.setText(comboDTO.getCombos());
+        viewHolder.punchkeysView.setVisibility(View.GONE);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,8 +112,7 @@ public class TrainingResultRoundListAdapter extends ArrayAdapter<TrainingResultS
     public static class ViewHolder {
 
         public LinearLayout parentView;
-        public CustomTextView roundNameView;//, comboStringView;//, comboRangeView;
-//        public ImageView settingsView;
+        public CustomTextView roundNameView, punchkeysView;
     }
 }
 

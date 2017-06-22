@@ -15,18 +15,18 @@
         android:text="Combo Set #1"
         android:textColor="@color/white"
         android:textSize="30sp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"/>
 
     <LinearLayout
         android:id="@+id/resultview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
         <ListView
-            android:id="@+id/combolistview"
+            android:id="@+id/setlistview"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
@@ -38,8 +38,65 @@
 
         <LinearLayout
             android:layout_width="0dp"
+            android:layout_weight="0.8"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/round_listbg"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="15dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/left_arrow_line_bg"/>
+
+                <com.efd.striketectablet.customview.CustomTextView
+                    android:textColor="@color/punches_text_color"
+                    android:layout_width="250dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_bg_fill"
+                    android:text="COMBOS"
+                    android:textSize="25sp"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="15dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/right_arrow_line_bg"/>
+
+            </LinearLayout>
+
+            <ListView
+                android:layout_marginTop="10dp"
+                android:id="@+id/combolistview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:scrollbars="none"
+                android:listSelector="@color/transparent"
+                android:divider="@color/transparent">
+
+            </ListView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
             android:background="@drawable/setlistbg"
             android:orientation="vertical"
             android:padding="20dp">

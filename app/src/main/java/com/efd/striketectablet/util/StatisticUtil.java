@@ -7,6 +7,9 @@ import android.util.TypedValue;
 import android.widget.Toast;
 
 import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 /**
  * Created by omnic on 8/28/2016.
@@ -73,5 +76,11 @@ public class StatisticUtil {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public static String changeMilestoDate(String miles){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy, MMM dd : KK:mm a");
+
+        return dateFormat.format(Long.parseLong(miles));
     }
 }

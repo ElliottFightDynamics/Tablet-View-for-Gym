@@ -280,7 +280,7 @@ public class ComboSetUtil {
 
         for (int i = 0; i < setResults.size(); i++){
             TrainingResultSetDTO trainingResultSetDTO;
-            Type type = new TypeToken<TrainingResultComboDTO>(){}.getType();
+            Type type = new TypeToken<TrainingResultSetDTO>(){}.getType();
             trainingResultSetDTO = gson.fromJson(setResults.get(i), type);
 
             resultSetDTOs.add(trainingResultSetDTO);
@@ -322,5 +322,21 @@ public class ComboSetUtil {
         Gson gson = new Gson();
         String jsonString = gson.toJson(workoutresult);
         dbAdapter.insertTrainingStats(EFDConstants.TYPE_WORKOUT, jsonString);
+    }
+
+    public static String getPunchkeyDetail (TrainingResultComboDTO comboDTO){
+        String result = "";
+        if (comboDTO.getPunches() == null || comboDTO.getPunches().size() == 0){
+            return result;
+        }
+
+        for (int i = 0; i < comboDTO.getPunches().size(); i++){
+            if (i == 0)
+                result = result + comboDTO.getPunches().get(i).getPunchKey();
+            else
+                result = result + "-" + comboDTO.getPunches().get(i).getPunchKey();
+        }
+
+        return result;
     }
 }

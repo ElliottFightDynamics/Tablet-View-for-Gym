@@ -20,6 +20,7 @@ import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
 import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 
 public class TrainingStatsFragment extends Fragment {
@@ -185,7 +186,7 @@ public class TrainingStatsFragment extends Fragment {
         updateTab(0);
     }
 
-    private void showToday(){
+    public void showToday(){
         Date date = new Date();
 
         String year = ((String) android.text.format.DateFormat.format("yyyy", date));
@@ -195,11 +196,38 @@ public class TrainingStatsFragment extends Fragment {
         daySpinner.setSelection(PresetUtil.getDayPosition(day));
         monthSpinner.setSelection(PresetUtil.getMonthPosition(month));
         yearSpinner.setSelection(PresetUtil.getStatYearPosition(year));
+
+        currentSelectedDay = yearSpinner.getSelectedItem().toString() + "-" + PresetUtil.digitMonthList.get(monthSpinner.getSelectedItemPosition()) + "-" + daySpinner.getSelectedItem().toString() ;
     }
 
     private void updateTrainingStats(){
-        String currentDay = yearSpinner.getSelectedItem().toString() + "-" + monthSpinner.getSelectedItem().toString() + "-" + daySpinner.getSelectedItem().toString() ;
-        Log.e("Super", "selected day = " + currentDay);
+        String newDay = yearSpinner.getSelectedItem().toString() + "-" + PresetUtil.digitMonthList.get(monthSpinner.getSelectedItemPosition()) + "-" + daySpinner.getSelectedItem().toString() ;
+
+        if (currentSelectedDay.equalsIgnoreCase(newDay))
+            return;
+
+        currentSelectedDay = newDay;
+
+        if (TotalInfoStatsFragment.totalInfoStatsFragment != null){
+            TotalInfoStatsFragment.totalInfoStatsFragment.onResume();
+        }
+
+        if (ComboStatsFragment.comboStatsFragment != null){
+            ComboStatsFragment.comboStatsFragment.onResume();
+        }
+
+        if (SetStatsFragment.setStatsFragment != null){
+            SetStatsFragment.setStatsFragment.onResume();
+        }
+
+        if (WorkoutStatsFragment.workoutStatsFragment != null){
+            WorkoutStatsFragment.workoutStatsFragment.onResume();
+        }
+
+    }
+
+    public String getCurrentSelectedDay(){
+        return currentSelectedDay;
     }
 
     public void updateStatFragment(int position){
@@ -257,6 +285,22 @@ public class TrainingStatsFragment extends Fragment {
                 scriptedHighlight.setVisibility(View.VISIBLE);
 
                 break;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 }

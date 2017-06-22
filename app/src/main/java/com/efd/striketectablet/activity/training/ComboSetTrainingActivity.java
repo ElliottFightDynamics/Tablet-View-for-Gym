@@ -23,6 +23,7 @@ import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.DTO.PunchDTO;
 import com.efd.striketectablet.DTO.PunchHistoryGraphDataDetails;
 import com.efd.striketectablet.DTO.SetsDTO;
+import com.efd.striketectablet.DTO.TrainingPunchDTO;
 import com.efd.striketectablet.DTO.TrainingResultComboDTO;
 import com.efd.striketectablet.DTO.TrainingResultPunchDTO;
 import com.efd.striketectablet.DTO.TrainingResultSetDTO;
@@ -290,6 +291,10 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
         if (punchDTOs != null && punchDTOs.size() > 0)
             punchDTOs.clear();
+
+        resultPunchList = new ArrayList<>();
+
+        resultComboList = new ArrayList<>();
 
         punchTypeView.setText("");
 
@@ -705,10 +710,10 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     }
 
     private void startTraining(){
-//        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
-//            StatisticUtil.showToastMessage("Please connect with sensors");
-//            return;
-//        }
+        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
+            StatisticUtil.showToastMessage("Please connect with sensors");
+            return;
+        }
 
         if (comboid != -1 || setid != -1){
             //this is combo training
@@ -768,12 +773,14 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                 resultRoundList.add(resultSetDTO);
             }
 
-            resultWorkoutDTO = new TrainingResultWorkoutDTO(workoutDTO.getName(), resultRoundList, String.valueOf(System.currentTimeMillis()));
+            if (resultRoundList.size() > 0) {
+                resultWorkoutDTO = new TrainingResultWorkoutDTO(workoutDTO.getName(), resultRoundList, String.valueOf(System.currentTimeMillis()));
 
-            mainActivityInstance.trainingResultWorkoutDTO = resultWorkoutDTO;
-            ComboSetUtil.saveWorkStats(MainActivity.db, resultWorkoutDTO);
+                mainActivityInstance.trainingResultWorkoutDTO = resultWorkoutDTO;
+                ComboSetUtil.saveWorkStats(MainActivity.db, resultWorkoutDTO);
 
-            mainActivityInstance.showStats(3);
+                mainActivityInstance.showStats(3);
+            }
 //            startStatsActivity(4);
         }
 
@@ -812,8 +819,17 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                         String text = PresetUtil.chagngeSecsToTime(currentTime) + " - STOP";
 
                         startTrainingBtn.setText(text);
-                        if (currentTime % 1 == 0)
-                            tmpStart();
+//                        if (currentTime % 1 == 0 && mainActivityInstance.receivePunchable) {
+//                            if (currentTime % 2 == 0){
+//                                resultPunchList.add(new TrainingResultPunchDTO("RIGHT STRAIGHT", currentComboDTO.getComboTypes().get(currentPunchIndex), 200, 100, false));
+//                                MainActivity.db.addPunchtoStats(new TrainingPunchDTO("RIGHT STRAIGHT", 200, 100, 0.5));
+//                            }else {
+//                                resultPunchList.add(new TrainingResultPunchDTO("LEFT STRAIGHT", currentComboDTO.getComboTypes().get(currentPunchIndex), 50, 20, true));
+//                                MainActivity.db.addPunchtoStats(new TrainingPunchDTO("LEFT STRAIGHT", 50, 20, 0.5));
+//                            }
+//
+//                            tmpStart();
+//                        }
                     }
                 });
             }
@@ -852,6 +868,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 //                                trainingProgressStatus.setTextColor(getResources().getColor(R.color.progress_round));
                                 trainingProgressStatus.setTextColor(getResources().getColor(R.color.white));
                                 trainingStartTime = System.currentTimeMillis();
+
                                 resetPunchDetails();
                                 mainActivityInstance.startRoundTraining();
 
@@ -886,6 +903,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                                     trainingProgressStatus.setText("");
                                     stopProgressWorkoutTimer();
                                     stopProgressCombosetTimer();
+                                    stopTraining();
                                 }else {
                                     roundvalue++;
                                     totalTime = roundTime;
@@ -900,6 +918,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                                     initComboTrainingView();
 
                                     trainingStartTime = System.currentTimeMillis();
+
                                     resetPunchDetails();
                                     mainActivityInstance.startRoundTraining();
 

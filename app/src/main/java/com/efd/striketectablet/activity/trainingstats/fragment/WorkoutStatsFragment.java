@@ -7,22 +7,30 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.efd.striketectablet.DTO.TrainingResultComboDTO;
 import com.efd.striketectablet.DTO.TrainingResultPunchDTO;
 import com.efd.striketectablet.DTO.TrainingResultSetDTO;
+import com.efd.striketectablet.DTO.TrainingResultWorkoutDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.activity.trainingstats.adapter.TrainingResultCombosAdapter;
 import com.efd.striketectablet.activity.trainingstats.adapter.TrainingResultPunchesAdapter;
 import com.efd.striketectablet.activity.trainingstats.adapter.TrainingResultRoundListAdapter;
 import com.efd.striketectablet.activity.trainingstats.adapter.WorkoutExpandableListAdapter;
+import com.efd.striketectablet.activity.trainingstats.adapter.WorkoutSpinnerAdapter;
+import com.efd.striketectablet.util.ComboSetUtil;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class WorkoutStatsFragment extends Fragment {
@@ -31,7 +39,9 @@ public class WorkoutStatsFragment extends Fragment {
     TextView workoutNameView;
     ListView roundlistview, combolistview, punchlistView;
     LinearLayout resultView;
+    Spinner workoutSpinner;
 
+    ArrayList<TrainingResultWorkoutDTO>  workoutResults;
     ArrayList<TrainingResultSetDTO>  roundResults;
     ArrayList<TrainingResultComboDTO> comboResults;
     ArrayList<TrainingResultPunchDTO> punchesResults;
@@ -39,6 +49,8 @@ public class WorkoutStatsFragment extends Fragment {
     TrainingResultRoundListAdapter roundListAdapter;
     TrainingResultCombosAdapter combosAdapter;
     TrainingResultPunchesAdapter punchesAdapter;
+
+    WorkoutSpinnerAdapter workoutSpinnerAdapter;
 
     MainActivity mainActivity;
 
@@ -66,6 +78,7 @@ public class WorkoutStatsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_workoutstats, container, false);
+        workoutResults = new ArrayList<>();
         roundResults = new ArrayList<>();
         comboResults = new ArrayList<>();
         punchesResults = new ArrayList<>();
@@ -87,14 +100,21 @@ public class WorkoutStatsFragment extends Fragment {
         punchesAdapter = new TrainingResultPunchesAdapter(getActivity(), punchesResults);
         punchlistView.setAdapter(punchesAdapter);
 
-//        roundlistview.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener()
-//        {
-//            public boolean onGroupClick(ExpandableListView arg0, View itemView, int itemPosition, long itemId)
-//            {
-//                roundlistview.expandGroup(itemPosition);
-//                return true;
-//            }
-//        });
+        workoutSpinner = (Spinner)view.findViewById(R.id.workout_spinner);
+        workoutSpinnerAdapter = new WorkoutSpinnerAdapter(getActivity(), workoutResults);
+        workoutSpinner.setAdapter(workoutSpinnerAdapter);
+
+        workoutSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                updateWorkout((TrainingResultWorkoutDTO)workoutSpinner.getSelectedItem());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         return view;
     }
@@ -103,8 +123,6 @@ public class WorkoutStatsFragment extends Fragment {
         if (punchesResults.size() > 0){
             punchesResults.clear();
         }
-
-        Log.e("Super", "workout update result");
 
         punchesResults.addAll(resultComboDTO.getPunches());
         punchesAdapter.setData(punchesResults);
@@ -117,127 +135,57 @@ public class WorkoutStatsFragment extends Fragment {
         }
 
         comboResults.addAll(resultSetDTO.getCombos());
+        combosAdapter.setCurrentPosition(0);
         combosAdapter.setData(comboResults);
         combosAdapter.notifyDataSetChanged();
     }
 
-//    private void loadComboResult(){
-//        ArrayList<TrainingResultPunchDTO> punchDTOs = new ArrayList<>();
-//
-//        TrainingResultPunchDTO punchDTO1 = new TrainingResultPunchDTO("Right Jab", "1", 200, 50, true);
-//        TrainingResultPunchDTO punchDTO2 = new TrainingResultPunchDTO("Right Jab", "2", 200, 50, false);
-//        TrainingResultPunchDTO punchDTO3 = new TrainingResultPunchDTO("Right Jab", "3", 200, 50, false);
-//        TrainingResultPunchDTO punchDTO4 = new TrainingResultPunchDTO("Right Jab", "4", 200, 50, true);
-//        TrainingResultPunchDTO punchDTO5 = new TrainingResultPunchDTO("Right Jab", "5", 200, 50, true);
-//        TrainingResultPunchDTO punchDTO6 = new TrainingResultPunchDTO("Right Jab", "1", 200, 50, true);
-//        TrainingResultPunchDTO punchDTO7 = new TrainingResultPunchDTO("Right Jab", "2", 200, 50, false);
-//        TrainingResultPunchDTO punchDTO8 = new TrainingResultPunchDTO("Right Jab", "3", 200, 50, false);
-//        TrainingResultPunchDTO punchDTO9 = new TrainingResultPunchDTO("Right Jab", "4", 200, 50, true);
-//        TrainingResultPunchDTO punchDTO10 = new TrainingResultPunchDTO("Right Jab", "5", 200, 50, true);
-//        TrainingResultPunchDTO punchDTO11 = new TrainingResultPunchDTO("Right Jab", "1", 200, 50, true);
-//        TrainingResultPunchDTO punchDTO12 = new TrainingResultPunchDTO("Right Jab", "2", 200, 50, false);
-//        TrainingResultPunchDTO punchDTO13 = new TrainingResultPunchDTO("Right Jab", "3", 200, 50, false);
-//        TrainingResultPunchDTO punchDTO14 = new TrainingResultPunchDTO("Right Jab", "4", 200, 50, true);
-//        TrainingResultPunchDTO punchDTO15 = new TrainingResultPunchDTO("Right Jab", "5", 200, 50, true);
-//
-//        punchDTOs.add(punchDTO1);
-//        punchDTOs.add(punchDTO2);
-//        punchDTOs.add(punchDTO3);
-//        punchDTOs.add(punchDTO4);
-//        punchDTOs.add(punchDTO5);
-//        punchDTOs.add(punchDTO6);
-//        punchDTOs.add(punchDTO7);
-//        punchDTOs.add(punchDTO8);
-//        punchDTOs.add(punchDTO9);
-//        punchDTOs.add(punchDTO10);
-//        punchDTOs.add(punchDTO11);
-//        punchDTOs.add(punchDTO12);
-//        punchDTOs.add(punchDTO13);
-//        punchDTOs.add(punchDTO14);
-//        punchDTOs.add(punchDTO15);
-//        punchDTOs.add(punchDTO1);
-//        punchDTOs.add(punchDTO2);
-//        punchDTOs.add(punchDTO3);
-//        punchDTOs.add(punchDTO4);
-//        punchDTOs.add(punchDTO5);
-//        punchDTOs.add(punchDTO6);
-//        punchDTOs.add(punchDTO7);
-//        punchDTOs.add(punchDTO8);
-//        punchDTOs.add(punchDTO9);
-//        punchDTOs.add(punchDTO10);
-//        punchDTOs.add(punchDTO11);
-//        punchDTOs.add(punchDTO12);
-//        punchDTOs.add(punchDTO13);
-//        punchDTOs.add(punchDTO14);
-//        punchDTOs.add(punchDTO15);
-//        punchDTOs.add(punchDTO1);
-//        punchDTOs.add(punchDTO2);
-//        punchDTOs.add(punchDTO3);
-//        punchDTOs.add(punchDTO4);
-//        punchDTOs.add(punchDTO5);
-//        punchDTOs.add(punchDTO6);
-//        punchDTOs.add(punchDTO7);
-//        punchDTOs.add(punchDTO8);
-//        punchDTOs.add(punchDTO9);
-//        punchDTOs.add(punchDTO10);
-//        punchDTOs.add(punchDTO11);
-//        punchDTOs.add(punchDTO12);
-//        punchDTOs.add(punchDTO13);
-//        punchDTOs.add(punchDTO14);
-//        punchDTOs.add(punchDTO15);
-//
-//        TrainingResultComboDTO comboDTO = new TrainingResultComboDTO("Combo 1", punchDTOs);
-//
-//        ArrayList<TrainingResultPunchDTO> punchDTOs1 = new ArrayList<>();
-//
-//        TrainingResultPunchDTO punchDTO111 = new TrainingResultPunchDTO("Right Jab", "1", 200, 50, true);
-//        TrainingResultPunchDTO punchDTO21 = new TrainingResultPunchDTO("Right Jab", "2", 200, 50, false);
-//        TrainingResultPunchDTO punchDTO31 = new TrainingResultPunchDTO("Right Jab", "3", 200, 50, false);
-//        TrainingResultPunchDTO punchDTO41 = new TrainingResultPunchDTO("Right Jab", "4", 200, 50, true);
-//        TrainingResultPunchDTO punchDTO51 = new TrainingResultPunchDTO("Right Jab", "5", 200, 50, true);
-//
-//        punchDTOs1.add(punchDTO111);
-//        punchDTOs1.add(punchDTO21);
-//        punchDTOs1.add(punchDTO31);
-//        punchDTOs1.add(punchDTO41);
-//        punchDTOs1.add(punchDTO51);
-//
-//        TrainingResultComboDTO comboDTO1 = new TrainingResultComboDTO("Combo 2", punchDTOs1);
-//
-//        ArrayList<TrainingResultComboDTO> comboDTOs = new ArrayList<>();
-//        comboDTOs.add(comboDTO);
-//        comboDTOs.add(comboDTO1);
-//
-//
-//        ArrayList<TrainingResultComboDTO> comboDTOs1 = new ArrayList<>();
-//        comboDTOs1.add(comboDTO);
-//        comboDTOs1.add(comboDTO1);
-//        comboDTOs1.add(comboDTO);
-//        comboDTOs1.add(comboDTO1);
-//
-//        workoutNameView.setText("Workout 1");
-//
-//        roundResults.add(new TrainingResultSetDTO("Round 1", comboDTOs));
-//        roundResults.add(new TrainingResultSetDTO("Round 2", comboDTOs1));
-//        roundResults.add(new TrainingResultSetDTO("Round 3", comboDTOs));
-//        roundResults.add(new TrainingResultSetDTO("Round 4", comboDTOs1));
-//
-//        roundListAdapter.setData(roundResults);
-//        roundListAdapter.notifyDataSetChanged();
-//    }
+    private void updateWorkout(TrainingResultWorkoutDTO workoutDTO){
+        if (workoutDTO != null && workoutDTO.getRoundcombos() != null && workoutDTO.getRoundcombos().size() > 0){
+            Log.e("Super", "update workout = " + workoutDTO.getRoundcombos().get(0).getCombos().size());
+        }
+
+        roundResults.clear();
+        roundListAdapter.setCurrentPosition(0);
+        roundResults.addAll(workoutDTO.getRoundcombos());
+        roundListAdapter.notifyDataSetChanged();
+    }
 
     private void loadWorkoutResult(){
-        if (mainActivity.trainingResultWorkoutDTO != null){
-            roundResults.clear();
+        String currentDay = TrainingStatsFragment.trainingStatsFragment.getCurrentSelectedDay();
 
-            workoutNameView.setText(mainActivity.trainingResultWorkoutDTO.getWorkoutname());
-            roundResults.addAll(mainActivity.trainingResultWorkoutDTO.getRoundcombos());
-            roundListAdapter.notifyDataSetChanged();
-            resultView.setVisibility(View.VISIBLE);
-        }else {
-            workoutNameView.setText("Workout Training is Empty");
-            resultView.setVisibility(View.INVISIBLE);
+        ArrayList<TrainingResultWorkoutDTO> resultWorkoutDTOs = ComboSetUtil.getWorkoutstatsforDay(MainActivity.db, currentDay);
+
+        for (int i = 0; i < resultWorkoutDTOs.size(); i++){
+            Log.e("Super", "workoutname  = " + resultWorkoutDTOs.get(i).getWorkoutname());
         }
+
+        if (resultWorkoutDTOs.size() > 0){
+            Collections.sort(resultWorkoutDTOs, WORKOUT_COMPARATOR);
+            workoutResults.clear();
+            workoutResults.addAll(resultWorkoutDTOs);
+
+            workoutSpinnerAdapter.notifyDataSetChanged();
+            workoutNameView.setVisibility(View.GONE);
+            resultView.setVisibility(View.VISIBLE);
+
+//            updateWorkout((TrainingResultWorkoutDTO)workoutSpinner.getSelectedItem());
+        }else {
+            resultView.setVisibility(View.GONE);
+            workoutNameView.setText("Workout Training is Empty");
+        }
+
+//        if (mainActivity.trainingResultWorkoutDTO != null){
+//            roundResults.clear();
+//
+//            workoutNameView.setText(mainActivity.trainingResultWorkoutDTO.getWorkoutname());
+//            roundResults.addAll(mainActivity.trainingResultWorkoutDTO.getRoundcombos());
+//            roundListAdapter.notifyDataSetChanged();
+//            resultView.setVisibility(View.VISIBLE);
+//        }else {
+//            workoutNameView.setText("Workout Training is Empty");
+//            resultView.setVisibility(View.INVISIBLE);
+//        }
     }
 
     @Override
@@ -245,12 +193,34 @@ public class WorkoutStatsFragment extends Fragment {
         super.onResume();
         loadWorkoutResult();
         Log.e("Super", "workout on resume");
-//        loadComboResult();
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
+    }
+
+    private Comparator<TrainingResultWorkoutDTO> WORKOUT_COMPARATOR = new Comparator<TrainingResultWorkoutDTO>() {
+        @Override
+        public int compare(TrainingResultWorkoutDTO lhs, TrainingResultWorkoutDTO rhs) {
+            return (int) (Long.parseLong(rhs.getTime()) - Long.parseLong(lhs.getTime()));
+        }
+    };
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
