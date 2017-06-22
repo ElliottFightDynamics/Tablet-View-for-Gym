@@ -107,7 +107,7 @@ public class WorkoutStatsFragment extends Fragment {
         workoutSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                updateWorkout((TrainingResultWorkoutDTO)workoutSpinner.getSelectedItem());
+                updateWorkout();
             }
 
             @Override
@@ -140,7 +140,8 @@ public class WorkoutStatsFragment extends Fragment {
         combosAdapter.notifyDataSetChanged();
     }
 
-    private void updateWorkout(TrainingResultWorkoutDTO workoutDTO){
+    private void updateWorkout(){
+        TrainingResultWorkoutDTO workoutDTO = (TrainingResultWorkoutDTO)workoutSpinner.getSelectedItem();
         if (workoutDTO != null && workoutDTO.getRoundcombos() != null && workoutDTO.getRoundcombos().size() > 0){
             Log.e("Super", "update workout = " + workoutDTO.getRoundcombos().get(0).getCombos().size());
         }
@@ -166,6 +167,8 @@ public class WorkoutStatsFragment extends Fragment {
             workoutResults.addAll(resultWorkoutDTOs);
 
             workoutSpinnerAdapter.notifyDataSetChanged();
+            workoutSpinner.setSelection(0);
+            updateWorkout();
             workoutNameView.setVisibility(View.GONE);
             resultView.setVisibility(View.VISIBLE);
 
