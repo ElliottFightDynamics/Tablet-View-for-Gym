@@ -655,7 +655,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
             //update next result view
             LinearLayout resultnextChild = (LinearLayout)comboResultParent.getChildAt(currentPunchIndex);
-            TextView resultnextkeyView = (TextView)resultnextChild.findViewById(R.id.key);
+            final TextView resultnextkeyView = (TextView)resultnextChild.findViewById(R.id.key);
 
             resultnextkeyView.setBackgroundResource(R.drawable.next_punch_next);
             resultnextkeyView.setTextColor(getResources().getColor(R.color.white));
@@ -664,7 +664,8 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                    updateView(true);
+                        resultPunchList.add(new TrainingResultPunchDTO(ComboSetUtil.punchTypeMap.get(resultnextkeyView.getText().toString()), currentComboDTO.getComboTypes().get(currentPunchIndex), -1, -1, true));
+                        updateView(true);
                     }
                 }, 300);
             }

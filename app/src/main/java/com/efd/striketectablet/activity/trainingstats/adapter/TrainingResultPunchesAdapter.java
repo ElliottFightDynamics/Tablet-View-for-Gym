@@ -76,8 +76,19 @@ public class TrainingResultPunchesAdapter extends ArrayAdapter<TrainingResultPun
 
         viewHolder.typeView.setText(punchDTO.getPunchtype());
         viewHolder.typeindicatorView.setText(punchDTO.getPunchKey());
-        viewHolder.forceView.setText(punchDTO.getForce() + " LBS");
-        viewHolder.speedView.setText(punchDTO.getSpeed() + " MPH");
+
+        if (punchDTO.getForce() == -1){
+            viewHolder.forceView.setText("-");
+        }else {
+            viewHolder.forceView.setText(punchDTO.getForce() + " LBS");
+        }
+
+        if (punchDTO.getSpeed() == -1){
+            viewHolder.speedView.setText("-");
+        }else {
+            viewHolder.speedView.setText(punchDTO.getSpeed() + " MPH");
+        }
+
 
         if (punchDTO.getSuccess()){
             viewHolder.resultView.setBackgroundResource(R.drawable.green_btn);
