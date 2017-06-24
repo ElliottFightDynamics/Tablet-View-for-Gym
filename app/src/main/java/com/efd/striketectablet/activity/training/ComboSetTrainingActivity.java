@@ -507,7 +507,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
         if (currentComboIndex == currentTrainingComboCount - 1){
             if (setid != -1) {
                 playBoxingBell();
-                resultSetDTO = new TrainingResultSetDTO(currentSetDTO.getName(), resultComboList, String.valueOf(System.currentTimeMillis()));
+//                resultSetDTO = new TrainingResultSetDTO(currentSetDTO.getName(), resultComboList, String.valueOf(System.currentTimeMillis()));
                 mainActivityInstance.receivePunchable = false;
                 stopTraining();
             }else {
@@ -586,7 +586,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
             //training is finished,
             if (comboid != -1) {
                 playBoxingBell();
-                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()) );
+//                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()) );
                 mainActivityInstance.receivePunchable = false;
                 stopTraining();
 
@@ -748,9 +748,11 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     private void stopTraining(){
 
         if (comboid != -1){
-            if (mainActivityInstance.receivePunchable){
-                resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()));
-            }
+//            if (mainActivityInstance.receivePunchable){
+//
+//            }
+
+            resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()));
 
             mainActivityInstance.trainingresultComboDTO = resultComboDTO;
             ComboSetUtil.saveComboStats(MainActivity.db, resultComboDTO);
@@ -761,6 +763,8 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                 resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()));
                 resultComboList.add(resultComboDTO);
             }
+
+            resultSetDTO = new TrainingResultSetDTO(currentSetDTO.getName(), resultComboList, String.valueOf(System.currentTimeMillis()));
 
             mainActivityInstance.trainingResultSetDTO = resultSetDTO;
             ComboSetUtil.saveSetStats(MainActivity.db, resultSetDTO);
