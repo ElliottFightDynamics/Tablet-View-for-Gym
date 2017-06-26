@@ -748,9 +748,11 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     private void stopTraining(){
 
         if (comboid != -1){
-//            if (mainActivityInstance.receivePunchable){
-//
-//            }
+            if (mainActivityInstance.receivePunchable){
+                for (int i = currentPunchIndex; i < currentComboDTO.getComboTypes().size(); i++){
+                    resultPunchList.add(new TrainingResultPunchDTO(ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(i)), currentComboDTO.getComboTypes().get(i), -1, -1, false));
+                }
+            }
 
             resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()));
 
@@ -760,6 +762,11 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 //            startStatsActivity(2);
         }else if (setid != -1){
             if (mainActivityInstance.receivePunchable){
+                //add incompleted combos
+                for (int i = currentPunchIndex; i < currentComboDTO.getComboTypes().size(); i++){
+                    resultPunchList.add(new TrainingResultPunchDTO(ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(i)), currentComboDTO.getComboTypes().get(i), -1, -1, false));
+                }
+
                 resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()));
                 resultComboList.add(resultComboDTO);
             }
@@ -772,6 +779,11 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 //            startStatsActivity(3);
         }else if (workoutDTO != null){
             if (mainActivityInstance.receivePunchable) {
+                //add incompleted combos
+                for (int i = currentPunchIndex; i < currentComboDTO.getComboTypes().size(); i++){
+                    resultPunchList.add(new TrainingResultPunchDTO(ComboSetUtil.punchTypeMap.get(currentComboDTO.getComboTypes().get(i)), currentComboDTO.getComboTypes().get(i), -1, -1, false));
+                }
+
                 resultComboDTO = new TrainingResultComboDTO(currentComboDTO.getName(), resultPunchList, String.valueOf(System.currentTimeMillis()));
                 resultComboList.add(resultComboDTO);
                 resultSetDTO = new TrainingResultSetDTO("ROUND " + (roundvalue + 1), resultComboList, String.valueOf(System.currentTimeMillis()));
