@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+        android:id="@+id/key"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="80sp"
+        android:text="4"
+        android:gravity="center"
+        android:textColor="@color/punches_text_color"/>
+
+    <View
+        android:id="@+id/combo_divider"
+        android:layout_width="30dp"
+        android:layout_height="4dp"
+        android:background="@drawable/combo_divider"/>
+
+</LinearLayout>

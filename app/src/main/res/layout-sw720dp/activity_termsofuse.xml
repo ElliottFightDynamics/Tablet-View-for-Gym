@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:paddingBottom="20dp"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    tools:context="com.efd.striketectablet.activity.credential.TermsofuseActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbarsize"
+        >
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:paddingRight="20dp"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/close" />
+
+        <com.efd.striketectablet.customview.CustomTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:text="@string/termsofuse"
+            android:textColor="@color/header_text_color_blue"
+            android:textSize="@dimen/title_textsize" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/separator" />
+
+    <ScrollView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/agreement"
+                android:textColor="@color/punches_text_color"
+                android:textSize="@dimen/registration_agreement_title_text_size"
+                android:textStyle="bold" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_content0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_content0"
+                android:textColor="@color/agreement_content_text_color"
+                android:textSize="@dimen/registration_agreement_content_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_subtitle1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_subtitle1"
+                android:textColor="@color/punches_text_color"
+                android:textSize="@dimen/registration_textView_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_content1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_content1"
+                android:textColor="@color/agreement_content_text_color"
+                android:textSize="@dimen/registration_agreement_content_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_subtitle2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_subtitle2"
+                android:textColor="@color/punches_text_color"
+                android:textSize="@dimen/registration_textView_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_content2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_content2"
+                android:textColor="@color/agreement_content_text_color"
+                android:textSize="@dimen/registration_agreement_content_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_subtitle3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_subtitle3"
+                android:textColor="@color/punches_text_color"
+                android:textSize="@dimen/registration_textView_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_content3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_content3"
+                android:textColor="@color/agreement_content_text_color"
+                android:textSize="@dimen/registration_agreement_content_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_subtitle4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_subtitle4"
+                android:textColor="@color/punches_text_color"
+                android:textSize="@dimen/registration_textView_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_content4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_content4"
+                android:textColor="@color/agreement_content_text_color"
+                android:textSize="@dimen/registration_agreement_content_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_subtitle5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_subtitle5"
+                android:textColor="@color/punches_text_color"
+                android:textSize="@dimen/registration_textView_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_content5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_content5"
+                android:textColor="@color/agreement_content_text_color"
+                android:textSize="@dimen/registration_agreement_content_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_subtitle6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_subtitle6"
+                android:textColor="@color/punches_text_color"
+                android:textSize="@dimen/registration_textView_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_content6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_content6"
+                android:textColor="@color/agreement_content_text_color"
+                android:textSize="@dimen/registration_agreement_content_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_subtitle7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_subtitle7"
+                android:textColor="@color/punches_text_color"
+                android:textSize="@dimen/registration_textView_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_content7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_content7"
+                android:textColor="@color/agreement_content_text_color"
+                android:textSize="@dimen/registration_agreement_content_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_subtitle8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_subtitle8"
+                android:textColor="@color/punches_text_color"
+                android:textSize="@dimen/registration_textView_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_content8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_content8"
+                android:textColor="@color/agreement_content_text_color"
+                android:textSize="@dimen/registration_agreement_content_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_subtitle9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_subtitle9"
+                android:textColor="@color/punches_text_color"
+                android:textSize="@dimen/registration_textView_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_content9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_content9"
+                android:textColor="@color/agreement_content_text_color"
+                android:textSize="@dimen/registration_agreement_content_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_subtitle10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_subtitle10"
+                android:textColor="@color/punches_text_color"
+                android:textSize="@dimen/registration_textView_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_content10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_content10"
+                android:textColor="@color/agreement_content_text_color"
+                android:textSize="@dimen/registration_agreement_content_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_subtitle11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_subtitle11"
+                android:textColor="@color/punches_text_color"
+                android:textSize="@dimen/registration_textView_text_size" />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/agreement_content11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:text="@string/agreement_content11"
+                android:textColor="@color/agreement_content_text_color"
+                android:textSize="@dimen/registration_agreement_content_text_size" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</LinearLayout>

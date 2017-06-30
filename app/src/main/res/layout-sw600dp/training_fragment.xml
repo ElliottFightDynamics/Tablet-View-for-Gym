@@ -1,0 +1,252 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="5dp">
+
+        <com.efd.striketectablet.customview.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/training_title"
+            android:textColor="@color/header_text_color_blue"
+            android:textSize="35sp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:id="@+id/addbtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/plus"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/trainingstats_left_line"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:background="@drawable/dropdown"
+            android:layout_marginBottom="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <com.efd.striketectablet.customview.CustomTextView
+                    android:id="@+id/quickstart"
+                    style="@style/tab_item"
+                    android:text="QUICK START"
+                    />
+
+                <View
+                    android:id="@+id/quickstart_highlight"
+                    android:background="@drawable/tab_highlight"
+                    android:layout_width="15dp"
+                    android:layout_height="45dp"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/tab_divider"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <com.efd.striketectablet.customview.CustomTextView
+                    android:id="@+id/timer"
+                    style="@style/tab_item"
+                    android:text="TIMER"
+                    />
+
+                <View
+                    android:id="@+id/timer_highlight"
+                    android:background="@drawable/tab_highlight"
+                    android:layout_width="15dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/tab_divider"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <com.efd.striketectablet.customview.CustomTextView
+                    android:id="@+id/combination"
+                    style="@style/tab_item"
+                    android:text="COMBINATIONS"
+                    />
+
+                <View
+                    android:id="@+id/combination_highlight"
+                    android:background="@drawable/tab_highlight"
+                    android:layout_width="15dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/tab_divider"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <com.efd.striketectablet.customview.CustomTextView
+                    android:id="@+id/set"
+                    style="@style/tab_item"
+                    android:text="SETS"
+                    />
+                <View
+                    android:id="@+id/set_highlight"
+                    android:background="@drawable/tab_highlight"
+                    android:layout_width="15dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/tab_divider"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <com.efd.striketectablet.customview.CustomTextView
+                    android:id="@+id/scripted"
+                    style="@style/tab_item"
+                    android:text="WORKOUTS"
+                    />
+
+                <View
+                    android:id="@+id/scripted_highlight"
+                    android:background="@drawable/tab_highlight"
+                    android:layout_width="15dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/trainingstats_right_line"/>
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/training_viewpager"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+
+
+    <!--<LinearLayout-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/traning_menu_quick_start"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="80dp"-->
+            <!--android:clickable="true">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/menu_quick_start"-->
+                <!--android:text="@string/quick_start"-->
+                <!--style="@style/training_menu_title"/>-->
+
+            <!--<ImageView-->
+                <!--style="@style/training_menu_icon"-->
+                <!--android:contentDescription="@null"/>-->
+
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:background="@drawable/separator"/>-->
+        <!--</RelativeLayout>-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/traning_menu_round_traning"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="80dp"-->
+            <!--&gt;-->
+            <!--<TextView-->
+                <!--android:id="@+id/menu_round_traning"-->
+                <!--android:text="@string/round_traning"-->
+                <!--style="@style/training_menu_title"/>-->
+            <!--<ImageView-->
+                <!--style="@style/training_menu_icon"-->
+                <!--android:contentDescription="@null"/>-->
+
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:background="@drawable/separator"/>-->
+        <!--</RelativeLayout>-->
+
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@drawable/separator"/>-->
+
+    <!--</LinearLayout>-->
+
+</LinearLayout>

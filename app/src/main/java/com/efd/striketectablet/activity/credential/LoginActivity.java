@@ -2,6 +2,7 @@ package com.efd.striketectablet.activity.credential;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -62,6 +63,8 @@ public class LoginActivity extends AppCompatActivity {
         db = DBAdapter.getInstance(LoginActivity.this);
 
         initView();
+        Configuration config = getResources().getConfiguration();
+        Log.e("Super", config.screenWidthDp + "     " + config.screenHeightDp);
     }
 
     private void initView(){

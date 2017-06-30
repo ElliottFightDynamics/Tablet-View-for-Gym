@@ -1,0 +1,466 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    android:padding="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:id="@+id/edit_button"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:src="@drawable/ic_edit_icon"
+            android:layout_toLeftOf="@+id/text_edit"/>
+
+        <com.efd.striketectablet.customview.CustomTextView
+            android:id="@+id/text_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_profile"
+            android:textColor="@color/punches_text_color"
+            android:textSize="20sp"
+            android:layout_marginRight="30dp"
+            android:layout_alignParentEnd="true"
+
+            android:layout_centerVertical="true"
+        />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:id="@+id/connectsensor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="-40dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toRightOf="@+id/user_photo">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/left_arrow" />
+
+                        <com.efd.striketectablet.customview.CustomButton
+                            android:id="@+id/connect_button"
+                            android:layout_width="192dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/connect_button_bg"
+                            android:text="@string/connectsensor"
+                            android:textAllCaps="true"
+                            android:textColor="@color/orange"
+                            android:textSize="18sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/totaltimetrained"
+                        android:layout_width="380dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="-40dp"
+                        android:layout_marginTop="100dp"
+                        android:layout_toRightOf="@+id/user_photo"
+                        android:background="@drawable/bg_fill">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="40dp"
+                            android:text="@string/total_timetrained"
+                            android:textColor="@color/orange"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="20dp"
+                            android:text="24:12:21 PTS"
+                            android:textColor="@color/orange"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/totaldaytrained"
+                        android:layout_width="380dp"
+                        android:layout_height="30dp"
+                        android:layout_below="@id/totaltimetrained"
+                        android:layout_marginLeft="-55dp"
+                        android:layout_toRightOf="@+id/user_photo">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:id="@+id/customTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="40dp"
+                            android:text="@string/total_daystrained"
+                            android:textColor="@color/speed_text_color"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="20dp"
+                            android:text="345DAYS"
+                            android:textColor="@color/speed_text_color"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lastupdatetrained"
+                        android:layout_width="380dp"
+                        android:layout_height="30dp"
+                        android:layout_below="@id/totaldaytrained"
+                        android:layout_marginLeft="-70dp"
+                        android:layout_toRightOf="@+id/user_photo"
+                        android:background="@drawable/bg_fill">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="40dp"
+                            android:text="@string/last_trained"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="20dp"
+                            android:text="SEPTEMBER 17, 2017"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
+                        android:id="@+id/user_photo"
+                        android:layout_width="229dp"
+                        android:layout_height="200dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/train1"
+                        app:siShape="@drawable/profile_overlay" />
+
+                </RelativeLayout>
+
+                <com.efd.striketectablet.customview.CustomTextView
+                    android:id="@+id/profile_name_view"
+                    android:layout_width="480dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/btn_bg_fill"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:text="GENNADY GOLOVKIN"
+                    android:textColor="@color/punches_text_color"
+                    android:textSize="30sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:background="@drawable/line_bg" />
+
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="20dp">-->
+                <!--<View-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@drawable/left_line"/>-->
+                <!---->
+                <!--<View-->
+                <!--android:adjustViewBounds="true"-->
+                <!--android:layout_width="500dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:background="@drawable/line_bottom_bg"/>-->
+
+                <!--<View-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@drawable/right_line"/>-->
+
+                <!--</LinearLayout>-->
+
+                <!--<View-->
+                <!--android:adjustViewBounds="true"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:background="@drawable/line_bg2"/>-->
+
+                <com.efd.striketectablet.customview.CustomTextView
+                    android:id="@+id/details_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:text="KAZAHSTAN, 32 YO, NOVICE, TRADITIONAL STYLE"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:orientation="vertical">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            style="@style/dashboard_setting_label"
+                            android:text="WEIGHT" />
+
+                        <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                            android:id="@+id/weight_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:gravity="center"
+                            android:text="120"
+                            android:textColor="@color/white"
+                            android:textSize="45sp" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            style="@style/dashboard_setting_stat_label"
+                            android:text="LBS" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:orientation="vertical">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            style="@style/dashboard_setting_label"
+                            android:text="HEIGHT" />
+
+                        <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                            android:id="@+id/height_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:gravity="center"
+                            android:text="120"
+                            android:textColor="@color/white"
+                            android:textSize="45sp" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            style="@style/dashboard_setting_stat_label"
+                            android:text="INCH" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            style="@style/dashboard_setting_label"
+                            android:text="GLOVES" />
+
+                        <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                            android:id="@+id/gloves_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:gravity="center"
+                            android:text="120"
+                            android:textColor="@color/white"
+                            android:textSize="45dp" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            style="@style/dashboard_setting_stat_label"
+                            android:text="OZ" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            style="@style/dashboard_setting_label"
+                            android:text="REACH" />
+
+                        <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
+                            android:id="@+id/reach_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:gravity="center"
+                            android:text="120"
+                            android:textColor="@color/white"
+                            android:textSize="45sp" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            style="@style/dashboard_setting_stat_label"
+                            android:text="INCH" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/separator" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp">
+
+        <RelativeLayout
+            android:id="@+id/deletedatabtn"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/btn_bg"
+            >
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deletedata"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+
+
+        <com.efd.striketectablet.customview.CustomTextView
+            android:id="@+id/mail_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GGG.GOLOVKIN@GMAIL.COM"
+            android:textColor="@color/punches_text_color"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/logoutbtn"/>
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/logoutbtn"-->
+            <!--android:layout_width="120dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:background="@drawable/btn_bg"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_alignParentEnd="true">-->
+
+            <!--<com.efd.striketectablet.customview.CustomTextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/logout"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="20sp"-->
+                <!--android:layout_centerInParent="true"/>-->
+
+        <!--</RelativeLayout>-->
+
+        <com.efd.striketectablet.customview.HexagonButton
+            android:id="@+id/logoutbtn"
+            android:layout_width="128dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:padding="1dp"
+            android:text="@string/logout"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:fill="false"
+            app:hexagon_color="@color/btn_color"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>
