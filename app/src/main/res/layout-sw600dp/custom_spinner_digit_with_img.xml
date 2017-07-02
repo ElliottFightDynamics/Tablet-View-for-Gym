@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:gravity="start"
-        android:padding="10dp"
+        android:padding="7dp"
         android:textColor="@color/white"
-        android:textSize="20sp"/>
+        android:textSize="18sp"/>
 
     <ImageView
         android:layout_width="match_parent"

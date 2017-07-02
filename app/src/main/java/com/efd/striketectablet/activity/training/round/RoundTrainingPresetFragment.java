@@ -32,6 +32,7 @@ import com.efd.striketectablet.adapter.PresetListAdapter;
 import com.efd.striketectablet.customview.CustomButton;
 import com.efd.striketectablet.customview.CustomTextView;
 import com.efd.striketectablet.util.PresetUtil;
+import com.efd.striketectablet.util.StatisticUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 
@@ -120,8 +121,13 @@ public class RoundTrainingPresetFragment extends Fragment {
         roundsAdapter.setItemTextResource(R.id.text);
         roundsAdapter.setActiveTextColor(getResources().getColor(R.color.rounds_select));
         roundsAdapter.setDeactiveTextColor(getResources().getColor(R.color.rounds_unselect));
-        roundsAdapter.setActiveTextSzie(120);
-        roundsAdapter.setDeactiveTextSize(80);
+        if (StatisticUtil.is600Dp()) {
+            roundsAdapter.setActiveTextSzie(80);
+            roundsAdapter.setDeactiveTextSize(50);
+        }else {
+            roundsAdapter.setActiveTextSzie(120);
+            roundsAdapter.setDeactiveTextSize(80);
+        }
         roundsPicker.setViewAdapter(roundsAdapter);
         roundsPicker.setVisibleItems(3);
 
@@ -132,8 +138,13 @@ public class RoundTrainingPresetFragment extends Fragment {
         roundAdapter.setItemTextResource(R.id.text);
         roundAdapter.setActiveTextColor(getResources().getColor(R.color.round_select));
         roundAdapter.setDeactiveTextColor(getResources().getColor(R.color.round_unselect));
-        roundAdapter.setActiveTextSzie(55);
-        roundAdapter.setDeactiveTextSize(50);
+        if (!StatisticUtil.is600Dp()) {
+            roundAdapter.setActiveTextSzie(55);
+            roundAdapter.setDeactiveTextSize(50);
+        }else {
+            roundAdapter.setActiveTextSzie(40);
+            roundAdapter.setDeactiveTextSize(35);
+        }
         roundPicker.setViewAdapter(roundAdapter);
         roundPicker.setVisibleItems(3);
 
@@ -144,8 +155,13 @@ public class RoundTrainingPresetFragment extends Fragment {
         restAdapter.setItemTextResource(R.id.text);
         restAdapter.setActiveTextColor(getResources().getColor(R.color.speed_text_color));
         restAdapter.setDeactiveTextColor(getResources().getColor(R.color.rest_unselect));
-        restAdapter.setActiveTextSzie(55);
-        restAdapter.setDeactiveTextSize(50);
+        if (!StatisticUtil.is600Dp()) {
+            restAdapter.setActiveTextSzie(55);
+            restAdapter.setDeactiveTextSize(50);
+        }else {
+            restAdapter.setActiveTextSzie(40);
+            restAdapter.setDeactiveTextSize(35);
+        }
         restPicker.setViewAdapter(restAdapter);
         restPicker.setVisibleItems(3);
 

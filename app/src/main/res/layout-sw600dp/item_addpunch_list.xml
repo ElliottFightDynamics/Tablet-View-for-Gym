@@ -8,23 +8,24 @@
     <LinearLayout
         android:id="@+id/combo_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:orientation="horizontal"
         android:background="@drawable/comboset_childbg">
 
         <LinearLayout
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
 
             <com.efd.striketectablet.customview.CustomTextView
                 android:id="@+id/key"
-                android:layout_width="100dp"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:textColor="@color/white"/>
 
             <com.efd.striketectablet.customview.CustomTextView
@@ -35,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:textColor="@color/white"
-                android:textSize="30sp"
+                android:textSize="18sp"
                 android:text="Attack">
 
             </com.efd.striketectablet.customview.CustomTextView>
@@ -46,8 +47,8 @@
         <ImageView
             android:id="@+id/settings"
             android:adjustViewBounds="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/combosets_settings"
             android:layout_gravity="center_vertical"/>
 

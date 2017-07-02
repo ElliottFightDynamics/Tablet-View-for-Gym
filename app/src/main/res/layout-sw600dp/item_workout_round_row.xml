@@ -8,14 +8,14 @@
     <LinearLayout
         android:id="@+id/combo_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:orientation="horizontal">
 
             <com.efd.striketectablet.customview.CustomTextView
@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:textColor="@color/white"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:text="Attack">
 
             </com.efd.striketectablet.customview.CustomTextView>

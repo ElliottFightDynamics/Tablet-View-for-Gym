@@ -13,10 +13,10 @@
        >
 
         <LinearLayout
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:orientation="horizontal">
 
             <com.efd.striketectablet.customview.CustomTextView
@@ -25,7 +25,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:textColor="@color/white"/>
 
             <com.efd.striketectablet.customview.CustomTextView
@@ -36,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|end"
                 android:textColor="@color/comboset_divider"
-                android:textSize="25sp"
+                android:textSize="18sp"
                 android:text="Attack">
 
             </com.efd.striketectablet.customview.CustomTextView>

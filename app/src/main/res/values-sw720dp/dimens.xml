@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mmaglove_device_list_text_view_text_size">30sp</dimen>
+    <dimen name="mmaglove_device_list_text_view_margin_bottom">10dp</dimen>
+    <dimen name="mmaglove_device_list_radio_button_margin_bottom_top">8dp</dimen>
+    <dimen name="mmaglove_device_list_radio_button_text_size">26sp</dimen>
+    <dimen name="mmaglove_device_list_radio_button_drawable_padding">16dp</dimen>
+
+    <dimen name="cell_height">35dp</dimen>
+    <dimen name="cell_textsize">18sp</dimen>
+    <dimen name="spinner_textsize">40sp</dimen>
+    <dimen name="toolbarsize">60dp</dimen>
+    <dimen name="title_textsize">35sp</dimen>
+    <dimen name="customspinner_height">40dp</dimen>
+    <dimen name="button_textsize">25sp</dimen>
+    <dimen name="button_preset_textsize">30sp</dimen>
+
+    <dimen name="bag_training_battery_layout_height">16dp</dimen>
+    <dimen name="bag_training_battery_icon_height">11dp</dimen>
+    <dimen name="battery_text_top_margin">-3.5dp</dimen>
+    <dimen name="battery_fill_margin">2.8dp</dimen>
+    <dimen name="battery_text_size">12sp</dimen>
+    <dimen name="bag_training_common_font_size">12.5sp</dimen>
+
+    <dimen name="training_progress_stat_title_font_size">18dp</dimen>
+    <dimen name="training_progress_stat_font_size">28sp</dimen>
+    <dimen name="training_progress_stat_label_font_size">20sp</dimen>
+    <dimen name="tab_textsize">18sp</dimen>
+
+    <dimen name="registration_agreement_title_text_size">25sp</dimen>
+    <dimen name="registration_agreement_content_text_size">20sp</dimen>
+    <dimen name="registration_textView_text_size">25sp</dimen>
+    <dimen name="boxer_view_line_margin">-9dp</dimen>
+
+    <item name="bag_training_top_line_weight" format="integer" type="dimen">4</item>
+    <dimen name="bag_training_top_line_height">4.5dp</dimen>
+
+    <bool name="iTablet">false</bool>
+</resources>

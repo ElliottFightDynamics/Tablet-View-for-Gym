@@ -30,31 +30,31 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp">
+                android:layout_height="30dp">
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="20dp"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/left_arrow_line_bg"/>
 
                 <com.efd.striketectablet.customview.CustomTextView
                     android:textColor="@color/punches_text_color"
-                    android:layout_width="280dp"
+                    android:layout_width="240dp"
 
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_bg_fill"
                     android:text="@string/combination_insets"
-                    android:textSize="25sp"
+                    android:textSize="18sp"
                     android:gravity="center"
                     android:layout_gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="20dp"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/right_arrow_line_bg"/>
@@ -77,8 +77,8 @@
 
             <com.efd.striketectablet.customview.CustomButton
                 android:id="@+id/training_start_button"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
                 android:background="@drawable/positive_big_btn"
                 android:gravity="center"
                 android:text="@string/start_training"

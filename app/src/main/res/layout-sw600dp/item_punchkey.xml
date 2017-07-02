@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="60dp"
-    android:layout_height="60dp"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
     >
 
     <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
         android:id="@+id/key"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@drawable/punchkey_bg_first"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:text="4"
         android:gravity="center"
         android:textColor="@color/punches_text_color"/>

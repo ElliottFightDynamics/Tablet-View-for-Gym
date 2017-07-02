@@ -35,18 +35,18 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
 
         android:background="@color/preset_selected_bg">
 
         <com.efd.striketectablet.customview.CustomTextView
             android:id="@+id/combo_edit"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:gravity="center"
             android:text="@string/edit"
             android:textColor="@color/white"
-            android:textSize="25sp">
+            android:textSize="20sp">
 
         </com.efd.striketectablet.customview.CustomTextView>
 
@@ -60,17 +60,17 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         >
 
         <com.efd.striketectablet.customview.CustomTextView
             android:id="@+id/combo_delete"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:gravity="center"
             android:text="@string/delete"
             android:textColor="@color/white"
-            android:textSize="25sp">
+            android:textSize="20sp">
 
         </com.efd.striketectablet.customview.CustomTextView>
 

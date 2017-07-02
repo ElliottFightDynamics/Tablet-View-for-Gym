@@ -7,14 +7,14 @@
     tools:context="com.efd.striketectablet.activity.MainActivity">
 
     <RelativeLayout
-        android:layout_width="80dp"
+        android:layout_width="60dp"
         android:layout_height="match_parent"
         android:background="#091921">
 
         <com.gigamole.navigationtabbar.ntb.NavigationTabBar
             android:id="@+id/ntb_horizontal"
-            android:layout_width="80dp"
-            android:layout_height="280dp"
+            android:layout_width="60dp"
+            android:layout_height="240dp"
             android:layout_alignParentTop="true"
             app:ntb_badge_gravity="top"
             app:ntb_badge_position="right"

@@ -2,27 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="700dp"
+    android:layout_width="600dp"
     android:layout_height="match_parent"
     tools:context="com.efd.striketectablet.activity.SplashActivity"
     android:background="@drawable/popup_bg"
     android:orientation="vertical">
 
     <com.efd.striketectablet.customview.CustomTextView
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/connectsensor"
         android:textColor="@color/punches_text_color"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:layout_gravity="center_horizontal"/>
     
     <LinearLayout
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:layout_height="50dp">
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:layout_height="40dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -36,9 +36,10 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
+                    android:layout_height="10dp"
                     android:background="@drawable/edit_bg"
-                    android:layout_alignParentBottom="true"/>
+                    android:layout_alignParentBottom="true"
+                    />
 
                 <com.efd.striketectablet.customview.CustomEditText
                     android:id="@+id/left_sensor_id"
@@ -51,7 +52,7 @@
                     android:background="@color/transparent"
                     android:textColorHint="@color/hint_color"
                     android:textColor="@color/white"
-                    android:textSize="20sp"/>
+                    android:textSize="18sp"/>
 
             </RelativeLayout>
 
@@ -60,14 +61,14 @@
                 android:layout_marginLeft="10dp"
                 android:adjustViewBounds="true"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:src="@drawable/search_sensor"/>
 
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="30dp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent">
@@ -79,7 +80,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
+                    android:layout_height="10dp"
                     android:background="@drawable/edit_bg"
                     android:layout_alignParentBottom="true"/>
 
@@ -94,7 +95,7 @@
                     android:background="@color/transparent"
                     android:textColorHint="@color/hint_color"
                     android:textColor="@color/white"
-                    android:textSize="20sp"/>
+                    android:textSize="18sp"/>
 
             </RelativeLayout>
 
@@ -104,7 +105,7 @@
                 android:adjustViewBounds="true"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:src="@drawable/search_sensor"/>
 
         </LinearLayout>
@@ -112,17 +113,17 @@
     </LinearLayout>
 
     <View
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="120dp"
-        android:layout_marginRight="120dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
         android:background="@drawable/separator"/>
 
     <LinearLayout
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="35dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="50dp">
 
@@ -133,7 +134,7 @@
             android:gravity="center"
             android:padding="1dp"
             android:text="@string/cancel"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textAllCaps="true"
             android:textColor="@color/white"
             app:fill="false"
@@ -147,7 +148,7 @@
             android:gravity="center"
             android:padding="1dp"
             android:text="@string/ok"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textAllCaps="true"
             android:textColor="@color/black"
             app:fill="true"

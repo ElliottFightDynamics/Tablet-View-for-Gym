@@ -4,17 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/background"
-    android:padding="15dp">
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="@dimen/toolbarsize">
 
         <ImageView
             android:id="@+id/edit_button"
             android:layout_width="56dp"
             android:layout_height="match_parent"
-            android:padding="15dp"
+            android:padding="10dp"
             android:src="@drawable/ic_edit_icon"
             android:layout_toLeftOf="@+id/text_edit"/>
 
@@ -25,14 +27,13 @@
             android:text="@string/edit_profile"
             android:textColor="@color/punches_text_color"
             android:textSize="20sp"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="20dp"
             android:layout_alignParentEnd="true"
 
             android:layout_centerVertical="true"
         />
 
     </RelativeLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +44,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,11 +55,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-
                     <LinearLayout
                         android:id="@+id/connectsensor"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="25dp"
                         android:layout_marginLeft="-40dp"
                         android:layout_marginTop="20dp"
                         android:layout_toRightOf="@+id/user_photo">
@@ -77,15 +77,14 @@
                             android:text="@string/connectsensor"
                             android:textAllCaps="true"
                             android:textColor="@color/orange"
-                            android:textSize="18sp" />
-
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/totaltimetrained"
-                        android:layout_width="380dp"
-                        android:layout_height="30dp"
+                        android:layout_width="350dp"
+                        android:layout_height="25dp"
                         android:layout_marginLeft="-40dp"
                         android:layout_marginTop="100dp"
                         android:layout_toRightOf="@+id/user_photo"
@@ -118,8 +117,8 @@
 
                     <LinearLayout
                         android:id="@+id/totaldaytrained"
-                        android:layout_width="380dp"
-                        android:layout_height="30dp"
+                        android:layout_width="350dp"
+                        android:layout_height="25dp"
                         android:layout_below="@id/totaltimetrained"
                         android:layout_marginLeft="-55dp"
                         android:layout_toRightOf="@+id/user_photo">
@@ -152,8 +151,8 @@
 
                     <LinearLayout
                         android:id="@+id/lastupdatetrained"
-                        android:layout_width="380dp"
-                        android:layout_height="30dp"
+                        android:layout_width="350dp"
+                        android:layout_height="25dp"
                         android:layout_below="@id/totaldaytrained"
                         android:layout_marginLeft="-70dp"
                         android:layout_toRightOf="@+id/user_photo"
@@ -186,8 +185,8 @@
 
                     <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
                         android:id="@+id/user_photo"
-                        android:layout_width="229dp"
-                        android:layout_height="200dp"
+                        android:layout_width="206dp"
+                        android:layout_height="180dp"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:scaleType="centerCrop"
@@ -198,8 +197,8 @@
 
                 <com.efd.striketectablet.customview.CustomTextView
                     android:id="@+id/profile_name_view"
-                    android:layout_width="480dp"
-                    android:layout_height="60dp"
+                    android:layout_width="410dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/btn_bg_fill"
@@ -207,11 +206,11 @@
                     android:textAllCaps="true"
                     android:text="GENNADY GOLOVKIN"
                     android:textColor="@color/punches_text_color"
-                    android:textSize="30sp" />
+                    android:textSize="20sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="15dp"
                     android:background="@drawable/line_bg" />
 
 
@@ -253,12 +252,12 @@
                     android:textAllCaps="true"
                     android:text="KAZAHSTAN, 32 YO, NOVICE, TRADITIONAL STYLE"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp">
+                    android:layout_marginTop="20dp">
 
                     <View
                         android:layout_width="0dp"
@@ -266,9 +265,9 @@
                         android:layout_weight="1" />
 
                     <LinearLayout
-                        android:layout_width="160dp"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="20dp"
                         android:orientation="vertical">
 
                         <com.efd.striketectablet.customview.CustomTextView
@@ -278,11 +277,11 @@
                         <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
                             android:id="@+id/weight_view"
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
+                            android:layout_height="50dp"
                             android:gravity="center"
                             android:text="120"
                             android:textColor="@color/white"
-                            android:textSize="45sp" />
+                            android:textSize="30sp" />
 
                         <com.efd.striketectablet.customview.CustomTextView
                             style="@style/dashboard_setting_stat_label"
@@ -291,10 +290,10 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="160dp"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:orientation="vertical">
 
                         <com.efd.striketectablet.customview.CustomTextView
@@ -304,11 +303,11 @@
                         <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
                             android:id="@+id/height_view"
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
+                            android:layout_height="50dp"
                             android:gravity="center"
                             android:text="120"
                             android:textColor="@color/white"
-                            android:textSize="45sp" />
+                            android:textSize="30sp" />
 
                         <com.efd.striketectablet.customview.CustomTextView
                             style="@style/dashboard_setting_stat_label"
@@ -318,10 +317,10 @@
 
 
                     <LinearLayout
-                        android:layout_width="160dp"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginStart="20dp"
                         android:orientation="vertical">
 
                         <com.efd.striketectablet.customview.CustomTextView
@@ -331,11 +330,11 @@
                         <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
                             android:id="@+id/gloves_view"
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
+                            android:layout_height="50dp"
                             android:gravity="center"
                             android:text="120"
                             android:textColor="@color/white"
-                            android:textSize="45dp" />
+                            android:textSize="30sp" />
 
                         <com.efd.striketectablet.customview.CustomTextView
                             style="@style/dashboard_setting_stat_label"
@@ -344,9 +343,9 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="160dp"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="20dp"
                         android:orientation="vertical">
 
                         <com.efd.striketectablet.customview.CustomTextView
@@ -356,11 +355,11 @@
                         <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
                             android:id="@+id/reach_view"
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
+                            android:layout_height="50dp"
                             android:gravity="center"
                             android:text="120"
                             android:textColor="@color/white"
-                            android:textSize="45sp" />
+                            android:textSize="30sp" />
 
                         <com.efd.striketectablet.customview.CustomTextView
                             style="@style/dashboard_setting_stat_label"
@@ -391,12 +390,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="40dp">
+        android:layout_marginBottom="10dp">
 
         <RelativeLayout
             android:id="@+id/deletedatabtn"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
+            android:layout_width="140dp"
+            android:layout_height="35dp"
             android:layout_marginLeft="20dp"
             android:background="@drawable/btn_bg"
             >
@@ -406,7 +405,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/deletedata"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_centerInParent="true"/>
 
         </RelativeLayout>
@@ -419,7 +418,7 @@
             android:layout_height="wrap_content"
             android:text="GGG.GOLOVKIN@GMAIL.COM"
             android:textColor="@color/punches_text_color"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/logoutbtn"/>
 
@@ -444,15 +443,15 @@
 
         <com.efd.striketectablet.customview.HexagonButton
             android:id="@+id/logoutbtn"
-            android:layout_width="128dp"
-            android:layout_height="40dp"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
             android:padding="1dp"
             android:text="@string/logout"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:fill="false"
             app:hexagon_color="@color/btn_color"
             android:layout_alignParentTop="true"

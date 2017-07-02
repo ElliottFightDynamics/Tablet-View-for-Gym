@@ -2,7 +2,10 @@ package com.efd.striketectablet.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
+import android.os.Trace;
+import android.util.Config;
 import android.util.TypedValue;
 import android.widget.Toast;
 
@@ -82,5 +85,15 @@ public class StatisticUtil {
         DateFormat dateFormat = new SimpleDateFormat("yyyy, MMM dd : KK:mm a");
 
         return dateFormat.format(Long.parseLong(miles));
+    }
+
+    public static boolean is600Dp(){
+        Configuration configuration = mContext.getResources().getConfiguration();
+
+        if (configuration.smallestScreenWidthDp < 720){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

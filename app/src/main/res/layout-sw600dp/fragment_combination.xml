@@ -17,8 +17,8 @@
 
     <com.efd.striketectablet.customview.CustomButton
         android:id="@+id/training_start_button"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
         android:background="@drawable/positive_big_btn"
         android:gravity="center"
         android:text="@string/start_training"

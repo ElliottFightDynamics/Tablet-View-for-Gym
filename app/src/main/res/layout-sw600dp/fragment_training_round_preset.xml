@@ -52,12 +52,12 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:orientation="horizontal">
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="20dp"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/trainingstats_left_line" />
@@ -90,7 +90,7 @@
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="20dp"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/trainingstats_right_line" />
@@ -123,7 +123,7 @@
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="15dp"
+                            android:layout_height="20dp"
                             android:layout_alignParentBottom="true"
                             android:layout_marginBottom="5dp"
                             android:adjustViewBounds="true"
@@ -168,7 +168,7 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp"
+                                android:layout_height="30dp"
                                 android:background="@drawable/preset_restbg">
 
                                 <com.efd.striketectablet.customview.CustomTextView
@@ -212,7 +212,7 @@
                                     <com.efd.striketectablet.customview.CustomTextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="20dp"
+                                        android:layout_marginTop="10dp"
                                         android:gravity="center"
                                         android:text="@string/min_sec"
                                         android:textColor="@color/round_minsec"
@@ -237,7 +237,7 @@
                                     <com.efd.striketectablet.customview.CustomTextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="20dp"
+                                        android:layout_marginTop="10dp"
                                         android:gravity="center"
                                         android:text="@string/min_sec"
                                         android:textColor="@color/rest_minsec"
@@ -269,7 +269,7 @@
 
                 <LinearLayout
                     android:id="@+id/prepare_parent"
-                    android:layout_width="160dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -279,7 +279,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="30dp"
                         android:layout_marginBottom="7dp"
                         android:layout_marginTop="7dp">
 
@@ -316,7 +316,7 @@
 
                 <LinearLayout
                     android:id="@+id/warning_parent"
-                    android:layout_width="160dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:orientation="vertical">
@@ -327,7 +327,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="30dp"
                         android:layout_marginBottom="7dp"
                         android:layout_marginTop="7dp">
 
@@ -363,7 +363,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="160dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="20dp"
@@ -377,7 +377,7 @@
                         android:id="@+id/weight_spinner"
                         style="@style/dashboard_spinner"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="30dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:prompt="@string/weight_spinner_prompt" />
@@ -390,7 +390,7 @@
 
                 <LinearLayout
                     android:layout_marginStart="20dp"
-                    android:layout_width="160dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:orientation="vertical">
@@ -403,7 +403,7 @@
                         android:id="@+id/glove_spinner"
                         style="@style/dashboard_spinner"
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+                        android:layout_height="30dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:prompt="@string/glove_type_spinner_prompt" />
@@ -448,13 +448,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="20dp"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/left_arrow_line_bg"/>
@@ -464,8 +464,8 @@
                     android:layout_height="match_parent">
 
                     <com.efd.striketectablet.customview.CustomButton
-                        android:layout_width="300dp"
-                        android:layout_height="50dp"
+                        android:layout_width="250dp"
+                        android:layout_height="40dp"
                         android:background="@drawable/training_big_btn"
                         android:gravity="center"
                         android:layout_marginRight="-35dp"
@@ -476,18 +476,18 @@
 
                     <com.efd.striketectablet.customview.CustomTextView
                         android:id="@+id/total_time"
-                        android:layout_width="340dp"
+                        android:layout_width="300dp"
                         android:layout_height="match_parent"
                         android:background="@drawable/total_time_bg"
                         android:text="3:48:15"
-                        android:textSize="65sp"
+                        android:textSize="40sp"
                         android:gravity="center"
                         android:textColor="@color/punches_text_color"/>
 
                     <com.efd.striketectablet.customview.CustomButton
                         android:id="@+id/training_start_button"
-                        android:layout_width="300dp"
-                        android:layout_height="50dp"
+                        android:layout_width="250dp"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="-35dp"
                         android:background="@drawable/positive_big_btn"
                         android:gravity="center"
@@ -500,7 +500,7 @@
 
                 <View
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="20dp"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/right_arrow_line_bg"/>

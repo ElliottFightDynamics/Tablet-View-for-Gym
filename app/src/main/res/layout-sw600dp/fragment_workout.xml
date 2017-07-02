@@ -29,14 +29,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@drawable/round_listbg"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp">
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
+                android:layout_height="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
 
                 <View
                     android:layout_width="0dp"
@@ -47,14 +47,11 @@
 
                 <com.efd.striketectablet.customview.CustomTextView
                     android:textColor="@color/punches_text_color"
-                    android:layout_width="250dp"
-
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_bg_fill"
                     android:text="@string/roundinworkout"
-                    android:textSize="25sp"
+                    android:textSize="18sp"
                     android:gravity="center"
                     android:layout_gravity="center_horizontal"/>
 
@@ -81,15 +78,15 @@
 
             <com.efd.striketectablet.customview.CustomButton
                 android:id="@+id/training_start_button"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
                 android:background="@drawable/positive_big_btn"
                 android:gravity="center"
                 android:text="@string/start_training"
                 android:textColor="@color/black"
                 android:textSize="@dimen/button_textsize"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 />
 
         </LinearLayout>
@@ -100,11 +97,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@drawable/setlistbg"
-            android:padding="20dp">
+            android:padding="15dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="30dp">
 
                 <View
                     android:layout_width="0dp"
@@ -115,14 +112,11 @@
 
                 <com.efd.striketectablet.customview.CustomTextView
                     android:textColor="@color/punches_text_color"
-                    android:layout_width="300dp"
-
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_bg_fill"
                     android:text="@string/combinationsinround"
-                    android:textSize="25sp"
+                    android:textSize="18sp"
                     android:gravity="center"
                     android:layout_gravity="center_horizontal"/>
 
@@ -163,7 +157,7 @@
 
             <LinearLayout
                 android:id="@+id/round_parent"
-                android:layout_width="160dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
@@ -174,7 +168,7 @@
                 <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
                     android:id="@+id/round_time"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="30dp"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:background="@null"
@@ -183,14 +177,14 @@
                     android:gravity="center"
                     android:text="47:50"
                     android:textColor="@color/white"
-                    android:textSize="30sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/rest_parent"
-                android:layout_width="160dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="15dp"
                 android:orientation="vertical">
 
                 <com.efd.striketectablet.customview.CustomTextView
@@ -200,7 +194,7 @@
                 <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
                     android:id="@+id/rest_time"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="30dp"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:background="@null"
@@ -209,14 +203,14 @@
                     android:gravity="center"
                     android:text="47:50"
                     android:textColor="@color/white"
-                    android:textSize="30sp"/>
+                    android:textSize="20sp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/prepare_parent"
-                android:layout_width="160dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="15dp"
                 android:orientation="vertical">
 
                 <com.efd.striketectablet.customview.CustomTextView
@@ -226,7 +220,7 @@
                 <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
                     android:id="@+id/prepare_time"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="30dp"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:background="@null"
@@ -235,14 +229,14 @@
                     android:gravity="center"
                     android:text="47:50"
                     android:textColor="@color/white"
-                    android:textSize="30sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/warning_parent"
-                android:layout_width="160dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="15dp"
                 android:orientation="vertical">
 
                 <com.efd.striketectablet.customview.CustomTextView
@@ -252,7 +246,7 @@
                 <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
                     android:id="@+id/warning_time"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="30dp"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:background="@null"
@@ -261,13 +255,13 @@
                     android:gravity="center"
                     android:text="47:50"
                     android:textColor="@color/white"
-                    android:textSize="30sp"/>
+                    android:textSize="20sp"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/glove_parent"
-                android:layout_width="160dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="15dp"
                 android:orientation="vertical">
 
                 <com.efd.striketectablet.customview.CustomTextView
@@ -277,7 +271,7 @@
                 <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
                     android:id="@+id/glovevalue"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="30dp"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:background="@null"
@@ -286,14 +280,14 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/white"
-                    android:textSize="30sp"/>
+                    android:textSize="20sp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/total_parent"
-                android:layout_width="160dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="15dp"
                 android:orientation="vertical">
 
                 <com.efd.striketectablet.customview.CustomTextView
@@ -303,7 +297,7 @@
                 <com.efd.striketectablet.customview.CustomTextViewFontEfDigit
                     android:id="@+id/total_time"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="30dp"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:background="@null"
@@ -312,7 +306,7 @@
                     android:gravity="center"
                     android:text="30"
                     android:textColor="@color/punches_text_color"
-                    android:textSize="30sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </LinearLayout>

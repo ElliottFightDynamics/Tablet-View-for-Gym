@@ -9,15 +9,15 @@
         android:id="@+id/key"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textSize="80sp"
+        android:textSize="60sp"
         android:text="4"
         android:gravity="center"
         android:textColor="@color/punches_text_color"/>
 
     <View
         android:id="@+id/combo_divider"
-        android:layout_width="30dp"
-        android:layout_height="4dp"
+        android:layout_width="20dp"
+        android:layout_height="3dp"
         android:background="@drawable/combo_divider"/>
 
 </LinearLayout>

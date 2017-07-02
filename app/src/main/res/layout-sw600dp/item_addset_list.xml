@@ -8,15 +8,16 @@
     <RelativeLayout
         android:id="@+id/combo_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:orientation="horizontal"
         android:background="@drawable/comboset_childbg">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_weight="1"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true">
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
 
             <!--<com.efd.striketectablet.customview.CustomTextView-->
                 <!--android:id="@+id/key"-->
@@ -33,7 +34,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:textColor="@color/white"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:text="Attack">
 
             </com.efd.striketectablet.customview.CustomTextView>
@@ -44,8 +45,8 @@
         <ImageView
             android:id="@+id/settings"
             android:adjustViewBounds="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/combosets_settings"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"/>
@@ -55,7 +56,7 @@
     <ImageView
         android:id="@+id/divider"
         android:layout_width="1dp"
-        android:layout_height="20dp"
+        android:layout_height="10dp"
         android:src="@drawable/divider_1"
         android:layout_gravity="center_horizontal"/>
 

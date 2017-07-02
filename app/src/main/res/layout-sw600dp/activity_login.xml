@@ -41,7 +41,7 @@
 
         <LinearLayout
             android:id="@+id/parent"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="70dp"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -64,12 +64,12 @@
             <View
                 android:layout_marginTop="-10dp"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="10dp"
                 android:background="@drawable/edit_bg"
                 android:layout_alignParentBottom="true"/>
 
             <com.efd.striketectablet.customview.CustomEditText
-                android:layout_marginTop="37dp"
+                android:layout_marginTop="42dp"
                 android:id="@+id/pwd"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
@@ -86,7 +86,7 @@
             <View
                 android:layout_marginTop="-10dp"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="10dp"
                 android:background="@drawable/edit_bg"
                 android:layout_alignParentBottom="true"/>
 

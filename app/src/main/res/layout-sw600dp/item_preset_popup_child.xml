@@ -2,16 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/text"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="40dp"
     >
 
     <com.efd.striketectablet.customview.CustomTextView
         android:id="@+id/preset_name"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="25sp">
+        android:textSize="20sp">
 
     </com.efd.striketectablet.customview.CustomTextView>
 

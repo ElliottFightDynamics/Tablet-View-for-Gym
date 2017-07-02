@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp"
-    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="10dp"
     android:background="@drawable/background"
     tools:context="com.efd.striketectablet.activity.credential.RegisterActivity"
     android:orientation="vertical">
@@ -60,19 +60,19 @@
                 android:gravity="center"
                 android:text="@string/register_guide"
                 android:textColor="@color/punches_text_color"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
 
             <LinearLayout
-                android:layout_width="350dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
                 <com.efd.striketectablet.customview.CustomEditText
                     android:id="@+id/fname"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:background="@color/transparent"
                     android:gravity="center"
                     android:hint="@string/fistname"
@@ -81,11 +81,11 @@
                     android:paddingRight="10dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/hint_color"
-                    android:textSize="20sp" />
+                    android:textSize="17sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
+                    android:layout_height="10dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="-10dp"
                     android:background="@drawable/edit_bg" />
@@ -93,21 +93,21 @@
                 <com.efd.striketectablet.customview.CustomEditText
                     android:id="@+id/lname"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:background="@color/transparent"
                     android:gravity="center"
                     android:hint="@string/lastname"
                     android:inputType="textPersonName"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/hint_color"
-                    android:textSize="20sp" />
+                    android:textSize="17sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
+                    android:layout_height="10dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="-10dp"
                     android:background="@drawable/edit_bg" />
@@ -115,21 +115,21 @@
                 <com.efd.striketectablet.customview.CustomEditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:background="@color/transparent"
                     android:gravity="center"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/hint_color"
-                    android:textSize="20sp" />
+                    android:textSize="17sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
+                    android:layout_height="10dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="-10dp"
                     android:background="@drawable/edit_bg" />
@@ -137,21 +137,21 @@
                 <com.efd.striketectablet.customview.CustomEditText
                     android:id="@+id/pwd"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:background="@color/transparent"
                     android:gravity="center"
                     android:hint="@string/pwd"
                     android:inputType="textPassword"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/hint_color"
-                    android:textSize="20sp" />
+                    android:textSize="17sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
+                    android:layout_height="10dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="-10dp"
                     android:background="@drawable/edit_bg" />
@@ -160,29 +160,29 @@
                 <com.efd.striketectablet.customview.CustomEditText
                     android:id="@+id/repwd"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:background="@color/transparent"
                     android:gravity="center"
                     android:hint="@string/repwd"
                     android:inputType="textPassword"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/hint_color"
-                    android:textSize="20sp" />
+                    android:textSize="17sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
+                    android:layout_height="10dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="-10dp"
                     android:background="@drawable/edit_bg" />
 
                 <LinearLayout
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/dropdown">
 
                     <Spinner
@@ -202,8 +202,8 @@
                 <com.efd.striketectablet.customview.CustomEditText
                     android:id="@+id/answer"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="20dp"
                     android:background="@color/transparent"
                     android:gravity="center"
                     android:hint="@string/type_answer"
@@ -213,11 +213,11 @@
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textColorHint="@color/hint_color"
-                    android:textSize="20sp" />
+                    android:textSize="17sp" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
+                    android:layout_height="10dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="-10dp"
                     android:background="@drawable/edit_bg" />
@@ -225,9 +225,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:gravity="center"
                 android:layout_gravity="center_horizontal">
 
@@ -236,7 +236,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/terms1"
                     android:textColor="@color/punches_text_color"
-                    android:textSize="25sp" />
+                    android:textSize="20sp" />
 
                 <com.efd.striketectablet.customview.CustomTextView
                     android:id="@+id/termsofuse"
@@ -245,7 +245,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/terms2"
                     android:textColor="@color/white"
-                    android:textSize="25sp" />
+                    android:textSize="20sp" />
 
                 <com.efd.striketectablet.customview.CustomTextView
                     android:layout_marginLeft="10dp"
@@ -253,17 +253,17 @@
                     android:layout_height="wrap_content"
                     android:text="@string/terms3"
                     android:textColor="@color/punches_text_color"
-                    android:textSize="25sp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
                 <com.efd.striketectablet.customview.HexagonButton
                     android:id="@+id/register_btn"
-                    android:layout_width="310dp"
-                    android:layout_height="40dp"
+                    android:layout_width="300dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:padding="1dp"
                     android:text="@string/register"

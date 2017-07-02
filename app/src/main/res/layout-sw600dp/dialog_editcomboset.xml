@@ -12,17 +12,17 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         >
 
         <com.efd.striketectablet.customview.CustomTextView
             android:id="@+id/replace"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:gravity="center"
             android:text="@string/replace_punch"
             android:textColor="@color/white"
-            android:textSize="25sp">
+            android:textSize="20sp">
 
         </com.efd.striketectablet.customview.CustomTextView>
 
@@ -35,17 +35,17 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         >
 
         <com.efd.striketectablet.customview.CustomTextView
             android:id="@+id/insert_above"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:gravity="center"
             android:text="@string/insert_above"
             android:textColor="@color/white"
-            android:textSize="25sp">
+            android:textSize="20sp">
 
         </com.efd.striketectablet.customview.CustomTextView>
 
@@ -59,17 +59,17 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         >
 
         <com.efd.striketectablet.customview.CustomTextView
             android:id="@+id/insert_below"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:gravity="center"
             android:text="@string/insert_below"
             android:textColor="@color/white"
-            android:textSize="25sp">
+            android:textSize="20sp">
 
         </com.efd.striketectablet.customview.CustomTextView>
 
@@ -83,17 +83,17 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         >
 
         <com.efd.striketectablet.customview.CustomTextView
             android:id="@+id/delete"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:gravity="center"
             android:text="@string/delete"
             android:textColor="@color/white"
-            android:textSize="25sp">
+            android:textSize="20sp">
 
         </com.efd.striketectablet.customview.CustomTextView>
 
