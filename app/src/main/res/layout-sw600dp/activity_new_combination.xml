@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp"
-    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="10dp"
     android:background="@drawable/background">
 
     <RelativeLayout
@@ -33,15 +33,15 @@
 
         <com.efd.striketectablet.customview.CustomTextView
             android:id="@+id/savebtn"
-            android:layout_width="160dp"
-            android:layout_height="40dp"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:background="@drawable/trainingstats_btn_fill"
             android:gravity="center"
             android:text="SAVE"
             android:textColor="@color/black"
-            android:textSize="25sp" />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <View
@@ -50,14 +50,14 @@
         android:background="@drawable/separator" />
 
     <RelativeLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="400dp"
-        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_horizontal">
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="15dp"
+            android:layout_height="10dp"
             android:background="@drawable/edit_bg"
             android:layout_alignParentBottom="true"/>
 
@@ -72,45 +72,43 @@
             android:background="@color/transparent"
             android:textColorHint="@color/hint_color"
             android:textColor="@color/white"
-            android:textSize="25sp"/>
+            android:textSize="20sp"/>
 
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp">
 
         <View
             android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
+            android:layout_height="22dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/trainingstats_left_line"/>
+            android:layout_weight="1"
+            android:background="@drawable/trainingstats_left_line" />
 
         <com.efd.striketectablet.customview.CustomTextView
-            android:textColor="@color/punches_text_color"
-            android:layout_width="250dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
             android:background="@drawable/trainingstats_btn_fill"
-            android:text="@string/listofpunches"
-            android:textSize="25sp"
             android:gravity="center"
-            android:layout_gravity="center_horizontal"/>
+            android:text="@string/listofpunches"
+            android:textColor="@color/punches_text_color"
+            android:textSize="18sp" />
 
         <View
             android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
+            android:layout_height="22dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/trainingstats_right_line"/>
+            android:layout_weight="1"
+            android:background="@drawable/trainingstats_right_line" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -135,7 +133,7 @@
             
             <ListView
                 android:id="@+id/punch_detail"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="500dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
@@ -147,8 +145,8 @@
         <com.efd.striketectablet.customview.CustomButton
             android:layout_below="@+id/punchlist_parent"
             android:id="@+id/add_punch"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_width="250dp"
+            android:layout_height="35dp"
             android:background="@drawable/positive_big_btn"
             android:gravity="center"
             android:text="@string/addpunch"
@@ -156,8 +154,7 @@
             android:textSize="@dimen/button_textsize"
             android:layout_gravity="center_horizontal"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
 
 </LinearLayout>

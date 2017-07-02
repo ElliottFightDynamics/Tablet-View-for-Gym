@@ -468,11 +468,20 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
         comboDivider.setAlpha(0.25f);
         comboNumParent.addView(newLayout, position);
 
-        if (position == 3){
-            keyView.setTextSize(115);
+        if (StatisticUtil.is600Dp()){
+            if (position == 3){
+                keyView.setTextSize(80);
+            }else {
+                keyView.setTextSize(60);
+            }
         }else {
-            keyView.setTextSize(80);
+            if (position == 3){
+                keyView.setTextSize(115);
+            }else {
+                keyView.setTextSize(80);
+            }
         }
+
 
         if (position == maxview - 1){
             comboDivider.setVisibility(View.GONE);
@@ -562,8 +571,11 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
             //update num view
             LinearLayout child = (LinearLayout)comboNumParent.getChildAt(3);
             TextView keyView = (TextView)child.findViewById(R.id.key);
-            keyView.setTextSize(80);
 
+            if (StatisticUtil.is600Dp())
+                keyView.setTextSize(60);
+            else
+                keyView.setTextSize(80);
             LinearLayout resultChild = (LinearLayout)comboResultParent.getChildAt(currentPunchIndex);
             TextView resultkeyView = (TextView)resultChild.findViewById(R.id.key);
 
@@ -619,10 +631,18 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                     child.setVisibility(View.VISIBLE);
                     keyView.setText(currentComboDTO.getComboTypes().get(currentPunchIndex + i - 3));
 
-                    if (i == 3){
-                        keyView.setTextSize(115);
+                    if (StatisticUtil.is600Dp()){
+                        if (i == 3){
+                            keyView.setTextSize(80);
+                        }else {
+                            keyView.setTextSize(60);
+                        }
                     }else {
-                        keyView.setTextSize(80);
+                        if (i == 3){
+                            keyView.setTextSize(115);
+                        }else {
+                            keyView.setTextSize(80);
+                        }
                     }
 
                     if (i == max - 1){

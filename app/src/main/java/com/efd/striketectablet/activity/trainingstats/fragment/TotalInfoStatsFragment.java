@@ -18,6 +18,7 @@ import com.efd.striketectablet.activity.trainingstats.adapter.CommonStatsAdapter
 import com.efd.striketectablet.activity.trainingstats.adapter.PunchesRankAdapter;
 import com.efd.striketectablet.customview.CustomCircleView;
 import com.efd.striketectablet.util.PresetUtil;
+import com.efd.striketectablet.util.StatisticUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -139,7 +140,10 @@ public class TotalInfoStatsFragment extends Fragment{
         commonstatsListView.setAdapter(commonStatsAdapter);
 
         circlePercentView.setDeactivePaint(getResources().getColor(R.color.advise_deactivecolor));
-        circlePercentView.setStrokeWidth(18);
+        if (!StatisticUtil.is600Dp())
+            circlePercentView.setStrokeWidth(18);
+        else
+            circlePercentView.setStrokeWidth(7);
 
         circlePercentView.setActivePaint(getResources().getColor(R.color.force_text_color));
         circlePercentView.setInnerPaint(getResources().getColor(R.color.speed_text_color));

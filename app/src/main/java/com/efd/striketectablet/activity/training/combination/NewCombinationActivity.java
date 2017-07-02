@@ -316,7 +316,6 @@ public class NewCombinationActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 dialog.dismiss();
-                StatisticUtil.showToastMessage(ComboSetUtil.keyLists.get(position) + " is added");
 
                 String key = ComboSetUtil.keyLists.get(position);
 

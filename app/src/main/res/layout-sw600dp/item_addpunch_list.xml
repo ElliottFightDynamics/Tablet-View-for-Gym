@@ -57,7 +57,7 @@
     <ImageView
         android:id="@+id/divider"
         android:layout_width="1dp"
-        android:layout_height="20dp"
+        android:layout_height="10dp"
         android:src="@drawable/divider_1"
         android:layout_gravity="center_horizontal"/>
 

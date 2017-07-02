@@ -7,7 +7,7 @@
 
     <com.efd.striketectablet.customview.CustomTextView
         android:id="@+id/num"
-        android:layout_width="25dp"
+        android:layout_width="20dp"
         android:layout_height="@dimen/cell_height"
         android:layout_centerVertical="true"
         android:gravity="center_vertical|end"
@@ -15,7 +15,7 @@
         android:paddingLeft="5dp"
         android:text="1."
         android:textColor="@color/num_textcolor"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <com.efd.striketectablet.customview.CustomTextView
         android:id="@+id/punch_type"
@@ -29,11 +29,11 @@
         android:text="STRAIGHT"
         android:singleLine="true"
         android:textColor="@color/punches_text_color"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <com.efd.striketectablet.customview.CustomTextView
         android:id="@+id/avg_speed"
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:layout_height="@dimen/cell_height"
         android:layout_centerVertical="true"
         android:gravity="center_vertical|end"
@@ -42,11 +42,11 @@
         android:text="199.2MPH"
         android:singleLine="true"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <com.efd.striketectablet.customview.CustomTextView
         android:id="@+id/avg_force"
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:layout_height="@dimen/cell_height"
         android:layout_centerVertical="true"
         android:gravity="center_vertical|end"
@@ -55,11 +55,11 @@
         android:paddingLeft="5dp"
         android:text="199.2LBS"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <com.efd.striketectablet.customview.CustomTextView
         android:id="@+id/punch_count"
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:layout_height="@dimen/cell_height"
         android:layout_centerVertical="true"
         android:gravity="center_vertical|end"
@@ -68,7 +68,7 @@
         android:paddingLeft="5dp"
         android:text="199HITS"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <com.efd.striketectablet.customview.CustomTextView
         android:id="@+id/punch_effective"
@@ -81,6 +81,6 @@
         android:paddingLeft="5dp"
         android:text="199HITS"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
 </LinearLayout>

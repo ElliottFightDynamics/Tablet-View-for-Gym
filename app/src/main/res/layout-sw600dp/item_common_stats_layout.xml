@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
         android:textColor="@color/punches_text_color"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <com.efd.striketectablet.customview.CustomTextView
         android:id="@+id/value"
@@ -21,6 +21,6 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
 </RelativeLayout>
