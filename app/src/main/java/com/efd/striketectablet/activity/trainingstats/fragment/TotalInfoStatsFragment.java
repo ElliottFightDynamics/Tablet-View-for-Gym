@@ -200,10 +200,10 @@ public class TotalInfoStatsFragment extends Fragment{
             sumactivetime += punchTypeInfoDTOs.get(i).totaltime;
         }
 
-        int activePercent = (int)(sumactivetime / totaltime * 100);
+        int activePercent = (int)((int)sumactivetime / (totaltime * 1f) * 100);
         int inactivePercent = 100 - activePercent;
 
-        int activeAngle = (int)(sumactivetime / totaltime * 360);
+        int activeAngle = (int)((int)sumactivetime /  (totaltime * 1f) * 360);
         int inactiveAngle = 360 - activeAngle;
 
         activePercentView.setText(activePercent + "%");
@@ -212,7 +212,7 @@ public class TotalInfoStatsFragment extends Fragment{
         updateCirlceView(true, activeAngle, inactiveAngle);
 
         activeTimeView.setText(PresetUtil.changeSecondsToHours((int)sumactivetime));
-        inactiveTimeView.setText(PresetUtil.changeSecondsToHours((int)(totaltime - sumactivetime)));
+        inactiveTimeView.setText(PresetUtil.changeSecondsToHours((totaltime - (int)sumactivetime)));
 
         totalPunchesView.setText(String.valueOf(totalpunchcount));
         valueLists.set(keyLists.indexOf("AVG SPEED"), (int)(sumavgspeed / totalpunchcount) + " MPH");
