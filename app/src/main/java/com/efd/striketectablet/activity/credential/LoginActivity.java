@@ -185,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void setUserData(AuthenticationDTO authenticationDTO, String accessTokenFromRegistrationScreen, boolean isRedirectedFromLogin) {
         int userId = -1;
-        if (authenticationDTO.getSuccess().equalsIgnoreCase("true")) {
+        if (authenticationDTO.getSuccess()) {
             UserDTO userDTO = authenticationDTO.getUser();
             BoxerProfileDTO boxerProfileDTO = authenticationDTO.getBoxerProfile();
 
@@ -213,7 +213,7 @@ public class LoginActivity extends AppCompatActivity {
      * @param loggedInUserDetails the logged in user details
      */
     public void saveUserDetails(UserDTO loggedInUserDetails, BoxerProfileDTO loggedInBoxerProfileDetails) {
-        db = DBAdapter.getInstance(LoginActivity.this);
+
         int recordInsertedOrUpdated = -1, loggedInUserId = -1, boxerProfileRecordInsertedOrUpdated = -1;
 
         try {
@@ -255,7 +255,6 @@ public class LoginActivity extends AppCompatActivity {
                         loggedInBoxerProfileDetails.getGloveType(),
                         loggedInBoxerProfileDetails.getSkillLevel(),
                         loggedInUserDetails.getId());
-                db.insertUserRole(1, recordInsertedOrUpdated);
             } else {
                 recordInsertedOrUpdated = db.updateUser(
                         loggedInUserId,

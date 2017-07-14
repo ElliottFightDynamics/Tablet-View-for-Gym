@@ -1,11 +1,8 @@
 package com.efd.striketectablet.DTO.responsedto;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
-public class UserDTO implements Parcelable {
-
-    private int id;
+public class UserDTO extends HasId{
     private boolean accountExpired;
     private boolean accountLocked;
     private String firstName;
@@ -23,7 +20,6 @@ public class UserDTO implements Parcelable {
     public UserDTO() {}
 
     protected UserDTO(Parcel in) {
-        this.id = in.readInt();
         this.accountExpired = in.readByte() != 0;
         this.accountLocked = in.readByte() != 0;
         this.firstName = in.readString();
@@ -41,7 +37,6 @@ public class UserDTO implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
         dest.writeByte(this.accountExpired ? (byte) 1 : (byte) 0);
         dest.writeByte(this.accountLocked ? (byte) 1 : (byte) 0);
         dest.writeString(this.firstName);
@@ -55,14 +50,6 @@ public class UserDTO implements Parcelable {
         dest.writeString(this.emailId);
         dest.writeParcelable(this.country, flags);
         dest.writeString(this.zipcode);
-    }
-
-    public int getId(){
-        return id;
-    }
-
-    public void setId(int id){
-        this.id = id;
     }
 
     public boolean getAccountExpired(){
@@ -138,7 +125,7 @@ public class UserDTO implements Parcelable {
     }
 
     public String getUsername(){
-        return password;
+        return username;
     }
 
     public void setUsername(String username){
@@ -169,12 +156,7 @@ public class UserDTO implements Parcelable {
         this.zipcode = zipcode;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Parcelable.Creator<UserDTO> CREATOR = new Parcelable.Creator<UserDTO>() {
+    public static final Creator<UserDTO> CREATOR = new Creator<UserDTO>() {
         @Override
         public UserDTO createFromParcel(Parcel source) {
             return new UserDTO(source);

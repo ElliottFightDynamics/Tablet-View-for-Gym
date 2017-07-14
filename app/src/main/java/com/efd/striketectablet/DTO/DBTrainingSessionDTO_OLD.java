@@ -1,6 +1,6 @@
 package com.efd.striketectablet.DTO;
 
-public class DBTrainingSessionDTO {
+public class DBTrainingSessionDTO_OLD {
 
     private Integer id;
     private String startTime;
@@ -15,9 +15,9 @@ public class DBTrainingSessionDTO {
     private String syncDate;
     private Long serverID;
 
-    public DBTrainingSessionDTO(Integer id, String startTime, String endTime,
-                                String date, String trainingType, Integer userID, Integer sync,
-                                String syncDate, Long serverID) {
+    public DBTrainingSessionDTO_OLD(Integer id, String startTime, String endTime,
+                                    String date, String trainingType, Integer userID, Integer sync,
+                                    String syncDate, Long serverID) {
         super();
         this.id = id;
         this.startTime = startTime;
@@ -68,7 +68,7 @@ public class DBTrainingSessionDTO {
 
     @Override
     public String toString() {
-        return "DBTrainingSessionDTO [id=" + id + ", startTime=" + startTime
+        return "DBTrainingSessionDTO_OLD [id=" + id + ", startTime=" + startTime
                 + ", endTime=" + endTime + ", trainingSessionDate=" + trainingSessionDate + ", trainingType="
                 + trainingType + ", userID=" + userID + ", sync=" + sync
                 + ", syncDate=" + syncDate + ", serverID=" + serverID + "]";

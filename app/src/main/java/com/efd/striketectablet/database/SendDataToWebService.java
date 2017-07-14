@@ -6,15 +6,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.efd.striketectablet.DTO.DBTrainingDataDTO;
-import com.efd.striketectablet.DTO.DBTrainingDataDetailsDTO;
-import com.efd.striketectablet.DTO.DBTrainingPunchDataDTO;
-import com.efd.striketectablet.DTO.DBTrainingPunchDataPeakSummaryDTO;
-import com.efd.striketectablet.DTO.DBTrainingSessionDTO;
-import com.efd.striketectablet.DTO.SyncResponseDTO;
+import com.efd.striketectablet.DTO.responsedto.DBTrainingPlanResultDTO;
+import com.efd.striketectablet.DTO.responsedto.DBTrainingPunchDetailDTO;
+import com.efd.striketectablet.DTO.responsedto.DBTrainingPunchStatDTO;
+import com.efd.striketectablet.DTO.responsedto.DBTrainingSessionDTO;
+import com.efd.striketectablet.DTO.responsedto.SyncResponseDTO;
+import com.efd.striketectablet.DTO.responsedto.SyncServerResponseDTO;
 import com.efd.striketectablet.activity.MainActivity;
+import com.efd.striketectablet.api.RetrofitSingleton;
 import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionConfig;
 import com.efd.striketectablet.exception.EFDExceptionHandler;
+import com.efd.striketectablet.util.IndicatorCallback;
 import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.google.gson.Gson;
@@ -47,6 +49,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import retrofit2.Call;
+import retrofit2.Response;
+
 public class SendDataToWebService extends Activity {
     int sessionId, trainingDataId, trainingDataDetailsId, trainingPunchDataId, trainingPunchDataPeakSummaryId;
     private final String TAG = "SendDataToWebService";
@@ -62,16 +67,15 @@ public class SendDataToWebService extends Activity {
     DBAdapter db = DBAdapter.getInstance(SendDataToWebService.this);
 
     private final String tableTrainingSession = DBAdapter.getTrainingSessionTable();
-    private final String tableTrainingData = DBAdapter.getTrainingDataTable();
-    private final String tableTrainingDataDetails = DBAdapter.getTrainingDataDetailsTable();
-    private final String tableTrainingPunchData = DBAdapter.getTrainingPunchDataTable();
-    private final String tableTrainingPunchDataPeakSummary = DBAdapter.getTrainingPunchDataPeakSummaryTable();
+    private final String tableTrainingPunchStats = DBAdapter.getTrainingPunchStatsTable();
+    private final String tablePlanResultTable = DBAdapter.getTrainingPlanResultsTable();
+    private final String tablePunchDetailsTable = DBAdapter.getTrainingPunchDetailTable();
+
 
     private boolean isDataInTrainingSessionExist = true;
-    private boolean isDataInTrainingDataExist = true;
-    private boolean isDataInTrainingDataDetailsExist = true;
-    private boolean isDataInTrainingPunchDataExist = true;
-    private boolean isDataInTrainingPunchDataPeakSummaryExist = true;
+    private boolean isDataInTrainingPunchStatsExist = true;
+    private boolean isDataInTrainingPlanResultsExist = true;
+    private boolean isDataInTrainingDetailsExist = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +90,7 @@ public class SendDataToWebService extends Activity {
      */
     public void deletePastSyncedRecords() {
         final int MORE_THAN_N_DAYS = 30;
-        db.deleteCompletelySyncedTrainingSessionRecords(MORE_THAN_N_DAYS);
+//        db.deleteCompletelySyncedTrainingSessionRecords(MORE_THAN_N_DAYS);
     }
 
     class Data {
@@ -107,109 +111,6 @@ public class SendDataToWebService extends Activity {
         }
     }
 
-    private class AsyncCallWS extends AsyncTask<Data, Void, String> {
-        String action;
-
-        private String convertStreamToString(InputStream is) {
-
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-
-            String line = null;
-            try {
-                while ((line = reader.readLine()) != null) {
-
-                    sb.append(line + "\n");
-                }
-            } catch (IOException e) {
-
-                e.printStackTrace();
-            } finally {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return sb.toString();
-        }
-
-        @Override
-        protected String doInBackground(Data... params) {
-            action = params[0].action;
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpContext localContext = new BasicHttpContext();
-            ArrayList<NameValuePair> param = new ArrayList<NameValuePair>();
-            for (Map.Entry<String, String> boxer : params[0].params.entrySet()) {
-                param.add(new BasicNameValuePair(boxer.getKey(), boxer.getValue()));
-            }
-
-            String text = null;
-            HttpGet httpGet = null;
-            HttpPost httpPost = null;
-            HttpResponse response = null;
-            if ((params[0].method).equals("GET")) {
-                httpGet = new HttpGet(params[0].url);
-                try {
-                    response = httpClient.execute(httpGet, localContext);
-                } catch (ClientProtocolException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if ((params[0].method).equals("POST")) {
-                httpPost = new HttpPost(params[0].url);
-                try {
-                    httpPost.setEntity(new UrlEncodedFormEntity(param, HTTP.UTF_8));
-                    response = httpClient.execute(httpPost, localContext);
-                    //response.getStatusLine().getStatusCode();
-                } catch (UnsupportedEncodingException e1) {
-                    e1.printStackTrace();
-                } catch (ClientProtocolException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            try {
-
-                HttpEntity entity = response.getEntity();
-                if (entity != null) {
-
-                    InputStream instream = entity.getContent();
-                    text = convertStreamToString(instream);
-                    instream.close();
-                }
-            } catch (Exception e) {
-                return e.getLocalizedMessage();
-            }
-            return text;
-
-        }
-
-        protected void onPostExecute(String result) {
-            //new code for sync. using unique keys
-            if (result != null) {
-                if (action.equals("saveSynchronizedTrainingSession")) {
-                    performLocalUpdates(result, tableTrainingSession);
-                } else if (action.equals("saveSynchronizedTrainingData")) {
-                    performLocalUpdates(result, tableTrainingData);
-                } else if (action.equals("saveSynchronizedTrainingDataDetails")) {
-                    performLocalUpdates(result, tableTrainingDataDetails);
-                } else if (action.equals("saveSynchronizedTrainingPunchData")) {
-                    performLocalUpdates(result, tableTrainingPunchData);
-                } else if (action.equals("saveSynchronizedPunchDataPeakSummary")) {
-                    performLocalUpdates(result, tableTrainingPunchDataPeakSummary);
-                } else if (action.equals("synchronizeUserInfoAfterEdit")) {
-                    setSyncFlag(result, DBAdapter.getUserTable());
-                }
-            }
-        }
-    }
-
     /**
      * syncAllWhileDataFound to sync trainee data if unsync data found
      */
@@ -219,215 +120,205 @@ public class SendDataToWebService extends Activity {
     }
 
     /**
-     * Synchronize the Training PunchData Peak Summary Records
-     */
-    private void synchronizeTrainingPunchDataPeakSummaryRecords() {
-
-//        Log.d(TAG,"-- Start Syncing synchronizeTrainingPunchDataPeakSummaryRecords " + new Timestamp((new Date()).getTime()));
-
-        // Training Punch Data Peak Summary
-        List<DBTrainingPunchDataPeakSummaryDTO> dataPeakSummaries = new ArrayList<DBTrainingPunchDataPeakSummaryDTO>();
-        dataPeakSummaries = db.getAllNonSynchronizedTrainingPunchDataPeakSummaryRecords(EFDConstants.SYNC_RECORDS_LIMIT);
-
-        Gson gsonTrainingPunchDataPeakSummaries = new GsonBuilder().create();
-        Map<String, String> paramsForTrainingPunchDataPeakSummary = new HashMap<String, String>();
-        paramsForTrainingPunchDataPeakSummary.put("training_punch_data_peak_summary", gsonTrainingPunchDataPeakSummaries.toJson(dataPeakSummaries));
-        //Log.d(TAG,"paramsForTrainingPunchDataPeakSummary " + paramsForTrainingPunchDataPeakSummary.get("training_punch_data_peak_summary"));
-
-        if (paramsForTrainingPunchDataPeakSummary.get("training_punch_data_peak_summary").equals("[]")) {
-            isDataInTrainingPunchDataPeakSummaryExist = false;
-            resetSyncFlagIfDataNotExist();
-        } else {
-            isDataInTrainingPunchDataPeakSummaryExist = true;
-            sendDataToWS(paramsForTrainingPunchDataPeakSummary, "trainingPunchDataPeakSummary/saveBulkLocalData", "saveSynchronizedPunchDataPeakSummary");
-        }
-
-//        Log.d(TAG,"-- completed function synchronizeTrainingPunchDataPeakSummaryRecords " + new Timestamp((new Date()).getTime()));
-    }
-
-    /**
-     * Synchronize the Training PunchData Records
-     */
-    private void synchronizeTrainingPunchDataRecords() {
-
-//        Log.d(TAG,"-- Start Syncing synchronizeTrainingPunchDataRecords " + new Timestamp((new Date()).getTime()));
-
-        // Training Punch Data
-        List<DBTrainingPunchDataDTO> dbTrainingPunchDataDTOs = new ArrayList<DBTrainingPunchDataDTO>();
-        dbTrainingPunchDataDTOs = db.getAllNonSynchronizedTrainingPunchDataRecords(EFDConstants.SYNC_RECORDS_LIMIT);
-
-        Gson gsonTrainingPunchData = new GsonBuilder().create();
-        Map<String, String> paramsForTrainingPunchData = new HashMap<String, String>();
-        paramsForTrainingPunchData.put("training_punch_data", gsonTrainingPunchData.toJson(dbTrainingPunchDataDTOs));
-        //Log.d(TAG,"synchronizeTrainingPunchDataRecords " + paramsForTrainingPunchData.get("training_punch_data"));
-
-        if (paramsForTrainingPunchData.get("training_punch_data").equals("[]")) {
-            isDataInTrainingPunchDataExist = false;
-            synchronizeTrainingPunchDataPeakSummaryRecords();
-            resetSyncFlagIfDataNotExist();
-        } else {
-            isDataInTrainingPunchDataExist = true;
-            sendDataToWS(paramsForTrainingPunchData, "trainingPunchData/saveBulkLocalData", "saveSynchronizedTrainingPunchData");
-        }
-
-//        Log.d(TAG,"-- completed function synchronizeTrainingPunchDataRecords " + new Timestamp((new Date()).getTime()));
-    }
-
-    /**
-     * Synchronize the Training Data Details Records
-     */
-    private void synchronizeTrainingDataDetailsRecords() {
-
-//        Log.d(TAG,"-- Start Syncing synchronizeTrainingDataDetailsRecords " + new Timestamp((new Date()).getTime()));
-
-        // Training Data Details
-        List<DBTrainingDataDetailsDTO> dbTrainingDataDetailsDTOs = new ArrayList<DBTrainingDataDetailsDTO>();
-        dbTrainingDataDetailsDTOs = db.getAllNonSynchronizedTrainingDataDetailsRecords(EFDConstants.SYNC_RECORDS_LIMIT);
-
-        Gson gsonTrainingDataDetails = new GsonBuilder().create();
-        Map<String, String> paramsForTrainingDataDetails = new HashMap<String, String>();
-        paramsForTrainingDataDetails.put("training_data_details", gsonTrainingDataDetails.toJson(dbTrainingDataDetailsDTOs));
-        //Log.d(TAG,"-- paramsForTrainingDataDetails " + paramsForTrainingDataDetails.get("training_data_details"));
-
-        if (paramsForTrainingDataDetails.get("training_data_details").equals("[]")) {
-            isDataInTrainingDataDetailsExist = false;
-            resetSyncFlagIfDataNotExist();
-            synchronizeTrainingPunchDataRecords();
-        } else {
-            isDataInTrainingDataDetailsExist = true;
-            sendDataToWS(paramsForTrainingDataDetails, "trainingDataDetails/saveBulkLocalData", "saveSynchronizedTrainingDataDetails");
-        }
-
-//        Log.d(TAG,"-- completed function synchronizeTrainingDataDetailsRecords " + new Timestamp((new Date()).getTime()));
-    }
-
-    /**
-     * Synchronize the Training Data Records
-     */
-    private void synchronizeTrainingDataRecords() {
-
-
-        // Training Data
-        List<DBTrainingDataDTO> dbTrainingDataDTOs = new ArrayList<DBTrainingDataDTO>();
-        dbTrainingDataDTOs = db.getAllNonSynchronizedTrainingDataRecords(EFDConstants.SYNC_RECORDS_LIMIT);
-
-        Gson gsonTrainingData = new GsonBuilder().create();
-
-        Map<String, String> paramsForTrainingData = new HashMap<String, String>();
-        paramsForTrainingData.put("training_data", gsonTrainingData.toJson(dbTrainingDataDTOs));
-        Log.d(TAG, "synchronizeTrainingDataRecords data " + paramsForTrainingData.get("training_data"));
-
-        if (paramsForTrainingData.get("training_data").equals("[]")) {
-            isDataInTrainingDataExist = false;
-//        	resetSyncFlagIfDataNotExist();
-            synchronizeTrainingDataDetailsRecords();
-            //synchronizeTrainingPunchDataRecords();
-            //synchronizeTrainingPunchDataPeakSummaryRecords();
-        } else {
-            isDataInTrainingDataExist = true;
-            sendDataToWS(paramsForTrainingData, "trainingData/saveBulkLocalData", "saveSynchronizedTrainingData");
-        }
-
-//        Log.d(TAG,"-- completed function synchronizeTrainingDataRecords " + new Timestamp((new Date()).getTime()));
-    }
-
-    /**
      * Synchronize the Training Session Records
      */
     private void synchronizeTrainingSessionRecords() {
 
-//        Log.d(TAG,"Start Syncing synchronizeTrainingSessionRecords " + new Timestamp((new Date()).getTime()));
-
         // Training Session
         List<DBTrainingSessionDTO> dbTrainingSessionDTOList = new ArrayList<DBTrainingSessionDTO>();
-        dbTrainingSessionDTOList = db.getAllNonSynchronizedTrainingSessionRecords(EFDConstants.SYNC_RECORDS_LIMIT);
-
-        Log.i(TAG, " dbTrainingSessionDTOList: " + dbTrainingSessionDTOList.toString());
-
+        dbTrainingSessionDTOList = db.getAllNonSynchronizedTrainingSessionRecords(EFDConstants.SYNC_RECORDS_LIMIT, Integer.valueOf(MainActivity.getInstance().userId));
         Gson gsonTrainingSession = new GsonBuilder().create();
-        Map<String, String> paramsForTrainingSession = new HashMap<String, String>();
-        paramsForTrainingSession.put("training_session", gsonTrainingSession.toJson(dbTrainingSessionDTOList));
-        Log.i(TAG, "synchronizeTrainingSessionRecords  data " + paramsForTrainingSession.get("training_session"));
+        Log.e(TAG, " dbTrainingSessionDTOList: " + gsonTrainingSession.toJson(dbTrainingSessionDTOList));
 
-        if (paramsForTrainingSession.get("training_session").equals("[]")) {
+        if (gsonTrainingSession.toJson(dbTrainingSessionDTOList).equals("[]")) {
             isDataInTrainingSessionExist = false;
-//        	resetSyncFlagIfDataNotExist();
-            synchronizeTrainingDataRecords();
+            synchronizeTrainingPunchStatsRecords();
+            resetSyncFlagIfDataNotExist();
         } else {
             isDataInTrainingSessionExist = true;
-            sendDataToWS(paramsForTrainingSession, "trainingSession/saveBulkLocalData", "saveSynchronizedTrainingSession");
-        }
-//        Log.d(TAG,"-- Final completed function synchronizeTrainingSessionRecords " + new Timestamp((new Date()).getTime()));
-    }
 
-    /**
-     * Send Data To Web Server
-     *
-     * @param params
-     * @param url
-     * @param action
-     */
-    public void sendDataToWS(Map<String, String> params, String url, String action) {
-        /*//super
-        Log.i("sendDataToWS ", "SECURE ACCESS TOKEN: " + CommonUtils.getAccessTokenValue(MainActivity.context));
-        Log.i("sendDataToWS ", "SERVER USER ID: " + CommonUtils.getServerUserId(MainActivity.context));
+            RetrofitSingleton.TRAINING_REST.saveTrainingSession(CommonUtils.getServerUserId(MainActivity.context),
+                    CommonUtils.getAccessTokenValue(MainActivity.context),
+                    gsonTrainingSession.toJson(dbTrainingSessionDTOList)).enqueue(new IndicatorCallback<SyncServerResponseDTO>(MainActivity.context, false) {
+                @Override
+                public void onResponse(Call<SyncServerResponseDTO> call, Response<SyncServerResponseDTO> response) {
+                    super.onResponse(call, response);
+                    if (response.body() != null) {
+                        SyncServerResponseDTO syncServerResponseDTO = response.body();
 
-        if (CommonUtils.getAccessTokenValue(MainActivity.context) != null && !"".equals(CommonUtils.getAccessTokenValue(MainActivity.context).trim()) &&
-                CommonUtils.getServerUserId(MainActivity.context) != null && !"".equals(CommonUtils.getServerUserId(MainActivity.context).trim())) {
-            params.put(EFDConstants.KEY_SECURE_ACCESS_TOKEN, CommonUtils.getAccessTokenValue(MainActivity.context));
-            params.put(EFDConstants.KEY_USER_ID, CommonUtils.getServerUserId(MainActivity.context));
-            final String method = EFDConstants.HTTP_POST_METHOD;
-            Data obj = new Data(url, params, method, action);
-            AsyncCallWS task = new AsyncCallWS();
-            task.execute(obj);
-        }
-        */
-    }
-
-    /**
-     * Perform Local Updates
-     *
-     * @param result
-     * @param tableName
-     */
-    public void performLocalUpdates(String result, String tableName) {
-
-//		Log.d(TAG,"-- result " + result);
-
-        Type listType = new TypeToken<List<SyncResponseDTO>>() {
-        }.getType();
-        try {
-            JSONObject jsonResponce = new JSONObject(result);
-            Log.i("performLocalUpdates ", "tableName " + tableName);
-            if ((jsonResponce.getString(EFDConstants.KEY_ACCESS) != null) && jsonResponce.getBoolean(EFDConstants.KEY_ACCESS)) {
-                if (jsonResponce.getBoolean("success")) {
-                    ArrayList<SyncResponseDTO> serverResponse = new Gson().fromJson(jsonResponce.getJSONArray("jsonArrayResponse").toString(), listType);
-                    int success = db.updateSynchronizedRecordsForTable(tableName, serverResponse);
-                    Log.i("performLocalUpdates ", " updateSynchronizedRecordsForTable --" + success);
-
-                    if (tableName.equals(tableTrainingSession)) {
-                        synchronizeTrainingSessionRecords();
+                        if (syncServerResponseDTO.getAccess()) {
+                            MainActivity.isAccessTokenValid = true;
+                            if (syncServerResponseDTO.getSuccess()) {
+                                List<SyncResponseDTO> syncResponseDTOs = syncServerResponseDTO.getJsonArrayResponse();
+                                int success = db.updateSynchronizedRecordsForTable(tableTrainingSession, syncResponseDTOs);
+                                Log.e("Super", "session success = ");
+                                synchronizeTrainingSessionRecords();
+                            }
+                        } else {
+                            MainActivity.isAccessTokenValid = false;
+                        }
+                    } else {
+                        Log.e("Super", "session success, body is null ");
+                        synchronizeTrainingPunchStatsRecords();
                     }
-                    if (tableName.equals(tableTrainingData)) {
-                        synchronizeTrainingDataRecords();
-                    }
-                    if (tableName.equals(tableTrainingDataDetails)) {
-                        synchronizeTrainingDataDetailsRecords();
-                    }
-                    if (tableName.equals(tableTrainingPunchData)) {
-                        synchronizeTrainingPunchDataRecords();
-                    }
-                    if (tableName.equals(tableTrainingPunchDataPeakSummary)) {
-                        synchronizeTrainingPunchDataPeakSummaryRecords();
-                    }
-                    //resetSyncFlagIfDataNotExist();
-                    MainActivity.isAccessTokenValid = true;
                 }
-            } else {
-                 MainActivity.isAccessTokenValid = false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+                @Override
+                public void onFailure(Call<SyncServerResponseDTO> call, Throwable t) {
+                    super.onFailure(call, t);
+
+                    Log.e("Super", "session faild  " + t);
+                }
+            });
+        }
+    }
+
+    private void synchronizeTrainingPunchStatsRecords(){
+        List<DBTrainingPunchStatDTO> dbTrainingPunchStatDTOs = new ArrayList<DBTrainingPunchStatDTO>();
+        dbTrainingPunchStatDTOs = db.getAllNonSynchronizedTrainingPunchStatRecords(EFDConstants.SYNC_RECORDS_LIMIT, Integer.valueOf(MainActivity.getInstance().userId));
+        Gson gsonTrainingPunchStats = new GsonBuilder().create();
+
+        Log.e(TAG, " dbTrainingPunchStatsDTOList: " + gsonTrainingPunchStats.toJson(dbTrainingPunchStatDTOs));
+
+        if (gsonTrainingPunchStats.toJson(dbTrainingPunchStatDTOs).equals("[]")){
+            isDataInTrainingPunchStatsExist = false;
+            synchronizeTrainingPlanResultsRecords();
+            resetSyncFlagIfDataNotExist();
+        }else {
+            isDataInTrainingPunchStatsExist = true;
+
+            RetrofitSingleton.TRAINING_REST.saveTrainingPunchStats(CommonUtils.getServerUserId(MainActivity.context),
+                    CommonUtils.getAccessTokenValue(MainActivity.context),
+                    gsonTrainingPunchStats.toJson(dbTrainingPunchStatDTOs)).enqueue(new IndicatorCallback<SyncServerResponseDTO>(MainActivity.context, false) {
+                @Override
+                public void onResponse(Call<SyncServerResponseDTO> call, Response<SyncServerResponseDTO> response) {
+                    super.onResponse(call, response);
+                    if (response.body() != null) {
+                        SyncServerResponseDTO syncServerResponseDTO = response.body();
+
+                        if (syncServerResponseDTO.getAccess()){
+                            MainActivity.isAccessTokenValid = true;
+                            if (syncServerResponseDTO.getSuccess()){
+                                List<SyncResponseDTO> syncResponseDTOs = syncServerResponseDTO.getJsonArrayResponse();
+                                int success = db.updateSynchronizedRecordsForTable(tableTrainingPunchStats, syncResponseDTOs);
+                                Log.e("Super", "punch stats success = ");
+                                synchronizeTrainingPunchStatsRecords();
+                            }
+                        }else {
+                            MainActivity.isAccessTokenValid = false;
+                        }
+                    } else {
+                        Log.e("Super", "punch stats success, body is null ");
+                        synchronizeTrainingPlanResultsRecords();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SyncServerResponseDTO> call, Throwable t) {
+                    super.onFailure(call, t);
+
+                    Log.e("Super", "punch stats  faild  " + t);
+                }
+            });
+        }
+    }
+
+    private void synchronizeTrainingPlanResultsRecords(){
+        List<DBTrainingPlanResultDTO> dbTrainingPlanResultDTOs = new ArrayList<DBTrainingPlanResultDTO>();
+        dbTrainingPlanResultDTOs = db.getAllNonSynchronizedTrainingPlanResultRecords(EFDConstants.SYNC_RECORDS_LIMIT, Integer.valueOf(MainActivity.getInstance().userId));
+
+        Gson gsonTrainingPlanResults = new GsonBuilder().create();
+        Log.e(TAG, " dbTrainingPlanResultDTOs: " + gsonTrainingPlanResults.toJson(dbTrainingPlanResultDTOs));
+
+        if (gsonTrainingPlanResults.toJson(dbTrainingPlanResultDTOs).equals("[]")){
+            isDataInTrainingPlanResultsExist = false;
+            synchronizeTrainingPunchDetailRecords();
+            resetSyncFlagIfDataNotExist();
+        }else {
+            isDataInTrainingPlanResultsExist = true;
+            Log.e("Super", "id = " + CommonUtils.getServerUserId(MainActivity.context) + "   " + CommonUtils.getAccessTokenValue(MainActivity.context));
+            RetrofitSingleton.TRAINING_REST.saveTrainingPlanResults(CommonUtils.getServerUserId(MainActivity.context),
+                    CommonUtils.getAccessTokenValue(MainActivity.context),
+                    gsonTrainingPlanResults.toJson(dbTrainingPlanResultDTOs)).enqueue(new IndicatorCallback<SyncServerResponseDTO>(MainActivity.context, false) {
+                @Override
+                public void onResponse(Call<SyncServerResponseDTO> call, Response<SyncServerResponseDTO> response) {
+                    super.onResponse(call, response);
+                    if (response.body() != null) {
+                        SyncServerResponseDTO syncServerResponseDTO = response.body();
+
+                        if (syncServerResponseDTO.getAccess()){
+                            MainActivity.isAccessTokenValid = true;
+                            if (syncServerResponseDTO.getSuccess()){
+                                List<SyncResponseDTO> syncResponseDTOs = syncServerResponseDTO.getJsonArrayResponse();
+                                int success = db.updateSynchronizedRecordsForTable(tablePlanResultTable, syncResponseDTOs);
+                                Log.e("Super", "plan results success = ");
+                                synchronizeTrainingPlanResultsRecords();
+                            }
+                        }else {
+                            MainActivity.isAccessTokenValid = false;
+                            Log.e("Super", "plan results success = access is false");
+                        }
+                    } else {
+                        Log.e("Super", "plan results success, body is null ");
+                        synchronizeTrainingPunchDetailRecords();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SyncServerResponseDTO> call, Throwable t) {
+                    super.onFailure(call, t);
+
+                    Log.e("Super", "plan results faild  " + t);
+                }
+            });
+        }
+    }
+
+    private void synchronizeTrainingPunchDetailRecords(){
+        List<DBTrainingPunchDetailDTO> dbTrainingPunchDetailDTOs = new ArrayList<DBTrainingPunchDetailDTO>();
+        dbTrainingPunchDetailDTOs = db.getAllNonSynchronizedTrainingDetailRecords(EFDConstants.SYNC_RECORDS_LIMIT, Integer.valueOf(MainActivity.getInstance().userId));
+
+        Gson gsonTrainingDetails = new GsonBuilder().create();
+        Log.e(TAG, " dbTrainingPunchDetailDTOs: " + gsonTrainingDetails.toJson(dbTrainingPunchDetailDTOs));
+
+        if (gsonTrainingDetails.toJson(dbTrainingPunchDetailDTOs).equals("[]")){
+            isDataInTrainingDetailsExist = false;
+            resetSyncFlagIfDataNotExist();
+        }else {
+            isDataInTrainingDetailsExist = true;
+
+            RetrofitSingleton.TRAINING_REST.saveTrainingPunchDetails(CommonUtils.getServerUserId(MainActivity.context),
+                    CommonUtils.getAccessTokenValue(MainActivity.context),
+                    gsonTrainingDetails.toJson(dbTrainingPunchDetailDTOs)).enqueue(new IndicatorCallback<SyncServerResponseDTO>(MainActivity.context, false) {
+                @Override
+                public void onResponse(Call<SyncServerResponseDTO> call, Response<SyncServerResponseDTO> response) {
+                    super.onResponse(call, response);
+                    if (response.body() != null) {
+                        SyncServerResponseDTO syncServerResponseDTO = response.body();
+
+                        if (syncServerResponseDTO.getAccess()){
+                            MainActivity.isAccessTokenValid = true;
+                            if (syncServerResponseDTO.getSuccess()){
+                                List<SyncResponseDTO> syncResponseDTOs = syncServerResponseDTO.getJsonArrayResponse();
+                                int success = db.updateSynchronizedRecordsForTable(tablePunchDetailsTable, syncResponseDTOs);
+                                Log.e("Super", "punch detail  success = ");
+                                synchronizeTrainingPunchDetailRecords();
+                            }
+                        }else {
+                            MainActivity.isAccessTokenValid = false;
+                        }
+                    } else {
+                        Log.e("Super", "punch detail success, body is null ");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SyncServerResponseDTO> call, Throwable t) {
+                    super.onFailure(call, t);
+
+                    Log.e("Super", "punch detail faild  " + t);
+                }
+            });
         }
     }
 
@@ -435,65 +326,12 @@ public class SendDataToWebService extends Activity {
      * Reset Sync Flag If Data Not Exist
      */
     public void resetSyncFlagIfDataNotExist() {
-        Log.i(TAG, "-- data exists ? " + isDataInTrainingSessionExist + " " +
-                isDataInTrainingDataExist + " " +
-                isDataInTrainingDataDetailsExist + " " +
-                isDataInTrainingPunchDataExist + " " +
-                isDataInTrainingPunchDataPeakSummaryExist);
-
         if (!isDataInTrainingSessionExist &&
-                !isDataInTrainingDataExist &&
-                !isDataInTrainingDataDetailsExist &&
-                !isDataInTrainingPunchDataExist &&
-                !isDataInTrainingPunchDataPeakSummaryExist) {
+                !isDataInTrainingPunchStatsExist &&
+                !isDataInTrainingDetailsExist &&
+                !isDataInTrainingPlanResultsExist) {
 
-//			System.out.println("-- set flag to false");
-            //super       MainActivity.setSynchronizingWithServer(false);
-        }
-    }
-
-    /**
-     * Synchronize User Info details
-     */
-    public void synchronizeUserInfoAfterEdit() {
-        final String url = "user/updateUserInfo";
-        final String action = "synchronizeUserInfoAfterEdit";
-        Map<String, String> params = db.getNonSyncedUserInformation();
-
-//		Log.d(TAG,"-- synchronizeUserInfoAfterEdit params " + params);
-
-        if (params != null) {
-            sendDataToWS(params, url, action);
-        }
-
-    }
-
-    /**
-     * Set Sync Flag
-     *
-     * @param result
-     * @param tableName
-     */
-    public void setSyncFlag(String result, String tableName) {
-        int sync = 1;
-
-        try {
-            if (result != null) {
-                JSONObject jsonObject = new JSONObject(result);
-                //Log.d(TAG,"tableName: "+tableName);
-                if ((jsonObject.getString(EFDConstants.KEY_ACCESS) != null) && jsonObject.getBoolean(EFDConstants.KEY_ACCESS)) {
-                    if (jsonObject.getString("success").equals("true")) {
-                        JSONObject userObject = jsonObject.getJSONObject("user");
-                        db.setSyncFlag(userObject.getInt("id"), tableName, sync);
-                        //super            MainActivity.isAccessTokenValid = true;
-                    }
-                } else {
-//					CommonUtils.showAlertDialog(MainActivity.context, jsonObject.getString("message") );	// TODO: Comment this message
-                    //super          MainActivity.isAccessTokenValid = false;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+                 MainActivity.setSynchronizingWithServer(false);
         }
     }
 }

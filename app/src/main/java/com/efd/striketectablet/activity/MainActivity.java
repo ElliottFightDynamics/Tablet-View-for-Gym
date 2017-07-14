@@ -44,7 +44,6 @@ import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.credential.LoginActivity;
 import com.efd.striketectablet.activity.profile.ProfileFragment;
 import com.efd.striketectablet.activity.training.TrainingFragment;
-import com.efd.striketectablet.activity.trainingstats.fragment.TotalInfoStatsFragment;
 import com.efd.striketectablet.activity.trainingstats.fragment.TrainingStatsFragment;
 import com.efd.striketectablet.bluetooth.Connection.ConnectionManager;
 import com.efd.striketectablet.bluetooth.Connection.ConnectionThread;
@@ -237,8 +236,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deleteGymTrainingData(){
-        MainActivity.db.deleteGymTrainingSession();
-        MainActivity.db.deleteGymTrainingStats();
+
     }
 
     private void setDeviceHandlers() {
@@ -350,19 +348,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void createOrUpdateSummaryTables() {
 
-        createCalendarSummary();
-        createResultSummary(EFDConstants.SUMMARY_TYPE_MAX);
-        createResultSummary(EFDConstants.SUMMARY_TYPE_AVG);
-        createProgressSummary(EFDConstants.SUMMARY_TYPE_DAILY);
-        createProgressSummary(EFDConstants.SUMMARY_TYPE_WEEKLY);
-        createProgressSummary(EFDConstants.SUMMARY_TYPE_MONTHLY);
-        createPunchCountSummary();
+//        createCalendarSummary();
+//        createResultSummary(EFDConstants.SUMMARY_TYPE_MAX);
+//        createResultSummary(EFDConstants.SUMMARY_TYPE_AVG);
+//        createProgressSummary(EFDConstants.SUMMARY_TYPE_DAILY);
+//        createProgressSummary(EFDConstants.SUMMARY_TYPE_WEEKLY);
+//        createProgressSummary(EFDConstants.SUMMARY_TYPE_MONTHLY);
+//        createPunchCountSummary();
     }
 
     /**
      * Create or update calendar summary record once training is stopped
      * gets called in onCreate() to update record if training is not stopped by user
      */
+    /*super mark this
     public void createCalendarSummary() {
 
         JSONObject calendarSummaryResult = db.trainingDataDetailsCalendarSummary(Long.parseLong(userId),
@@ -378,10 +377,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
+*/
     /**
      * @param summaryType - max / avg
      */
+     /*super mark this
     public void createResultSummary(String summaryType) {
         JSONObject maxData = db.getTrainingResultData(userId, summaryType.toLowerCase(Locale.getDefault()));
         ResultSummaryDTO resultSummaryDTO = JSONParsers.parseTrainingResultJSON(maxData, Integer.parseInt(userId), CommonUtils.getCurrentDateStringYMD(), summaryType);
@@ -391,11 +391,12 @@ public class MainActivity extends AppCompatActivity {
             db.insertResultSummaryRecord(resultSummaryDTO);
         }
     }
-
+*/
     /**
      * Create or update calendar summary record once training is stopped
      * gets called in onCreate() to update record if training is not stopped by user
      */
+     /*super mark this
     public void createPunchCountSummary() {
 
         Calendar calendar = Calendar.getInstance();
@@ -453,7 +454,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+*/
     private void checkUser() {
         if (!db.isUserAvailable()) {
             Log.d(TAG, "isUserAvailable" + db.isUserAvailable());
@@ -517,7 +518,7 @@ public class MainActivity extends AppCompatActivity {
                     sendDataObj.deletePastSyncedRecords();
 
                     // sync user information data
-                    sendDataObj.synchronizeUserInfoAfterEdit();
+//                    sendDataObj.synchronizeUserInfoAfterEdit();
                     if (!isAccessTokenValid) {
                         showSessionExpiredAlertDialog();
                     }
@@ -562,7 +563,7 @@ public class MainActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedCurrentDate = dateFormat.format(new Date());
         String beforeTwoYears = CommonUtils.calculatePastDate(formattedCurrentDate, EFDConstants.CALENDAR_SUMMARY_NUMBER_OF_YEARS, EFDConstants.MEASURE_YEAR);
-        db.deleteCalendarSummaryBeforeDate(beforeTwoYears);
+//        db.deleteCalendarSummaryBeforeDate(beforeTwoYears);
     }
 
     public void setDataToLiveMonitorMap(String liveMonitorData) {
@@ -628,7 +629,7 @@ public class MainActivity extends AppCompatActivity {
             realpunchType = hand + " " + EFDConstants.UNRECOGNIZED;
         }
 
-        MainActivity.db.addPunchtoStats(new TrainingPunchDTO(realpunchType, Long.parseLong(punchdetails.punchSpeed),
+        MainActivity.db.insertPunchedData(trainingSessionId, new TrainingPunchDTO(realpunchType, Long.parseLong(punchdetails.punchSpeed),
                 Long.parseLong(punchdetails.punchForce), 0.5));
     }
 
@@ -837,16 +838,17 @@ public class MainActivity extends AppCompatActivity {
                 trainingRightHandId = EFDConstants.GUEST_TRAINING_DATA_RIGHT_HAND_ID;
                 boxerPunchMassEffect = EFDConstants.GUEST_TRAINING_EFFECTIVE_PUNCH_MASS;
             } else {
-                JSONObject result = null;
-                result = MainActivity.db.trainingSessionSave(Integer.parseInt(userId), EFDConstants.TRAINING_TYPE_BOXER);
-                MainActivity.db.insertGymTrainingSession();
-                boxerName = "WES";
+//                JSONObject result = null;
+//                result = MainActivity.db.trainingSessionSave(Integer.parseInt(userId), EFDConstants.TRAINING_TYPE_BOXER);
+                long result = MainActivity.db.insertTrainingSession(EFDConstants.TRAINING_TYPE_BOXER, Integer.parseInt(userId));
+
+                boxerName = checkboxerDetails.get("boxerName");
                 boxerStance = EFDConstants.TRADITIONAL;//checkboxerDetails.get("boxerName");
-                json = new JSONObject(result.toString());
-                JSONObject trainingData = json.getJSONObject("trainingData");
-                trainingSessionId = trainingData.getInt("trainingSessionId");
-                trainingRightHandId = trainingData.getInt("trainingRightHandId");
-                trainingLeftHandId = trainingData.getInt("trainingLeftHandId");
+//                json = new JSONObject(result.toString());
+                trainingSessionId = (int)result; //trainingData.getInt("trainingSessionId");
+                trainingRightHandId =  (int)result;//trainingData.getInt("trainingRightHandId");
+                trainingLeftHandId =  (int)result;;//trainingData.getInt("trainingLeftHandId");
+                Log.e("Super", "trainingsessionid = " + trainingSessionId);
                 boxerIdValue = Integer.valueOf(userId);
                 currentTrainingSessionId = trainingSessionId;
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -897,10 +899,10 @@ public class MainActivity extends AppCompatActivity {
         if (!trainingManager.isTrainingRunning()) {
             //set taskmanger traing value as true
             trainingManager.startTraining();
+
             receivePunchable = true;
             //start training timer
             startTrainingTimer();
-
             //start training
             startTraining();
             Log.e("Super", "Start round training");
@@ -913,16 +915,17 @@ public class MainActivity extends AppCompatActivity {
         if (trainingManager.isTrainingRunning()) {
             trainingManager.stopTraining();
             receivePunchable = false;
+            db.trainingSessionEnd(trainingSessionId);
             stopTrainingTimer();
             stopTraining();
 
             trainingSessionId = null;
             punchHistoryGraph.clear();
-//            liveMonitorDataMap.clear();
-//            punchDataDTO.resetValues(0);
+            liveMonitorDataMap.clear();
+            punchDataDTO.resetValues(0);
 
             endTrainingTime = EFDConstants.DEFAULT_START_TIME;
-            MainActivity.db.endAllPreviousGymTrainingSessions();
+
         }
     }
 

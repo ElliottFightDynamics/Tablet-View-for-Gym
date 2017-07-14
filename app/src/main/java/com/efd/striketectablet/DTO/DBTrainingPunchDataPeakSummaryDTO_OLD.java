@@ -1,6 +1,6 @@
 package com.efd.striketectablet.DTO;
 
-public class DBTrainingPunchDataPeakSummaryDTO {
+public class DBTrainingPunchDataPeakSummaryDTO_OLD {
 
     Integer id;
     Integer hook;
@@ -14,9 +14,9 @@ public class DBTrainingPunchDataPeakSummaryDTO {
     String syncDate;
     Long serverID;
 
-    public DBTrainingPunchDataPeakSummaryDTO(Integer id, Integer hook, Integer jab,
-                                             String punchDataPeakSummaryDate, Integer speedFlag, Integer straight, Integer trainingDataId,
-                                             Integer uppercut, Integer sync, String syncDate, Long serverID) {
+    public DBTrainingPunchDataPeakSummaryDTO_OLD(Integer id, Integer hook, Integer jab,
+                                                 String punchDataPeakSummaryDate, Integer speedFlag, Integer straight, Integer trainingDataId,
+                                                 Integer uppercut, Integer sync, String syncDate, Long serverID) {
         super();
         this.id = id;
         this.hook = hook;

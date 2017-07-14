@@ -731,10 +731,10 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     }
 
     private void startTraining(){
-        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
-            StatisticUtil.showToastMessage("Please connect with sensors");
-            return;
-        }
+//        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
+//            StatisticUtil.showToastMessage("Please connect with sensors");
+//            return;
+//        }
 
         if (comboid != -1 || setid != -1){
             //this is combo training
@@ -856,17 +856,20 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                         String text = PresetUtil.chagngeSecsToTime(currentTime) + " - STOP";
 
                         startTrainingBtn.setText(text);
-//                        if (currentTime % 1 == 0 && mainActivityInstance.receivePunchable) {
-//                            if (currentTime % 2 == 0){
-//                                resultPunchList.add(new TrainingResultPunchDTO("RIGHT STRAIGHT", currentComboDTO.getComboTypes().get(currentPunchIndex), 200, 100, false));
-//                                MainActivity.db.addPunchtoStats(new TrainingPunchDTO("RIGHT STRAIGHT", 200, 100, 0.5));
-//                            }else {
-//                                resultPunchList.add(new TrainingResultPunchDTO("LEFT STRAIGHT", currentComboDTO.getComboTypes().get(currentPunchIndex), 50, 20, true));
-//                                MainActivity.db.addPunchtoStats(new TrainingPunchDTO("LEFT STRAIGHT", 50, 20, 0.5));
-//                            }
-//
-//                            tmpStart();
-//                        }
+
+                        if (currentTime % 1 == 0 && mainActivityInstance.receivePunchable) {
+                            java.sql.Timestamp dataReceiveTime = new java.sql.Timestamp(System.currentTimeMillis());
+                            if (currentTime % 2 == 0){
+                                resultPunchList.add(new TrainingResultPunchDTO("RIGHT STRAIGHT", currentComboDTO.getComboTypes().get(currentPunchIndex), 200, 100, false));
+                                MainActivity.db.insertPunchedData(MainActivity.getInstance().trainingSessionId, new TrainingPunchDTO("RIGHT STRAIGHT", 200, 100, 0.5));
+
+                            }else {
+                                resultPunchList.add(new TrainingResultPunchDTO("LEFT STRAIGHT", currentComboDTO.getComboTypes().get(currentPunchIndex), 50, 20, true));
+                                MainActivity.db.insertPunchedData(MainActivity.getInstance().trainingSessionId, new TrainingPunchDTO("LEFT STRAIGHT", 50, 20, 0.5));
+                            }
+
+                            tmpStart();
+                        }
                     }
                 });
             }

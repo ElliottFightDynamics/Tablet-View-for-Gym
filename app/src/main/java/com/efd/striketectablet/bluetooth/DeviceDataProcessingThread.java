@@ -13,7 +13,6 @@ import com.efd.punch.PunchVFAData;
 import com.efd.punch.SensorBuffer;
 import com.efd.punch.SensorDataPackage;
 import com.efd.punch.SensorDataSample;
-import com.efd.striketectablet.DTO.TrainingPunchDTO;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.bluetooth.readerBean.PunchDetectedMap;
 import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionConfig;
@@ -789,7 +788,7 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
         return punchTime;
     }
 
-
+/*super mark this
     private void savePunchPeakSummary(PunchVFAData punchVFAData,
                                       PeakPunchValueDetector peakPunchValueDetector, Integer trainingId) {
 
@@ -841,7 +840,7 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
         }
 
     }
-
+*/
     public String[] getResponseFromWebService(String url, Map<String, String> punchdata) {
         String webServiceUrl = PunchDetectionConfig.getInstance().getWEB_SERVICE_DOMAIN();
 
@@ -863,7 +862,7 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
         Log.d(TAG, "response in GetResponse = " + response.toString());
         return response;
     }
-
+/*super mark this
     private void saveMatchDataPeakSummary(String maxSpeedStraight, String maxSpeedJab,
                                           String maxSpeedHook, String maxSpeedUpper, boolean isSpeed, Integer trainingId) {
 
@@ -889,7 +888,7 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
 
         JSONObject result_trainingPunchData_save = db.trainingPunchDataSave(punchVFAData.getPunchType(), punchVFAData.getForce(), punchVFAData.getVelocity(), punchTime, trainingId);
     }
-
+*/
     /**
      * Method sending match data to client
      *
@@ -1000,12 +999,13 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
         sensorData.setMsgTime(sensorDataSample.getMsgTime());
         sensorData.setTemperature((short)sensorDataSample.getTemperature());
 
+        /*super mark this
         if (!mainActivityInstance.isGuestBoxerActive()) {
             savePunchData(punchVFAData, trainingId);
             saveMatchDataDetails(punchVFAData, sensorData, trainingId);
             savePunchPeakSummary(punchVFAData, punchDetails.getPeakPunchValueDetector(), trainingId);
         }
-
+*/
         sendMatchData(punchVFAData);
     }
 

@@ -1,8 +1,6 @@
 package com.efd.striketectablet.util;
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 
 import com.efd.striketectablet.DTO.ComboDTO;
 import com.efd.striketectablet.DTO.SetsDTO;
@@ -10,7 +8,9 @@ import com.efd.striketectablet.DTO.TrainingResultComboDTO;
 import com.efd.striketectablet.DTO.TrainingResultSetDTO;
 import com.efd.striketectablet.DTO.TrainingResultWorkoutDTO;
 import com.efd.striketectablet.DTO.WorkoutDTO;
+import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.database.DBAdapter;
+import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 import com.google.gson.Gson;
@@ -30,10 +30,17 @@ public class ComboSetUtil {
     public static ArrayList<String> keyLists;
     public static Context mContext;
 
+    public static ArrayList<ComboDTO>  defaultCombos;
+    public static ArrayList<SetsDTO>   defaultSets;
+    public static ArrayList<WorkoutDTO>  defaultWorkouts;
+
     public static void init(Context context){
         mContext = context;
         punchTypeMap = new HashMap<>();
         keyLists = new ArrayList<>();
+        defaultCombos = new ArrayList<>();
+        defaultSets = new ArrayList<>();
+        defaultWorkouts = new ArrayList<>();
 
         //punch type
         punchTypeMap.put("1", "Jab");
@@ -65,6 +72,188 @@ public class ComboSetUtil {
         keyLists.add("DR");
         keyLists.add("SF");
         keyLists.add("SB");
+
+        initDefaultCombos();
+        initDefaultSets();
+        initDefaultWorkouts();
+    }
+
+    private static void initDefaultCombos(){
+        ArrayList<String>  punchKeyList = new ArrayList<>();
+        punchKeyList.add("1");
+        punchKeyList.add("2");
+        punchKeyList.add("SR");
+        punchKeyList.add("2");
+        punchKeyList.add("3");
+        punchKeyList.add("2");
+        punchKeyList.add("5");
+        punchKeyList.add("6");
+        punchKeyList.add("3");
+        punchKeyList.add("2");
+
+        defaultCombos.add(new ComboDTO("Attack", punchKeyList, 1));
+
+        punchKeyList = new ArrayList<>();
+        punchKeyList.add("1");
+        punchKeyList.add("2");
+        punchKeyList.add("5");
+        punchKeyList.add("7");
+        punchKeyList.add("3");
+        punchKeyList.add("2");
+        punchKeyList.add("SR");
+        punchKeyList.add("5");
+        punchKeyList.add("3");
+        punchKeyList.add("1");
+
+        defaultCombos.add(new ComboDTO("Crafty", punchKeyList, 2));
+
+        punchKeyList = new ArrayList<>();
+        punchKeyList.add("1");
+        punchKeyList.add("3");
+        punchKeyList.add("5");
+        punchKeyList.add("5");
+        punchKeyList.add("3");
+        punchKeyList.add("1");
+        punchKeyList.add("5");
+        punchKeyList.add("3");
+        punchKeyList.add("3");
+        punchKeyList.add("1");
+
+        defaultCombos.add(new ComboDTO("Left overs", punchKeyList, 3));
+
+        punchKeyList = new ArrayList<>();
+        punchKeyList.add("1");
+        punchKeyList.add("2");
+        punchKeyList.add("6");
+        punchKeyList.add("7");
+        punchKeyList.add("3");
+        punchKeyList.add("2");
+        punchKeyList.add("5");
+        punchKeyList.add("1");
+        punchKeyList.add("3");
+        punchKeyList.add("2");
+
+        defaultCombos.add(new ComboDTO("Defensive", punchKeyList, 4));
+
+        punchKeyList = new ArrayList<>();
+        punchKeyList.add("3");
+        punchKeyList.add("5");
+        punchKeyList.add("4");
+        punchKeyList.add("1");
+        punchKeyList.add("5");
+        punchKeyList.add("2");
+        punchKeyList.add("1");
+        punchKeyList.add("6");
+        punchKeyList.add("3");
+        punchKeyList.add("2");
+
+        defaultCombos.add(new ComboDTO("Super Banger", punchKeyList, 5));
+    }
+
+    private static void initDefaultSets(){
+        ArrayList<Integer> comboIDList = new ArrayList<>();
+        comboIDList.add(1);
+        comboIDList.add(2);
+        comboIDList.add(3);
+        defaultSets.add(new SetsDTO("Aggressor", comboIDList, 1));
+
+        comboIDList = new ArrayList<>();
+        comboIDList.add(1);
+        comboIDList.add(4);
+        comboIDList.add(5);
+        defaultSets.add(new SetsDTO("Defensive", comboIDList, 2));
+
+    }
+
+    private static void initDefaultWorkouts(){
+
+        ArrayList<ArrayList<Integer>>  roundComboLists = new ArrayList<>();
+
+        ArrayList<Integer> comboIDList = new ArrayList<>();
+        comboIDList.add(1);
+        comboIDList.add(2);
+        comboIDList.add(3);
+        roundComboLists.add(comboIDList);
+
+        comboIDList = new ArrayList<>();
+        comboIDList.add(1);
+        comboIDList.add(4);
+        comboIDList.add(5);
+        roundComboLists.add(comboIDList);
+
+        comboIDList = new ArrayList<>();
+        comboIDList.add(2);
+        comboIDList.add(3);
+        comboIDList.add(1);
+        roundComboLists.add(comboIDList);
+
+        comboIDList = new ArrayList<>();
+        comboIDList.add(3);
+        comboIDList.add(4);
+        comboIDList.add(2);
+        roundComboLists.add(comboIDList);
+
+        comboIDList = new ArrayList<>();
+        comboIDList.add(3);
+        comboIDList.add(1);
+        comboIDList.add(5);
+        roundComboLists.add(comboIDList);
+
+        defaultWorkouts.add(new WorkoutDTO(1, "Workout 1", 5, roundComboLists, PresetUtil.timeList.size() / 2, PresetUtil.timeList.size() /2,
+                PresetUtil.timeList.size() / 2, PresetUtil.warningList.size() / 2, PresetUtil.gloveList.size() / 2));
+
+        roundComboLists = new ArrayList<>();
+
+        comboIDList = new ArrayList<>();
+        comboIDList.add(1);
+        comboIDList.add(5);
+        comboIDList.add(3);
+        roundComboLists.add(comboIDList);
+
+        comboIDList = new ArrayList<>();
+        comboIDList.add(2);
+        comboIDList.add(4);
+        comboIDList.add(3);
+        roundComboLists.add(comboIDList);
+
+        comboIDList = new ArrayList<>();
+        comboIDList.add(5);
+        comboIDList.add(3);
+        comboIDList.add(4);
+        roundComboLists.add(comboIDList);
+
+        comboIDList = new ArrayList<>();
+        comboIDList.add(1);
+        comboIDList.add(4);
+        comboIDList.add(2);
+        roundComboLists.add(comboIDList);
+
+        comboIDList = new ArrayList<>();
+        comboIDList.add(3);
+        comboIDList.add(1);
+        comboIDList.add(5);
+        roundComboLists.add(comboIDList);
+
+        comboIDList = new ArrayList<>();
+        comboIDList.add(2);
+        comboIDList.add(1);
+        comboIDList.add(5);
+        roundComboLists.add(comboIDList);
+
+        comboIDList = new ArrayList<>();
+        comboIDList.add(3);
+        comboIDList.add(2);
+        comboIDList.add(5);
+        roundComboLists.add(comboIDList);
+
+        comboIDList = new ArrayList<>();
+        comboIDList.add(3);
+        comboIDList.add(4);
+        comboIDList.add(1);
+        roundComboLists.add(comboIDList);
+
+        defaultWorkouts.add(new WorkoutDTO(2, "Workout 2", 8, roundComboLists, PresetUtil.timeList.size() / 2, PresetUtil.timeList.size() /2,
+                PresetUtil.timeList.size() / 2, PresetUtil.warningList.size() / 2, PresetUtil.gloveList.size() / 2));
     }
 
     public static ComboDTO getComboDtowithID(int id){
@@ -257,7 +446,7 @@ public class ComboSetUtil {
     }
 
     public static ArrayList<TrainingResultComboDTO> getCombostatsforDay(DBAdapter dbAdapter, String formatteddate){
-        List<String> comboResults = dbAdapter.getTrainingStatswithtype(EFDConstants.TYPE_COMBO, formatteddate);
+        List<String> comboResults = dbAdapter.getTrainingStatswithtype(Integer.parseInt(MainActivity.getInstance().userId), EFDConstants.TYPE_COMBO, formatteddate);
         ArrayList<TrainingResultComboDTO> resultComboDTOs = new ArrayList<>();
         Gson gson = new Gson();
 
@@ -273,7 +462,7 @@ public class ComboSetUtil {
     }
 
     public static ArrayList<TrainingResultSetDTO> getSetstatsforDay(DBAdapter dbAdapter, String formatteddate){
-        List<String> setResults = dbAdapter.getTrainingStatswithtype(EFDConstants.TYPE_SET, formatteddate);
+        List<String> setResults = dbAdapter.getTrainingStatswithtype(Integer.parseInt(MainActivity.getInstance().userId), EFDConstants.TYPE_SET, formatteddate);
 
         ArrayList<TrainingResultSetDTO> resultSetDTOs = new ArrayList<>();
         Gson gson = new Gson();
@@ -290,7 +479,7 @@ public class ComboSetUtil {
     }
 
     public static ArrayList<TrainingResultWorkoutDTO> getWorkoutstatsforDay(DBAdapter dbAdapter, String formatteddate){
-        List<String> workoutResults = dbAdapter.getTrainingStatswithtype(EFDConstants.TYPE_WORKOUT, formatteddate);
+        List<String> workoutResults = dbAdapter.getTrainingStatswithtype(Integer.parseInt(MainActivity.getInstance().userId), EFDConstants.TYPE_WORKOUT, formatteddate);
 
         ArrayList<TrainingResultWorkoutDTO> resultWorkoutDTOs = new ArrayList<>();
         Gson gson = new Gson();
@@ -309,19 +498,19 @@ public class ComboSetUtil {
     public static void saveComboStats(DBAdapter dbAdapter, TrainingResultComboDTO comboresult){
         Gson gson = new Gson();
         String jsonString = gson.toJson(comboresult);
-        dbAdapter.insertTrainingStats(EFDConstants.TYPE_COMBO, jsonString);
+        dbAdapter.insertTrainingPlanRestuls(Integer.parseInt(MainActivity.getInstance().userId), EFDConstants.TYPE_COMBO, jsonString);
     }
 
     public static void saveSetStats(DBAdapter dbAdapter, TrainingResultSetDTO setresult){
         Gson gson = new Gson();
         String jsonString = gson.toJson(setresult);
-        dbAdapter.insertTrainingStats(EFDConstants.TYPE_SET, jsonString);
+        dbAdapter.insertTrainingPlanRestuls(Integer.parseInt(MainActivity.getInstance().userId),EFDConstants.TYPE_SET, jsonString);
     }
 
     public static void saveWorkStats(DBAdapter dbAdapter, TrainingResultWorkoutDTO workoutresult){
         Gson gson = new Gson();
         String jsonString = gson.toJson(workoutresult);
-        dbAdapter.insertTrainingStats(EFDConstants.TYPE_WORKOUT, jsonString);
+        dbAdapter.insertTrainingPlanRestuls(Integer.parseInt(MainActivity.getInstance().userId),EFDConstants.TYPE_WORKOUT, jsonString);
     }
 
     public static String getPunchkeyDetail (TrainingResultComboDTO comboDTO){

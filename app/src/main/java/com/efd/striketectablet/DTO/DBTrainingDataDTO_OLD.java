@@ -1,6 +1,6 @@
 package com.efd.striketectablet.DTO;
 
-public class DBTrainingDataDTO {
+public class DBTrainingDataDTO_OLD {
 
     Integer id;
     Integer isLeftHand;
@@ -12,8 +12,8 @@ public class DBTrainingDataDTO {
 
 
 
-    public DBTrainingDataDTO(Integer id, Integer isLeftHand, Integer sessionID, Integer userID,
-                             Integer sync, String syncDate, Long serverID) {
+    public DBTrainingDataDTO_OLD(Integer id, Integer isLeftHand, Integer sessionID, Integer userID,
+                                 Integer sync, String syncDate, Long serverID) {
         super();
         this.id = id;
         this.isLeftHand = isLeftHand;
@@ -54,7 +54,7 @@ public class DBTrainingDataDTO {
 
     @Override
     public String toString() {
-        return "DBTrainingDataDTO [id=" + id + ", isLeftHand=" + isLeftHand
+        return "DBTrainingDataDTO_OLD [id=" + id + ", isLeftHand=" + isLeftHand
                 + ", sessionID=" + sessionID + ", userID=" + userID + ", sync="
                 + sync + ", syncDate=" + syncDate + ", serverID=" + serverID
                 + "]";

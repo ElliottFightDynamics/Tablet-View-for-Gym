@@ -1,9 +1,6 @@
 package com.efd.striketectablet.api;
 
 import com.efd.striketectablet.DTO.responsedto.AuthenticationDTO;
-import com.efd.striketectablet.DTO.responsedto.CountryListDTO;
-import com.efd.striketectablet.DTO.responsedto.QuestionListDTO;
-import com.efd.striketectablet.DTO.responsedto.RegisterResponseDTO;
 import com.efd.striketectablet.DTO.responsedto.ResetpwdDTO;
 
 import java.util.Map;

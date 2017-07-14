@@ -1,8 +1,6 @@
 package com.efd.striketectablet.api;
 
 import com.efd.striketectablet.App;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +16,7 @@ public class RetrofitSingleton {
 
     public static CredentialRest CREDENTIAL_REST;
     public static UserRest USER_REST;
+    public static TrainingRest TRAINING_REST;
 
     private static App application;
     private static OkHttpClient httpClient = new OkHttpClient.Builder()
@@ -34,10 +33,6 @@ public class RetrofitSingleton {
             })
             .build();
 
-    Gson gson = new GsonBuilder()
-            .setLenient()
-            .create();
-
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
                     .baseUrl(RestUrl.BASE_URL)
@@ -52,6 +47,7 @@ public class RetrofitSingleton {
         RetrofitSingleton.application = application;
         CREDENTIAL_REST = createService(CredentialRest.class);
         USER_REST = createService(UserRest.class);
+        TRAINING_REST = createService(TrainingRest.class);
     }
 
 }

@@ -1,10 +1,10 @@
 package com.efd.striketectablet.DTO;
 
-public class SyncResponseDTO {
+public class SyncResponseDTO_OLD {
     String id;
     String serverID;
 
-    public SyncResponseDTO(String id, String serverID) {
+    public SyncResponseDTO_OLD(String id, String serverID) {
         super();
         this.id = id;
         this.serverID = serverID;
@@ -20,7 +20,7 @@ public class SyncResponseDTO {
 
     @Override
     public String toString() {
-        return "SyncResponseDTO [id=" + id + ", serverID=" + serverID + "]";
+        return "SyncResponseDTO_OLD [id=" + id + ", serverID=" + serverID + "]";
     }
 
 }

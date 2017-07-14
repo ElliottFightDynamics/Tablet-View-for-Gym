@@ -1,32 +1,20 @@
 package com.efd.striketectablet.DTO.responsedto;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
-public class CountryDTO implements Parcelable {
+public class CountryDTO extends HasId{
 
-    private int id;
     private String name;
 
     public CountryDTO() {}
 
     protected CountryDTO(Parcel in) {
-        this.id = in.readInt();
         this.name = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
         dest.writeString(this.name);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id){
-        this.id = id;
     }
 
     public String getName(){

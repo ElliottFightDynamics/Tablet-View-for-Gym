@@ -1,11 +1,9 @@
 package com.efd.striketectablet.DTO.responsedto;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
-public class RegisterResponseDTO implements Parcelable {
+public class RegisterResponseDTO extends HasSuccess {
 
-    private boolean success;
     private String traineeServerId;
     private String secureAccessToken;
     private String message;
@@ -13,7 +11,6 @@ public class RegisterResponseDTO implements Parcelable {
     public RegisterResponseDTO() {}
 
     protected RegisterResponseDTO(Parcel in) {
-        this.success = in.readByte() != 0;
         this.traineeServerId = in.readString();
         this.secureAccessToken = in.readString();
         this.message = in.readString();
@@ -21,18 +18,9 @@ public class RegisterResponseDTO implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte(this.success ? (byte) 1 : (byte) 0);
         dest.writeString(this.traineeServerId);
         dest.writeString(this.secureAccessToken);
         dest.writeString(this.message);
-    }
-
-    public boolean getSuccess(){
-        return success;
-    }
-
-    public void setSuccess(boolean success){
-        this.success = success;
     }
 
     public String getTraineeServerId(){
@@ -57,11 +45,6 @@ public class RegisterResponseDTO implements Parcelable {
 
     public void setMessage(String message){
         this.message = message;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public static final Creator<RegisterResponseDTO> CREATOR = new Creator<RegisterResponseDTO>() {

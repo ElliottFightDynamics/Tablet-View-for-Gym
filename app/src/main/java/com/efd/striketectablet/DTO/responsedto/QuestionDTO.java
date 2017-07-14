@@ -1,32 +1,20 @@
 package com.efd.striketectablet.DTO.responsedto;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
-public class QuestionDTO implements Parcelable {
+public class QuestionDTO extends HasId {
 
-    private int id;
     private String questionText;
 
     public QuestionDTO() {}
 
     protected QuestionDTO(Parcel in) {
-        this.id = in.readInt();
         this.questionText = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
         dest.writeString(this.questionText);
-    }
-
-    public int getId(){
-        return id;
-    }
-
-    public void setId(int id){
-        this.id = id;
     }
 
     public String getQuestionText(){
@@ -35,12 +23,6 @@ public class QuestionDTO implements Parcelable {
 
     public void setQuestionText(String questionText){
         this.questionText = questionText;
-    }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public static final Creator<QuestionDTO> CREATOR = new Creator<QuestionDTO>() {

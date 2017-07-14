@@ -1,14 +1,12 @@
 package com.efd.striketectablet.api;
 
-import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionConfig;
-
 public class RestUrl {
     public static final int ENV = 1; // 0 local, 1 dev, 2 prod
 
 //    public static String BASE_URL = "http://fe1-1088333348.us-west-2.elb.amazonaws.com:8090/EFD/";//PunchDetectionConfig.getInstance().getWEB_SERVICE_DOMAIN();
-    public static String BASE_URL = "http://54.213.226.127:8090/EFD/";//PunchDetectionConfig.getInstance().getWEB_SERVICE_DOMAIN();
+//    public static String BASE_URL = "http://54.213.226.127:8090/EFD/";//PunchDetectionConfig.getInstance().getWEB_SERVICE_DOMAIN();
 
-//    public static String BASE_URL = "http://34.212.48.125:8090/EFD/";//PunchDetectionConfig.getInstance().getWEB_SERVICE_DOMAIN();
+    public static String BASE_URL = "http://34.212.48.125:8090/EFD/";//PunchDetectionConfig.getInstance().getWEB_SERVICE_DOMAIN();
 
     //credential url
     public static final String LOGIN = "user/traineeLogin";
@@ -34,6 +32,36 @@ public class RestUrl {
     //update new password
     public static final String CHANGEPWD = "user/updatePassword";
 
+    //check user is registered or not
+    public static final String CHECK_UNREGISTERED_USER = "user/isUnRegisteredUser";
+
     //update weight and glove type
     public static final String UPDATE_WEIGHTGLOVE = "user/changeParams";
+
+
+
+    /******************************* Training Rest ***************************************/
+
+    public static final String SAVE_COMBO_PLAN = "combo/save";
+    public static final String RETRIEVE_PLANS = "comboSetsWorkout/retrieve";
+    public static final String SAVE_SETS_PLAN = "sets/save";
+    public static final String SAVE_WORKOUT_PLAN = "workout/save";
+    public static final String SAVE_PRESET = "preset/save";
+
+    //save/retreive training data
+    public static final String SAVE_TRAINING_DATA = "trainingData/saveBulkLocalData";
+    public static final String SAVE_TRAINING_DATA_DETAIL = "trainingDataDetails/saveBulkLocalData";
+    public static final String SAVE_TRAINING_PUNCH_DATA = "trainingPunchData/saveBulkLocalData";
+    public static final String SAVE_TRAINING_PUNCH_PEAK_SUMMARY = "trainingPunchDataPeakSummary/saveBulkLocalData";
+    public static final String RETRIEVE_TRAINING_DATAS = "getBulkLocalData";
+
+    public static final String SAVE_TRAINING_SESSION = "trainingSession/saveBulkLocalData";
+    public static final String SAVE_TRAINING_PUNCH_STATS = "trainingPunchStats/saveBulkLocalData";
+    public static final String SAVE_TRAINING_PUNCH_DETAIL = "trainingPunchDetail/saveBulkLocalData";
+    public static final String SAVE_TRAINING_PLAN_RESULTS = "trainingPlanResults/saveBulkLocalData";
+
+    public static final String RETRIEVE_TRAINING_SESSION = "getBulkLocalData";
+    public static final String RETRIEVE_TRAINING_PUNCH_DETAIL = "getTrainingPunchDetail";
+    public static final String RETRIEVE_TRAINING_PUNCH_STATS = "getTrainingPunchStats";
+    public static final String RETRIEVE_TRAINING_PLAN_RESULTS = "getTrainingPlanResults";
 }

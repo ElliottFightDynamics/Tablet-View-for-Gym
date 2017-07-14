@@ -1,12 +1,9 @@
 package com.efd.striketectablet.DTO.responsedto;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
-public class AuthenticationDTO implements Parcelable {
+public class AuthenticationDTO extends HasSuccess {
 
-    private String success;
-    private String access;
     private String secureAccessToken;
     private String message;
     private UserDTO user;
@@ -15,8 +12,6 @@ public class AuthenticationDTO implements Parcelable {
     public AuthenticationDTO() {}
 
     protected AuthenticationDTO(Parcel in) {
-        this.success = in.readString();
-        this.access = in.readString();
         this.secureAccessToken = in.readString();
         this.message = in.readString();
         this.user = in.readParcelable(UserDTO.class.getClassLoader());
@@ -25,30 +20,11 @@ public class AuthenticationDTO implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(success);
-        dest.writeString(access);
         dest.writeString(secureAccessToken);
         dest.writeString(message);
         dest.writeParcelable(user, flags);
         dest.writeParcelable(boxerProfile, flags);
     }
-
-    public String getSuccess(){
-        return success;
-    }
-
-    public void setSuccess(String success){
-        this.success = success;
-    }
-
-    public String getAccess(){
-        return access;
-    }
-
-    public void setAccess(String access){
-        this.access = access;
-    }
-
 
     public String getSecureAccessToken(){
         return secureAccessToken;
@@ -80,11 +56,6 @@ public class AuthenticationDTO implements Parcelable {
 
     public void setBoxerProfile(BoxerProfileDTO boxerProfile){
         this.boxerProfile = boxerProfile;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public static final Creator<AuthenticationDTO> CREATOR = new Creator<AuthenticationDTO>() {

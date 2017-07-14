@@ -12,7 +12,10 @@ public class EFDConstants {
     public static String TRAINING_TYPE_BAG = "BAG";
     public static String USER_ROLE_BOXER = "ROLE_BOXER";
     public static String USER_ROLE_ADMIN = "ROLE_ADMIN";
+
+    public static final String DATABASE_NAME_OLD = "EFD_TrainerApp_DBold.db";
     public static final String DATABASE_NAME = "EFD_TrainerApp_DB.db";
+
     public static final String[] MMAGLOVE_PREFIX = {"MMAGlove-", "STRIKTEC-"};    // "MMAGlove-";
 
     //----------------------------- Default date and time ----------------------

@@ -1,6 +1,7 @@
 package com.efd.striketectablet.api;
 
 import com.efd.striketectablet.DTO.responsedto.AuthenticationDTO;
+import com.efd.striketectablet.DTO.responsedto.CheckRegisteredUserDTO;
 import com.efd.striketectablet.DTO.responsedto.CountryListDTO;
 import com.efd.striketectablet.DTO.responsedto.QuestionListDTO;
 import com.efd.striketectablet.DTO.responsedto.RegisterResponseDTO;
@@ -40,7 +41,7 @@ public interface CredentialRest {
                                        @Field("leftDeviceSensorName") String leftDeviceSensorName,
                                        @Field("leftDeviceGeneration") String leftDeviceGeneration,
                                        @Field("rightDeviceSensorName") String rightDeviceSensorName,
-                                       @Field("rightDeviceGeneration") String rightDeviceGeneration );
+                                       @Field("rightDeviceGeneration") String rightDeviceGeneration);
 
     @FormUrlEncoded
     @POST(RestUrl.RESETPWD_EMAIL)
@@ -49,12 +50,16 @@ public interface CredentialRest {
     @FormUrlEncoded
     @POST(RestUrl.RESETPWD_QUESTION)
     Call<ResetpwdDTO> resetPwdwithQuestion(@Field("emailId") String emailId,
-                                                 @Field("questionId") String quesId,
-                                                 @Field("questionAnswer") String questionAsnwer);
+                                           @Field("questionId") String quesId,
+                                           @Field("questionAnswer") String questionAsnwer);
 
     @FormUrlEncoded
     @POST(RestUrl.CHANGEPWD)
     Call<ResetpwdDTO> updatePassword(@Field("emailId") String emailId,
-                                           @Field("password") String password);
+                                     @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST(RestUrl.CHECK_UNREGISTERED_USER)
+    Call<CheckRegisteredUserDTO> checkUnregisteredUser(@Field("emailId") String emailId);
 
 }

@@ -1,6 +1,6 @@
 package com.efd.striketectablet.DTO;
 
-public class DBTrainingPunchDataDTO {
+public class DBTrainingPunchDataDTO_OLD {
 
     Integer id;
     Double maxForce;
@@ -14,9 +14,9 @@ public class DBTrainingPunchDataDTO {
 
 
 
-    public DBTrainingPunchDataDTO(Integer id, Double maxForce, Double maxSpeed,
-                                  String punchDataDate, String punchType, Integer trainingDataId,
-                                  Integer sync, String syncDate, Long serverID) {
+    public DBTrainingPunchDataDTO_OLD(Integer id, Double maxForce, Double maxSpeed,
+                                      String punchDataDate, String punchType, Integer trainingDataId,
+                                      Integer sync, String syncDate, Long serverID) {
         super();
         this.id = id;
         this.maxForce = maxForce;
@@ -67,7 +67,7 @@ public class DBTrainingPunchDataDTO {
 
     @Override
     public String toString() {
-        return "DBTrainingPunchDataDTO [id=" + id + ", maxForce=" + maxForce
+        return "DBTrainingPunchDataDTO_OLD [id=" + id + ", maxForce=" + maxForce
                 + ", maxSpeed=" + maxSpeed + ", punchDataDate=" + punchDataDate
                 + ", punchType=" + punchType + ", trainingDataId="
                 + trainingDataId + ", sync=" + sync + ", syncDate=" + syncDate

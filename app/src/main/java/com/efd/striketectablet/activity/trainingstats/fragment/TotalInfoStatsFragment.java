@@ -172,10 +172,10 @@ public class TotalInfoStatsFragment extends Fragment{
         initData();
 
         //set total time
-        int totaltime = MainActivity.db.getTodayTotalTime(currentDay);
+        int totaltime = MainActivity.db.getTodayTotalTime(Integer.parseInt(MainActivity.getInstance().userId), currentDay);
         valueLists.set(keyLists.indexOf("TRAINING TIME"), PresetUtil.changeSecondsToHours(totaltime));
 
-        ArrayList<TrainingStatsPunchTypeInfoDTO> punchTypeInfoDTOs = MainActivity.db.getTrainingStats(currentDay);
+        ArrayList<TrainingStatsPunchTypeInfoDTO> punchTypeInfoDTOs = MainActivity.db.getTrainingStats(Integer.parseInt(MainActivity.getInstance().userId), currentDay);
         if (punchTypeInfoDTOs.size() == 0){
             commonStatsAdapter.setData(keyLists, valueLists);
             commonStatsAdapter.notifyDataSetChanged();

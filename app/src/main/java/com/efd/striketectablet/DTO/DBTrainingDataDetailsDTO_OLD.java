@@ -1,6 +1,6 @@
 package com.efd.striketectablet.DTO;
 
-public class DBTrainingDataDetailsDTO {
+public class DBTrainingDataDetailsDTO_OLD {
 
     Integer id;
     Integer ax;
@@ -21,11 +21,11 @@ public class DBTrainingDataDetailsDTO {
     Long serverID;
 
 
-    public DBTrainingDataDetailsDTO(Integer id, Integer ax, Integer ay, Integer az,
-                                    Double currentForce, Double currentVelocity,
-                                    String dataReceivedTime, Integer gx, Integer gy, Integer gz, Double headTrauma,
-                                    Double milliSeconds, Integer temp, Integer trainingDataId, Integer sync,
-                                    String syncDate, Long serverID) {
+    public DBTrainingDataDetailsDTO_OLD(Integer id, Integer ax, Integer ay, Integer az,
+                                        Double currentForce, Double currentVelocity,
+                                        String dataReceivedTime, Integer gx, Integer gy, Integer gz, Double headTrauma,
+                                        Double milliSeconds, Integer temp, Integer trainingDataId, Integer sync,
+                                        String syncDate, Long serverID) {
         super();
         this.id = id;
         this.ax = ax;
@@ -116,7 +116,7 @@ public class DBTrainingDataDetailsDTO {
 
     @Override
     public String toString() {
-        return "DBTrainingDataDetailsDTO [id=" + id + ", ax=" + ax + ", ay="
+        return "DBTrainingDataDetailsDTO_OLD [id=" + id + ", ax=" + ax + ", ay="
                 + ay + ", az=" + az + ", currentForce=" + currentForce
                 + ", currentVelocity=" + currentVelocity
                 + ", dataReceivedTime=" + dataReceivedTime + ", gx=" + gx

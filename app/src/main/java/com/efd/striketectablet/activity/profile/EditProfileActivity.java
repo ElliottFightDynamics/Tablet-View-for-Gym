@@ -4,12 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.net.Uri;
-import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +17,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,19 +24,14 @@ import android.widget.Toast;
 
 import com.efd.striketectablet.DTO.responsedto.AuthenticationDTO;
 import com.efd.striketectablet.DTO.responsedto.BoxerProfileDTO;
-import com.efd.striketectablet.DTO.responsedto.RegisterResponseDTO;
 import com.efd.striketectablet.DTO.responsedto.UserDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
-import com.efd.striketectablet.activity.credential.RegisterActivity;
 import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
 import com.efd.striketectablet.api.RetrofitSingleton;
-import com.efd.striketectablet.customview.CustomButton;
-import com.efd.striketectablet.customview.CustomEditText;
 import com.efd.striketectablet.database.DBAdapter;
 import com.efd.striketectablet.util.IndicatorCallback;
 import com.efd.striketectablet.util.PresetUtil;
-import com.efd.striketectablet.util.SchemeType;
 import com.efd.striketectablet.util.StatisticUtil;
 import com.efd.striketectablet.util.StorageUtils;
 import com.efd.striketectablet.utilities.CommonUtils;
@@ -341,8 +331,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
                     AuthenticationDTO authenticationDTO = response.body();
 
-                    if (authenticationDTO.getAccess().equalsIgnoreCase("true")){
-                        if (authenticationDTO.getSuccess().equalsIgnoreCase("true")){
+                    if (authenticationDTO.getAccess()){
+                        if (authenticationDTO.getSuccess()){
                             UserDTO userDTO = authenticationDTO.getUser();
                             BoxerProfileDTO boxerProfileDTO = authenticationDTO.getBoxerProfile();
 
