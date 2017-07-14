@@ -46,6 +46,7 @@ public class ReaderThread extends Thread {
     private String boxerStance;
     private String hand;
     private Integer trainingDataId;
+    private String sessionStartTime;
     public DeviceDataProcessingThread deviceDataProcessingThread;
     private Thread dataProcessingThread;
     BlockingQueue<Integer[]> sensorDatablockingQueue;
@@ -71,6 +72,7 @@ public class ReaderThread extends Thread {
         this.boxerStance = manager.getBoxerStance();
         this.hand = manager.getBoxerHand();
         this.trainingDataId = manager.getTrainingDataId();
+        this.sessionStartTime = manager.getSessionStartTime();
 
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
@@ -89,7 +91,7 @@ public class ReaderThread extends Thread {
         final String csvFileName = "Boxer1Right.csv";
         final String CSV_FILE_PATH = Environment.getExternalStorageDirectory() + File.separator + EFDConstants.APP_DIRECTORY + File.separator + EFDConstants.CONFIG_DIRECTORY;
         File csvFile = (DEBUG_WITH_CSV_FILE) ? new File(CSV_FILE_PATH, csvFileName) : null;
-        deviceDataProcessingThread = new DeviceDataProcessingThread(sensorDatablockingQueue, boxerName, hand, boxerStance, 1, trainingDataId, uiHandler, /*mainContext,*/ csvFile, DEBUG_WITH_CSV_FILE);
+        deviceDataProcessingThread = new DeviceDataProcessingThread(sensorDatablockingQueue, boxerName, hand, boxerStance, 1, trainingDataId, uiHandler, /*mainContext,*/ csvFile, DEBUG_WITH_CSV_FILE, sessionStartTime);
 
         Log.i(TAG, "Reading data from " + ((DEBUG_WITH_CSV_FILE) ? ("csv file: " + csvFileName) : "chip"));
 
@@ -102,9 +104,15 @@ public class ReaderThread extends Thread {
         this.boxerStance = bluetoothConnectionManager.getBoxerStance();
         this.hand = bluetoothConnectionManager.getBoxerHand();
         this.trainingDataId = bluetoothConnectionManager.getTrainingDataId();
+        this.sessionStartTime = bluetoothConnectionManager.getSessionStartTime();
 
-        deviceDataProcessingThread.updateTrainingInfo(boxerName, hand, boxerStance,  trainingDataId);
+        deviceDataProcessingThread.updateTrainingInfo(boxerName, hand, boxerStance,  trainingDataId, sessionStartTime);
 
+    }
+
+    public void stopWriteCSV(){
+        if (deviceDataProcessingThread != null)
+            deviceDataProcessingThread.stopWriteCSV();
     }
 
     /**

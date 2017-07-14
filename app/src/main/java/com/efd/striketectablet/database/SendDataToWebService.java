@@ -116,7 +116,7 @@ public class SendDataToWebService extends Activity {
      */
     public void syncAllWhileDataFound() {
 //super        MainActivity.setSynchronizingWithServer(true);
-        synchronizeTrainingSessionRecords();
+//        synchronizeTrainingSessionRecords();
     }
 
     /**

@@ -321,4 +321,7 @@ public class EFDConstants {
     public static final String TYPE_COMBO = "combo";
     public static final String TYPE_SET = "set";
     public static final String TYPE_WORKOUT = "workout";
+
+    public static final String SESSIONID = "sessionid";
+    public static final String SESSIONSTARTTIME = "starttime";
 }

@@ -731,10 +731,10 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
     }
 
     private void startTraining(){
-//        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
-//            StatisticUtil.showToastMessage("Please connect with sensors");
-//            return;
-//        }
+        if (!mainActivityInstance.leftSensorConnected && !mainActivityInstance.rightSensorConnected){
+            StatisticUtil.showToastMessage("Please connect with sensors");
+            return;
+        }
 
         if (comboid != -1 || setid != -1){
             //this is combo training
@@ -857,6 +857,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
                         startTrainingBtn.setText(text);
 
+                        /*
                         if (currentTime % 1 == 0 && mainActivityInstance.receivePunchable) {
                             java.sql.Timestamp dataReceiveTime = new java.sql.Timestamp(System.currentTimeMillis());
                             if (currentTime % 2 == 0){
@@ -870,6 +871,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
                             tmpStart();
                         }
+                        */
                     }
                 });
             }

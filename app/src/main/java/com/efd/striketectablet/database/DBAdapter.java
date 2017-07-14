@@ -483,7 +483,7 @@ public class DBAdapter {
         return updateResult;
     }
 
-    public long insertTrainingSession(String training_type, int userId) {
+    public JSONObject insertTrainingSession(String training_type, int userId) {
         Date date = new java.sql.Timestamp(System.currentTimeMillis());
         DateFormat sessionDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        sessionDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -491,16 +491,30 @@ public class DBAdapter {
         Date sessionDate = new Date();
 
         ContentValues values = new ContentValues();
+        String startTime = String.valueOf(System.currentTimeMillis());
 
-        values.put(KEY_TRAINING_SESSION_START_TIME, String.valueOf(System.currentTimeMillis()));
-        values.put(KEY_TRAINING_SESSION_END_TIME, String.valueOf(System.currentTimeMillis()));
+        values.put(KEY_TRAINING_SESSION_START_TIME, startTime);
+        values.put(KEY_TRAINING_SESSION_END_TIME, startTime);
         values.put(KEY_TRAINING_SESSION_TRAINING_SESSION_DATE, sessionDateFormat.format(sessionDate));
         values.put(KEY_TRAINING_SESSION_TRAINING_TYPE, training_type);
         values.put(KEY_TRAINING_SESSION_USER_ID, userId);
         values.put(KEY_TRAINING_SESSION_SERVER_TIMESTAMP, "0");
 
         long result = db.insert(TRAINING_SESSION_TABLE, null, values);
-        return result;
+
+        JSONObject resultJSON;
+
+        resultJSON = new JSONObject();
+
+        try {
+            resultJSON.put(EFDConstants.SESSIONID, result);
+            resultJSON.put(EFDConstants.SESSIONSTARTTIME, startTime);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return resultJSON;
+//        return result;
     }
 
     public void insertPunchedData(int trainingId, TrainingPunchDTO punchDataDTO){

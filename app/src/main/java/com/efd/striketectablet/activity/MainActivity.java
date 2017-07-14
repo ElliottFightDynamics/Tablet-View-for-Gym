@@ -117,9 +117,9 @@ public class MainActivity extends AppCompatActivity {
     public static TrainingTimer trainingDurationCounterThread = null;
 
     public Integer trainingSessionId;
+    public String trainingSessionStartTime;
     Integer trainingRightHandId;
     Integer trainingLeftHandId;
-    Integer currentTrainingSessionId;
 
     public String endTrainingTime = EFDConstants.DEFAULT_START_TIME;
 
@@ -725,7 +725,7 @@ public class MainActivity extends AppCompatActivity {
 
 			/*for reconnection device */
             if (trainingManager.isTrainingRunning()) {
-                setConnectionManagerConnected(leftHandConnectionThread, boxerName, boxerStance, trainingLeftHandId, EFDConstants.LEFT_HAND);
+                setConnectionManagerConnected(leftHandConnectionThread, boxerName, boxerStance, trainingLeftHandId, EFDConstants.LEFT_HAND, trainingSessionStartTime);
             }
 
             EventBus.getDefault().post(new TrainingBatteryLayoutDTO(true, false));
@@ -739,7 +739,7 @@ public class MainActivity extends AppCompatActivity {
 
 			/*for reconnection device */
             if (trainingManager.isTrainingRunning()) {
-                setConnectionManagerConnected(rightHandConnectionThread, boxerName, boxerStance, trainingRightHandId, EFDConstants.RIGHT_HAND);
+                setConnectionManagerConnected(rightHandConnectionThread, boxerName, boxerStance, trainingRightHandId, EFDConstants.RIGHT_HAND, trainingSessionStartTime);
             }
 
             EventBus.getDefault().post(new TrainingBatteryLayoutDTO(false, false));
@@ -803,6 +803,14 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean stopTraining() {
         try {
+            if (leftDeviceConnectionManager != null){
+                leftDeviceConnectionManager.stopWriteCSV();
+            }
+
+            if (rightDeviceConnectionManager != null){
+                rightDeviceConnectionManager.stopWriteCSV();
+            }
+
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
             if (trainingSessionId != null) {
@@ -838,19 +846,21 @@ public class MainActivity extends AppCompatActivity {
                 trainingRightHandId = EFDConstants.GUEST_TRAINING_DATA_RIGHT_HAND_ID;
                 boxerPunchMassEffect = EFDConstants.GUEST_TRAINING_EFFECTIVE_PUNCH_MASS;
             } else {
-//                JSONObject result = null;
+                JSONObject result = null;
 //                result = MainActivity.db.trainingSessionSave(Integer.parseInt(userId), EFDConstants.TRAINING_TYPE_BOXER);
-                long result = MainActivity.db.insertTrainingSession(EFDConstants.TRAINING_TYPE_BOXER, Integer.parseInt(userId));
+                result = MainActivity.db.insertTrainingSession(EFDConstants.TRAINING_TYPE_BOXER, Integer.parseInt(userId));
 
                 boxerName = checkboxerDetails.get("boxerName");
                 boxerStance = EFDConstants.TRADITIONAL;//checkboxerDetails.get("boxerName");
 //                json = new JSONObject(result.toString());
-                trainingSessionId = (int)result; //trainingData.getInt("trainingSessionId");
-                trainingRightHandId =  (int)result;//trainingData.getInt("trainingRightHandId");
-                trainingLeftHandId =  (int)result;;//trainingData.getInt("trainingLeftHandId");
-                Log.e("Super", "trainingsessionid = " + trainingSessionId);
+                trainingSessionId = result.getInt(EFDConstants.SESSIONID); //trainingData.getInt("trainingSessionId");
+                trainingRightHandId = result.getInt(EFDConstants.SESSIONID);//trainingData.getInt("trainingRightHandId");
+                trainingLeftHandId = result.getInt(EFDConstants.SESSIONID);;//trainingData.getInt("trainingLeftHandId");
+                trainingSessionStartTime = result.getString(EFDConstants.SESSIONSTARTTIME);
+
+                Log.e("Super", "trainingsessionid = " + trainingSessionId + "      " + trainingSessionStartTime);
                 boxerIdValue = Integer.valueOf(userId);
-                currentTrainingSessionId = trainingSessionId;
+
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
                 HashMap<String, String> usersBoxerDetails = MainActivity.db.getUsersBoxerDetails(boxerIdValue);
@@ -863,10 +873,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (leftHandConnectionThread != null) {
-                setConnectionManagerConnected(leftHandConnectionThread, boxerName, boxerStance, trainingLeftHandId, EFDConstants.LEFT_HAND);
+                setConnectionManagerConnected(leftHandConnectionThread, boxerName, boxerStance, trainingLeftHandId, EFDConstants.LEFT_HAND, trainingSessionStartTime);
             }
             if (rightHandConnectionThread != null) {
-                setConnectionManagerConnected(rightHandConnectionThread, boxerName, boxerStance, trainingRightHandId, EFDConstants.RIGHT_HAND);
+                setConnectionManagerConnected(rightHandConnectionThread, boxerName, boxerStance, trainingRightHandId, EFDConstants.RIGHT_HAND, trainingSessionStartTime);
             }
 
             EventBus.getDefault().post(new TrainingConnectStatusDTO(true, false, ""));
@@ -920,6 +930,7 @@ public class MainActivity extends AppCompatActivity {
             stopTraining();
 
             trainingSessionId = null;
+            trainingSessionStartTime = null;
             punchHistoryGraph.clear();
             liveMonitorDataMap.clear();
             punchDataDTO.resetValues(0);
@@ -929,12 +940,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setConnectionManagerConnected(ConnectionThread connectionThread, String boxerName, String boxerStance, Integer trainingDataId, String boxerHand) {
+    private void setConnectionManagerConnected(ConnectionThread connectionThread, String boxerName, String boxerStance, Integer trainingDataId, String boxerHand, String sessionStartTime) {
         ConnectionManager connectionManager = connectionThread.getBluetoothConnectionManager();
         connectionManager.setBoxerName(boxerName);
         connectionManager.setBoxerStance(boxerStance);
         connectionManager.setTrainingDataId(trainingDataId);
         connectionManager.setBoxerHand(boxerHand);
+        connectionManager.setSessionStartTime(sessionStartTime);
         connectionManager.connected(connectionThread.getBluetoothSocket());
     }
 

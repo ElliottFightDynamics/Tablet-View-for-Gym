@@ -57,6 +57,8 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
     String stance;
     Integer boxerId;
     Integer trainingId;
+    String sessionStartTime;
+
     boolean shouldStop = false;
     Handler mhandler;
     File file;
@@ -66,12 +68,16 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
     SimpleDateFormat formatter = new SimpleDateFormat(EFDConstants.DATE_FORMAT);
     private MainActivity mainActivityInstance;
 
+    String logFileNameWith16PacketPerRow;
+    FileWriter fstreamFor16PacketPerRow = null;
+    BufferedWriter bufferedWriterFor16PacketPerRow = null;
+
     public DBAdapter db;
     private SensorBuffer sensorBuffer;
     private double effectivePunchMass;
 
     public DeviceDataProcessingThread(BlockingQueue<Integer[]> senserDatablockingQueue, String boxerName, String hand, String stance, Integer boxerId, Integer trainingId,
-                                      Handler mHandler, File file, boolean isreadFromCSVFile) {
+                                      Handler mHandler, File file, boolean isreadFromCSVFile, String sessionStartTime) {
         try {
             synchronized (this) {
                 this.senserDatablockingQueue = senserDatablockingQueue;
@@ -81,6 +87,7 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
                 this.mhandler = mHandler;
                 this.boxerId = boxerId;
                 this.trainingId = trainingId;
+                this.sessionStartTime = sessionStartTime;
                 db = DBAdapter.getInstance(MainActivity.context);
                 mainActivityInstance = (MainActivity) MainActivity.context;
                 this.file = file;
@@ -92,11 +99,51 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
     }
 
     /*super added, update training info when round stats*/
-    public void updateTrainingInfo(String boxerName, String hand, String stance, Integer trainingId){
+    public void updateTrainingInfo(String boxerName, String hand, String stance, Integer trainingId, String sessionStartTime){
         this.boxerName = boxerName;
         this.hand = hand;
         this.stance = stance;
         this.trainingId = trainingId;
+        this.sessionStartTime = sessionStartTime;
+
+        final char H = ("right".equals(this.hand)) ? 'R' : 'L';
+
+        logFileNameWith16PacketPerRow = EFDConstants.EFD_COMMON_DATA_DIRECTORY + File.separator + EFDConstants.LOGS_DIRECTORY + File.separator
+                + "With" + EFDConstants.SAMPLE_PACKET_SIZE + "PacketPerRow_" + this.boxerName + "_-" + H + "-_" + sessionStartTime + ".csv";
+        //Log.d("~", "logFileNameWith16PacketPerRow: "+logFileNameWith16PacketPerRow);
+
+        File myDirectory = new File(EFDConstants.EFD_COMMON_DATA_DIRECTORY, EFDConstants.LOGS_DIRECTORY);
+
+        if (!myDirectory.exists()) {
+            myDirectory.mkdirs();
+        }
+
+        fstreamFor16PacketPerRow = null;
+        bufferedWriterFor16PacketPerRow = null;
+        try {
+            fstreamFor16PacketPerRow = new FileWriter(logFileNameWith16PacketPerRow, true);
+
+            bufferedWriterFor16PacketPerRow = new BufferedWriter(fstreamFor16PacketPerRow);
+            bufferedWriterFor16PacketPerRow.write("StartByte" + "," + "MessageID" + "," + "MessageLength(lsb)" + "," + "MessageLength(msb)"
+                    + "," + "Time0" + "," + "Time1" + "," + "Time2" + "," + "Time3" + "," + "Time" + "," + "AX" + "," + "AY" + "," + "AZ"
+                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
+                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
+                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
+                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
+                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
+                    + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void stopWriteCSV(){
+        if (bufferedWriterFor16PacketPerRow != null)
+            try {
+                bufferedWriterFor16PacketPerRow.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 
     @Override
@@ -194,8 +241,10 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
             String dateNow = formatter.format(currentDate.getTime());
 
             final char H = ("right".equals(this.hand)) ? 'R' : 'L';
-            String logFileNameWith16PacketPerRow = EFDConstants.EFD_COMMON_DATA_DIRECTORY + File.separator + EFDConstants.LOGS_DIRECTORY + File.separator
-                    + "With" + EFDConstants.SAMPLE_PACKET_SIZE + "PacketPerRow_" + this.boxerName + "_-" + H + "-_" + dateNow + ".csv";
+//            logFileNameWith16PacketPerRow = EFDConstants.EFD_COMMON_DATA_DIRECTORY + File.separator + EFDConstants.LOGS_DIRECTORY + File.separator
+//                    + "With" + EFDConstants.SAMPLE_PACKET_SIZE + "PacketPerRow_" + this.boxerName + "_-" + H + "-_" + dateNow + ".csv";
+            logFileNameWith16PacketPerRow = EFDConstants.EFD_COMMON_DATA_DIRECTORY + File.separator + EFDConstants.LOGS_DIRECTORY + File.separator
+                    + "With" + EFDConstants.SAMPLE_PACKET_SIZE + "PacketPerRow_" + this.boxerName + "_-" + H + "-_" + sessionStartTime + ".csv";
             //Log.d("~", "logFileNameWith16PacketPerRow: "+logFileNameWith16PacketPerRow);
 
             File myDirectory = new File(EFDConstants.EFD_COMMON_DATA_DIRECTORY, EFDConstants.LOGS_DIRECTORY);
@@ -204,8 +253,8 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
                 myDirectory.mkdirs();
             }
 
-            FileWriter fstreamFor16PacketPerRow = null;
-            BufferedWriter bufferedWriterFor16PacketPerRow = null;
+            fstreamFor16PacketPerRow = null;
+            bufferedWriterFor16PacketPerRow = null;
             fstreamFor16PacketPerRow = new FileWriter(logFileNameWith16PacketPerRow, true);
             bufferedWriterFor16PacketPerRow = new BufferedWriter(fstreamFor16PacketPerRow);
             bufferedWriterFor16PacketPerRow.write("StartByte" + "," + "MessageID" + "," + "MessageLength(lsb)" + "," + "MessageLength(msb)"
@@ -219,223 +268,228 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
 
             while (isContinue) {
 
-                ArrayList<Integer> packet = readPacketFromQueue();
-                if (isreadFromCSVFile) {
+                if (mainActivityInstance.receivePunchable) {
 
-                    if ((line = bufRdr.readLine()) != null) {
-                        stringTokenizer = new StringTokenizer(line, ",");
+                    ArrayList<Integer> packet = readPacketFromQueue();
+                    if (isreadFromCSVFile) {
+
+                        if ((line = bufRdr.readLine()) != null) {
+                            stringTokenizer = new StringTokenizer(line, ",");
+                        } else {
+                            csvDataReadingFinished = true;
+                            break;
+                        }
+                        String startByteStr = stringTokenizer.nextToken();
+                        startByte = Integer.parseInt(startByteStr);
+
                     } else {
-                        csvDataReadingFinished = true;
+                        startByte = readDeviceDataByte(packet);
+                    }
+
+                    isContinue = (startByte != -1) && (!this.shouldStop);
+
+                    if (!isContinue) {
                         break;
                     }
-                    String startByteStr = stringTokenizer.nextToken();
-                    startByte = Integer.parseInt(startByteStr);
 
-                } else {
-                    startByte = readDeviceDataByte(packet);
-                }
-
-                isContinue = (startByte != -1) && (!this.shouldStop);
-
-                if (!isContinue) {
-                    break;
-                }
-
-                isValidStartByte = (EFDConstants.START_BYTE == startByte);
-                if (isValidStartByte) {
-                    int messageId = 0;
-                    if (isreadFromCSVFile) {
-                        String messageIDString = stringTokenizer.nextToken();
-                        if (messageIDString.endsWith(String.valueOf(EFDConstants.LOW_G_MODE))) {
-                            messageId = EFDConstants.LOW_G_MODE;
-                        } else if (messageIDString.endsWith(String.valueOf(EFDConstants.HIGH_G_MODE))) {
-                            messageId = EFDConstants.HIGH_G_MODE;
-                        } else if(messageIDString.endsWith(String.valueOf(EFDConstants.GYRO_MODE))) {
-                            messageId = EFDConstants.GYRO_MODE;
+                    isValidStartByte = (EFDConstants.START_BYTE == startByte);
+                    if (isValidStartByte) {
+                        int messageId = 0;
+                        if (isreadFromCSVFile) {
+                            String messageIDString = stringTokenizer.nextToken();
+                            if (messageIDString.endsWith(String.valueOf(EFDConstants.LOW_G_MODE))) {
+                                messageId = EFDConstants.LOW_G_MODE;
+                            } else if (messageIDString.endsWith(String.valueOf(EFDConstants.HIGH_G_MODE))) {
+                                messageId = EFDConstants.HIGH_G_MODE;
+                            } else if (messageIDString.endsWith(String.valueOf(EFDConstants.GYRO_MODE))) {
+                                messageId = EFDConstants.GYRO_MODE;
+                            }
+                        } else {
+                            messageId = readDeviceDataByte(packet);
                         }
-                    } else {
-                        messageId = readDeviceDataByte(packet);
-                    }
 
-                    String streamMode;
-                    switch (messageId) {
-                        case EFDConstants.BATTERY_MODE:
-                            streamMode = "Battery";
-                            break;
-                        case EFDConstants.GYRO_MODE:
-                            streamMode = "Gyro";
-                            break;
-                        case EFDConstants.LOW_G_MODE:
-                            streamMode = "LowG";
-                            break;
-                        default:
-                            streamMode = "HighG";
-                    }
+                        String streamMode;
+                        switch (messageId) {
+                            case EFDConstants.BATTERY_MODE:
+                                streamMode = "Battery";
+                                break;
+                            case EFDConstants.GYRO_MODE:
+                                streamMode = "Gyro";
+                                break;
+                            case EFDConstants.LOW_G_MODE:
+                                streamMode = "LowG";
+                                break;
+                            default:
+                                streamMode = "HighG";
+                        }
 
-                    isValidMode = (EFDConstants.LOW_G_MODE == messageId || EFDConstants.HIGH_G_MODE == messageId || EFDConstants.BATTERY_MODE == messageId || EFDConstants.GYRO_MODE == messageId);
+                        isValidMode = (EFDConstants.LOW_G_MODE == messageId || EFDConstants.HIGH_G_MODE == messageId || EFDConstants.BATTERY_MODE == messageId || EFDConstants.GYRO_MODE == messageId);
 
-                    if (isValidMode) {
-                        int time = 0;
-                        int messageLengthLsb = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken()) : readDeviceDataByte(packet);
-                        int messageLengthMsb = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken()) : readDeviceDataByte(packet);
-                        // Combined time0-time3 for calculating
-                        // time(milliseconds)
-                        if (messageLengthLsb == EFDConstants.MESSAGE_LENGTH_LSB) {
-                            int time0 = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken()) : readDeviceDataByte(packet);
-                            int time1 = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken()) : readDeviceDataByte(packet);
-                            int time2 = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken()) : readDeviceDataByte(packet);
-                            int time3 = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken()) : readDeviceDataByte(packet);
-                            time = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken())
-                                    : ((((((time3 << 8) | time2) << 8) | time1) << 8) | time0);
+                        if (isValidMode) {
+                            int time = 0;
+                            int messageLengthLsb = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken()) : readDeviceDataByte(packet);
+                            int messageLengthMsb = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken()) : readDeviceDataByte(packet);
+                            // Combined time0-time3 for calculating
+                            // time(milliseconds)
+                            if (messageLengthLsb == EFDConstants.MESSAGE_LENGTH_LSB) {
+                                int time0 = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken()) : readDeviceDataByte(packet);
+                                int time1 = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken()) : readDeviceDataByte(packet);
+                                int time2 = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken()) : readDeviceDataByte(packet);
+                                int time3 = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken()) : readDeviceDataByte(packet);
+                                time = isreadFromCSVFile ? Integer.parseInt(stringTokenizer.nextToken())
+                                        : ((((((time3 << 8) | time2) << 8) | time1) << 8) | time0);
 
-                            bufferedWriterFor16PacketPerRow.write(
-                                    Integer.toString(startByte) + "," + streamMode + " - " + Integer.toString(messageId) + ",");
-                            bufferedWriterFor16PacketPerRow.write(
-                                    Integer.toString(messageLengthLsb) + "," + Integer.toString(messageLengthMsb) + "," + Integer.toString(time0)
-                                            + "," + Integer.toString(time1) + "," + Integer.toString(time2) + "," + Integer.toString(time3) + ","
-                                            + Integer.toString(time));
+                                bufferedWriterFor16PacketPerRow.write(
+                                        Integer.toString(startByte) + "," + streamMode + " - " + Integer.toString(messageId) + ",");
+                                bufferedWriterFor16PacketPerRow.write(
+                                        Integer.toString(messageLengthLsb) + "," + Integer.toString(messageLengthMsb) + "," + Integer.toString(time0)
+                                                + "," + Integer.toString(time1) + "," + Integer.toString(time2) + "," + Integer.toString(time3) + ","
+                                                + Integer.toString(time));
 
 
-                            if (messageId == EFDConstants.LOW_G_MODE) {
-                                short[][] data = new short[EFDConstants.SAMPLE_PACKET_SIZE][3];
+                                if (messageId == EFDConstants.LOW_G_MODE) {
+                                    short[][] data = new short[EFDConstants.SAMPLE_PACKET_SIZE][3];
 //								Log.i(TAG, "Low G mode Time="+formatter.format(currentDate.getTime()));
-                                for (int i = 0; i < EFDConstants.SAMPLE_PACKET_SIZE; i++) {
-                                    sensorData[i] = new SensorData();
-                                    sensorData[i].setHand(this.hand);
-                                    sensorData[i].setPrevTime(sensorData[i].getMsgTime());
-                                    sensorData[i].setMsgTime(time + (i * EFDConstants.LOWG_SAMPLE_TIME_DIFFERENCE));
-                                    short ax = 0, ay = 0, az = 0;
-                                    // Changes made for Gen4 sensor data reading
-                                    // x = x; y = -y; z = -z;
-                                    try {
-                                        ax = isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
-                                                : (short) (((short) readWordBE(packet) >> 4) * 12);
-                                        ay = isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
-                                                : (short) -(((short) readWordBE(packet) >> 4) * 12);    // Negate y (inverted y axis) for gen4
-                                        az = isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
-                                                : (short) -(((short) readWordBE(packet) >> 4) * 12);    // Negate z (inverted z axis) for gen4
-                                    } catch (Exception e) {
-                                        if (isreadFromCSVFile) {
-                                            csvDataReadingFinished = true;
-                                            break;
-                                        }
-                                    }
-                                    sensorData[i].setAx(ax);
-                                    sensorData[i].setAy(ay);
-                                    sensorData[i].setAz(az);
-                                    punchVFAData.setHand(sensorData[i].getHand());
-
-                                    bufferedWriterFor16PacketPerRow.write(
-                                            "," + Integer.toString((int) sensorData[i].getAx()) + "," + Integer.toString((int) sensorData[i].getAy()) + ","
-                                                    + Integer.toString((int) sensorData[i].getAz()));
-
-                                    processLowGData(sensorData[i], punchDetector, lowGPunchDetetction, punchVFACalculatorOnYYAxis,
-                                            punchVFACalculatorOnYZAxis, punchVFAData, (time + (i * EFDConstants.LOWG_SAMPLE_TIME_DIFFERENCE)), peakPunchValueDetector);
-
-                                    data[i][0] = (short) sensorData[i].getAx();
-                                    data[i][1] = (short) sensorData[i].getAy();
-                                    data[i][2] = (short) sensorData[i].getAz();
-                                }
-                                sensorBuffer.appendSensorData(getSensorData(messageId, time, data));
-                            }
-                            if (messageId == EFDConstants.HIGH_G_MODE) {
-                                short[][] data = new short[EFDConstants.SAMPLE_PACKET_SIZE][3];
-//								Log.i(TAG, "high G mode time="+formatter.format(currentDate.getTime()));
-                                for (int i = 0; i < EFDConstants.SAMPLE_PACKET_SIZE; i++) {
-                                    sensorData[i] = new SensorData();
-                                    sensorData[i].setHand(this.hand);
-                                    punchVFAData.setHand(sensorData[i].getHand());
-                                    sensorData[i].setPrevTime(sensorData[i].getMsgTime());
-                                    sensorData[i].setMsgTime(time + i);
-                                    try {
+                                    for (int i = 0; i < EFDConstants.SAMPLE_PACKET_SIZE; i++) {
+                                        sensorData[i] = new SensorData();
+                                        sensorData[i].setHand(this.hand);
+                                        sensorData[i].setPrevTime(sensorData[i].getMsgTime());
+                                        sensorData[i].setMsgTime(time + (i * EFDConstants.LOWG_SAMPLE_TIME_DIFFERENCE));
+                                        short ax = 0, ay = 0, az = 0;
                                         // Changes made for Gen4 sensor data reading
-                                        // x = y; y = x; z = -z;
-                                        if (isreadFromCSVFile) {
-                                            sensorData[i].setAx((short) Integer.parseInt(stringTokenizer.nextToken()));
-                                            sensorData[i].setAy((short) Integer.parseInt(stringTokenizer.nextToken()));
-                                        } else {
-                                            sensorData[i].setAy((short) readWordBE(packet));    // Swap y with x for gen4
-                                            sensorData[i].setAx((short) readWordBE(packet));    // Swap x with y for gen4
+                                        // x = x; y = -y; z = -z;
+                                        try {
+                                            ax = isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
+                                                    : (short) (((short) readWordBE(packet) >> 4) * 12);
+                                            ay = isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
+                                                    : (short) -(((short) readWordBE(packet) >> 4) * 12);    // Negate y (inverted y axis) for gen4
+                                            az = isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
+                                                    : (short) -(((short) readWordBE(packet) >> 4) * 12);    // Negate z (inverted z axis) for gen4
+                                        } catch (Exception e) {
+                                            if (isreadFromCSVFile) {
+                                                csvDataReadingFinished = true;
+                                                break;
+                                            }
                                         }
-                                        sensorData[i].setAz(isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
-                                                : -(short) readWordBE(packet));    // Negate z (inverted z axis) for gen4
-                                    } catch (Exception e) {
-                                        if (isreadFromCSVFile) {
-                                            csvDataReadingFinished = true;
-                                            break;
-                                        }
+                                        sensorData[i].setAx(ax);
+                                        sensorData[i].setAy(ay);
+                                        sensorData[i].setAz(az);
+                                        punchVFAData.setHand(sensorData[i].getHand());
+
+                                        bufferedWriterFor16PacketPerRow.write(
+                                                "," + Integer.toString((int) sensorData[i].getAx()) + "," + Integer.toString((int) sensorData[i].getAy()) + ","
+                                                        + Integer.toString((int) sensorData[i].getAz()));
+
+                                        processLowGData(sensorData[i], punchDetector, lowGPunchDetetction, punchVFACalculatorOnYYAxis,
+                                                punchVFACalculatorOnYZAxis, punchVFAData, (time + (i * EFDConstants.LOWG_SAMPLE_TIME_DIFFERENCE)), peakPunchValueDetector);
+
+                                        data[i][0] = (short) sensorData[i].getAx();
+                                        data[i][1] = (short) sensorData[i].getAy();
+                                        data[i][2] = (short) sensorData[i].getAz();
                                     }
-
-                                    data[i][0] = (short) sensorData[i].getAx();
-                                    data[i][1] = (short) sensorData[i].getAy();
-                                    data[i][2] = (short) sensorData[i].getAz();
-
-                                    bufferedWriterFor16PacketPerRow.write(
-                                            "," + Integer.toString((int) sensorData[i].getAx()) + "," + Integer.toString((int) sensorData[i].getAy()) + ","
-                                                    + Integer.toString((int) sensorData[i].getAz()));
-
-                                    processHighGData(peakPunchValueDetector, sensorData[i], punchVFACalculatorOnYYAxis, punchVFACalculatorOnYZAxis,
-                                            punchVFAData, (time + i), lowGPunchDetetction, punchDetector);
+                                    sensorBuffer.appendSensorData(getSensorData(messageId, time, data));
                                 }
-                                sensorBuffer.appendSensorData(getSensorData(messageId, time, data));
-                            }
-
-                            if(messageId == EFDConstants.GYRO_MODE) {
-                                short[][] data = new short[EFDConstants.SAMPLE_PACKET_SIZE][3];
-
-                                for (int i = 0; i < EFDConstants.SAMPLE_PACKET_SIZE; i++) {
-                                    sensorData[i] = new SensorData();
-                                    short ax = 0, ay = 0, az = 0;
-                                    // Changes made for Gen4 sensor data reading
-                                    // x = x; y = -y; z = -z;
-                                    try {
-                                        ax = isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
-                                                : (short) (((short) readWordBE(packet) >> 4) * 12);
-                                        ay = isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
-                                                : (short) -(((short) readWordBE(packet) >> 4) * 12);    // Negate y (inverted y axis) for gen4
-                                        az = isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
-                                                : (short) -(((short) readWordBE(packet) >> 4) * 12);    // Negate z (inverted z axis) for gen4
-                                    } catch (Exception e) {
-                                        if (isreadFromCSVFile) {
-                                            csvDataReadingFinished = true;
-                                            break;
+                                if (messageId == EFDConstants.HIGH_G_MODE) {
+                                    short[][] data = new short[EFDConstants.SAMPLE_PACKET_SIZE][3];
+//								Log.i(TAG, "high G mode time="+formatter.format(currentDate.getTime()));
+                                    for (int i = 0; i < EFDConstants.SAMPLE_PACKET_SIZE; i++) {
+                                        sensorData[i] = new SensorData();
+                                        sensorData[i].setHand(this.hand);
+                                        punchVFAData.setHand(sensorData[i].getHand());
+                                        sensorData[i].setPrevTime(sensorData[i].getMsgTime());
+                                        sensorData[i].setMsgTime(time + i);
+                                        try {
+                                            // Changes made for Gen4 sensor data reading
+                                            // x = y; y = x; z = -z;
+                                            if (isreadFromCSVFile) {
+                                                sensorData[i].setAx((short) Integer.parseInt(stringTokenizer.nextToken()));
+                                                sensorData[i].setAy((short) Integer.parseInt(stringTokenizer.nextToken()));
+                                            } else {
+                                                sensorData[i].setAy((short) readWordBE(packet));    // Swap y with x for gen4
+                                                sensorData[i].setAx((short) readWordBE(packet));    // Swap x with y for gen4
+                                            }
+                                            sensorData[i].setAz(isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
+                                                    : -(short) readWordBE(packet));    // Negate z (inverted z axis) for gen4
+                                        } catch (Exception e) {
+                                            if (isreadFromCSVFile) {
+                                                csvDataReadingFinished = true;
+                                                break;
+                                            }
                                         }
+
+                                        data[i][0] = (short) sensorData[i].getAx();
+                                        data[i][1] = (short) sensorData[i].getAy();
+                                        data[i][2] = (short) sensorData[i].getAz();
+
+                                        bufferedWriterFor16PacketPerRow.write(
+                                                "," + Integer.toString((int) sensorData[i].getAx()) + "," + Integer.toString((int) sensorData[i].getAy()) + ","
+                                                        + Integer.toString((int) sensorData[i].getAz()));
+
+                                        processHighGData(peakPunchValueDetector, sensorData[i], punchVFACalculatorOnYYAxis, punchVFACalculatorOnYZAxis,
+                                                punchVFAData, (time + i), lowGPunchDetetction, punchDetector);
                                     }
-                                    sensorData[i].setAx(ax);
-                                    sensorData[i].setAy(ay);
-                                    sensorData[i].setAz(az);
-
-                                    bufferedWriterFor16PacketPerRow.write(
-                                            "," + Integer.toString((int) sensorData[i].getAx()) + "," + Integer.toString((int) sensorData[i].getAy()) + ","
-                                                    + Integer.toString((int) sensorData[i].getAz()));
-
-                                    data[i][0] = (short) sensorData[i].getAx();
-                                    data[i][1] = (short) sensorData[i].getAy();
-                                    data[i][2] = (short) sensorData[i].getAz();
+                                    sensorBuffer.appendSensorData(getSensorData(messageId, time, data));
                                 }
-                                sensorBuffer.appendSensorData(getSensorData(messageId, time, data));
-                            }
-                        } else if (messageLengthLsb == EFDConstants.MESSAGE_LENGTH_BATTERY) {
-                            int battery = readWordBE(packet);
 
-                            float batteryData = (float) battery / 1000; //voltage is calculated in volt
-                            battery = (battery - 3000) / 11;    //voltage is calculated in %
-                            DecimalFormat df = new DecimalFormat("#.#");
-                            String batteryVoltage = "{\"success\":true,\"batteryVoltage\":" + battery + ",\"hand\":" + this.hand + "}";
-                            Message msg = mhandler.obtainMessage(3);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("batteryVoltage", batteryVoltage);
-                            msg.setData(bundle);
-                            mhandler.sendMessage(msg);
+                                if (messageId == EFDConstants.GYRO_MODE) {
+                                    short[][] data = new short[EFDConstants.SAMPLE_PACKET_SIZE][3];
+
+                                    for (int i = 0; i < EFDConstants.SAMPLE_PACKET_SIZE; i++) {
+                                        sensorData[i] = new SensorData();
+                                        short ax = 0, ay = 0, az = 0;
+                                        // Changes made for Gen4 sensor data reading
+                                        // x = x; y = -y; z = -z;
+                                        try {
+                                            ax = isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
+                                                    : (short) (((short) readWordBE(packet) >> 4) * 12);
+                                            ay = isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
+                                                    : (short) -(((short) readWordBE(packet) >> 4) * 12);    // Negate y (inverted y axis) for gen4
+                                            az = isreadFromCSVFile ? (short) Integer.parseInt(stringTokenizer.nextToken())
+                                                    : (short) -(((short) readWordBE(packet) >> 4) * 12);    // Negate z (inverted z axis) for gen4
+                                        } catch (Exception e) {
+                                            if (isreadFromCSVFile) {
+                                                csvDataReadingFinished = true;
+                                                break;
+                                            }
+                                        }
+                                        sensorData[i].setAx(ax);
+                                        sensorData[i].setAy(ay);
+                                        sensorData[i].setAz(az);
+
+                                        bufferedWriterFor16PacketPerRow.write(
+                                                "," + Integer.toString((int) sensorData[i].getAx()) + "," + Integer.toString((int) sensorData[i].getAy()) + ","
+                                                        + Integer.toString((int) sensorData[i].getAz()));
+
+                                        data[i][0] = (short) sensorData[i].getAx();
+                                        data[i][1] = (short) sensorData[i].getAy();
+                                        data[i][2] = (short) sensorData[i].getAz();
+                                    }
+                                    sensorBuffer.appendSensorData(getSensorData(messageId, time, data));
+                                }
+                            } else if (messageLengthLsb == EFDConstants.MESSAGE_LENGTH_BATTERY) {
+                                int battery = readWordBE(packet);
+
+                                float batteryData = (float) battery / 1000; //voltage is calculated in volt
+                                battery = (battery - 3000) / 11;    //voltage is calculated in %
+                                DecimalFormat df = new DecimalFormat("#.#");
+                                String batteryVoltage = "{\"success\":true,\"batteryVoltage\":" + battery + ",\"hand\":" + this.hand + "}";
+                                Message msg = mhandler.obtainMessage(3);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("batteryVoltage", batteryVoltage);
+                                msg.setData(bundle);
+                                mhandler.sendMessage(msg);
+                            }
+                            bufferedWriterFor16PacketPerRow.write("\n");
+
                         }
-                        bufferedWriterFor16PacketPerRow.write("\n");
+                        if (isreadFromCSVFile) {
+                            Thread.sleep(30);// delay for reading CSV file data
+                        }
+
+                        //continue;
+                    }else {
 
                     }
-                    if (isreadFromCSVFile) {
-                        Thread.sleep(30);// delay for reading CSV file data
-                    }
-
-                    //continue;
                 }
 //				Log.i("DataProcessingThread", "Time--------------="+formatter.format(currentDate.getTime())+" SensorData size="+senserDatablockingQueue.size());
 

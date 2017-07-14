@@ -35,6 +35,7 @@ public class ConnectionManager {
     private String boxerStance;
     private Integer trainingDataId;
     private String boxerHand;
+    private String sessionStartTime;
 
     /**
      * Constructor
@@ -116,6 +117,11 @@ public class ConnectionManager {
         }
     }
 
+    public void stopWriteCSV(){
+        if (readerThread != null)
+            readerThread.stopWriteCSV();
+    }
+
     /**
      * Cancels all running threads for the open connection on disconnect.
      */
@@ -181,6 +187,14 @@ public class ConnectionManager {
 
     public Integer getTrainingDataId() {
         return trainingDataId;
+    }
+
+    public void setSessionStartTime(String startTime){
+        this.sessionStartTime = sessionStartTime;
+    }
+
+    public String getSessionStartTime(){
+        return sessionStartTime;
     }
 
     public void setTrainingDataId(Integer trainingDataId) {
