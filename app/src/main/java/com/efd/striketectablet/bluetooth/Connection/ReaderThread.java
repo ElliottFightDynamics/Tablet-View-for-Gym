@@ -74,6 +74,8 @@ public class ReaderThread extends Thread {
         this.trainingDataId = manager.getTrainingDataId();
         this.sessionStartTime = manager.getSessionStartTime();
 
+        Log.e("Super", "create reader thread sessionstart time = " + sessionStartTime);
+
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
         sensorDatablockingQueue = new LinkedBlockingQueue<Integer[]>();
@@ -105,14 +107,32 @@ public class ReaderThread extends Thread {
         this.hand = bluetoothConnectionManager.getBoxerHand();
         this.trainingDataId = bluetoothConnectionManager.getTrainingDataId();
         this.sessionStartTime = bluetoothConnectionManager.getSessionStartTime();
+        Log.e("Super", "update reader thread sessionstart time = " + sessionStartTime);
 
-        deviceDataProcessingThread.updateTrainingInfo(boxerName, hand, boxerStance,  trainingDataId, sessionStartTime);
+
+        sensorDatablockingQueue = new LinkedBlockingQueue<Integer[]>();
+
+//        deviceDataProcessingThread.updateTrainingInfo(boxerName, hand, boxerStance,  trainingDataId, sessionStartTime);
+
+        final String csvFileName = "Boxer1Right.csv";
+        final String CSV_FILE_PATH = Environment.getExternalStorageDirectory() + File.separator + EFDConstants.APP_DIRECTORY + File.separator + EFDConstants.CONFIG_DIRECTORY;
+        File csvFile = (DEBUG_WITH_CSV_FILE) ? new File(CSV_FILE_PATH, csvFileName) : null;
+        deviceDataProcessingThread = new DeviceDataProcessingThread(sensorDatablockingQueue, boxerName, hand, boxerStance, 1, trainingDataId, uiHandler, /*mainContext,*/ csvFile, DEBUG_WITH_CSV_FILE, sessionStartTime);
+
+        Log.i(TAG, "Reading data from " + ((DEBUG_WITH_CSV_FILE) ? ("csv file: " + csvFileName) : "chip"));
+
+        dataProcessingThread = new Thread(this.deviceDataProcessingThread);
+        dataProcessingThread.start();
 
     }
 
     public void stopWriteCSV(){
-        if (deviceDataProcessingThread != null)
-            deviceDataProcessingThread.stopWriteCSV();
+        deviceDataProcessingThread.setShouldStop(true);
+        dataProcessingThread.interrupt();
+
+
+//        if (deviceDataProcessingThread != null)
+//            deviceDataProcessingThread.stopWriteCSV();
     }
 
     /**
@@ -144,7 +164,8 @@ public class ReaderThread extends Thread {
                     dataInputStream.read(packetByte, 0, packetByte.length);
                     //Log.d(TAG, "Time="+getCurrentTime()+" total no of packet="+counter);
                     //Log.d(TAG, "packetByte="+packetByte);
-                    unsignedToBytes(packetByte, packetByte.length);
+                    if (MainActivity.getInstance().receivePunchable)
+                        unsignedToBytes(packetByte, packetByte.length);
                 }
 
             } catch (Exception e) {

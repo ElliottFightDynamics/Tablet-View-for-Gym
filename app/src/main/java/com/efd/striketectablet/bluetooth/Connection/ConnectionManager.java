@@ -189,7 +189,7 @@ public class ConnectionManager {
         return trainingDataId;
     }
 
-    public void setSessionStartTime(String startTime){
+    public void setSessionStartTime(String sessionStartTime){
         this.sessionStartTime = sessionStartTime;
     }
 

@@ -59,7 +59,7 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
     Integer trainingId;
     String sessionStartTime;
 
-    boolean shouldStop = false;
+    public boolean shouldStop = false;
     Handler mhandler;
     File file;
     boolean isreadFromCSVFile;
@@ -92,10 +92,15 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
                 mainActivityInstance = (MainActivity) MainActivity.context;
                 this.file = file;
                 this.isreadFromCSVFile = isreadFromCSVFile;
+                Log.e("Super", "create datathread thread sessionstart time = " + sessionStartTime);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setShouldStop(boolean shouldStop){
+        this.shouldStop = shouldStop;
     }
 
     /*super added, update training info when round stats*/
@@ -105,36 +110,43 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
         this.stance = stance;
         this.trainingId = trainingId;
         this.sessionStartTime = sessionStartTime;
-
-        final char H = ("right".equals(this.hand)) ? 'R' : 'L';
-
-        logFileNameWith16PacketPerRow = EFDConstants.EFD_COMMON_DATA_DIRECTORY + File.separator + EFDConstants.LOGS_DIRECTORY + File.separator
-                + "With" + EFDConstants.SAMPLE_PACKET_SIZE + "PacketPerRow_" + this.boxerName + "_-" + H + "-_" + sessionStartTime + ".csv";
-        //Log.d("~", "logFileNameWith16PacketPerRow: "+logFileNameWith16PacketPerRow);
-
-        File myDirectory = new File(EFDConstants.EFD_COMMON_DATA_DIRECTORY, EFDConstants.LOGS_DIRECTORY);
-
-        if (!myDirectory.exists()) {
-            myDirectory.mkdirs();
-        }
-
-        fstreamFor16PacketPerRow = null;
-        bufferedWriterFor16PacketPerRow = null;
-        try {
-            fstreamFor16PacketPerRow = new FileWriter(logFileNameWith16PacketPerRow, true);
-
-            bufferedWriterFor16PacketPerRow = new BufferedWriter(fstreamFor16PacketPerRow);
-            bufferedWriterFor16PacketPerRow.write("StartByte" + "," + "MessageID" + "," + "MessageLength(lsb)" + "," + "MessageLength(msb)"
-                    + "," + "Time0" + "," + "Time1" + "," + "Time2" + "," + "Time3" + "," + "Time" + "," + "AX" + "," + "AY" + "," + "AZ"
-                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
-                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
-                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
-                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
-                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
-                    + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Log.e("Super", "update datathread thread sessionstart time = " + sessionStartTime);
+//        try {
+//            readDataFromGloveDevice();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        final char H = ("right".equals(this.hand)) ? 'R' : 'L';
+//
+//        logFileNameWith16PacketPerRow = EFDConstants.EFD_COMMON_DATA_DIRECTORY + File.separator + EFDConstants.LOGS_DIRECTORY + File.separator
+//                + "With" + EFDConstants.SAMPLE_PACKET_SIZE + "PacketPerRow_" + this.boxerName + "_-" + H + "-_" + sessionStartTime + ".csv";
+//        //Log.d("~", "logFileNameWith16PacketPerRow: "+logFileNameWith16PacketPerRow);
+//
+//        File myDirectory = new File(EFDConstants.EFD_COMMON_DATA_DIRECTORY, EFDConstants.LOGS_DIRECTORY);
+//
+//        if (!myDirectory.exists()) {
+//            myDirectory.mkdirs();
+//        }
+//
+//        stopWriteCSV();
+//
+//        fstreamFor16PacketPerRow = null;
+//        bufferedWriterFor16PacketPerRow = null;
+//        try {
+//            fstreamFor16PacketPerRow = new FileWriter(logFileNameWith16PacketPerRow, true);
+//
+//            bufferedWriterFor16PacketPerRow = new BufferedWriter(fstreamFor16PacketPerRow);
+//            bufferedWriterFor16PacketPerRow.write("StartByte" + "," + "MessageID" + "," + "MessageLength(lsb)" + "," + "MessageLength(msb)"
+//                    + "," + "Time0" + "," + "Time1" + "," + "Time2" + "," + "Time3" + "," + "Time" + "," + "AX" + "," + "AY" + "," + "AZ"
+//                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
+//                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
+//                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
+//                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
+//                    + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ" + "," + "AX" + "," + "AY" + "," + "AZ"
+//                    + "\n");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void stopWriteCSV(){
@@ -267,9 +279,9 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
                     + "\n");
 
             while (isContinue) {
-
+                Log.e("Super", "mainactivityinstance punchable = " + mainActivityInstance.receivePunchable);
                 if (mainActivityInstance.receivePunchable) {
-
+                    Log.e("Super", "mainactivityinstance punchable11111111 = " + mainActivityInstance.receivePunchable);
                     ArrayList<Integer> packet = readPacketFromQueue();
                     if (isreadFromCSVFile) {
 
@@ -287,7 +299,7 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
                     }
 
                     isContinue = (startByte != -1) && (!this.shouldStop);
-
+                    Log.e("Super", "iscontinue = " + !this.shouldStop + "     " + (startByte != -1));
                     if (!isContinue) {
                         break;
                     }
@@ -488,12 +500,13 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
 
                         //continue;
                     }else {
-
+                        Log.e("Super", "222222222222222222222222222222");
                     }
                 }
 //				Log.i("DataProcessingThread", "Time--------------="+formatter.format(currentDate.getTime())+" SensorData size="+senserDatablockingQueue.size());
 
             }// end while
+            Log.e("Super", "reading thread is closed");
             bufferedWriterFor16PacketPerRow.close();
             if (isreadFromCSVFile) {
                 if (csvDataReadingFinished) {

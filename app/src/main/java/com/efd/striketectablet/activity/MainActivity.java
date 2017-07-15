@@ -946,6 +946,7 @@ public class MainActivity extends AppCompatActivity {
         connectionManager.setBoxerStance(boxerStance);
         connectionManager.setTrainingDataId(trainingDataId);
         connectionManager.setBoxerHand(boxerHand);
+        Log.e("Super", "connect sensor = " + sessionStartTime);
         connectionManager.setSessionStartTime(sessionStartTime);
         connectionManager.connected(connectionThread.getBluetoothSocket());
     }
