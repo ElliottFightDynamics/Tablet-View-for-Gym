@@ -325,7 +325,7 @@
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:gravity="center"
-                            android:textColor="@color/punches_text_color"
+                            android:textColor="@color/white"
                             android:text="1st IMP."/>
 
                         <com.efd.striketectablet.customview.CustomTextView
@@ -334,8 +334,8 @@
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:gravity="center"
-                            android:textColor="@color/punches_text_color"
-                            android:text="1st IMP."/>
+                            android:textColor="@color/white"
+                            android:text="2nd IMP."/>
 
                         <com.efd.striketectablet.customview.CustomTextView
                             android:id="@+id/thrid"
@@ -343,8 +343,8 @@
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:gravity="center"
-                            android:textColor="@color/punches_text_color"
-                            android:text="1st IMP."/>
+                            android:textColor="@color/white"
+                            android:text="3rd IMP."/>
                     </LinearLayout>
 
                     <View

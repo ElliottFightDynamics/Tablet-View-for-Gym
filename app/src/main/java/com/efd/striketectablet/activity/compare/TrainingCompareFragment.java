@@ -348,6 +348,8 @@ public class TrainingCompareFragment extends Fragment {
 
     private void insertPunchDetail(){
         punchDetailParent.removeAllViews();
+        graphListViewAdpater.setData(new ArrayList<PunchInfoDTO>());
+        graphListViewAdpater.notifyDataSetChanged();
 
         if (isLeft){
 
@@ -466,17 +468,38 @@ public class TrainingCompareFragment extends Fragment {
             public void onClick(View v) {
                 if (selectpunchDtailArray.get(position)){
                     selectpunchDtailArray.put(position, false);
+                    updatePunchDetailView(position);
                 }else {
-                    selectpunchDtailArray.put(position, true);
-                }
 
-                updatePunchDetailView(position);
+                    //check condition
+                    if (checkAddable(selectpunchDtailArray)) {
+                        selectpunchDtailArray.put(position, true);
+                        updatePunchDetailView(position);
+                    }else {
+                        StatisticUtil.showToastMessage("Can not compare more than 5 punches");
+                    }
+                }
             }
         });
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         newLayout.setLayoutParams(params);
+    }
+
+    private boolean checkAddable(SparseBooleanArray booleanArray){
+
+        int checkedNum = 0;
+
+        for (int i = 0; i < booleanArray.size(); i++){
+            if (booleanArray.get(i))
+                checkedNum++;
+
+            if (checkedNum >= 5)
+                return false;
+        }
+
+        return true;
     }
 
     private void updatePunchDetailView(int position){
