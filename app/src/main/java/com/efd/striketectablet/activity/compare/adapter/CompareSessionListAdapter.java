@@ -49,6 +49,10 @@ public class CompareSessionListAdapter extends ArrayAdapter<DBTrainingSessionDTO
         this.selectedPosition = selectedPosition;
     }
 
+    public int getSelectedPosition(){
+        return selectedPosition;
+    }
+
     public DBTrainingSessionDTO getCurrentSession(){
         return getItem(selectedPosition);
     }

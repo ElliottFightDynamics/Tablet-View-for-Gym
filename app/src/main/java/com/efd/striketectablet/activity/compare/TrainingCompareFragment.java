@@ -155,9 +155,14 @@ public class TrainingCompareFragment extends Fragment {
         sessionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                sessionListAdapter.setSelectedPosition(position);
-                getSessionpunchInfos(sessionListAdapter.getItem(position));
-                sessionListAdapter.notifyDataSetChanged();
+                if (sessionListAdapter.getSelectedPosition() != position) {
+                    sessionListAdapter.setSelectedPosition(position);
+                    getSessionpunchInfos(sessionListAdapter.getItem(position));
+                    sessionListAdapter.notifyDataSetChanged();
+
+                    graphListViewAdpater.setData(new ArrayList<PunchInfoDTO>());
+                    graphListViewAdpater.notifyDataSetChanged();
+                }
             }
         });
 
@@ -447,13 +452,6 @@ public class TrainingCompareFragment extends Fragment {
         punchDurationView = (TextView)newLayout.findViewById(R.id.punch_duration);
         punchdetailbgView = (LinearLayout)newLayout.findViewById(R.id.punch_detail_parent);
 
-        punchtimeView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         punchtimeView.setText("1:22:04 PM");
         punchspeedView.setText(String.valueOf((int)Float.parseFloat(punchInfoDTO.getPunch_speed())) + " MPH");
         punchforceView.setText(String.valueOf((int)Float.parseFloat(punchInfoDTO.getImpulse())) + " LBS");
@@ -541,15 +539,29 @@ public class TrainingCompareFragment extends Fragment {
     }
 
     public void removeActionInGraph(PunchInfoDTO punchInfoDTO){
-        int position;
-        if (isLeft){
-            position = sortedLeftPunchInfos.indexOf(punchInfoDTO);
-        }else {
-            position = sortedRightPunchInfos.indexOf(punchInfoDTO);
+        int position = -1;
+        if (punchInfoDTO != null) {
+            if (isLeft) {
+                if (sortedLeftPunchInfos.contains(punchInfoDTO)) {
+                    position = sortedLeftPunchInfos.indexOf(punchInfoDTO);
+                }else {
+                    graphListViewAdpater.setData(new ArrayList<PunchInfoDTO>());
+                    graphListViewAdpater.notifyDataSetChanged();
+                }
+            } else {
+                if (sortedRightPunchInfos.contains(punchInfoDTO)) {
+                    position = sortedRightPunchInfos.indexOf(punchInfoDTO);
+                }else {
+                    graphListViewAdpater.setData(new ArrayList<PunchInfoDTO>());
+                    graphListViewAdpater.notifyDataSetChanged();
+                }
+            }
         }
 
-        selectpunchDtailArray.put(position, false);
-        updatePunchDetailView(position);
+        if (position != -1) {
+            selectpunchDtailArray.put(position, false);
+            updatePunchDetailView(position);
+        }
     }
 
     private void getPlottingLogs(final PunchInfoDTO punchInfoDTO, final String filename){
