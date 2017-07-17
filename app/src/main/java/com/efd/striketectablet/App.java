@@ -5,6 +5,7 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.efd.striketectablet.api.RetrofitSingleton;
+import com.efd.striketectablet.api.RetrofitSingletonCSV;
 import com.efd.striketectablet.util.ComboSetUtil;
 import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.util.StatisticUtil;
@@ -27,6 +28,7 @@ public class App extends MultiDexApplication {
 
         SharedPreferencesUtils.init(context);
         RetrofitSingleton.setApplication(this);
+        RetrofitSingletonCSV.setApplication(this);
 
         StorageUtils.init(context);
         StatisticUtil.init(context);

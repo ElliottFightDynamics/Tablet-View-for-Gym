@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -23,7 +22,6 @@ import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.activity.trainingstats.adapter.TrainingResultCombosAdapter;
 import com.efd.striketectablet.activity.trainingstats.adapter.TrainingResultPunchesAdapter;
 import com.efd.striketectablet.activity.trainingstats.adapter.TrainingResultRoundListAdapter;
-import com.efd.striketectablet.activity.trainingstats.adapter.WorkoutExpandableListAdapter;
 import com.efd.striketectablet.activity.trainingstats.adapter.WorkoutSpinnerAdapter;
 import com.efd.striketectablet.util.ComboSetUtil;
 

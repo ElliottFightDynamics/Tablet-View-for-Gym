@@ -87,6 +87,13 @@ public class StatisticUtil {
         return dateFormat.format(Long.parseLong(miles));
     }
 
+    public static String changeMilestoSessionDate(String miles){
+        DateFormat dateFormat = new SimpleDateFormat("KK:mm a-dd/MM/yy");
+
+        return dateFormat.format(Long.parseLong(miles));
+    }
+
+
     public static boolean is600Dp(){
         Configuration configuration = mContext.getResources().getConfiguration();
 

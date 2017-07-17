@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
+import com.efd.striketectablet.DTO.responsedto.AnalyzeCSVDTO;
 import com.efd.striketectablet.DTO.responsedto.DBTrainingPlanResultDTO;
 import com.efd.striketectablet.DTO.responsedto.DBTrainingPunchDetailDTO;
 import com.efd.striketectablet.DTO.responsedto.DBTrainingPunchStatDTO;
@@ -14,9 +17,11 @@ import com.efd.striketectablet.DTO.responsedto.SyncResponseDTO;
 import com.efd.striketectablet.DTO.responsedto.SyncServerResponseDTO;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.api.RetrofitSingleton;
+import com.efd.striketectablet.api.RetrofitSingletonCSV;
 import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionConfig;
 import com.efd.striketectablet.exception.EFDExceptionHandler;
 import com.efd.striketectablet.util.IndicatorCallback;
+import com.efd.striketectablet.util.StatisticUtil;
 import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.google.gson.Gson;
@@ -39,6 +44,7 @@ import org.apache.http.protocol.HttpContext;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -49,6 +55,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -117,6 +126,88 @@ public class SendDataToWebService extends Activity {
     public void syncAllWhileDataFound() {
 //super        MainActivity.setSynchronizingWithServer(true);
 //        synchronizeTrainingSessionRecords();
+
+        synchronizeCSVFiles();
+    }
+
+    private void synchronizeCSVFiles() {
+       File file = getUploadableFile();
+
+        if (file == null){
+            //goto next stop, sync training session
+        }else {
+            uploadCSVFile(file);
+        }
+    }
+
+    private File getUploadableFile(){
+        String logDirectory = EFDConstants.EFD_COMMON_DATA_DIRECTORY + File.separator + EFDConstants.LOGS_DIRECTORY;
+        File logDir = new File(logDirectory);
+
+        if (!logDir.exists()) {
+            return null;
+        }
+
+        File[] files = logDir.listFiles();
+
+        for (int i = 0; i < files.length; i++) {
+            Log.e("Super", "files  = " + files[i].getAbsolutePath());
+            //get timestamp
+            String filename = files[i].getName();
+            String[] splitednames = filename.split("-");
+            String timestamp = splitednames[splitednames.length - 2];
+            String hand = splitednames[splitednames.length - 3];
+
+            Log.e("Super", "timestamp = " + timestamp + "    " + hand);
+
+            if (db.checkCSVfileUploadable(timestamp, Integer.parseInt(MainActivity.getInstance().userId))) {
+                return files[i];
+            }
+        }
+
+        return null;
+    }
+
+    private void uploadCSVFile(final File file){
+
+        String filename = file.getName();
+        String[] splitednames = filename.split("-");
+        final String timestamp = splitednames[splitednames.length - 2];
+        final String hand = splitednames[splitednames.length - 3];
+
+        Log.e("Super", "timestamp = " + timestamp + "    " + hand);
+
+        final RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("data", file.getName(), requestFile);
+
+        RetrofitSingletonCSV.CSV_REST.uploadCSV(body).enqueue(new IndicatorCallback<AnalyzeCSVDTO>(MainActivity.getInstance(), false) {
+            @Override
+            public void onResponse(Call<AnalyzeCSVDTO> call, Response<AnalyzeCSVDTO> response) {
+                super.onResponse(call, response);
+                if (response.body() != null) {
+                    AnalyzeCSVDTO analyzeCSVDTO = response.body();
+                    Log.e("Super", "uploading csv file= " + analyzeCSVDTO.getError() + "    " + analyzeCSVDTO.getFileName());
+                    if (!TextUtils.isEmpty(analyzeCSVDTO.getFileName())){
+                        boolean isLeft = hand.equalsIgnoreCase("L")? true : false;
+                        //after uploading delete uploade file.
+                        file.delete();
+                        db.updatesessionInfofile(Integer.parseInt(MainActivity.getInstance().userId), timestamp, analyzeCSVDTO.getFileName(), isLeft, true);
+                    }else {
+                        StatisticUtil.showToastMessage(analyzeCSVDTO.getError());
+
+                        //update session
+                    }
+                } else {
+                    //update session
+
+                }
+            }
+            @Override
+            public void onFailure(Call<AnalyzeCSVDTO> call, Throwable t) {
+                super.onFailure(call, t);
+                //update session
+            }
+        });
     }
 
     /**

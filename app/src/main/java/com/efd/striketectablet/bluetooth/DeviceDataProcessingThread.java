@@ -256,7 +256,7 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
 //            logFileNameWith16PacketPerRow = EFDConstants.EFD_COMMON_DATA_DIRECTORY + File.separator + EFDConstants.LOGS_DIRECTORY + File.separator
 //                    + "With" + EFDConstants.SAMPLE_PACKET_SIZE + "PacketPerRow_" + this.boxerName + "_-" + H + "-_" + dateNow + ".csv";
             logFileNameWith16PacketPerRow = EFDConstants.EFD_COMMON_DATA_DIRECTORY + File.separator + EFDConstants.LOGS_DIRECTORY + File.separator
-                    + "With" + EFDConstants.SAMPLE_PACKET_SIZE + "PacketPerRow_" + this.boxerName + "_-" + H + "-_" + sessionStartTime + ".csv";
+                    + "With" + EFDConstants.SAMPLE_PACKET_SIZE + "PacketPerRow_" + this.boxerName + "-" + H + "-" + sessionStartTime + "-" + ".csv";
             //Log.d("~", "logFileNameWith16PacketPerRow: "+logFileNameWith16PacketPerRow);
 
             File myDirectory = new File(EFDConstants.EFD_COMMON_DATA_DIRECTORY, EFDConstants.LOGS_DIRECTORY);

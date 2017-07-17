@@ -25,6 +25,7 @@
     <color name="orange">#DFA542</color>
     <color name="num_textcolor">#232b35</color>
     <color name="list_odd_item">#1a232b</color>
+    <color name="list_odd_session">#1a2934</color>
     <color name="login_hexagon">#0c232d</color>
 
     <color name="advise_deactivecolor">#0f29f7ff</color>
@@ -62,5 +63,17 @@
     <color name="set_selectcolorinworkout">#183a48</color>
 
     <color name="btn_color">#15303f</color>
+    <color name="compare_selected">#105a66</color>
+    <color name="compare_unselected">#1d4249</color>
+    <color name="punch_selected">#12333e</color>
+    <color name="session_selected">#6ddfa542</color>
+    <color name="session_unselected">#0d252d</color>
+    <color name="punchdetail_selected">#133340</color>
+
+    <color name="graph_first">#206d56</color>
+    <color name="graph_second">#bc9f47</color>
+    <color name="graph_third">#d07979</color>
+    <color name="graph_forth">#2c27f1</color>
+    <color name="graph_fifth">#f606aa</color>
 
 </resources>

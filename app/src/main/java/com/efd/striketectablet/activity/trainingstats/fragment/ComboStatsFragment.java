@@ -13,10 +13,8 @@ import android.widget.TextView;
 
 import com.efd.striketectablet.DTO.TrainingResultComboDTO;
 import com.efd.striketectablet.DTO.TrainingResultPunchDTO;
-import com.efd.striketectablet.DTO.TrainingStatsPunchTypeInfoDTO;
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
-import com.efd.striketectablet.activity.trainingstats.adapter.TrainingResultCombosAdapter;
 import com.efd.striketectablet.activity.trainingstats.adapter.TrainingResultCombosNameAdapter;
 import com.efd.striketectablet.activity.trainingstats.adapter.TrainingResultPunchesAdapter;
 import com.efd.striketectablet.util.ComboSetUtil;

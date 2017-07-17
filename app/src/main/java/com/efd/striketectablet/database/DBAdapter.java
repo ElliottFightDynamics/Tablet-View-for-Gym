@@ -65,6 +65,10 @@ public class DBAdapter {
     public static final String KEY_TRAINING_SESSION_MAX_FORCE = "max_force";
     public static final String KEY_TRAINING_SESSION_TOTAL_PUNCH_COUNT = "total_punch_count";
     public static final String KEY_TRAINING_SESSION_USER_ID = "user_id";  //user_id
+    public static final String KEY_TRAINING_SESSION_LEFT_HAND_INFO = "lefthand";
+    public static final String KEY_TRAINING_SESSION_RIGHT_HAND_INFO = "righthand";
+    public static final String KEY_TRAINING_SESSION_LEFT_KICK_INFO = "leftkick";
+    public static final String KEY_TRAINING_SESSION_RIGHT_KICK_INFO = "rightkick";
     public static final String KEY_TRAINING_SESSION_SERVER_TIMESTAMP = "server_time";
     public static final String KEY_TRAINING_SESSION_FINISHED = "finished"; //0: training, 1:finished
     public static final String KEY_TRAINING_SESSION_SYNC = "sync";  // o : unsynced
@@ -83,6 +87,10 @@ public class DBAdapter {
             + " max_force double DEFAULT 0, "
             + " total_punch_count integer(5) default 0, "
             + " user_id integer(20) NOT NULL, "
+            + " lefthand text default NULL, "
+            + " righthand text default NULL, "
+            + " leftkick text default NULL, "
+            + " rightkick text default NULL, "
             + " sync integer(1) default 0, "
             + " finished integer(1) default 0, "
             + " server_time text default NULL, "
@@ -703,7 +711,11 @@ public class DBAdapter {
                             cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_SESSION_MAX_FORCE)),
                             cursor.getInt(cursor.getColumnIndex(KEY_TRAINING_SESSION_TOTAL_PUNCH_COUNT)),
                             cursor.getInt(cursor.getColumnIndex(KEY_TRAINING_SESSION_USER_ID)),
-                            cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_SERVER_TIMESTAMP)));
+                            cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_SERVER_TIMESTAMP)),
+                            cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_LEFT_HAND_INFO)),
+                            cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_RIGHT_HAND_INFO)),
+                            cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_LEFT_KICK_INFO)),
+                            cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_RIGHT_KICK_INFO)));
 
                     list.add(dbTrainingSessionDTO);
                 } while (cursor.moveToNext());
@@ -1664,6 +1676,10 @@ public class DBAdapter {
                     values.put(KEY_TRAINING_SESSION_SERVER_TIMESTAMP, sessionDTO.getServerTime());
                     values.put(KEY_TRAINING_SESSION_FINISHED, "1");
                     values.put(KEY_TRAINING_SESSION_SYNC, "1");
+                    values.put(KEY_TRAINING_SESSION_LEFT_HAND_INFO, sessionDTO.getLefthandInfo());
+                    values.put(KEY_TRAINING_SESSION_RIGHT_HAND_INFO, sessionDTO.getRighthandInfo());
+                    values.put(KEY_TRAINING_SESSION_LEFT_KICK_INFO, sessionDTO.getLeftkickInfo());
+                    values.put(KEY_TRAINING_SESSION_RIGHT_KICK_INFO, sessionDTO.getRightkickInfo());
 
                     long result = db.insert(TRAINING_SESSION_TABLE, null, values);
                 }
@@ -1775,6 +1791,116 @@ public class DBAdapter {
                 if (cursor != null)
                     cursor.close();
             }
+        }
+    }
+
+    public ArrayList<DBTrainingSessionDTO> getSessionsofDay(int userId, String formatteddate){
+
+        ArrayList<DBTrainingSessionDTO> dbTrainingSessionDTOs = new ArrayList<>();
+
+        String selectQuery = "SELECT * FROM " + TRAINING_SESSION_TABLE + " WHERE " + KEY_TRAINING_SESSION_TRAINING_SESSION_DATE + "='"  + formatteddate +
+                "' AND " + KEY_TRAINING_SESSION_USER_ID + "='" + userId + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try {
+            int count = cursor.getCount();
+            DBTrainingSessionDTO dbTrainingSessionDTO;
+            if (count > 0) {
+                cursor.moveToFirst();
+            }
+
+            for (int i = 0; i < count; i++) {
+                dbTrainingSessionDTO = new DBTrainingSessionDTO(cursor.getInt(cursor.getColumnIndex(KEY_TRAINING_SESSION_ID)),
+                        cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_START_TIME)),
+                        cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_END_TIME)),
+                        cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_TRAINING_SESSION_DATE)),
+                        cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_TRAINING_TYPE)),
+                        cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_SESSION_AVG_SPEED)),
+                        cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_SESSION_AVG_FORCE)),
+                        cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_SESSION_MAX_SPEED)),
+                        cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_SESSION_MAX_FORCE)),
+                        cursor.getInt(cursor.getColumnIndex(KEY_TRAINING_SESSION_TOTAL_PUNCH_COUNT)),
+                        cursor.getInt(cursor.getColumnIndex(KEY_TRAINING_SESSION_USER_ID)),
+                        cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_SERVER_TIMESTAMP)),
+                        cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_LEFT_HAND_INFO)),
+                        cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_RIGHT_HAND_INFO)),
+                        cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_LEFT_KICK_INFO)),
+                        cursor.getString(cursor.getColumnIndex(KEY_TRAINING_SESSION_RIGHT_KICK_INFO)));
+
+                dbTrainingSessionDTOs.add(dbTrainingSessionDTO);
+                cursor.moveToNext();
+            }
+
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return dbTrainingSessionDTOs;
+    }
+
+    public boolean checkCSVfileUploadable(String starttimestamp, int userId){
+        String selectQuery = "SELECT * FROM " + TRAINING_SESSION_TABLE + " WHERE " + KEY_TRAINING_SESSION_START_TIME + "='"  + starttimestamp +
+                "' AND " + KEY_TRAINING_SESSION_USER_ID + "='" + userId
+                + "' AND " + KEY_TRAINING_SESSION_FINISHED + "='" + 1 + "'";
+
+        boolean result = false;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try {
+            int count = cursor.getCount();
+
+            if (count > 0) {
+                result = true;
+            }else {
+                result = false;
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return result;
+    }
+
+    public void updatesessionInfofile(int userId, String starttimestamp, String infofilename, boolean isLeft, boolean isHand){
+
+        String selectQuery = "SELECT * FROM " + TRAINING_SESSION_TABLE + " WHERE " + KEY_TRAINING_SESSION_START_TIME + "='"  + starttimestamp +
+                "' AND " + KEY_TRAINING_SESSION_USER_ID + "='" + userId + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try {
+            int count = cursor.getCount();
+            DBTrainingSessionDTO dbTrainingSessionDTO;
+            if (count > 0) {
+                cursor.moveToFirst();
+                ContentValues values = new ContentValues();
+
+                if (isLeft){
+                    if (isHand){
+                        values.put(KEY_TRAINING_SESSION_LEFT_HAND_INFO, infofilename);
+                    }else {
+                        values.put(KEY_TRAINING_SESSION_LEFT_KICK_INFO, infofilename);
+                    }
+                }else {
+                    if (isHand){
+                        values.put(KEY_TRAINING_SESSION_RIGHT_HAND_INFO, infofilename);
+                    }else {
+                        values.put(KEY_TRAINING_SESSION_RIGHT_KICK_INFO, infofilename);
+                    }
+                }
+
+                values.put(KEY_TRAINING_SESSION_SYNC, "0");
+
+                db.update(TRAINING_SESSION_TABLE, values, KEY_TRAINING_SESSION_ID + " = " + cursor.getInt(cursor.getColumnIndex(KEY_TRAINING_SESSION_ID)), null);
+            }
+
+        } finally {
+            if (cursor != null)
+                cursor.close();
         }
     }
 }

@@ -22,7 +22,6 @@ import com.efd.striketectablet.activity.training.sets.NewSetRoutineActivity;
 import com.efd.striketectablet.activity.training.sets.SetsFragment;
 import com.efd.striketectablet.activity.training.workout.NewWorkoutActivity;
 import com.efd.striketectablet.activity.training.workout.WorkoutFragment;
-import com.efd.striketectablet.activity.trainingstats.fragment.TrainingStatsFragment;
 import com.efd.striketectablet.adapter.TrainingTabPageAdapter;
 
 public class TrainingFragment extends Fragment {

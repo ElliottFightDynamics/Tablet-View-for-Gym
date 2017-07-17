@@ -40,7 +40,11 @@ import com.efd.striketectablet.DTO.TrainingPunchDTO;
 import com.efd.striketectablet.DTO.TrainingResultComboDTO;
 import com.efd.striketectablet.DTO.TrainingResultSetDTO;
 import com.efd.striketectablet.DTO.TrainingResultWorkoutDTO;
+import com.efd.striketectablet.DTO.responsedto.PunchInfoDTO;
+import com.efd.striketectablet.DTO.responsedto.PunchLogPlottingDTO;
+import com.efd.striketectablet.DTO.responsedto.PunchWindowPlottingDTO;
 import com.efd.striketectablet.R;
+import com.efd.striketectablet.activity.compare.TrainingCompareFragment;
 import com.efd.striketectablet.activity.credential.LoginActivity;
 import com.efd.striketectablet.activity.profile.ProfileFragment;
 import com.efd.striketectablet.activity.training.TrainingFragment;
@@ -152,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
 
     public  boolean receivePunchable = false;
 
+    public HashMap<String, List<PunchInfoDTO>>  sessionInfosDTOMap = new HashMap<>();
+    public HashMap<String, List<PunchLogPlottingDTO>>  punchLogsMap = new HashMap<>();
 
     public static boolean isSynchronizingWithServer() {
         return isSynchronizingWithServer;
@@ -1120,6 +1126,16 @@ public class MainActivity extends AppCompatActivity {
                         .build()
         );
 
+        models.add(
+                new NavigationTabBar.Model.Builder(
+                        getResources().getDrawable(R.drawable.compare_unselected),
+                        getResources().getColor(R.color.active_color_ntb))
+                        .selectedIcon(getResources().getDrawable(R.drawable.compare_orange))
+                        .title("COMPARE")
+                        .badgeTitle("state")
+                        .build()
+        );
+
         navigationTabBar.setModels(models);
         navigationTabBar.setViewPager(viewPager, 0);
 
@@ -1164,7 +1180,7 @@ public class MainActivity extends AppCompatActivity {
 
     private class CustomViewPagerAdapter extends FragmentStatePagerAdapter {
 
-        private String[] titles = { "PROFILE", "TRAINING", "STATS" };
+        private String[] titles = { "PROFILE", "TRAINING", "STATS", "COMPARE" };
         private final FragmentManager mFragmentManager;
 
         public CustomViewPagerAdapter(FragmentManager fragmentManager) {
@@ -1187,6 +1203,9 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     return TrainingStatsFragment.newInstance();
 
+                case 3:
+                    return TrainingCompareFragment.newInstance();
+
                 default:
                     return null;
             }
@@ -1194,7 +1213,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override

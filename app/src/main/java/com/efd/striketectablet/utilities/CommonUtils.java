@@ -235,6 +235,16 @@ public class CommonUtils {
         return twoDigitString(hours) + ":" + twoDigitString(minutes) + ":" + twoDigitString(seconds);
     }
 
+    public static String changeMillisecondsToTime(int milliseconds){
+        String result = "";
+        int totalSeconds = milliseconds / 1000;
+        int min = totalSeconds / 60;
+        int sec = totalSeconds % 60;
+
+        return twoDigitString(min) + ": " + twoDigitString(sec);
+    }
+
+
     @SuppressLint("SimpleDateFormat")
     public static String getCurrentDateStringYMD() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

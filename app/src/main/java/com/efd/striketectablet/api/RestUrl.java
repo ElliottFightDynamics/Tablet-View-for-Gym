@@ -7,6 +7,7 @@ public class RestUrl {
 //    public static String BASE_URL = "http://54.213.226.127:8090/EFD/";//PunchDetectionConfig.getInstance().getWEB_SERVICE_DOMAIN();
 
     public static String BASE_URL = "http://34.212.48.125:8090/EFD/";//PunchDetectionConfig.getInstance().getWEB_SERVICE_DOMAIN();
+    public static String CSV_BASE_URL = "http://ec2-34-212-48-125.us-west-2.compute.amazonaws.com:3000/";
 
     //credential url
     public static final String LOGIN = "user/traineeLogin";
@@ -64,4 +65,10 @@ public class RestUrl {
     public static final String RETRIEVE_TRAINING_PUNCH_DETAIL = "getTrainingPunchDetail";
     public static final String RETRIEVE_TRAINING_PUNCH_STATS = "getTrainingPunchStats";
     public static final String RETRIEVE_TRAINING_PLAN_RESULTS = "getTrainingPlanResults";
+
+
+    /************************* CSV REST **********************************/
+    public static final String UPLOAD_CSV = "analyze";
+    public static final String GET_INFO = "info";
+    public static final String GET_PLOTTING_LOG = "plottingLog";
 }

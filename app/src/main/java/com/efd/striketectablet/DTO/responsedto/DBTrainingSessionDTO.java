@@ -15,10 +15,15 @@ public class DBTrainingSessionDTO implements Parcelable{
     private Double maxSpeed;
     private Double maxForce;
     private int totalPunchCount;
+    private String lefthandInfo;
+    private String righthandInfo;
+    private String leftkickInfo;
+    private String rightkickInfo;
     private String serverTime;
 
     public DBTrainingSessionDTO(Integer id, String startTime, String endTime, String trainingSessionDate, String trainingType,
-                                Double avgSpeed, Double avgForce, Double maxSpeed, Double maxForce, int totalPunchCount, Integer userID, String serverTime){
+                                Double avgSpeed, Double avgForce, Double maxSpeed, Double maxForce, int totalPunchCount, Integer userID, String serverTime,
+                                String lefthandInfo, String righthandInfo, String leftkickInfo, String rightkickInfo){
         super();
         this.id = id;
         this.startTime = startTime;
@@ -31,6 +36,10 @@ public class DBTrainingSessionDTO implements Parcelable{
         this.maxSpeed = maxSpeed;
         this.maxForce = maxForce;
         this.totalPunchCount = totalPunchCount;
+        this.lefthandInfo = lefthandInfo;
+        this.righthandInfo = righthandInfo;
+        this.leftkickInfo = leftkickInfo;
+        this.rightkickInfo = rightkickInfo;
         this.serverTime = serverTime;
     }
 
@@ -82,6 +91,22 @@ public class DBTrainingSessionDTO implements Parcelable{
         return serverTime;
     }
 
+    public String getLefthandInfo(){
+        return lefthandInfo;
+    }
+
+    public String getRighthandInfo(){
+        return righthandInfo;
+    }
+
+    public String getLeftkickInfo(){
+        return leftkickInfo;
+    }
+
+    public String getRightkickInfo(){
+        return rightkickInfo;
+    }
+
 
     @Override
     public String toString() {
@@ -109,6 +134,10 @@ public class DBTrainingSessionDTO implements Parcelable{
         this.maxSpeed = in.readDouble();
         this.totalPunchCount = in.readInt();
         this.serverTime = in.readString();
+        this.lefthandInfo = in.readString();
+        this.righthandInfo = in.readString();
+        this.leftkickInfo = in.readString();
+        this.rightkickInfo = in.readString();
 
     }
 
@@ -126,6 +155,10 @@ public class DBTrainingSessionDTO implements Parcelable{
         dest.writeDouble(this.maxSpeed);
         dest.writeInt(this.totalPunchCount);
         dest.writeString(this.serverTime);
+        dest.writeString(this.lefthandInfo);
+        dest.writeString(this.righthandInfo);
+        dest.writeString(this.leftkickInfo);
+        dest.writeString(this.rightkickInfo);
     }
 
     public static final Creator<DBTrainingSessionDTO> CREATOR = new Creator<DBTrainingSessionDTO>() {
@@ -140,3 +173,4 @@ public class DBTrainingSessionDTO implements Parcelable{
         }
     };
 }
+
