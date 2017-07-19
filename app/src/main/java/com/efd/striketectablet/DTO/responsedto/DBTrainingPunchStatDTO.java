@@ -12,13 +12,15 @@ public class DBTrainingPunchStatDTO implements Parcelable{
     private Double avgForce;
     private Double maxSpeed;
     private Double maxForce;
+    private Double minSpeed;
+    private Double minForce;
     private int punchCount;
     private Double totalTime;
     private Integer userID;
     private String serverTime;
 
     public DBTrainingPunchStatDTO(Integer id, String punchedDate, String punchType, Double avgSpeed, Double avgForce,
-                                  Double maxSpeed, Double maxForce, int punchCount, Double totalTime, Integer userID, String serverTime){
+                                  Double maxSpeed, Double maxForce, Double minSpeed, Double minForce, int punchCount, Double totalTime, Integer userID, String serverTime){
         super();
         this.id = id;
         this.punchedDate = punchedDate;
@@ -27,6 +29,8 @@ public class DBTrainingPunchStatDTO implements Parcelable{
         this.avgForce = avgForce;
         this.maxSpeed = maxSpeed;
         this.maxForce = maxForce;
+        this.minSpeed = minSpeed;
+        this.minForce = minForce;
         this.punchCount = punchCount;
         this.totalTime = totalTime;
         this.userID = userID;
@@ -59,6 +63,14 @@ public class DBTrainingPunchStatDTO implements Parcelable{
 
     public Double getMaxForce(){
         return maxForce;
+    }
+
+    public Double getMinSpeed(){
+        return minSpeed;
+    }
+
+    public Double getMinForce(){
+        return minForce;
     }
 
     public int getPunchCount(){
@@ -95,6 +107,8 @@ public class DBTrainingPunchStatDTO implements Parcelable{
         this.avgForce = in.readDouble();
         this.maxForce = in.readDouble();
         this.maxSpeed = in.readDouble();
+        this.minForce = in.readDouble();
+        this.minSpeed = in.readDouble();
         this.punchCount = in.readInt();
         this.totalTime = in.readDouble();
         this.userID = in.readInt();
@@ -110,6 +124,8 @@ public class DBTrainingPunchStatDTO implements Parcelable{
         dest.writeDouble(this.avgForce);
         dest.writeDouble(this.maxForce);
         dest.writeDouble(this.maxSpeed);
+        dest.writeDouble(this.minForce);
+        dest.writeDouble(this.minSpeed);
         dest.writeInt(this.punchCount);
         dest.writeDouble(this.totalTime);
         dest.writeInt(this.userID);

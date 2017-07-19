@@ -1,15 +1,15 @@
-<LinearLayout android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:id="@+id/parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="10dp"
-    android:paddingTop="10dp"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:id="@+id/background"
+        android:id="@+id/background1"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/session_selected"
+        android:layout_height="wrap_content"
+        android:background="@drawable/compare_sessionunselected_bg"
         android:orientation="vertical"
         >
 
@@ -22,7 +22,7 @@
                 android:id="@+id/session_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:paddingLeft="20dp"
                 android:textColor="@color/punches_text_color"
                 android:text="SESSION 1"/>
@@ -32,14 +32,14 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:paddingRight="20dp"
                 android:textColor="@color/punches_text_color"
                 android:text="25MIN"
                 android:gravity="end"/>
 
         </LinearLayout>
-        
+
         <com.efd.striketectablet.customview.CustomTextView
             android:layout_marginTop="5dp"
             android:id="@+id/training_time"
@@ -52,24 +52,24 @@
         <LinearLayout
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/cell_height"
+            android:layout_height="30dp"
             android:gravity="center_vertical"
-            android:background="@color/list_odd_item">
+            android:background="@color/list_odd_session">
 
             <com.efd.striketectablet.customview.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:paddingLeft="20dp"
                 android:textColor="@color/punches_text_color"
-                android:text="SESSION 1"/>
+                android:text="TOTAL STRIKES"/>
 
             <com.efd.striketectablet.customview.CustomTextView
                 android:id="@+id/total_count"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:paddingRight="20dp"
                 android:textColor="@color/white"
                 android:text="250"
@@ -78,15 +78,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/cell_height"
+            android:layout_height="30dp"
             android:gravity="center_vertical">
 
             <com.efd.striketectablet.customview.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:paddingLeft="20dp"
                 android:textColor="@color/punches_text_color"
                 android:text="AVG. SPEED"/>
@@ -96,7 +95,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:paddingRight="20dp"
                 android:textColor="@color/speed_text_color"
                 android:text="24 MPH"
@@ -105,16 +104,15 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/cell_height"
+            android:layout_height="30dp"
             android:gravity="center_vertical"
-            android:background="@color/list_odd_item">
+            android:background="@color/list_odd_session">
 
             <com.efd.striketectablet.customview.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:paddingLeft="20dp"
                 android:textColor="@color/punches_text_color"
                 android:text="AVG. FORCE"/>
@@ -124,7 +122,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:paddingRight="20dp"
                 android:textColor="@color/force_text_color"
                 android:text="250 LBS"
@@ -132,10 +130,15 @@
 
         </LinearLayout>
 
-
-
     </LinearLayout>
 
-
-
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignTop="@+id/background1"
+        android:layout_alignBottom="@+id/background1"
+        >
+    </LinearLayout>
+</RelativeLayout>

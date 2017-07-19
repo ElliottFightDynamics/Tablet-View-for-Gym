@@ -112,7 +112,9 @@ public class DBAdapter {
     public static final String KEY_TRAINING_PUNCH_STATS_AVG_SPEED = "avg_speed";
     public static final String KEY_TRAINING_PUNCH_STATS_AVG_FORCE = "avg_force";
     public static final String KEY_TRAINING_PUNCH_STATS_MAX_SPEED = "max_speed";
+    public static final String KEY_TRAINING_PUNCH_STATS_MIN_SPEED = "min_speed";
     public static final String KEY_TRAINING_PUNCH_STATS_MAX_FORCE = "max_force";
+    public static final String KEY_TRAINING_PUNCH_STATS_MIN_FORCE = "min_force";
     public static final String KEY_TRAINING_PUNCH_STATS_PUNCH_COUNT = "punch_count";
     public static final String KEY_TRAINING_PUNCH_STATS_TOTAL_TIME = "total_time";
     public static final String KEY_TRAINING_PUNCH_STATS_USER_ID = "user_id";
@@ -128,7 +130,9 @@ public class DBAdapter {
             + " avg_speed double DEFAULT 0, "
             + " avg_force double DEFAULT 0, "
             + " max_speed double DEFAULT 0, "
+            + " min_speed double DEFAULT 1000, "
             + " max_force double DEFAULT 0, "
+            + " min_force double DEFAULT 1000, "
             + " punch_count integer(11) DEFAULT 0, "
             + " total_time double DEFAULT 0, "
             + " user_id integer(20) NOT NULL, "
@@ -601,6 +605,9 @@ public class DBAdapter {
         double avgforce = cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_AVG_FORCE));
         double maxspeed = cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_MAX_SPEED));
         double maxforce = cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_MAX_FORCE));
+        double minspeed = cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_MIN_SPEED));
+        double minforce = cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_MIN_FORCE));
+
         int punchcount = cursor.getInt(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_PUNCH_COUNT));
         double totaltime = cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_TOTAL_TIME));
 
@@ -608,6 +615,8 @@ public class DBAdapter {
         avgforce = ((avgforce * punchcount) + punchDTO.getForce()) / (punchcount + 1);
         maxspeed = Math.max(maxspeed, punchDTO.getSpeed());
         maxforce = Math.max(maxforce, punchDTO.getForce());
+        minspeed = Math.min(minspeed, punchDTO.getSpeed());
+        minforce = Math.min(minforce, punchDTO.getForce());
         totaltime = totaltime + punchDTO.getPunchtime();
         punchcount = punchcount + 1;
 
@@ -618,6 +627,8 @@ public class DBAdapter {
         values.put(KEY_TRAINING_PUNCH_STATS_AVG_FORCE, avgforce);
         values.put(KEY_TRAINING_PUNCH_STATS_MAX_SPEED, maxspeed);
         values.put(KEY_TRAINING_PUNCH_STATS_MAX_FORCE, maxforce);
+        values.put(KEY_TRAINING_PUNCH_STATS_MIN_SPEED, minspeed);
+        values.put(KEY_TRAINING_PUNCH_STATS_MIN_FORCE, minforce);
         values.put(KEY_TRAINING_PUNCH_STATS_PUNCH_COUNT, punchcount);
         values.put(KEY_TRAINING_PUNCH_STATS_TOTAL_TIME, totaltime);
         values.put(KEY_TRAINING_PUNCH_STATS_SYNC, 0);
@@ -638,6 +649,8 @@ public class DBAdapter {
         values.put(KEY_TRAINING_PUNCH_STATS_AVG_FORCE, punchDTO.getForce());
         values.put(KEY_TRAINING_PUNCH_STATS_MAX_SPEED, punchDTO.getSpeed());
         values.put(KEY_TRAINING_PUNCH_STATS_MAX_FORCE, punchDTO.getForce());
+        values.put(KEY_TRAINING_PUNCH_STATS_MIN_SPEED, punchDTO.getSpeed());
+        values.put(KEY_TRAINING_PUNCH_STATS_MIN_FORCE, punchDTO.getForce());
         values.put(KEY_TRAINING_PUNCH_STATS_PUNCH_COUNT, 1);
         values.put(KEY_TRAINING_PUNCH_STATS_TOTAL_TIME, punchDTO.getPunchtime());
         values.put(KEY_TRAINING_PUNCH_STATS_USER_ID, userId);
@@ -823,6 +836,8 @@ public class DBAdapter {
                             cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_AVG_FORCE)),
                             cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_MAX_SPEED)),
                             cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_MAX_FORCE)),
+                            cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_MIN_SPEED)),
+                            cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_MIN_FORCE)),
                             cursor.getInt(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_PUNCH_COUNT)),
                             cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_TOTAL_TIME)),
                             cursor.getInt(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_USER_ID)),
@@ -1183,6 +1198,10 @@ public class DBAdapter {
                 punchTypeInfoDTO.punchtype = (cursor.getString(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_PUNCH_TYPE)));
                 punchTypeInfoDTO.avgspeed = (cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_AVG_SPEED)));
                 punchTypeInfoDTO.avgforce = (cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_AVG_FORCE)));
+                punchTypeInfoDTO.maxspeed = (cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_MAX_SPEED)));
+                punchTypeInfoDTO.maxforce = (cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_MAX_FORCE)));
+                punchTypeInfoDTO.minspeed = (cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_MIN_SPEED)));
+                punchTypeInfoDTO.minforce = (cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_MIN_FORCE)));
                 punchTypeInfoDTO.totaltime = (cursor.getDouble(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_TOTAL_TIME)));
                 punchTypeInfoDTO.punchcount = (cursor.getInt(cursor.getColumnIndex(KEY_TRAINING_PUNCH_STATS_PUNCH_COUNT)));
 
@@ -1713,6 +1732,8 @@ public class DBAdapter {
                     values.put(KEY_TRAINING_PUNCH_STATS_AVG_FORCE, punchStatDTO.getAvgForce());
                     values.put(KEY_TRAINING_PUNCH_STATS_MAX_SPEED, punchStatDTO.getMaxSpeed());
                     values.put(KEY_TRAINING_PUNCH_STATS_MAX_FORCE, punchStatDTO.getMaxForce());
+                    values.put(KEY_TRAINING_PUNCH_STATS_MIN_SPEED, punchStatDTO.getMinSpeed());
+                    values.put(KEY_TRAINING_PUNCH_STATS_MIN_FORCE, punchStatDTO.getMinForce());
                     values.put(KEY_TRAINING_PUNCH_STATS_PUNCH_COUNT, punchStatDTO.getPunchCount());
                     values.put(KEY_TRAINING_PUNCH_STATS_TOTAL_TIME, punchStatDTO.getTotalTime());
                     values.put(KEY_TRAINING_PUNCH_STATS_USER_ID, punchStatDTO.getUserID());

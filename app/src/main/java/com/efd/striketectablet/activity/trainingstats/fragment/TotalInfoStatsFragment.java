@@ -230,23 +230,28 @@ public class TotalInfoStatsFragment extends Fragment{
         refreshShow(0);
 
         //max speed, min speed, fastest , slowest punch
+        //max speed, fastest punch
         Collections.sort(punchTypeInfoDTOs, MAX_SPEED_COMPARATOR);
         punchTypeInfoDTO = punchTypeInfoDTOs.get(0);
-        valueLists.set(keyLists.indexOf("MAX SPEED"), (int)(punchTypeInfoDTO.avgspeed) + " MPH");
+        valueLists.set(keyLists.indexOf("MAX SPEED"), (int)(punchTypeInfoDTO.maxspeed) + " MPH");
         valueLists.set(keyLists.indexOf("FASTEST PUNCH"), punchTypeInfoDTO.punchtype);
 
-        punchTypeInfoDTO = punchTypeInfoDTOs.get(punchTypeInfoDTOs.size() - 1);
-        valueLists.set(keyLists.indexOf("MIN SPEED"), (int)(punchTypeInfoDTO.avgspeed) + " MPH");
+        //min speed, slowet punch
+        Collections.sort(punchTypeInfoDTOs, MIN_SPEED_COMPARATOR);
+        punchTypeInfoDTO = punchTypeInfoDTOs.get(0);
+        valueLists.set(keyLists.indexOf("MIN SPEED"), (int)(punchTypeInfoDTO.minspeed) + " MPH");
         valueLists.set(keyLists.indexOf("SLOWEST PUNCH"), punchTypeInfoDTO.punchtype);
 
-        //max power, min power, most powerful, weakest punch
+        //max  power, most powerful
         Collections.sort(punchTypeInfoDTOs, MAX_FORCE_COMPARATOR);
         punchTypeInfoDTO = punchTypeInfoDTOs.get(0);
-        valueLists.set(keyLists.indexOf("MAX POWER"), (int)(punchTypeInfoDTO.avgforce) + " LBS");
+        valueLists.set(keyLists.indexOf("MAX POWER"), (int)(punchTypeInfoDTO.maxforce) + " LBS");
         valueLists.set(keyLists.indexOf("MOST POWERFUL PUNCH"), punchTypeInfoDTO.punchtype);
 
-        punchTypeInfoDTO = punchTypeInfoDTOs.get(punchTypeInfoDTOs.size() - 1);
-        valueLists.set(keyLists.indexOf("MIN POWER"), (int)(punchTypeInfoDTO.avgforce) + " LBS");
+        //min power weakest punch
+        Collections.sort(punchTypeInfoDTOs, MIN_FORCE_COMPARATOR);
+        punchTypeInfoDTO = punchTypeInfoDTOs.get(0);
+        valueLists.set(keyLists.indexOf("MIN POWER"), (int)(punchTypeInfoDTO.minforce) + " LBS");
         valueLists.set(keyLists.indexOf("WEAKEST PUNCH"), punchTypeInfoDTO.punchtype);
 
         //most, least effective
@@ -431,11 +436,39 @@ public class TotalInfoStatsFragment extends Fragment{
     private Comparator<TrainingStatsPunchTypeInfoDTO> MAX_SPEED_COMPARATOR = new Comparator<TrainingStatsPunchTypeInfoDTO>() {
         @Override
         public int compare(TrainingStatsPunchTypeInfoDTO lhs, TrainingStatsPunchTypeInfoDTO rhs) {
+            return (int) (rhs.maxspeed * 10 - lhs.maxspeed * 10);
+        }
+    };
+
+    private Comparator<TrainingStatsPunchTypeInfoDTO> MIN_SPEED_COMPARATOR = new Comparator<TrainingStatsPunchTypeInfoDTO>() {
+        @Override
+        public int compare(TrainingStatsPunchTypeInfoDTO lhs, TrainingStatsPunchTypeInfoDTO rhs) {
+            return (int) (lhs.minspeed * 10 - rhs.minspeed * 10);
+        }
+    };
+
+    private Comparator<TrainingStatsPunchTypeInfoDTO> AVG_SPEED_COMPARATOR = new Comparator<TrainingStatsPunchTypeInfoDTO>() {
+        @Override
+        public int compare(TrainingStatsPunchTypeInfoDTO lhs, TrainingStatsPunchTypeInfoDTO rhs) {
             return (int) (rhs.avgspeed * 10 - lhs.avgspeed * 10);
         }
     };
 
     private Comparator<TrainingStatsPunchTypeInfoDTO> MAX_FORCE_COMPARATOR = new Comparator<TrainingStatsPunchTypeInfoDTO>() {
+        @Override
+        public int compare(TrainingStatsPunchTypeInfoDTO lhs, TrainingStatsPunchTypeInfoDTO rhs) {
+            return (int) (rhs.maxforce * 10 - lhs.maxforce * 10);
+        }
+    };
+
+    private Comparator<TrainingStatsPunchTypeInfoDTO> MIN_FORCE_COMPARATOR = new Comparator<TrainingStatsPunchTypeInfoDTO>() {
+        @Override
+        public int compare(TrainingStatsPunchTypeInfoDTO lhs, TrainingStatsPunchTypeInfoDTO rhs) {
+            return (int) (lhs.minforce * 10 - rhs.minforce * 10);
+        }
+    };
+
+    private Comparator<TrainingStatsPunchTypeInfoDTO> AVG_FORCE_COMPARATOR = new Comparator<TrainingStatsPunchTypeInfoDTO>() {
         @Override
         public int compare(TrainingStatsPunchTypeInfoDTO lhs, TrainingStatsPunchTypeInfoDTO rhs) {
             return (int) (rhs.avgforce * 10 - lhs.avgforce * 10);

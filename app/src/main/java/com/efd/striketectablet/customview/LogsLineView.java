@@ -16,6 +16,8 @@ import com.efd.striketectablet.DTO.TrainingResultComboDTO;
 import com.efd.striketectablet.DTO.responsedto.PunchInfoDTO;
 import com.efd.striketectablet.DTO.responsedto.PunchLogPlottingDTO;
 import com.efd.striketectablet.R;
+import com.efd.striketectablet.util.StatisticUtil;
+import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
 
 import java.util.ArrayList;
@@ -88,7 +90,7 @@ public class LogsLineView extends View{
     private Paint labelPaint = new Paint();
     private Rect chartRect = new Rect();
 
-    private int LABEL_HEIGHT = 60;
+    private int LABEL_HEIGHT ;//= 60;
 
     private float scaleY = 1;
     private float scaleX = 1;
@@ -110,7 +112,15 @@ public class LogsLineView extends View{
         borderPaint.setAntiAlias(true);
 
         labelPaint.setColor(mContext.getResources().getColor(R.color.punchdetail_selected));
-        labelPaint.setTextSize(20f);
+
+        if (!StatisticUtil.is600Dp()){
+            LABEL_HEIGHT = 50;
+            labelPaint.setTextSize(20f);
+        }else {
+            LABEL_HEIGHT = 35;
+            labelPaint.setTextSize(13f);
+        }
+
         labelPaint.setAntiAlias(true);
     }
 
@@ -325,8 +335,10 @@ public class LogsLineView extends View{
 
             int right = (int)(chartRect.left + scaleX * intervalX * xcount + LABEL_HEIGHT);
 
-            canvas.drawText(text, (int)(right - textWidth), chartRect.bottom - LABEL_HEIGHT + textHeight + 3, labelPaint);
-
+            if (!StatisticUtil.is600Dp())
+                canvas.drawText(text, (int)(right - textWidth), chartRect.bottom - LABEL_HEIGHT + textHeight + 3, labelPaint);
+            else
+                canvas.drawText(text, (int)(right - textWidth), chartRect.bottom - LABEL_HEIGHT + textHeight + 1, labelPaint);
             xcount ++;
         }
 
@@ -335,7 +347,11 @@ public class LogsLineView extends View{
         float millitextWidth = getTextWidth(labelPaint, millitext);
         float millitextHeight = getTextHeight(labelPaint);
         int centerX = LABEL_HEIGHT + realchatWidth / 2;
-        canvas.drawText(millitext,  (int)(centerX - millitextWidth / 2), chartRect.bottom - LABEL_HEIGHT + 2 * millitextHeight + 5, labelPaint);
+
+        if (StatisticUtil.is600Dp())
+            canvas.drawText(millitext,  (int)(centerX - millitextWidth / 2), chartRect.bottom - LABEL_HEIGHT + 2 * millitextHeight + 3, labelPaint);
+        else
+            canvas.drawText(millitext,  (int)(centerX - millitextWidth / 2), chartRect.bottom - LABEL_HEIGHT + 2 * millitextHeight + 3, labelPaint);
 
         //draw xlabel
         int ycount = 1;
@@ -347,7 +363,10 @@ public class LogsLineView extends View{
 
             int startY = (int)(chartRect.bottom - LABEL_HEIGHT - scaleY * intervalY * ycount + 10);
 
-            canvas.drawText(text, (int)(LABEL_HEIGHT - textWidth - 5), startY, labelPaint);
+            if (!StatisticUtil.is600Dp())
+                canvas.drawText(text, (int)(LABEL_HEIGHT - textWidth - 5), startY, labelPaint);
+            else
+                canvas.drawText(text, (int)(LABEL_HEIGHT - textWidth - 3), startY, labelPaint);
 
             ycount ++;
         }

@@ -11,7 +11,7 @@
             android:layout_height="wrap_content">
 
                 <View
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="12.5dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/compare_sessionunselected_bg"
@@ -26,37 +26,37 @@
 
                         <com.efd.striketectablet.customview.CustomTextView
                             android:id="@+id/punchtime"
-                            android:layout_width="130dp"
-                            android:layout_height="30dp"
+                            android:layout_width="110dp"
+                            android:layout_height="25dp"
                             android:textColor="@color/punches_text_color"
-                            android:text="JABS"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
+                            android:text="01:23:43 PM"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/selected_punch_bg"
                             android:gravity="center"
-                            android:textSize="18sp"/>
+                            android:textSize="16sp"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="-15dp"
+                            android:layout_height="70dp"
+                            android:layout_marginTop="-12.5dp"
                             >
 
                                 <LinearLayout
                                     android:id="@+id/punch_detail_parent"
-                                    android:layout_marginTop="25dp"
+                                    android:layout_marginTop="15dp"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="50dp"
                                     android:orientation="vertical"
-                                    android:layout_marginLeft="15dp"
-                                    android:layout_marginRight="15dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
                                     android:layout_marginBottom="5dp"
-                                    android:padding="5dp">
+                                    android:padding="2.5dp">
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
-                                            android:layout_height="20dp"
+                                            android:layout_height="15dp"
                                             android:gravity="center_vertical"
                                             android:orientation="horizontal">
 
@@ -64,7 +64,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:textColor="@color/punches_text_color"
-                                                    android:text="SPEED"/>
+                                                    android:text="SPEED"
+                                                    android:textSize="12sp"/>
 
                                                 <com.efd.striketectablet.customview.CustomTextView
                                                     android:id="@+id/punch_speed"
@@ -73,20 +74,22 @@
                                                     android:layout_height="wrap_content"
                                                     android:textColor="@color/force_text_color"
                                                     android:text="24MPH"
-                                                    android:gravity="end"/>
+                                                    android:gravity="end"
+                                                    android:textSize="12sp"/>
 
                                         </LinearLayout>
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
-                                            android:layout_height="20dp"
+                                            android:layout_height="15dp"
                                             android:gravity="center_vertical">
 
                                                 <com.efd.striketectablet.customview.CustomTextView
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:textColor="@color/punches_text_color"
-                                                    android:text="FORCE"/>
+                                                    android:text="FORCE"
+                                                    android:textSize="12sp"/>
 
                                                 <com.efd.striketectablet.customview.CustomTextView
                                                     android:id="@+id/punch_force"
@@ -95,13 +98,14 @@
                                                     android:layout_height="wrap_content"
                                                     android:textColor="@color/force_text_color"
                                                     android:text="24LBS"
-                                                    android:gravity="end"/>
+                                                    android:gravity="end"
+                                                    android:textSize="12sp"/>
 
                                         </LinearLayout>
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
-                                            android:layout_height="20dp"
+                                            android:layout_height="15dp"
                                             android:gravity="center_vertical"
                                             >
 
@@ -109,7 +113,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:textColor="@color/punches_text_color"
-                                                    android:text="DURATION"/>
+                                                    android:text="DURATION"
+                                                    android:textSize="12sp"/>
 
                                                 <com.efd.striketectablet.customview.CustomTextView
                                                     android:id="@+id/punch_duration"
@@ -118,6 +123,7 @@
                                                     android:layout_height="wrap_content"
                                                     android:textColor="@color/white"
                                                     android:text="250MS"
+                                                    android:textSize="12sp"
                                                     android:gravity="end"/>
 
                                         </LinearLayout>
@@ -126,9 +132,9 @@
 
                         </LinearLayout>
 
+
                 </LinearLayout>
 
         </RelativeLayout>
-
 
 </LinearLayout>
