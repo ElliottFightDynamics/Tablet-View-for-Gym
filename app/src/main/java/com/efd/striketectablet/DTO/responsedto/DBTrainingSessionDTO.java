@@ -110,7 +110,7 @@ public class DBTrainingSessionDTO implements Parcelable{
 
     @Override
     public String toString() {
-        return "DBTrainingSessionDTO [id=" + id + ", startTime=" + startTime
+        return "DBTrainingSessionDTO [id=" + id + ", startTime=" + startTime + ", leftinfo = " + lefthandInfo + ",rightinfo = " + righthandInfo
                 + ", endTime=" + endTime + ", trainingSessionDate=" + trainingSessionDate + ", trainingType="
                 + trainingType + ", userID=" + userID + ", avgforce=" + avgForce
                 + ", avgspeed=" + avgSpeed + ", maxspeed =  " + maxSpeed + " , max force = " + maxForce + ", totalcount = " + totalPunchCount + ", servertime = " + serverTime;

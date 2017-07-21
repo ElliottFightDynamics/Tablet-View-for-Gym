@@ -164,7 +164,7 @@ public class SendDataToWebService extends Activity {
                         boolean isLeft = hand.equalsIgnoreCase("L")? true : false;
                         //after uploading delete uploade file.
                         file.delete();
-                        db.updatesessionInfofile(Integer.parseInt(CommonUtils.getServerUserId(getApplicationContext())), timestamp, analyzeCSVDTO.getFileName(), isLeft, true);
+                        db.updatesessionInfofile(Integer.parseInt(CommonUtils.getServerUserId(MainActivity.context)), timestamp, analyzeCSVDTO.getFileName(), isLeft, true);
                     }else {
                         StatisticUtil.showToastMessage(analyzeCSVDTO.getError());
 
