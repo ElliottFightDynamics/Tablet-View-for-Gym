@@ -882,7 +882,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
                             tmpStart();
                         }
-                        */
+*/
 
                     }
                 });

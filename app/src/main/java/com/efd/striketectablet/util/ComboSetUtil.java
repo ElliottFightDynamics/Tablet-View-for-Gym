@@ -11,6 +11,7 @@ import com.efd.striketectablet.DTO.WorkoutDTO;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.database.DBAdapter;
 import com.efd.striketectablet.util.PresetUtil;
+import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.SharedPreferencesUtils;
 import com.google.gson.Gson;
@@ -446,7 +447,7 @@ public class ComboSetUtil {
     }
 
     public static ArrayList<TrainingResultComboDTO> getCombostatsforDay(DBAdapter dbAdapter, String formatteddate){
-        List<String> comboResults = dbAdapter.getTrainingStatswithtype(Integer.parseInt(MainActivity.getInstance().userId), EFDConstants.TYPE_COMBO, formatteddate);
+        List<String> comboResults = dbAdapter.getTrainingStatswithtype(Integer.parseInt(CommonUtils.getServerUserId(mContext)), EFDConstants.TYPE_COMBO, formatteddate);
         ArrayList<TrainingResultComboDTO> resultComboDTOs = new ArrayList<>();
         Gson gson = new Gson();
 
@@ -462,7 +463,7 @@ public class ComboSetUtil {
     }
 
     public static ArrayList<TrainingResultSetDTO> getSetstatsforDay(DBAdapter dbAdapter, String formatteddate){
-        List<String> setResults = dbAdapter.getTrainingStatswithtype(Integer.parseInt(MainActivity.getInstance().userId), EFDConstants.TYPE_SET, formatteddate);
+        List<String> setResults = dbAdapter.getTrainingStatswithtype(Integer.parseInt(CommonUtils.getServerUserId(mContext)), EFDConstants.TYPE_SET, formatteddate);
 
         ArrayList<TrainingResultSetDTO> resultSetDTOs = new ArrayList<>();
         Gson gson = new Gson();
@@ -479,7 +480,7 @@ public class ComboSetUtil {
     }
 
     public static ArrayList<TrainingResultWorkoutDTO> getWorkoutstatsforDay(DBAdapter dbAdapter, String formatteddate){
-        List<String> workoutResults = dbAdapter.getTrainingStatswithtype(Integer.parseInt(MainActivity.getInstance().userId), EFDConstants.TYPE_WORKOUT, formatteddate);
+        List<String> workoutResults = dbAdapter.getTrainingStatswithtype(Integer.parseInt(CommonUtils.getServerUserId(mContext)), EFDConstants.TYPE_WORKOUT, formatteddate);
 
         ArrayList<TrainingResultWorkoutDTO> resultWorkoutDTOs = new ArrayList<>();
         Gson gson = new Gson();
@@ -498,19 +499,19 @@ public class ComboSetUtil {
     public static void saveComboStats(DBAdapter dbAdapter, TrainingResultComboDTO comboresult){
         Gson gson = new Gson();
         String jsonString = gson.toJson(comboresult);
-        dbAdapter.insertTrainingPlanRestuls(Integer.parseInt(MainActivity.getInstance().userId), EFDConstants.TYPE_COMBO, jsonString);
+        dbAdapter.insertTrainingPlanRestuls(Integer.parseInt(CommonUtils.getServerUserId(mContext)), EFDConstants.TYPE_COMBO, jsonString);
     }
 
     public static void saveSetStats(DBAdapter dbAdapter, TrainingResultSetDTO setresult){
         Gson gson = new Gson();
         String jsonString = gson.toJson(setresult);
-        dbAdapter.insertTrainingPlanRestuls(Integer.parseInt(MainActivity.getInstance().userId),EFDConstants.TYPE_SET, jsonString);
+        dbAdapter.insertTrainingPlanRestuls(Integer.parseInt(CommonUtils.getServerUserId(mContext)),EFDConstants.TYPE_SET, jsonString);
     }
 
     public static void saveWorkStats(DBAdapter dbAdapter, TrainingResultWorkoutDTO workoutresult){
         Gson gson = new Gson();
         String jsonString = gson.toJson(workoutresult);
-        dbAdapter.insertTrainingPlanRestuls(Integer.parseInt(MainActivity.getInstance().userId),EFDConstants.TYPE_WORKOUT, jsonString);
+        dbAdapter.insertTrainingPlanRestuls(Integer.parseInt(CommonUtils.getServerUserId(mContext)),EFDConstants.TYPE_WORKOUT, jsonString);
     }
 
     public static String getPunchkeyDetail (TrainingResultComboDTO comboDTO){

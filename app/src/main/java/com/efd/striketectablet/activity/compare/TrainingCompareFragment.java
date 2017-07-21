@@ -44,6 +44,7 @@ import com.efd.striketectablet.database.DBAdapter;
 import com.efd.striketectablet.util.IndicatorCallback;
 import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.util.StatisticUtil;
+import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
 
 import org.w3c.dom.Text;
@@ -696,7 +697,7 @@ public class TrainingCompareFragment extends Fragment {
         super.onResume();
 
         String formatteddate = simpleDateFormat.format(new Date());
-        dbTrainingSessionDTOs = MainActivity.db.getSessionsofDay(Integer.parseInt(mainActivity.userId), formatteddate);
+        dbTrainingSessionDTOs = MainActivity.db.getSessionsofDay(Integer.parseInt(CommonUtils.getServerUserId(mainActivity)), formatteddate);
 
         sessionListAdapter.setSelectedPosition(0);
         sessionListAdapter.setData(dbTrainingSessionDTOs);

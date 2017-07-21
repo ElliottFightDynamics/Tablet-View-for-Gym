@@ -19,6 +19,7 @@ import com.efd.striketectablet.activity.trainingstats.adapter.PunchesRankAdapter
 import com.efd.striketectablet.customview.CustomCircleView;
 import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.util.StatisticUtil;
+import com.efd.striketectablet.utilities.CommonUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -172,10 +173,10 @@ public class TotalInfoStatsFragment extends Fragment{
         initData();
 
         //set total time
-        int totaltime = MainActivity.db.getTodayTotalTime(Integer.parseInt(MainActivity.getInstance().userId), currentDay);
+        int totaltime = MainActivity.db.getTodayTotalTime(Integer.parseInt(CommonUtils.getServerUserId(mainActivityInstance)), currentDay);
         valueLists.set(keyLists.indexOf("TRAINING TIME"), PresetUtil.changeSecondsToHours(totaltime));
 
-        ArrayList<TrainingStatsPunchTypeInfoDTO> punchTypeInfoDTOs = MainActivity.db.getTrainingStats(Integer.parseInt(MainActivity.getInstance().userId), currentDay);
+        ArrayList<TrainingStatsPunchTypeInfoDTO> punchTypeInfoDTOs = MainActivity.db.getTrainingStats(Integer.parseInt(CommonUtils.getServerUserId(mainActivityInstance)), currentDay);
         if (punchTypeInfoDTOs.size() == 0){
             commonStatsAdapter.setData(keyLists, valueLists);
             commonStatsAdapter.notifyDataSetChanged();

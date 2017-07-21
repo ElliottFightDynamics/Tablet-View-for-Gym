@@ -46,6 +46,8 @@ public class SyncTrainingDataService extends IntentService {
         userId = CommonUtils.getServerUserId(this);
         accessToken = CommonUtils.getAccessTokenValue(this);
 
+
+
         startSessionRetrieve();
         startPunchStatsRetrieve();
         startPlanResultsRetrieve();
@@ -53,6 +55,7 @@ public class SyncTrainingDataService extends IntentService {
 
     private void startSessionRetrieve(){
         String startDate = dbAdapter.getLastSyncSessionServerTime(userId);
+        Log.e("Super", "user id = " + userId + "   " + accessToken + "    " + startDate);
         retreiveUnsyncedTrainingSession(startDate);
     }
 

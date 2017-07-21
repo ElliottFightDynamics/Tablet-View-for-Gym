@@ -98,7 +98,7 @@ public class SendDataToWebService extends Activity {
      * syncAllWhileDataFound to sync trainee data if unsync data found
      */
     public void syncAllWhileDataFound() {
-        MainActivity.setSynchronizingWithServer(true);
+//        MainActivity.setSynchronizingWithServer(true);
         synchronizeCSVFiles();
     }
 
@@ -133,7 +133,7 @@ public class SendDataToWebService extends Activity {
 
             Log.e("Super", "timestamp = " + timestamp + "    " + hand);
 
-            if (db.checkCSVfileUploadable(timestamp, Integer.parseInt(MainActivity.getInstance().userId))) {
+            if (db.checkCSVfileUploadable(timestamp, Integer.parseInt(CommonUtils.getServerUserId(MainActivity.context)))) {
                 return files[i];
             }
         }
@@ -164,7 +164,7 @@ public class SendDataToWebService extends Activity {
                         boolean isLeft = hand.equalsIgnoreCase("L")? true : false;
                         //after uploading delete uploade file.
                         file.delete();
-                        db.updatesessionInfofile(Integer.parseInt(MainActivity.getInstance().userId), timestamp, analyzeCSVDTO.getFileName(), isLeft, true);
+                        db.updatesessionInfofile(Integer.parseInt(CommonUtils.getServerUserId(getApplicationContext())), timestamp, analyzeCSVDTO.getFileName(), isLeft, true);
                     }else {
                         StatisticUtil.showToastMessage(analyzeCSVDTO.getError());
 
@@ -192,7 +192,7 @@ public class SendDataToWebService extends Activity {
 
         // Training Session
         List<DBTrainingSessionDTO> dbTrainingSessionDTOList = new ArrayList<DBTrainingSessionDTO>();
-        dbTrainingSessionDTOList = db.getAllNonSynchronizedTrainingSessionRecords(EFDConstants.SYNC_RECORDS_LIMIT, Integer.valueOf(MainActivity.getInstance().userId));
+        dbTrainingSessionDTOList = db.getAllNonSynchronizedTrainingSessionRecords(EFDConstants.SYNC_RECORDS_LIMIT, Integer.valueOf(CommonUtils.getServerUserId(MainActivity.context)));
         Gson gsonTrainingSession = new GsonBuilder().create();
         Log.e(TAG, " dbTrainingSessionDTOList: " + gsonTrainingSession.toJson(dbTrainingSessionDTOList));
 
@@ -241,7 +241,7 @@ public class SendDataToWebService extends Activity {
 
     private void synchronizeTrainingPunchStatsRecords(){
         List<DBTrainingPunchStatDTO> dbTrainingPunchStatDTOs = new ArrayList<DBTrainingPunchStatDTO>();
-        dbTrainingPunchStatDTOs = db.getAllNonSynchronizedTrainingPunchStatRecords(EFDConstants.SYNC_RECORDS_LIMIT, Integer.valueOf(MainActivity.getInstance().userId));
+        dbTrainingPunchStatDTOs = db.getAllNonSynchronizedTrainingPunchStatRecords(EFDConstants.SYNC_RECORDS_LIMIT, Integer.valueOf(CommonUtils.getServerUserId(MainActivity.context)));
         Gson gsonTrainingPunchStats = new GsonBuilder().create();
 
         Log.e(TAG, " dbTrainingPunchStatsDTOList: " + gsonTrainingPunchStats.toJson(dbTrainingPunchStatDTOs));
@@ -291,7 +291,7 @@ public class SendDataToWebService extends Activity {
 
     private void synchronizeTrainingPlanResultsRecords(){
         List<DBTrainingPlanResultDTO> dbTrainingPlanResultDTOs = new ArrayList<DBTrainingPlanResultDTO>();
-        dbTrainingPlanResultDTOs = db.getAllNonSynchronizedTrainingPlanResultRecords(EFDConstants.SYNC_RECORDS_LIMIT, Integer.valueOf(MainActivity.getInstance().userId));
+        dbTrainingPlanResultDTOs = db.getAllNonSynchronizedTrainingPlanResultRecords(EFDConstants.SYNC_RECORDS_LIMIT, Integer.valueOf(CommonUtils.getServerUserId(MainActivity.context)));
 
         Gson gsonTrainingPlanResults = new GsonBuilder().create();
         Log.e(TAG, " dbTrainingPlanResultDTOs: " + gsonTrainingPlanResults.toJson(dbTrainingPlanResultDTOs));
@@ -342,7 +342,7 @@ public class SendDataToWebService extends Activity {
 
     private void synchronizeTrainingPunchDetailRecords(){
         List<DBTrainingPunchDetailDTO> dbTrainingPunchDetailDTOs = new ArrayList<DBTrainingPunchDetailDTO>();
-        dbTrainingPunchDetailDTOs = db.getAllNonSynchronizedTrainingDetailRecords(EFDConstants.SYNC_RECORDS_LIMIT, Integer.valueOf(MainActivity.getInstance().userId));
+        dbTrainingPunchDetailDTOs = db.getAllNonSynchronizedTrainingDetailRecords(EFDConstants.SYNC_RECORDS_LIMIT, Integer.valueOf(CommonUtils.getServerUserId(MainActivity.context)));
 
         Gson gsonTrainingDetails = new GsonBuilder().create();
         Log.e(TAG, " dbTrainingPunchDetailDTOs: " + gsonTrainingDetails.toJson(dbTrainingPunchDetailDTOs));

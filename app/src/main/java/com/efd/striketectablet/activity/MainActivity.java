@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (sync){
             Intent serviceIntent = new Intent(this, SyncTrainingDataService.class);
+            Log.e("Super", "start sync");
             startService(serviceIntent);
         }
 
@@ -857,7 +858,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 JSONObject result = null;
 //                result = MainActivity.db.trainingSessionSave(Integer.parseInt(userId), EFDConstants.TRAINING_TYPE_BOXER);
-                result = MainActivity.db.insertTrainingSession(EFDConstants.TRAINING_TYPE_BOXER, Integer.parseInt(userId));
+                result = MainActivity.db.insertTrainingSession(EFDConstants.TRAINING_TYPE_BOXER, Integer.parseInt(CommonUtils.getServerUserId(this)));
 
                 boxerName = checkboxerDetails.get("boxerName");
                 boxerStance = EFDConstants.TRADITIONAL;//checkboxerDetails.get("boxerName");
