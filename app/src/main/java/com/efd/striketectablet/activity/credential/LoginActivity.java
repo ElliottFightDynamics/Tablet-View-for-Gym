@@ -368,6 +368,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void startMainActivity(){
         Intent mainIntent = new Intent(this, MainActivity.class);
+        mainIntent.putExtra("sync", true);
         startActivity(mainIntent);
         finish();
     }

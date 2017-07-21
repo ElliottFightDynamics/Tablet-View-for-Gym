@@ -337,7 +337,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             BoxerProfileDTO boxerProfileDTO = authenticationDTO.getBoxerProfile();
 
                             int updatedUserId = updateUserDetailsOnLocalDB(userDTO, boxerProfileDTO);
-
+                            Log.e("Super", "updated user id  = " + updatedUserId);
                             if (updatedUserId != -1) {
                                 updateBoxersStance(); //to update boxers stance
                             }

@@ -62,7 +62,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class SendDataToWebService extends Activity {
-    int sessionId, trainingDataId, trainingDataDetailsId, trainingPunchDataId, trainingPunchDataPeakSummaryId;
+
     private final String TAG = "SendDataToWebService";
 
     public Context getAppContext() {
@@ -95,38 +95,10 @@ public class SendDataToWebService extends Activity {
     }
 
     /**
-     * Delete records which are completely synced and are more than 30 days old.
-     */
-    public void deletePastSyncedRecords() {
-        final int MORE_THAN_N_DAYS = 30;
-//        db.deleteCompletelySyncedTrainingSessionRecords(MORE_THAN_N_DAYS);
-    }
-
-    class Data {
-
-        String webService = PunchDetectionConfig.getInstance().getWEB_SERVICE_DOMAIN();
-
-        String url;
-        String action;
-        String method;
-        Map<String, String> params;
-
-        public Data(String webServiceUrl, Map<String, String> param,
-                    String httpMethod, String actionData) {
-            url = this.webService + "/" + webServiceUrl;
-            params = param;
-            method = httpMethod;
-            action = actionData;
-        }
-    }
-
-    /**
      * syncAllWhileDataFound to sync trainee data if unsync data found
      */
     public void syncAllWhileDataFound() {
-//super        MainActivity.setSynchronizingWithServer(true);
-//        synchronizeTrainingSessionRecords();
-
+        MainActivity.setSynchronizingWithServer(true);
         synchronizeCSVFiles();
     }
 
@@ -135,6 +107,7 @@ public class SendDataToWebService extends Activity {
 
         if (file == null){
             //goto next stop, sync training session
+            synchronizeTrainingSessionRecords();
         }else {
             uploadCSVFile(file);
         }
@@ -196,9 +169,10 @@ public class SendDataToWebService extends Activity {
                         StatisticUtil.showToastMessage(analyzeCSVDTO.getError());
 
                         //update session
+                        synchronizeTrainingSessionRecords();
                     }
                 } else {
-                    //update session
+                    synchronizeTrainingSessionRecords();
 
                 }
             }
@@ -206,6 +180,7 @@ public class SendDataToWebService extends Activity {
             public void onFailure(Call<AnalyzeCSVDTO> call, Throwable t) {
                 super.onFailure(call, t);
                 //update session
+                synchronizeTrainingSessionRecords();
             }
         });
     }
@@ -323,7 +298,7 @@ public class SendDataToWebService extends Activity {
 
         if (gsonTrainingPlanResults.toJson(dbTrainingPlanResultDTOs).equals("[]")){
             isDataInTrainingPlanResultsExist = false;
-            synchronizeTrainingPunchDetailRecords();
+//            synchronizeTrainingPunchDetailRecords();
             resetSyncFlagIfDataNotExist();
         }else {
             isDataInTrainingPlanResultsExist = true;

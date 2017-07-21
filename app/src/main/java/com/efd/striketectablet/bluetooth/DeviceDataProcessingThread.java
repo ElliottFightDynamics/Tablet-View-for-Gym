@@ -280,6 +280,9 @@ public class DeviceDataProcessingThread extends Observable implements Runnable, 
 
             while (isContinue) {
                 Log.e("Super", "mainactivityinstance punchable = " + mainActivityInstance.receivePunchable);
+                if (!mainActivityInstance.receivePunchable)
+                    break;
+
                 if (mainActivityInstance.receivePunchable) {
                     Log.e("Super", "mainactivityinstance punchable11111111 = " + mainActivityInstance.receivePunchable);
                     ArrayList<Integer> packet = readPacketFromQueue();

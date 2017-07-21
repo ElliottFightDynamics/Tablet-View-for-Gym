@@ -56,6 +56,7 @@ import com.efd.striketectablet.database.DBAdapter;
 import com.efd.striketectablet.database.SendDataToWebService;
 import com.efd.striketectablet.mmaGlove.EffectivePunchMassCalculator;
 import com.efd.striketectablet.util.StatisticUtil;
+import com.efd.striketectablet.util.SyncTrainingDataService;
 import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.efd.striketectablet.utilities.JSONParsers;
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
     public String userId ;
     public static DBAdapter db;
-
+    private boolean sync = false;
     public PunchDataDTO punchDataDTO = new PunchDataDTO();
 
     public static String leftHandBatteryVoltage = "", rightHandBatteryVoltage = "";
@@ -185,6 +186,8 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
+        sync = getIntent().getBooleanExtra("sync", false);
+
         initUI();
 
         final SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
@@ -209,6 +212,11 @@ public class MainActivity extends AppCompatActivity {
 
         // To reset all null end_time values with proper end_time values
         db.endAllPreviousTrainingSessions();
+
+        if (sync){
+            Intent serviceIntent = new Intent(this, SyncTrainingDataService.class);
+            startService(serviceIntent);
+        }
 
         createOrUpdateSummaryTables();
 
@@ -506,7 +514,7 @@ public class MainActivity extends AppCompatActivity {
     long delay = 10 * EFDConstants.NUM_MILLISECONDS_IN_ONE_SECOND;        //	* EFDConstants.NUM_SECONDS_IN_ONE_MINUTE
 
     // 1 minute -- check multiplication
-    long period = 1 * EFDConstants.NUM_SECONDS_IN_ONE_MINUTE * EFDConstants.NUM_MILLISECONDS_IN_ONE_SECOND;
+    long period = 3 * EFDConstants.NUM_SECONDS_IN_ONE_MINUTE * EFDConstants.NUM_MILLISECONDS_IN_ONE_SECOND;
 
     private void startBackgroundThread() {
         timer = new Timer();
@@ -520,11 +528,6 @@ public class MainActivity extends AppCompatActivity {
                         sendDataObj.syncAllWhileDataFound();
                     }
 
-                    // Delete past synced training data
-                    sendDataObj.deletePastSyncedRecords();
-
-                    // sync user information data
-//                    sendDataObj.synchronizeUserInfoAfterEdit();
                     if (!isAccessTokenValid) {
                         showSessionExpiredAlertDialog();
                     }

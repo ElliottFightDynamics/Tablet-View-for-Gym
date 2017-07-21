@@ -858,30 +858,31 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
                         startTrainingBtn.setText(text);
 
+/*
+                        if (currentTime % 1 == 0 && mainActivityInstance.receivePunchable) {
+                            Random speedRandom = new Random();
+                            int Low = 8;
+                            int High = 45;
+                            int speed = speedRandom.nextInt(High-Low) + Low;
 
-//                        if (currentTime % 1 == 0 && mainActivityInstance.receivePunchable) {
-//                            Random speedRandom = new Random();
-//                            int Low = 8;
-//                            int High = 45;
-//                            int speed = speedRandom.nextInt(High-Low) + Low;
-//
-//                            Random forceRandom = new Random();
-//                            int fLow = 20;
-//                            int fHigh = 300;
-//                            int force = forceRandom.nextInt(fHigh-fLow) + fLow;
-//
-//                            java.sql.Timestamp dataReceiveTime = new java.sql.Timestamp(System.currentTimeMillis());
-//                            if (currentTime % 2 == 0){
-//                                resultPunchList.add(new TrainingResultPunchDTO("RIGHT STRAIGHT", currentComboDTO.getComboTypes().get(currentPunchIndex), speed, force, false));
-//                                MainActivity.db.insertPunchedData(MainActivity.getInstance().trainingSessionId, new TrainingPunchDTO("RIGHT STRAIGHT", speed, force, 0.5));
-//
-//                            }else {
-//                                resultPunchList.add(new TrainingResultPunchDTO("LEFT STRAIGHT", currentComboDTO.getComboTypes().get(currentPunchIndex), speed, force, true));
-//                                MainActivity.db.insertPunchedData(MainActivity.getInstance().trainingSessionId, new TrainingPunchDTO("LEFT STRAIGHT", speed, force, 0.5));
-//                            }
-//
-//                            tmpStart();
-//                        }
+                            Random forceRandom = new Random();
+                            int fLow = 20;
+                            int fHigh = 300;
+                            int force = forceRandom.nextInt(fHigh-fLow) + fLow;
+
+                            java.sql.Timestamp dataReceiveTime = new java.sql.Timestamp(System.currentTimeMillis());
+                            if (currentTime % 2 == 0){
+                                resultPunchList.add(new TrainingResultPunchDTO("RIGHT STRAIGHT", currentComboDTO.getComboTypes().get(currentPunchIndex), speed, force, false));
+                                MainActivity.db.insertPunchedData(MainActivity.getInstance().trainingSessionId, new TrainingPunchDTO("RIGHT STRAIGHT", speed, force, 0.5));
+
+                            }else {
+                                resultPunchList.add(new TrainingResultPunchDTO("LEFT STRAIGHT", currentComboDTO.getComboTypes().get(currentPunchIndex), speed, force, true));
+                                MainActivity.db.insertPunchedData(MainActivity.getInstance().trainingSessionId, new TrainingPunchDTO("LEFT STRAIGHT", speed, force, 0.5));
+                            }
+
+                            tmpStart();
+                        }
+                        */
 
                     }
                 });
