@@ -375,7 +375,7 @@ public class ProfileFragment extends Fragment  {
 
     private void init(){
         JSONObject user_info_jsonObj = MainActivity.db.trainingUserInfo(mainActivityInstance.userId);
-
+Log.e("Super", "user info json obj  = " + user_info_jsonObj.toString());
         try {
             if (user_info_jsonObj != null && user_info_jsonObj.getString("success").equals("true")) {
                 JSONObject user_info_json = user_info_jsonObj.getJSONObject("userInfo");

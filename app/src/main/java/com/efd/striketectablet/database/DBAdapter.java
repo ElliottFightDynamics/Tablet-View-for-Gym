@@ -1281,7 +1281,7 @@ public class DBAdapter {
                             + "\"user_glove_type\":\"" + getUsersBoxerDetails(Integer.parseInt(userId)).get(KEY_BOXER_GLOVE_TYPE) + "\","
                             + "\"user_email\":\"" + cursor.getString(cursor.getColumnIndex(KEY_USER_EMAIL_ID)) + "\""
                             + "}";
-
+Log.e("Super", "getuserinfo = " + userId + "      " + userInfoString);
                     userInfoJson = new JSONObject(userInfoString);
                     resultJSON.put("success", true);
                     resultJSON.put("userInfo", userInfoJson);
@@ -1366,7 +1366,7 @@ public class DBAdapter {
     public int updateBoxerProfile(int version, double chest, double inseam, double reach, String stance,
                                   int userID, double waist, double weight, double height, String leftDevice, String rightDevice,
                                   String gloveType, String skillLevel, int boxerServerId) {
-
+        Log.e("Super", "update profile user id = " + userID + "     " + height);
         ContentValues values = new ContentValues();
         values.put(KEY_BOXER_VERSION, version);
         values.put(KEY_BOXER_CHEST, chest);

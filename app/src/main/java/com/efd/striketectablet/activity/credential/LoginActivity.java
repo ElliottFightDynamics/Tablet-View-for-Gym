@@ -281,7 +281,7 @@ public class LoginActivity extends AppCompatActivity {
                         (loggedInBoxerProfileDetails.getInseam()),
                         (loggedInBoxerProfileDetails.getReach()),
                         (TextUtils.isEmpty(loggedInBoxerProfileDetails.getStance())) ? EFDConstants.TRADITIONAL : loggedInBoxerProfileDetails.getStance(),
-                        recordInsertedOrUpdated,
+                        loggedInUserId,
                         (loggedInBoxerProfileDetails.getWaist()),
                         (loggedInBoxerProfileDetails.getWeight()),
                         (loggedInBoxerProfileDetails.getHeight()),

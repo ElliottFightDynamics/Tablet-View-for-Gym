@@ -51,6 +51,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -314,13 +315,16 @@ public class EditProfileActivity extends AppCompatActivity {
             if (CommonUtils.isOnline(this)) {
                 updateUserInfo();
             } else {
-                updateUserAndBoxer();
+                StatisticUtil.showToastMessage("Network is unableable, Try later");
+                finish();
+//                updateUserAndBoxer();
             }
         }
     }
 
     private void updateUserInfo(){
-        int serverUserId = MainActivity.db.getServerID(Integer.valueOf(userId));
+        int serverUserId = Integer.parseInt(CommonUtils.getServerUserId(this));
+        Log.e("Super", "serverid = " + serverUserId + "    " + MainActivity.getInstance().userId);
 
         RetrofitSingleton.USER_REST.updateUser(String.valueOf(serverUserId), traineeFirstNameValue, traineeLastNameValue, stanceValue, genderValue, birthDate, weightCountValue,
                 reachCountValue, traineeSkillLevelValue, traineeHeightValue, traineeGloveTypeValue, traineeEmail,CommonUtils.getAccessTokenValue(getApplicationContext())).enqueue(new IndicatorCallback<AuthenticationDTO>(this) {
@@ -337,12 +341,15 @@ public class EditProfileActivity extends AppCompatActivity {
                             BoxerProfileDTO boxerProfileDTO = authenticationDTO.getBoxerProfile();
 
                             int updatedUserId = updateUserDetailsOnLocalDB(userDTO, boxerProfileDTO);
-                            Log.e("Super", "updated user id  = " + updatedUserId);
+                            Log.e("Super", "updated user id  = " + updatedUserId + "    " + boxerProfileDTO.getHeight());
                             if (updatedUserId != -1) {
                                 updateBoxersStance(); //to update boxers stance
                             }
 
                             StatisticUtil.showToastMessage(EFDConstants.USER_INFO_UPDATE_MESSAGE);
+                            if (ProfileFragment.profileFragment != null)
+                                ProfileFragment.profileFragment.onResume();
+
                             finish();
 
                         }else {
@@ -489,13 +496,13 @@ public class EditProfileActivity extends AppCompatActivity {
                     EFDConstants.SYNC_TRUE, loggedInUserDetails.getId());
 
             if (localUserId != -1) {
-                Log.e(TAG, "User table Updated successfully.......................");
+                Log.e(TAG, "User table Updated successfully......................." + "  " + loggedInBoxerProfileDetails.getHeight() + "    " + userId + "    " + localUserId);
                 localBoxerId = MainActivity.db.updateBoxerProfile(  1,
                         (loggedInBoxerProfileDetails.getChest()),
                         (loggedInBoxerProfileDetails.getInseam()),
                         (loggedInBoxerProfileDetails.getReach()),
                         (TextUtils.isEmpty(loggedInBoxerProfileDetails.getStance())) ? EFDConstants.TRADITIONAL : loggedInBoxerProfileDetails.getStance(),
-                        localUserId,
+                        Integer.parseInt(userId),
                         (loggedInBoxerProfileDetails.getWaist()),
                         (loggedInBoxerProfileDetails.getWeight()),
                         (loggedInBoxerProfileDetails.getHeight()),
