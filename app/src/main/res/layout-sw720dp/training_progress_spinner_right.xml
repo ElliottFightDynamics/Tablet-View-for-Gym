@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#00FFFFFF"
+    android:gravity="right"
+    android:padding="5dip"
+    android:layout_marginRight="4dp"
+    android:fontFamily="sans-serif-condensed"
+
+    android:textSize="20sp" />
+
+    <!--android:textColor="@color/menu_item_text_color"-->
+    <!--android:drawableRight="@drawable/training_spinner_icon_right"-->

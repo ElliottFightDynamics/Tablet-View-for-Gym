@@ -25,8 +25,8 @@ import java.util.Date;
 public class TrainingStatsFragment extends Fragment {
 
     private View view;
-    TextView overviewView, combinationView, setView, scriptedView;
-    View overviewHighlight, combinationHighlight, setHighlight, scriptedHighlight;
+    TextView roundView, overviewView, combinationView, setView, scriptedView;
+    View roundHighlight, overviewHighlight, combinationHighlight, setHighlight, scriptedHighlight;
 
     Spinner daySpinner, monthSpinner, yearSpinner;
     CustomSpinnerAdapter dayAdapter, monthAdapter, yearAdapter;
@@ -86,11 +86,13 @@ public class TrainingStatsFragment extends Fragment {
         yearAdapter = new CustomSpinnerAdapter(getActivity(), R.layout.custom_spinner_digit_with_img, PresetUtil.statYearList, EFDConstants.SPINNER_DIGIT_ORANGE);
         yearSpinner.setAdapter(yearAdapter);
 
+        roundView = (TextView)view.findViewById(R.id.rounds);
         overviewView = (TextView)view.findViewById(R.id.overview);
         combinationView = (TextView)view.findViewById(R.id.combination);
         setView = (TextView)view.findViewById(R.id.set);
         scriptedView = (TextView)view.findViewById(R.id.scripted);
 
+        roundHighlight = view.findViewById(R.id.rounds_highlight);
         overviewHighlight = view.findViewById(R.id.overview_highlight);
         combinationHighlight = view.findViewById(R.id.combination_highlight);
         setHighlight = view.findViewById(R.id.set_highlight);
@@ -100,31 +102,38 @@ public class TrainingStatsFragment extends Fragment {
         pageAdapter = new TodayStatsPageAdapter(mainActivity, fragmentManager);
         mViewPager.setAdapter(pageAdapter);
 
-        overviewView.setOnClickListener(new View.OnClickListener() {
+        roundView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mViewPager.setCurrentItem(0);
             }
         });
 
-        combinationView.setOnClickListener(new View.OnClickListener() {
+        overviewView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mViewPager.setCurrentItem(1);
             }
         });
 
-        setView.setOnClickListener(new View.OnClickListener() {
+        combinationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mViewPager.setCurrentItem(2);
             }
         });
 
-        scriptedView.setOnClickListener(new View.OnClickListener() {
+        setView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mViewPager.setCurrentItem(3);
+            }
+        });
+
+        scriptedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewPager.setCurrentItem(4);
             }
         });
 
@@ -207,6 +216,10 @@ public class TrainingStatsFragment extends Fragment {
 
         currentSelectedDay = newDay;
 
+        if (RoundStatsFragment.roundStatsFragment != null){
+            RoundStatsFragment.roundStatsFragment.onResume();
+        }
+
         if (TotalInfoStatsFragment.totalInfoStatsFragment != null){
             TotalInfoStatsFragment.totalInfoStatsFragment.onResume();
         }
@@ -237,47 +250,69 @@ public class TrainingStatsFragment extends Fragment {
     private void updateTab(int position){
         switch (position) {
             case 0:
-                overviewView.setTextColor(getResources().getColor(R.color.white));
+                roundView.setTextColor(getResources().getColor(R.color.white));
+                overviewView.setTextColor(getResources().getColor(R.color.orange));
                 combinationView.setTextColor(getResources().getColor(R.color.orange));
                 setView.setTextColor(getResources().getColor(R.color.orange));
                 scriptedView.setTextColor(getResources().getColor(R.color.orange));
 
-                overviewHighlight.setVisibility(View.VISIBLE);
+                roundHighlight.setVisibility(View.VISIBLE);
+                overviewHighlight.setVisibility(View.INVISIBLE);
                 combinationHighlight.setVisibility(View.INVISIBLE);
                 setHighlight.setVisibility(View.INVISIBLE);
                 scriptedHighlight.setVisibility(View.INVISIBLE);
                 break;
 
             case 1:
+                roundView.setTextColor(getResources().getColor(R.color.orange));
+                overviewView.setTextColor(getResources().getColor(R.color.white));
+                combinationView.setTextColor(getResources().getColor(R.color.orange));
+                setView.setTextColor(getResources().getColor(R.color.orange));
+                scriptedView.setTextColor(getResources().getColor(R.color.orange));
+
+                roundHighlight.setVisibility(View.INVISIBLE);
+                overviewHighlight.setVisibility(View.VISIBLE);
+                combinationHighlight.setVisibility(View.INVISIBLE);
+                setHighlight.setVisibility(View.INVISIBLE);
+                scriptedHighlight.setVisibility(View.INVISIBLE);
+                break;
+
+            case 2:
+                roundView.setTextColor(getResources().getColor(R.color.orange));
                 overviewView.setTextColor(getResources().getColor(R.color.orange));
                 combinationView.setTextColor(getResources().getColor(R.color.white));
                 setView.setTextColor(getResources().getColor(R.color.orange));
                 scriptedView.setTextColor(getResources().getColor(R.color.orange));
 
+                roundHighlight.setVisibility(View.INVISIBLE);
                 overviewHighlight.setVisibility(View.INVISIBLE);
                 combinationHighlight.setVisibility(View.VISIBLE);
                 setHighlight.setVisibility(View.INVISIBLE);
                 scriptedHighlight.setVisibility(View.INVISIBLE);
                 break;
 
-            case 2:
+            case 3:
+                roundView.setTextColor(getResources().getColor(R.color.orange));
                 overviewView.setTextColor(getResources().getColor(R.color.orange));
                 combinationView.setTextColor(getResources().getColor(R.color.orange));
                 setView.setTextColor(getResources().getColor(R.color.white));
                 scriptedView.setTextColor(getResources().getColor(R.color.orange));
 
+                roundHighlight.setVisibility(View.INVISIBLE);
                 overviewHighlight.setVisibility(View.INVISIBLE);
                 combinationHighlight.setVisibility(View.INVISIBLE);
                 setHighlight.setVisibility(View.VISIBLE);
                 scriptedHighlight.setVisibility(View.INVISIBLE);
                 break;
 
-            case 3:
+            case 4:
+                roundView.setTextColor(getResources().getColor(R.color.orange));
                 overviewView.setTextColor(getResources().getColor(R.color.orange));
                 combinationView.setTextColor(getResources().getColor(R.color.orange));
                 setView.setTextColor(getResources().getColor(R.color.orange));
                 scriptedView.setTextColor(getResources().getColor(R.color.white));
 
+                roundHighlight.setVisibility(View.INVISIBLE);
                 overviewHighlight.setVisibility(View.INVISIBLE);
                 combinationHighlight.setVisibility(View.INVISIBLE);
                 setHighlight.setVisibility(View.INVISIBLE);

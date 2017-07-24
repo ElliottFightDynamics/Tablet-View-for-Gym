@@ -779,7 +779,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
             mainActivityInstance.trainingresultComboDTO = resultComboDTO;
             ComboSetUtil.saveComboStats(MainActivity.db, resultComboDTO);
-            mainActivityInstance.showStats(1);
+            mainActivityInstance.showStats(2);
 //            startStatsActivity(2);
         }else if (setid != -1){
             if (mainActivityInstance.receivePunchable){
@@ -796,7 +796,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
 
             mainActivityInstance.trainingResultSetDTO = resultSetDTO;
             ComboSetUtil.saveSetStats(MainActivity.db, resultSetDTO);
-            mainActivityInstance.showStats(2);
+            mainActivityInstance.showStats(3);
 //            startStatsActivity(3);
         }else if (workoutDTO != null){
             if (mainActivityInstance.receivePunchable) {
@@ -817,7 +817,7 @@ public class ComboSetTrainingActivity extends BaseTrainingActivity {
                 mainActivityInstance.trainingResultWorkoutDTO = resultWorkoutDTO;
                 ComboSetUtil.saveWorkStats(MainActivity.db, resultWorkoutDTO);
 
-                mainActivityInstance.showStats(3);
+                mainActivityInstance.showStats(4);
             }
 //            startStatsActivity(4);
         }

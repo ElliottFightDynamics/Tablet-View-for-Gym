@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/today_stats"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity"
+    android:orientation="vertical"
+    >
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:columnCount="3"
+        android:orientation="horizontal"
+        android:rowCount="1"
+        android:visibility="gone">
+
+        <Spinner
+            android:id="@+id/training_progress_dropdown_month"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/transparent"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/training_progress_stat_header"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            />
+
+        <Spinner
+            android:id="@+id/training_progress_dropdown_year"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:background="@color/transparent"
+            android:gravity="right"
+            android:visibility="invisible"/>
+    </GridLayout>
+    <LinearLayout
+        android:id="@+id/todaystatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:orientation="vertical">
+
+            <com.efd.striketectablet.customview.CustomTextView
+                android:id="@+id/training_stat_time"
+                style="@style/training_progress_stat"
+                android:text="00:00"
+                />
+
+            <com.efd.striketectablet.customview.CustomTextView
+                style="@style/training_progress_stat_label"
+                android:layout_marginBottom="5dp"
+                android:text="MIN:SEC"
+                />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/vertical_line_big" />
+
+
+
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/vertical_line_big" />
+
+
+
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/vertical_line_big" />
+
+
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/training_progress_button_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/training_time" />
+
+                <ImageView
+                    android:id="@+id/training_progress_button_punches"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/training_punches" />
+
+                <ImageView
+                    android:id="@+id/training_progress_button_speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/training_speed" />
+
+                <ImageView
+                    android:id="@+id/training_progress_button_force"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/training_force" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:background="@drawable/trainingstats_left_line"
+                    android:scaleType="centerCrop" />
+
+
+                <com.efd.striketectablet.customview.CustomTextView
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/btn_bg_fill"
+                    android:gravity="center"
+                    android:text="@string/rounds"
+                    android:textColor="@color/punches_text_color"
+                    android:textSize="25sp" />
+
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:background="@drawable/trainingstats_right_line"
+                    android:scaleType="centerCrop" />
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/progress_chart_container"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:orientation="horizontal"
+                android:scrollbars="none">
+
+                <com.efd.striketectablet.activity.trainingstats.charts.TrainingProgressBarchartView
+                    android:id="@+id/training_progress_barchart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:drawLabelBackground="false"
+                    app:gridColor="@color/training_progress_barchart_grid"
+                    app:gridHorizontalLines="10"
+                    app:gridLineSize="2"
+                    app:gridPaddingTop="50"
+                    app:gridVerticalLines="0"
+                    app:outlineColor="@color/training_progress_barchart_highlight"
+                    app:showGrid="true"
+                    app:showOutline="true" />
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:background="@drawable/trainingstats_left_line" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="300dp"
+                            android:layout_height="match_parent"
+
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/btn_bg_fill"
+                            android:gravity="center"
+                            android:text="@string/today_selected"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="25sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:background="@drawable/trainingstats_right_line" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/cell_height"
+                        android:layout_marginTop="30dp"
+                        android:background="@color/today_itembgcolor"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/today_trainingtype"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:id="@+id/todayselected_trainingtype"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:text="BOXING"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/cell_height"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today_speed"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:id="@+id/training_stat_speed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" MPH"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/cell_height"
+                        android:background="@color/today_itembgcolor"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today_power"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:id="@+id/training_stat_force"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" LBS"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/cell_height"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today_punches"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:id="@+id/training_stat_punches"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" HITS"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:background="@drawable/trainingstats_left_line" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="300dp"
+                            android:layout_height="match_parent"
+
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/btn_bg_fill"
+                            android:gravity="center"
+                            android:text="@string/today_total"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="25sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:background="@drawable/trainingstats_right_line" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/cell_height"
+                        android:layout_marginTop="30dp"
+                        android:background="@color/today_itembgcolor"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today_punches"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:id="@+id/todaytotal_punches"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" HITS"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/cell_height"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today_speed"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:id="@+id/todaytotal_speed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" MPH"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/cell_height"
+                        android:background="@color/today_itembgcolor"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today_power"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:id="@+id/todaytotal_power"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+
+                        <com.efd.striketectablet.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" LBS"
+                            android:textColor="@color/punches_text_color"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

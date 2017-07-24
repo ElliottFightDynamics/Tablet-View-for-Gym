@@ -29,7 +29,6 @@
     <string name="training_quality">TRAINING QUALITY</string>
     <string name="training_bestpunch">BEST PUNCH</string>
     <string name="stats_damage">DAMAGE</string>
-    <string name="today_punches">PUNCHES</string>
     <string name="today_time">TIME</string>
     <string name="fatigue">FATIGUE</string>
     <string name="activity_time">ACTIVITY TIME</string>
@@ -58,6 +57,13 @@
     <string name="round_training">ROUND TRAINING</string>
     <string name="title_quick_start">QUICK START</string>
     <string name="stop_training">STOP TRAINING</string>
+
+    <string name="today_total">TOTAL</string>
+    <string name="today_selected">SELECTED</string>
+    <string name="today_trainingtype">TRAINING TYPE</string>
+    <string name="today_punches">PUNCHES</string>
+    <string name="today_speed">SPEED (AVG)</string>
+    <string name="today_power">POWER (AVG)</string>
 
     <string name="battery_default_value">0%</string>
 

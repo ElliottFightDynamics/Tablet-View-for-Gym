@@ -13,6 +13,12 @@
     <color name="punches_text_color">#29f7ff</color>
     <color name="curve_border">#132531</color>
 
+    <color name="time_text_color">#ffffff</color>
+    <color name="power_text_color">#ffffff</color>
+    <color name="default_text_color">#24B4BD</color>
+    <color name="training_progress_barchart_grid">#3353d9ff</color>
+    <color name="training_progress_barchart_highlight">#30768e</color>
+
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 
