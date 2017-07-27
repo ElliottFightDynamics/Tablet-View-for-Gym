@@ -6,8 +6,9 @@ public class RestUrl {
 //    public static String BASE_URL = "http://fe1-1088333348.us-west-2.elb.amazonaws.com:8090/EFD/";//PunchDetectionConfig.getInstance().getWEB_SERVICE_DOMAIN();
 //    public static String BASE_URL = "http://54.213.226.127:8090/EFD/";//PunchDetectionConfig.getInstance().getWEB_SERVICE_DOMAIN();
 
-    public static String BASE_URL = "http://34.212.48.125:8090/EFD/";//PunchDetectionConfig.getInstance().getWEB_SERVICE_DOMAIN();
-    public static String CSV_BASE_URL = "http://ec2-34-212-48-125.us-west-2.compute.amazonaws.com:3000/";
+//    public static String BASE_URL = "http://34.212.48.125:8090/EFD/";//PunchDetectionConfig.getInstance().getWEB_SERVICE_DOMAIN();
+    public static String BASE_URL = "http://34.213.85.121:8090/EFD/";
+    public static String CSV_BASE_URL = "http://ec2-34-213-85-121.us-west-2.compute.amazonaws.com:3000/";
 
     //credential url
     public static final String LOGIN = "user/traineeLogin";
