@@ -1,4 +1,4 @@
-package com.efd.striketectablet.mmaGlove;
+package com.efd.striketectablet.sensors.mmaGlove;
 
 /**
  * Created by erich on 8/22/2016.

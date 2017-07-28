@@ -6,15 +6,11 @@ import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,30 +19,21 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.efd.striketectablet.R;
 import com.efd.striketectablet.activity.MainActivity;
-import com.efd.striketectablet.activity.training.TrainingFragment;
-import com.efd.striketectablet.adapter.CustomSpinnerAdapter;
-import com.efd.striketectablet.bluetooth.BluetoothScanActivity;
+import com.efd.striketectablet.sensors.bluetooth.BluetoothScanActivity;
 import com.efd.striketectablet.customview.CustomButton;
 import com.efd.striketectablet.customview.CustomEditText;
-import com.efd.striketectablet.customview.HexagonButton;
-import com.efd.striketectablet.customview.HexagonImageView;
-import com.efd.striketectablet.util.PresetUtil;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.github.siyamed.shapeimageview.mask.PorterShapeImageView;
 
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class ProfileFragment extends Fragment  {
 

@@ -2,11 +2,9 @@ package com.efd.striketectablet.database;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.efd.striketectablet.DTO.responsedto.AnalyzeCSVDTO;
 import com.efd.striketectablet.DTO.responsedto.DBTrainingPlanResultDTO;
@@ -18,7 +16,6 @@ import com.efd.striketectablet.DTO.responsedto.SyncServerResponseDTO;
 import com.efd.striketectablet.activity.MainActivity;
 import com.efd.striketectablet.api.RetrofitSingleton;
 import com.efd.striketectablet.api.RetrofitSingletonCSV;
-import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionConfig;
 import com.efd.striketectablet.exception.EFDExceptionHandler;
 import com.efd.striketectablet.util.IndicatorCallback;
 import com.efd.striketectablet.util.StatisticUtil;
@@ -26,34 +23,10 @@ import com.efd.striketectablet.utilities.CommonUtils;
 import com.efd.striketectablet.utilities.EFDConstants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.protocol.HttpContext;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;

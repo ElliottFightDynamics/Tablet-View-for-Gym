@@ -1,4 +1,4 @@
-package com.efd.striketectablet.bluetooth.Connection;
+package com.efd.striketectablet.sensors.bluetooth.Connection;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;

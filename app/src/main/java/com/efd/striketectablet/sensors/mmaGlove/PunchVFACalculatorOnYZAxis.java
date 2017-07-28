@@ -1,10 +1,10 @@
-package com.efd.striketectablet.mmaGlove;
+package com.efd.striketectablet.sensors.mmaGlove;
 
 import android.util.Log;
 
-import com.efd.striketectablet.bluetooth.readerBean.SensorAcclData;
-import com.efd.striketectablet.bluetooth.readerBean.SensorData;
-import com.efd.striketectablet.bluetooth.readerBean.VFA;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.SensorAcclData;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.SensorData;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.VFA;
 
 /**
  * It calculates velocity, force & acceleration On YZAxis.

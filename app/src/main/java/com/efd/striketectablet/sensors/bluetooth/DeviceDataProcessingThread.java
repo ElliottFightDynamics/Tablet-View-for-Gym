@@ -1,4 +1,4 @@
-package com.efd.striketectablet.bluetooth;
+package com.efd.striketectablet.sensors.bluetooth;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -14,20 +14,18 @@ import com.efd.punch.SensorBuffer;
 import com.efd.punch.SensorDataPackage;
 import com.efd.punch.SensorDataSample;
 import com.efd.striketectablet.activity.MainActivity;
-import com.efd.striketectablet.bluetooth.readerBean.PunchDetectedMap;
-import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionConfig;
-import com.efd.striketectablet.bluetooth.readerBean.PunchDetector;
-import com.efd.striketectablet.bluetooth.readerBean.SensorData;
-import com.efd.striketectablet.bluetooth.readerBean.VFA;
-import com.efd.striketectablet.bluetooth.readerBean.VFAMap;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.PunchDetectedMap;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.PunchDetectionConfig;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.PunchDetector;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.SensorData;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.VFA;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.VFAMap;
 import com.efd.striketectablet.database.DBAdapter;
-import com.efd.striketectablet.mmaGlove.LowGPunchDetection;
-import com.efd.striketectablet.mmaGlove.PunchVFACalculatorOnYYAxis;
-import com.efd.striketectablet.mmaGlove.PunchVFACalculatorOnYZAxis;
+import com.efd.striketectablet.sensors.mmaGlove.LowGPunchDetection;
+import com.efd.striketectablet.sensors.mmaGlove.PunchVFACalculatorOnYYAxis;
+import com.efd.striketectablet.sensors.mmaGlove.PunchVFACalculatorOnYZAxis;
 import com.efd.striketectablet.util.rest.RestClient;
 import com.efd.striketectablet.utilities.EFDConstants;
-
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -40,7 +38,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 import java.util.Observable;
 import java.util.StringTokenizer;

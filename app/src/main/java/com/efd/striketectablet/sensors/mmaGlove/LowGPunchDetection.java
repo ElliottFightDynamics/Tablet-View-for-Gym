@@ -1,13 +1,13 @@
-package com.efd.striketectablet.mmaGlove;
+package com.efd.striketectablet.sensors.mmaGlove;
 
 import android.util.Log;
 
-import com.efd.striketectablet.bluetooth.readerBean.PunchDetectedMap;
-import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionConfig;
-import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionTemplate;
-import com.efd.striketectablet.bluetooth.readerBean.PunchDetector;
-import com.efd.striketectablet.bluetooth.readerBean.SensorAcclData;
-import com.efd.striketectablet.bluetooth.readerBean.SensorData;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.PunchDetectedMap;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.PunchDetectionConfig;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.PunchDetectionTemplate;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.PunchDetector;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.SensorAcclData;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.SensorData;
 import com.efd.striketectablet.utilities.EFDConstants;
 
 import org.apache.commons.collections.Buffer;

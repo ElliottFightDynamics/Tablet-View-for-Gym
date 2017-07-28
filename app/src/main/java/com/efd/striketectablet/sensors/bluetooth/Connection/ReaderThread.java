@@ -1,4 +1,4 @@
-package com.efd.striketectablet.bluetooth.Connection;
+package com.efd.striketectablet.sensors.bluetooth.Connection;
 
 import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.efd.striketectablet.activity.MainActivity;
-import com.efd.striketectablet.bluetooth.DeviceDataProcessingThread;
+import com.efd.striketectablet.sensors.bluetooth.DeviceDataProcessingThread;
 import com.efd.striketectablet.utilities.EFDConstants;
 
 import java.io.DataInputStream;

@@ -1,4 +1,4 @@
-package com.efd.striketectablet.mmaGlove;
+package com.efd.striketectablet.sensors.mmaGlove;
 
 import java.util.Arrays;
 

@@ -1,6 +1,6 @@
 package com.efd.striketectablet.utilities;
 
-import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionConfig;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.PunchDetectionConfig;
 
 public class EFDWebServiceUrl {
 

@@ -1,8 +1,7 @@
-package com.efd.striketectablet.mmaGlove;
+package com.efd.striketectablet.sensors.mmaGlove;
 
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.text.StaticLayout;
 import android.util.Log;
 
 import com.efd.striketectablet.util.StatisticUtil;

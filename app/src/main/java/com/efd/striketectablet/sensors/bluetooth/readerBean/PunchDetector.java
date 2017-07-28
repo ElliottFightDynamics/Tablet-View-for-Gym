@@ -1,4 +1,4 @@
-package com.efd.striketectablet.bluetooth.readerBean;
+package com.efd.striketectablet.sensors.bluetooth.readerBean;
 
 public class PunchDetector {
     boolean isUpperCut;

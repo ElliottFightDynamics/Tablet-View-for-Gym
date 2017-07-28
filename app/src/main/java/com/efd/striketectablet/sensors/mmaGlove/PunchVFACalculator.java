@@ -3,15 +3,15 @@
  * timestamp : Jan 23, 2014 12:48:13 PM
  * filename : - PunchVFACalculator.java
  */
-package com.efd.striketectablet.mmaGlove;
+package com.efd.striketectablet.sensors.mmaGlove;
 
 import android.util.Log;
 
-import com.efd.striketectablet.bluetooth.readerBean.PunchDetectionConfig;
-import com.efd.striketectablet.bluetooth.readerBean.SensorAcclData;
-import com.efd.striketectablet.bluetooth.readerBean.SensorData;
-import com.efd.striketectablet.bluetooth.readerBean.VFA;
-import com.efd.striketectablet.bluetooth.readerBean.VFAMap;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.PunchDetectionConfig;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.SensorAcclData;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.SensorData;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.VFA;
+import com.efd.striketectablet.sensors.bluetooth.readerBean.VFAMap;
 import com.efd.striketectablet.utilities.EFDConstants;
 
 import java.util.Stack;

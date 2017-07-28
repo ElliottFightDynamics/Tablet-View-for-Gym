@@ -1,4 +1,4 @@
-package com.efd.striketectablet.bluetooth.readerBean;
+package com.efd.striketectablet.sensors.bluetooth.readerBean;
 
 import com.efd.striketectablet.App;
 import com.efd.striketectablet.utilities.EFDConstants;
