@@ -1,0 +1,22 @@
+<resources>
+    <!-- Login Page alertmErrorrror messages -->
+    <string name="error_email_is_required">Please enter email id.</string>
+    <string name="error_invalid_email_id_format">Invalid email id format.</string>
+    <string name="error_password_is_required">Please enter password.</string>
+
+    <!-- Sign Up page alertmErrorrror messages -->
+    <string name="error_company_is_required">Please select company.</string>
+    <string name="error_repeat_password_is_required">Please enter repeat password.</string>
+    <string name="error_repeat_password_not_match">Password and repeat password does not match.</string>
+    <string name="error_company_list_not_found">Company list not found.</string>
+
+    <!-- Add User Screen -->
+    <string name="error_camera_not_supported">Camera not supported.</string>
+    <string name="error_user_cancelled_image_capture">User cancelled image capture.</string>
+    <string name="error_failed_to_capture_image">Sorry, failed to capture image.</string>
+    <string name="error_name_is_required">Please enter name.</string>
+    <string name="error_gender_is_required">Please select gender.</string>
+    <string name="error_dob_is_required">Please select date of birth.</string>
+    <string name="error_weight_is_required">Please select weight.</string>
+    <string name="error_height_is_required">Please select height.</string>
+</resources>

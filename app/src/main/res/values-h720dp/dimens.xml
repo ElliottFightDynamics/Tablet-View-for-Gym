@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Login page dimen -->
+    <dimen name="login_page_logo_margin_left">150dp</dimen>
+    <dimen name="login_page_login_layout_width">550dp</dimen>
+    <dimen name="login_page_login_layout_margin_right">100dp</dimen>
+    <dimen name="login_page_login_layout_padding">50dp</dimen>
+    <dimen name="label_text_size_1">25sp</dimen>
+    <dimen name="label_text_size_2">20sp</dimen>
+    <dimen name="edit_text_size_1">20sp</dimen>
+    <dimen name="email_edit_text_margin_top">20sp</dimen>
+    <dimen name="password_edit_text_margin_top">20sp</dimen>
+    <dimen name="label_forgot_password_text_size">20sp</dimen>
+    <dimen name="register_login_layout_margin_top">50sp</dimen>
+    <dimen name="register_button_padding_left">50sp</dimen>
+    <dimen name="register_button_padding_right">50sp</dimen>
+    <dimen name="register_button_padding_top">15sp</dimen>
+    <dimen name="register_button_padding_bottom">15sp</dimen>
+    <dimen name="register_button_text_size">20sp</dimen>
+    <dimen name="login_button_margin_left">50sp</dimen>
+
+    <!-- Forgot Password dimen -->
+    <dimen name="instruction_text_size_1">15sp</dimen>
+    <dimen name="forgot_password_margin_top">20dp</dimen>
+
+    <!-- Register New User dimen -->
+    <dimen name="company_spinner_margin_top">30dp</dimen>
+    <dimen name="horizontal_line_margin_top">20dp</dimen>
+    <dimen name="horizontal_line_margin_bottom">10dp</dimen>
+    <dimen name="dialog_company_list_layout_padding">30dp</dimen>
+    <dimen name="ok_button_margin_left">30sp</dimen>
+    <dimen name="company_name_row_item_padding">15sp</dimen>
+    <dimen name="company_name_text_size">20sp</dimen>
+    <dimen name="cancel_ok_layout_margin_top">30dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="nav_header_text_margin_left">50dp</dimen>
+    <dimen name="nav_header_image_margin_left">30dp</dimen>
+
+    <dimen name="fab_margin">50dp</dimen>
+    <dimen name="fab_button_width">70dp</dimen>
+    <dimen name="fab_button_height">70dp</dimen>
+
+
+    <!-- User Database Fragment Screen -->
+    <dimen name="outer_layout_padding_top">20dp</dimen>
+    <dimen name="outer_layout_padding_left">30dp</dimen>
+    <dimen name="outer_layout_padding_right">30dp</dimen>
+    <dimen name="outer_layout_padding_bottom">10dp</dimen>
+    <dimen name="users_relative_layout_margin_top">20dp</dimen>
+    <dimen name="users_relative_layout_padding_top">20dp</dimen>
+    <dimen name="users_relative_layout_padding_left">20dp</dimen>
+    <dimen name="users_relative_layout_padding_right">20dp</dimen>
+    <!-- User List on Users Database Screen -->
+    <dimen name="user_row_item_padding_top">15dp</dimen>
+    <dimen name="user_row_item_padding_bottom">15dp</dimen>
+    <dimen name="user_row_item_padding_left">20dp</dimen>
+    <dimen name="user_row_item_padding_right">20dp</dimen>
+    <dimen name="user_list_item_image_width">70dp</dimen>
+    <dimen name="user_list_item_image_height">70dp</dimen>
+    <dimen name="user_list_item_image_margin_left">10dp</dimen>
+    <dimen name="user_list_item_image_margin_right">10dp</dimen>
+    <dimen name="user_name_text_size">20sp</dimen>
+    <dimen name="user_email_text_size">18sp</dimen>
+    <dimen name="users_list_spacing">10dp</dimen>
+    <dimen name="user_row_item_inner_layout_padding_top">15dp</dimen>
+    <dimen name="user_row_item_inner_layout_padding_bottom">15dp</dimen>
+    <dimen name="user_database_screen_spinner_width">200dp</dimen>
+
+    <!-- Add User dimens -->
+    <dimen name="take_picture_layout_padding_top">10dp</dimen>
+    <dimen name="take_picture_layout_padding_bottom">10dp</dimen>
+    <dimen name="take_picture_layout_padding_left">20dp</dimen>
+    <dimen name="take_picture_layout_padding_right">20dp</dimen>
+    <dimen name="take_picture_layout_margin_left">20dp</dimen>
+    <dimen name="take_picture_text_view_margin_left">20dp</dimen>
+    <dimen name="user_name_edit_text_margin_top">50sp</dimen>
+    <dimen name="take_picture_image_layout_margin_top">40sp</dimen>
+    <dimen name="taken_picture_image_width">220dp</dimen>
+    <dimen name="taken_picture_image_height">220dp</dimen>
+    <dimen name="add_user_left_layout_margin_right">30dp</dimen>
+    <dimen name="add_user_right_layout_margin_left">30dp</dimen>
+    <dimen name="add_user_email_edit_text_margin_top">25sp</dimen>
+
+    <!-- Events Screen dimens-->
+    <dimen name="dimen_tab_indicator_height">3dp</dimen>
+    <dimen name="events_inner_layout_margin_top">30dp</dimen>
+    <dimen name="events_inner_layout_margin_left">30dp</dimen>
+    <dimen name="events_inner_layout_margin_right">30dp</dimen>
+    <dimen name="events_inner_layout_margin_bottom">5dp</dimen>
+    <dimen name="events_inner_layout_2_margin_top">50dp</dimen>
+    <dimen name="no_event_available_image_width">160dp</dimen>
+    <dimen name="no_event_available_image_height">160dp</dimen>
+    <dimen name="no_event_available_text_message_margin_top">50dp</dimen>
+    <dimen name="no_event_available_text_message_margin_bottom">50dp</dimen>
+    <dimen name="no_event_available_text_message_size">20sp</dimen>
+
+    <dimen name="layout_radius">10dp</dimen>
+    <dimen name="layout_stroke_width">3dp</dimen>
+    <dimen name="button_radius">7dp</dimen>
+    <dimen name="button_stroke_width">2dp</dimen>
+
+    <!-- Create Event -->
+    <dimen name="bottom_layout_cancel_next_height">100dp</dimen>
+    <dimen name="bottom_layout_next_button_margin_right">80dp</dimen>
+    <dimen name="top_layout_create_event_steps_margin_top">30dp</dimen>
+    <dimen name="horizontal_line_height_1">1dp</dimen>
+    <dimen name="create_event_horizontal_line_margin_left">35dp</dimen>
+    <dimen name="create_event_horizontal_line_margin_right">35dp</dimen>
+    <dimen name="create_event_horizontal_line_margin_top">20dp</dimen>
+    <dimen name="create_event_horizontal_line_margin_bottom">20dp</dimen>
+
+    <!-- Create Event Steps Header Layout -->
+    <dimen name="create_event_header_horizontal_line_width">100dp</dimen>
+    <dimen name="create_event_header_horizontal_line_height">2dp</dimen>
+    <dimen name="step_number_circle_shape_width">40dp</dimen>
+    <dimen name="step_number_circle_shape_height">40dp</dimen>
+    <dimen name="layout_step_margin_bottom">20dp</dimen>
+    <dimen name="create_event_steps_label_text_size">20dp</dimen>
+
+    <!-- Create Event General Info -->
+    <dimen name="create_event_general_info_layout_margin_right">10dp</dimen>
+    <dimen name="create_event_date_layout_margin_left">10dp</dimen>
+    <dimen name="dimen_label_date_from_margin_top">20dp</dimen>
+    <dimen name="dimen_label_date_to_margin_top">20dp</dimen>
+    <dimen name="dimen_from_time_margin_left">10dp</dimen>
+
+    <!-- Create Event Step 2 Select Activity -->
+    <dimen name="instruction_create_event_select_activity_margin_top">30dp</dimen>
+    <dimen name="instruction_create_event_select_activity_margin_bottom">30dp</dimen>
+</resources>

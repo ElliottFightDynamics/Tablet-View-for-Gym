@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/outer_layout_events_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_background_color"
+    tools:mContext="com.striketec.fanapp.view.home.HomeActivity">
+
+    <RelativeLayout
+        android:id="@+id/inner_layout_1_events"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/events_inner_layout_margin_bottom"
+        android:layout_marginEnd="@dimen/events_inner_layout_margin_right"
+        android:layout_marginLeft="@dimen/events_inner_layout_margin_left"
+        android:layout_marginRight="@dimen/events_inner_layout_margin_right"
+        android:layout_marginStart="@dimen/events_inner_layout_margin_left"
+        android:layout_marginTop="@dimen/events_inner_layout_margin_top"
+        android:background="@drawable/layout_round_corner_with_outline_grey">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/inner_layout_2_events"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/events_inner_layout_2_margin_top"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/no_event_available_image_width"
+                android:layout_height="@dimen/no_event_available_image_height"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/no_event_available_text_message_margin_bottom"
+                android:layout_marginTop="@dimen/no_event_available_text_message_margin_top"
+                android:gravity="center"
+                android:text="@string/no_event_available_text_message"
+                android:textColor="@color/label_text_color_1"
+                android:textSize="@dimen/no_event_available_text_message_size" />
+
+            <Button
+                android:id="@+id/button_create_event"
+                style="@style/Style_ButtonSolidBG"
+                android:layout_gravity="center"
+                android:background="@drawable/button_round_corner_solid_background"
+                android:text="@string/button_create_event" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_events"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/events_inner_layout_margin_bottom"
+        android:layout_marginEnd="@dimen/events_inner_layout_margin_right"
+        android:layout_marginLeft="@dimen/events_inner_layout_margin_left"
+        android:layout_marginRight="@dimen/events_inner_layout_margin_right"
+        android:layout_marginStart="@dimen/events_inner_layout_margin_left"
+        android:layout_marginTop="@dimen/events_inner_layout_margin_top" />
+</RelativeLayout>

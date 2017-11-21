@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/user_row_item_outer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_margin="@dimen/users_list_spacing"
+    android:background="@drawable/layout_round_corner_with_outline_grey"
+    android:paddingBottom="@dimen/user_row_item_padding_bottom"
+    android:paddingLeft="@dimen/user_row_item_padding_left"
+    android:paddingRight="@dimen/user_row_item_padding_right"
+    android:paddingTop="@dimen/user_row_item_padding_top">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/user_row_item_inner_layout_padding_bottom"
+        android:paddingTop="@dimen/user_row_item_inner_layout_padding_top">
+
+        <ImageView
+            android:id="@+id/img_user"
+            android:layout_width="@dimen/user_list_item_image_width"
+            android:layout_height="@dimen/user_list_item_image_height"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/user_list_item_image_margin_left"
+            android:layout_marginRight="@dimen/user_list_item_image_margin_right"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/img_user"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Philip Baker"
+                android:textColor="@color/user_name_text_color"
+                android:textSize="@dimen/user_name_text_size" />
+
+            <TextView
+                android:id="@+id/tv_user_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="philip.baker@hotmail.com"
+                android:textColor="@color/user_email_text_color_inactive"
+                android:textSize="@dimen/user_email_text_size" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

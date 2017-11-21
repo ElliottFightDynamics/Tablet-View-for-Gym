@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_background_color"
+    android:paddingLeft="@dimen/outer_layout_padding_left"
+    android:paddingRight="@dimen/outer_layout_padding_right"
+    android:paddingTop="@dimen/outer_layout_padding_top"
+    tools:mContext="com.striketec.fanapp.view.users.fragment.UserDatabaseFragment">
+
+    <RelativeLayout
+        android:id="@+id/top_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:layout_width="@dimen/user_database_screen_spinner_width"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+
+        <Button
+            android:id="@+id/button_add_users_to_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/login_button_margin_left"
+            android:background="@drawable/button_round_corner_solid_background"
+            android:paddingBottom="@dimen/register_button_padding_bottom"
+            android:paddingLeft="@dimen/register_button_padding_left"
+            android:paddingRight="@dimen/register_button_padding_right"
+            android:paddingTop="@dimen/register_button_padding_top"
+            android:text="@string/button_add_users_to_event"
+            android:textColor="@color/button_text_color_2"
+            android:textSize="@dimen/register_button_text_size" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_layout_users"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_relative_layout"
+        android:layout_marginTop="@dimen/users_relative_layout_margin_top"
+        android:background="@drawable/layout_round_corner_with_outline_grey"
+        android:paddingLeft="@dimen/users_relative_layout_padding_left"
+        android:paddingRight="@dimen/users_relative_layout_padding_right"
+        android:paddingTop="@dimen/users_relative_layout_padding_top">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/users_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

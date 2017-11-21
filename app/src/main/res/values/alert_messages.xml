@@ -1,0 +1,4 @@
+<resources>
+    <!-- Alert messages -->
+    <string name="loading">Loading...</string>
+</resources>

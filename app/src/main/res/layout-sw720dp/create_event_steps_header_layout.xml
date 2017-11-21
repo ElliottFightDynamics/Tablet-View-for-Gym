@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="@dimen/top_layout_create_event_steps_margin_top"
+    android:gravity="center_horizontal">
+
+    <RelativeLayout
+        android:id="@+id/outer_layout_step_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+            <LinearLayout
+                android:id="@+id/layout_step_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/layout_step_margin_bottom"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/view_step_1_first_line"
+                    android:layout_width="@dimen/create_event_header_horizontal_line_width"
+                    android:layout_height="@dimen/create_event_header_horizontal_line_height" />
+
+                <TextView
+                    android:id="@+id/tv_step_1_number"
+                    android:layout_width="@dimen/step_number_circle_shape_width"
+                    android:layout_height="@dimen/step_number_circle_shape_height"
+                    android:background="@drawable/steps_circle_shape_with_outline"
+                    android:gravity="center"
+                    android:text="@string/step_1"
+                    android:textColor="@color/label_text_color_disabled"
+                    android:textSize="@dimen/label_text_size_2" />
+
+                <View
+                    android:id="@+id/view_step_1_second_line"
+                    android:layout_width="@dimen/create_event_header_horizontal_line_width"
+                    android:layout_height="@dimen/create_event_header_horizontal_line_height"
+                    android:background="@color/label_text_color_disabled" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_step_1_event_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_step_1"
+                android:layout_centerHorizontal="true"
+                android:text="@string/label_event_info_step_1"
+                android:textColor="@color/label_text_color_disabled"
+                android:textSize="@dimen/create_event_steps_label_text_size" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/outer_layout_step_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/outer_layout_step_1">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+            <LinearLayout
+                android:id="@+id/layout_step_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/layout_step_margin_bottom"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/view_step_2_first_line"
+                    android:layout_width="@dimen/create_event_header_horizontal_line_width"
+                    android:layout_height="@dimen/create_event_header_horizontal_line_height"
+                    android:background="@color/label_text_color_disabled" />
+
+                <TextView
+                    android:id="@+id/tv_step_2_number"
+                    android:layout_width="@dimen/step_number_circle_shape_width"
+                    android:layout_height="@dimen/step_number_circle_shape_height"
+                    android:background="@drawable/steps_circle_shape_with_outline"
+                    android:gravity="center"
+                    android:text="@string/step_2"
+                    android:textColor="@color/label_text_color_disabled"
+                    android:textSize="@dimen/label_text_size_2" />
+
+                <View
+                    android:id="@+id/view_step_2_second_line"
+                    android:layout_width="@dimen/create_event_header_horizontal_line_width"
+                    android:layout_height="@dimen/create_event_header_horizontal_line_height"
+                    android:background="@color/label_text_color_disabled" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_step_2_activities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_step_2"
+                android:layout_centerHorizontal="true"
+                android:text="@string/label_activities_step_1"
+                android:textColor="@color/label_text_color_disabled"
+                android:textSize="@dimen/create_event_steps_label_text_size" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@+id/outer_layout_step_2">
+
+        <LinearLayout
+            android:id="@+id/layout_step_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/layout_step_margin_bottom"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/view_step_3_first_line"
+                android:layout_width="@dimen/create_event_header_horizontal_line_width"
+                android:layout_height="@dimen/create_event_header_horizontal_line_height"
+                android:background="@color/label_text_color_disabled" />
+
+            <TextView
+                android:id="@+id/tv_step_3_number"
+                android:layout_width="@dimen/step_number_circle_shape_width"
+                android:layout_height="@dimen/step_number_circle_shape_height"
+                android:background="@drawable/steps_circle_shape_with_outline"
+                android:gravity="center"
+                android:text="@string/step_3"
+                android:textColor="@color/label_text_color_disabled"
+                android:textSize="@dimen/label_text_size_2" />
+
+            <View
+                android:id="@+id/view_step_3_second_line"
+                android:layout_width="@dimen/create_event_header_horizontal_line_width"
+                android:layout_height="@dimen/create_event_header_horizontal_line_height" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_step_3_add_participants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_step_3"
+            android:layout_centerHorizontal="true"
+            android:text="@string/label_add_participants_step_1"
+            android:textColor="@color/label_text_color_disabled"
+            android:textSize="@dimen/create_event_steps_label_text_size" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/outer_linear_layout"
+    android:layout_width="300dp"
+    android:layout_height="600dp"
+    android:background="@drawable/layout_round_corner_without_outline"
+    android:orientation="vertical"
+    android:padding="@dimen/dialog_company_list_layout_padding">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:text="@string/label_company"
+        android:textColor="@color/label_text_color_1"
+        android:textSize="@dimen/label_text_size_1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="@dimen/horizontal_line_margin_bottom"
+        android:layout_marginTop="@dimen/horizontal_line_margin_top"
+        android:background="@color/button_text_color_1" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_company_names"
+        android:layout_width="match_parent"
+        android:layout_height="350dp" />
+
+    <RelativeLayout
+        android:id="@+id/bottom_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/cancel_ok_layout_margin_top">
+
+        <Button
+            android:id="@+id/button_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/button_ok"
+            android:background="@android:color/transparent"
+            android:onClick="loginButtonClicked"
+            android:text="@string/button_cancel"
+            android:textColor="@color/button_text_color_1"
+            android:textSize="@dimen/register_button_text_size" />
+
+        <Button
+            android:id="@+id/button_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/ok_button_margin_left"
+            android:background="@android:color/transparent"
+            android:onClick="registerButtonClicked"
+            android:text="@string/button_ok"
+            android:textColor="@color/color_1"
+            android:textSize="@dimen/register_button_text_size" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/outer_linear_layout"
+    android:layout_width="300dp"
+    android:layout_height="600dp"
+    android:background="@drawable/layout_round_corner_without_outline"
+    android:orientation="vertical"
+    android:padding="@dimen/dialog_company_list_layout_padding">
+
+    <TextView
+        android:id="@+id/drop_down_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:text="@string/label_company"
+        android:textColor="@color/label_text_color_1"
+        android:textSize="@dimen/label_text_size_1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="@dimen/horizontal_line_margin_bottom"
+        android:layout_marginTop="@dimen/horizontal_line_margin_top"
+        android:background="@color/button_text_color_1" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_drop_down_items"
+        android:layout_width="match_parent"
+        android:layout_height="350dp" />
+
+</LinearLayout>

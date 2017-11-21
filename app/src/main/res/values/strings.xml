@@ -1,41 +1,117 @@
 <resources>
-    <string name="app_name">StrikeTec(Tablet)</string>
+    <string name="app_name">StrikeTec Fan App</string>
 
-    <!--profile fragment-->
-    <string name="edit_profile">EDIT PROFILE</string>
-    <string name="logout">LOGOUT</string>
-    <string name="total_timetrained">TOTAL TIME TRAINED</string>
-    <string name="total_daystrained">TOTAL DAYS TRAINED</string>
-    <string name="last_trained">LAST DATE TRAINED</string>
+    <!-- Login Page -->
+    <string name="label_login">Login</string>
+    <string name="hint_email_edit_text">Email</string>
+    <string name="hint_password_edit_text">Password</string>
+    <string name="label_forgot_password_ques">Forgot Password?</string>
+    <string name="button_register">Register</string>
+    <string name="button_login">Login</string>
 
-    <string name="weight">WEIGHT</string>
-    <string name="height">HEIGHT</string>
-    <string name="gloves">GLOVES</string>
-    <string name="reach">REACH</string>
+    <!-- Forgot Password -->
+    <string name="label_forgot_password">Forgot Password</string>
+    <string name="forgot_password_instruction_1">Type your email address and soon you\'ll receive an email with instructions.</string>
+    <string name="button_submit">Submit</string>
+    <string name="button_cancel">Cancel</string>
 
-    <string name="connectsensor">CONNECT SENSORS</string>
-    <string name="weight_spinner_prompt">Weight</string>
-    <string name="glove_type_spinner_prompt">Glove Type</string>
-    <string name="height_spinner_prompt">Height</string>
-    <string name="reach_spinner_prompt">Reach</string>
+    <!-- Register New User -->
+    <string name="label_register">Register</string>
+    <string name="register_instruction_1">Sign up for StrikeTec Fan App and optimize events with users database, sensor powered activities and more.</string>
+    <string name="hint_repeat_password_edit_text">Repeat Password</string>
+    <string name="label_company">Company</string>
+    <string name="button_ok">OK</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_main">MainActivity</string>
 
-    <string name="quick_start">Quick start</string>
-    <string name="round_traning">Round traning</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="training_stats_title">TRAINING STATS</string>
-    <string name="training_title">TRAINING</string>
-    <string name="training_quality">TRAINING_QUALITY</string>
-    <string name="training_bestpunch">BEST PUNCH</string>
-    <string name="stats_damage">DAMAGE</string>
-    <string name="today_punches">PUNCHES</string>
-    <string name="today_time">TIME</string>
-    <string name="fatigue">FATIGUE</string>
-    <string name="punch_rank">PUNCH RANK</string>
-    <string name="common_stats">COMMON STATS</string>
+    <!-- Header Text -->
+    <string name="action_settings">Settings</string>
+    <string name="action_sort">Sort</string>
+    <string name="action_search">Search</string>
 
-    <string name="left_sensor_hint">LEFT SENSOR ID</string>
-    <string name="right_sensor_hint">RIGHT SENSOR ID</string>
-    <string name="cancel">CANCEL</string>
-    <string name="ok">OK</string>
+    <!-- User Database Fragment -->
+    <string name="button_add_users_to_event">+ ADD USERS TO EVENT</string>
+
+
+    <!-- Screens title -->
+    <string name="title_users_database_screen">StrikeTec Users Database</string>
+    <string name="title_events_screen">Events</string>
+    <string name="title_create_event_screen">Create Event</string>
+
+    <!-- Tab Title -->
+    <string name="tab_title_my_events">My Events</string>
+    <string name="tab_title_all_events">All Events</string>
+
+    <!-- Add User title -->
+    <string name="label_add_user_title">Register</string>
+    <string name="button_take_picture">TAKE PICTURE</string>
+    <string name="hint_user_name_edit_text">Name</string>
+    <string name="label_gender">Gender</string>
+    <string name="label_date_of_birth">Date of Birth</string>
+    <string name="label_weight">Weight</string>
+    <string name="label_height">Height</string>
+
+    <!-- Gender list -->
+    <string-array name="gender_list">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <!-- Weight Array -->
+    <string-array name="weight_list">
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+    </string-array>
+
+    <!-- Height Array -->
+    <string-array name="height_list">
+        <item>5\'8\"</item>
+        <item>5\'9\"</item>
+        <item>6\'0\"</item>
+    </string-array>
+
+    <!-- Events Screen strings -->
+    <string name="button_create_event">CREATE EVENT</string>
+    <string name="no_event_available_text_message">You haven\'t create any event yet, but don\'t\nworry, we can totally solve that.</string>
+
+    <!-- Create Event -->
+    <string name="button_next">Next</string>
+    <string name="label_event_info_step_1">Event Info</string>
+    <string name="label_activities_step_1">Activities</string>
+    <string name="label_add_participants_step_1">Add Participants</string>
+    <string name="fragment_create_event_step_1_title">Event Info</string>
+    <string name="fragment_create_event_step_2_title">Activities</string>
+    <string name="fragment_create_event_step_3_title">Add Participants</string>
+
+    <!-- Create Event Steps Header -->
+    <string name="step_1">1</string>
+    <string name="step_2">2</string>
+    <string name="step_3">3</string>
+    <string name="label_general_info">General Info</string>
+    <string name="hint_event_title_edit_text">Event Title</string>
+    <string name="hint_location_edit_text">Location</string>
+    <string name="hint_description_edit_text">Description</string>
+    <string name="label_date">Date</string>
+    <string name="label_from">From</string>
+    <string name="hint_date">Date</string>
+    <string name="hint_time">Time</string>
+    <string name="label_to">To</string>
+
+    <!-- Create Event Step 2 Select Activity-->
+    <string name="instruction_create_event_select_activity">Select the type of activity for the first activity on your event.</string>
 </resources>
-
