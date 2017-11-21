@@ -84,9 +84,9 @@ public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            mRowOuterRelativeLayout = (RelativeLayout) itemView.findViewById(R.id.outer_linear_layout);
-            mSelectUnselectImg = (ImageView) itemView.findViewById(R.id.img_select_unselect_icon);
-            mCompanyNameText = (TextView) itemView.findViewById(R.id.tv_company_name);
+            mRowOuterRelativeLayout = itemView.findViewById(R.id.outer_linear_layout);
+            mSelectUnselectImg = itemView.findViewById(R.id.img_select_unselect_icon);
+            mCompanyNameText = itemView.findViewById(R.id.tv_company_name);
         }
     }
 }

@@ -18,7 +18,7 @@ import com.striketec.fanapp.view.events.fragment.CreateEventInfoFragment;
 import com.striketec.fanapp.view.events.fragment.CreateEventParticipantsFragment;
 
 /**
- * This activity is used to create an event.
+ * This activity is used to create an event that contains ViewPager to display the steps Event Info, Activities and Participants to create event.
  */
 public class CreateEventActivity extends AppCompatActivity
         implements CreateEventActivityInteractor, View.OnClickListener,
@@ -103,6 +103,17 @@ public class CreateEventActivity extends AppCompatActivity
 
     private void nextButtonClicked() {
         int currentItem = mViewPager.getCurrentItem();
+
+        if (currentItem == 0){
+            // Event Info, validate the event info step 1 page
+
+        } else if (currentItem == 1){
+            // Event Activities
+
+        } else if (currentItem == 2){
+            // Add Participants
+
+        }
         DialogUtils.showToast(this, "current item: " + currentItem);
     }
 

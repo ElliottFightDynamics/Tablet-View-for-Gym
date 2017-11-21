@@ -114,4 +114,20 @@
 
     <!-- Create Event Step 2 Select Activity-->
     <string name="instruction_create_event_select_activity">Select the type of activity for the first activity on your event.</string>
+    <string-array name="create_event_activity_name_array">
+        <item>Endurance</item>
+        <item>Speed</item>
+        <item>Power</item>
+    </string-array>
+    <string-array name="create_event_activity_description_array">
+        <item>Proin ut quam eros. Donec\nsed lobortis diam. Nulla nec\nodio lacus.</item>
+        <item>Proin ut quam eros. Donec\nsed lobortis diam. Nulla nec\nodio lacus.</item>
+        <item>Proin ut quam eros. Donec\nsed lobortis diam. Nulla nec\nodio lacus.</item>
+    </string-array>
+    <integer-array name="create_event_activity_drawable_array">
+        <item>@drawable/activity_icon_endurance</item>
+        <item>@drawable/activity_icon_speed</item>
+        <item>@drawable/activity_icon_power</item>
+    </integer-array>
+
 </resources>

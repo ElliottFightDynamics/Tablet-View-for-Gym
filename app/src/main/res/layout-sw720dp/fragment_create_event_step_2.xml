@@ -28,21 +28,29 @@
             android:layout_below="@+id/steps_header_layout"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/instruction_create_event_select_activity_margin_top"
             android:layout_marginBottom="@dimen/instruction_create_event_select_activity_margin_bottom"
+            android:layout_marginTop="@dimen/instruction_create_event_select_activity_margin_top"
             android:text="@string/instruction_create_event_select_activity"
             android:textColor="@color/label_text_color_1"
             android:textSize="@dimen/no_event_available_text_message_size" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_create_event_activities"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tv_create_event_select_activity_instruction"
-            android:layout_marginEnd="@dimen/create_event_horizontal_line_margin_right"
-            android:layout_marginLeft="@dimen/create_event_horizontal_line_margin_left"
-            android:layout_marginRight="@dimen/create_event_horizontal_line_margin_right"
-            android:layout_marginStart="@dimen/create_event_horizontal_line_margin_left" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/tv_create_event_select_activity_instruction">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_create_event_activities"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/create_event_horizontal_line_margin_right"
+                android:layout_marginLeft="@dimen/create_event_horizontal_line_margin_left"
+                android:layout_marginRight="@dimen/create_event_horizontal_line_margin_right"
+                android:layout_marginStart="@dimen/create_event_horizontal_line_margin_left"
+                android:scrollbars="horizontal" />
+
+        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

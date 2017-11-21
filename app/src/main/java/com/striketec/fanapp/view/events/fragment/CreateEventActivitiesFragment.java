@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.striketec.fanapp.R;
+import com.striketec.fanapp.presenter.events.fragment.CreateEventActivitiesFragmentPresenter;
+import com.striketec.fanapp.presenter.events.fragment.CreateEventActivitiesFragmentPresenterImpl;
 
 /**
  * This fragment is used to select the activity for the event to be created.
@@ -19,9 +21,11 @@ public class CreateEventActivitiesFragment extends Fragment implements CreateEve
 
     private OnFragmentInteractionListener mListener;
     private RecyclerView mActivitiesRecyclerView;
+    private CreateEventActivitiesFragmentPresenter mActivitiesFragmentPresenter;
 
     public CreateEventActivitiesFragment() {
         // Required empty public constructor
+        mActivitiesFragmentPresenter = new CreateEventActivitiesFragmentPresenterImpl(this);
     }
 
     @Override
@@ -35,6 +39,7 @@ public class CreateEventActivitiesFragment extends Fragment implements CreateEve
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_event_step_2, container, false);
         findViewByIds(view);
+        mActivitiesFragmentPresenter.setActivityListData(mActivitiesRecyclerView);
         return view;
     }
 

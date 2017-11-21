@@ -132,4 +132,15 @@
     <!-- Create Event Step 2 Select Activity -->
     <dimen name="instruction_create_event_select_activity_margin_top">30dp</dimen>
     <dimen name="instruction_create_event_select_activity_margin_bottom">30dp</dimen>
+    <dimen name="create_event_activity_description_text_size">16dp</dimen>
+    <dimen name="dimen_create_event_step_2_outer_layout_padding_left">30dp</dimen>
+    <dimen name="dimen_create_event_step_2_outer_layout_padding_right">30dp</dimen>
+    <dimen name="dimen_create_event_step_2_outer_layout_padding_top">5dp</dimen>
+    <dimen name="dimen_create_event_step_2_outer_layout_padding_bottom">5dp</dimen>
+    <dimen name="dimen_inner_round_corner_layout_width">260dp</dimen>
+    <dimen name="dimen_inner_round_corner_layout_height">220dp</dimen>
+    <dimen name="dimen_inner_round_corner_layout_padding">15dp</dimen>
+    <dimen name="dimen_create_event_activity_image_margin">30dp</dimen>
+    <dimen name="dimen_create_event_activity_name_margin_bottom">10dp</dimen>
+    <dimen name="dimen_create_event_activity_description_margin_top">10dp</dimen>
 </resources>
