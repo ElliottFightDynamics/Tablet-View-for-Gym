@@ -30,7 +30,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpActivityI
         mSignUpPresenter = new SignUpPresenterImpl(this);
         findViewByIds();
 
-//        getCompaniesList();
+        getCompaniesList();
     }
 
     /**
@@ -79,13 +79,11 @@ public class SignUpActivity extends AppCompatActivity implements SignUpActivityI
      * @param view
      */
     public void showCompanyListSpinner(View view) {
-/*
         if (mCompanyInfoList != null && mCompanyInfoList.size() > 0) {
             mSignUpPresenter.showCompanySpinner(mCompanyInfoList);
         } else {
             getCompaniesList();
         }
-*/
     }
 
 

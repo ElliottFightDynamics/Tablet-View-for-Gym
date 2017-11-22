@@ -99,5 +99,6 @@ public class CreateEventParticipantsFragment extends Fragment implements CreateE
     }
 
     public interface OnFragmentInteractionListener {
+        void navigateToCreateEventStep3();
     }
 }

@@ -97,4 +97,9 @@ public class CreateEventActivitiesFragment extends Fragment implements CreateEve
 
     public interface OnFragmentInteractionListener {
     }
+
+    public void handleOnNextClick(){
+        /*String eventTitle = mEventTitleEdit.getText().toString().trim();
+        mCreateEventInfoFragmentPresenter.validateEventGeneralInfoOnNext(eventTitle);*/
+    }
 }

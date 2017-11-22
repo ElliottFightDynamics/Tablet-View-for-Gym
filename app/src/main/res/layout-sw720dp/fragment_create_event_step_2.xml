@@ -36,7 +36,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/tv_create_event_select_activity_instruction">
@@ -48,8 +48,7 @@
                 android:layout_marginEnd="@dimen/create_event_horizontal_line_margin_right"
                 android:layout_marginLeft="@dimen/create_event_horizontal_line_margin_left"
                 android:layout_marginRight="@dimen/create_event_horizontal_line_margin_right"
-                android:layout_marginStart="@dimen/create_event_horizontal_line_margin_left"
-                android:scrollbars="horizontal" />
+                android:layout_marginStart="@dimen/create_event_horizontal_line_margin_left" />
 
         </LinearLayout>
     </RelativeLayout>

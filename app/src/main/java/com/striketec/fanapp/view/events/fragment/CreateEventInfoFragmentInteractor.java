@@ -5,5 +5,14 @@ package com.striketec.fanapp.view.events.fragment;
  */
 
 public interface CreateEventInfoFragmentInteractor {
+    void setEventTitleError();
+    void setEventLocationError();
+    void setEventDescriptionError();
+    void setEventStartDateError();
+    void setEventStartTimeError();
+    void setEventEndDateError();
+    void setEventEndTimeError();
+    void setEventStartDateAfterEndDateError();
+    void navigateToCreateEventStep2();
 }
 

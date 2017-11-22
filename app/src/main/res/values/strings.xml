@@ -15,6 +15,9 @@
     <string name="button_submit">Submit</string>
     <string name="button_cancel">Cancel</string>
 
+    <string name="button_back">Back</string>
+    <string name="button_done">Done</string>
+
     <!-- Register New User -->
     <string name="label_register">Register</string>
     <string name="register_instruction_1">Sign up for StrikeTec Fan App and optimize events with users database, sensor powered activities and more.</string>
@@ -39,7 +42,7 @@
     <!-- Screens title -->
     <string name="title_users_database_screen">StrikeTec Users Database</string>
     <string name="title_events_screen">Events</string>
-    <string name="title_create_event_screen">Create Event</string>
+    <string name="title_new_event_screen">New Event</string>
 
     <!-- Tab Title -->
     <string name="tab_title_my_events">My Events</string>

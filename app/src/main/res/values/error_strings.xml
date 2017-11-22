@@ -19,4 +19,15 @@
     <string name="error_dob_is_required">Please select date of birth.</string>
     <string name="error_weight_is_required">Please select weight.</string>
     <string name="error_height_is_required">Please select height.</string>
+
+    <!-- Create Event -->
+    <!-- Create Event Step 1 - Event Info-->
+    <string name="error_event_title_is_required">Please enter event title.</string>
+    <string name="error_event_location_is_required">Please select location.</string>
+    <string name="error_event_description_is_required">Please enter event description.</string>
+    <string name="error_event_start_date_is_required">Please select event start date.</string>
+    <string name="error_event_start_time_is_required">Please select event start time.</string>
+    <string name="error_event_end_date_is_required">Please select event end date.</string>
+    <string name="error_event_end_time_is_required">Please select event end time.</string>
+    <string name="error_event_start_date_after_end_date">Start date should be before or equal to the end date.</string>
 </resources>

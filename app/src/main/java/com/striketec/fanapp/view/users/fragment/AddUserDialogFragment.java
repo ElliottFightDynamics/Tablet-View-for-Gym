@@ -109,7 +109,7 @@ public class AddUserDialogFragment extends DialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mSimpleDateFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
+        mSimpleDateFormat = new SimpleDateFormat(Constants.DATE_FORMAT_MM_DD_YYYY, Locale.US);
     }
 
     @Override

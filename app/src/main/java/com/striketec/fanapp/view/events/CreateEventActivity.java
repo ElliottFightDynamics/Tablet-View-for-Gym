@@ -17,6 +17,10 @@ import com.striketec.fanapp.view.events.fragment.CreateEventActivitiesFragment;
 import com.striketec.fanapp.view.events.fragment.CreateEventInfoFragment;
 import com.striketec.fanapp.view.events.fragment.CreateEventParticipantsFragment;
 
+import static com.striketec.fanapp.utils.constants.Constants.STEP_1_EVENT_INFO;
+import static com.striketec.fanapp.utils.constants.Constants.STEP_2_SELECT_ACTIVITY;
+import static com.striketec.fanapp.utils.constants.Constants.STEP_3_ADD_PARTICIPANTS;
+
 /**
  * This activity is used to create an event that contains ViewPager to display the steps Event Info, Activities and Participants to create event.
  */
@@ -24,7 +28,7 @@ public class CreateEventActivity extends AppCompatActivity
         implements CreateEventActivityInteractor, View.OnClickListener,
         CreateEventInfoFragment.OnFragmentInteractionListener,
         CreateEventActivitiesFragment.OnFragmentInteractionListener,
-        CreateEventParticipantsFragment.OnFragmentInteractionListener{
+        CreateEventParticipantsFragment.OnFragmentInteractionListener {
 
     private CreateEventActivityPresenter mCreateEventActivityPresenter;
 
@@ -59,7 +63,7 @@ public class CreateEventActivity extends AppCompatActivity
      */
     private void setToolbar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.title_create_event_screen));
+        actionBar.setTitle(getString(R.string.title_new_event_screen));
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
@@ -101,16 +105,21 @@ public class CreateEventActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Method to handle click event of Next button.
+     */
     private void nextButtonClicked() {
         int currentItem = mViewPager.getCurrentItem();
 
-        if (currentItem == 0){
+        if (currentItem == STEP_1_EVENT_INFO) {
             // Event Info, validate the event info step 1 page
-
-        } else if (currentItem == 1){
+            /*CreateEventInfoFragment mCreateEventInfoFragment = (CreateEventInfoFragment) mCreateEventActivityPresenter.getCurrentFragment(0);
+            mCreateEventInfoFragment.handleOnNextClick();*/
+            mCreateEventActivityPresenter.handleNextClick(currentItem);
+        } else if (currentItem == STEP_2_SELECT_ACTIVITY) {
             // Event Activities
 
-        } else if (currentItem == 2){
+        } else if (currentItem == STEP_3_ADD_PARTICIPANTS) {
             // Add Participants
 
         }
@@ -121,6 +130,40 @@ public class CreateEventActivity extends AppCompatActivity
      * Method to handle click event of Cancel button to go back to previous page or previous step.
      */
     private void cancelButtonClicked() {
-        finish();
+        int currentItem = mViewPager.getCurrentItem();
+        if (currentItem == STEP_1_EVENT_INFO) {
+            finish();
+        } else if (currentItem == STEP_2_SELECT_ACTIVITY) {
+            mCreateEventActivityPresenter.handleCancelClick(currentItem);
+        } else if (currentItem == STEP_3_ADD_PARTICIPANTS) {
+
+        }
+        String cancelButtonText = mCancelButton.getText().toString().trim();
     }
+
+    @Override
+    public void navigateToCreateEventStep1() {
+        // 0 - Step 1 Create Event General Info
+        // 1 - Step 2 Create Event Select Activity
+        // 2 - Step 3 Create Event Add Participants
+        mViewPager.setCurrentItem(STEP_1_EVENT_INFO);
+        mCancelButton.setText(getString(R.string.button_cancel));
+    }
+
+    @Override
+    public void navigateToCreateEventStep2() {
+        // 0 - Step 1 Create Event General Info
+        // 1 - Step 2 Create Event Select Activity
+        // 2 - Step 3 Create Event Add Participants
+        mViewPager.setCurrentItem(STEP_2_SELECT_ACTIVITY);
+        mCancelButton.setText(getString(R.string.button_back));
+    }
+
+    @Override
+    public void navigateToCreateEventStep3() {
+        mViewPager.setCurrentItem(STEP_3_ADD_PARTICIPANTS);
+        mCancelButton.setText(getString(R.string.button_back));
+        mNextButton.setText(getString(R.string.button_done));
+    }
+
 }

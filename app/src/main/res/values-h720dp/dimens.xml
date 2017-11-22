@@ -12,11 +12,11 @@
     <dimen name="password_edit_text_margin_top">20sp</dimen>
     <dimen name="label_forgot_password_text_size">20sp</dimen>
     <dimen name="register_login_layout_margin_top">50sp</dimen>
-    <dimen name="register_button_padding_left">50sp</dimen>
-    <dimen name="register_button_padding_right">50sp</dimen>
-    <dimen name="register_button_padding_top">15sp</dimen>
-    <dimen name="register_button_padding_bottom">15sp</dimen>
-    <dimen name="register_button_text_size">20sp</dimen>
+    <dimen name="register_button_padding_left">40sp</dimen>
+    <dimen name="register_button_padding_right">40sp</dimen>
+    <dimen name="register_button_padding_top">10sp</dimen>
+    <dimen name="register_button_padding_bottom">10sp</dimen>
+    <dimen name="register_button_text_size">18sp</dimen>
     <dimen name="login_button_margin_left">50sp</dimen>
 
     <!-- Forgot Password dimen -->
@@ -92,6 +92,7 @@
     <dimen name="events_inner_layout_margin_left">30dp</dimen>
     <dimen name="events_inner_layout_margin_right">30dp</dimen>
     <dimen name="events_inner_layout_margin_bottom">5dp</dimen>
+    <dimen name="events_inner_layout_padding_bottom">55dp</dimen>
     <dimen name="events_inner_layout_2_margin_top">50dp</dimen>
     <dimen name="no_event_available_image_width">160dp</dimen>
     <dimen name="no_event_available_image_height">160dp</dimen>
