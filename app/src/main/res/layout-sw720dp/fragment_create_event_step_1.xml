@@ -15,8 +15,8 @@
         android:layout_marginRight="@dimen/events_inner_layout_margin_right"
         android:layout_marginStart="@dimen/events_inner_layout_margin_left"
         android:layout_marginTop="@dimen/events_inner_layout_margin_top"
-        android:paddingBottom="@dimen/events_inner_layout_padding_bottom"
-        android:background="@drawable/layout_round_corner_with_outline_grey">
+        android:background="@drawable/layout_round_corner_with_outline_grey"
+        android:paddingBottom="@dimen/events_inner_layout_padding_bottom">
 
         <include
             android:id="@+id/steps_header_layout"
@@ -24,18 +24,11 @@
 
         <View
             android:id="@+id/view_horizontal_line"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/horizontal_line_height_1"
-            android:layout_below="@+id/steps_header_layout"
-            android:layout_marginBottom="@dimen/create_event_horizontal_line_margin_bottom"
-            android:layout_marginEnd="@dimen/create_event_horizontal_line_margin_right"
-            android:layout_marginLeft="@dimen/create_event_horizontal_line_margin_left"
-            android:layout_marginRight="@dimen/create_event_horizontal_line_margin_right"
-            android:layout_marginStart="@dimen/create_event_horizontal_line_margin_left"
-            android:layout_marginTop="@dimen/create_event_horizontal_line_margin_top"
-            android:background="@color/label_text_color_disabled" />
+            style="@style/Style_CreateEventHorizontalLine"
+            android:layout_below="@+id/steps_header_layout" />
 
         <LinearLayout
+            android:id="@+id/layout_event_general_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/view_horizontal_line"
@@ -196,6 +189,7 @@
                 </LinearLayout>
 
                 <CheckBox
+                    android:id="@+id/check_box_all_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"

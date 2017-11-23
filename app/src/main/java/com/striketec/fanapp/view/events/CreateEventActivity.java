@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.striketec.fanapp.R;
 import com.striketec.fanapp.presenter.events.CreateEventActivityPresenter;
@@ -34,6 +35,7 @@ public class CreateEventActivity extends AppCompatActivity
 
     private ViewPager mViewPager;
     private Button mCancelButton, mNextButton;
+    private TextView mIWillDoThisLaterTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +54,11 @@ public class CreateEventActivity extends AppCompatActivity
         mViewPager = findViewById(R.id.view_pager);
         mCancelButton = findViewById(R.id.button_cancel);
         mNextButton = findViewById(R.id.button_next);
+        mIWillDoThisLaterTV = findViewById(R.id.tv_i_will_do_this_later);
+
         mCancelButton.setOnClickListener(this);
         mNextButton.setOnClickListener(this);
+        mIWillDoThisLaterTV.setOnClickListener(this);
 
         mCreateEventActivityPresenter.setupViewPagerAdapter(mViewPager);
     }
@@ -100,9 +105,19 @@ public class CreateEventActivity extends AppCompatActivity
             case R.id.button_next:
                 nextButtonClicked();
                 break;
+            case R.id.tv_i_will_do_this_later:
+                iWillDoThisLaterClicked();
+                break;
             default:
                 break;
         }
+    }
+
+    /**
+     * Method to handle click event of "I will do this later" button text.
+     */
+    private void iWillDoThisLaterClicked() {
+        DialogUtils.showToast(this, "I will do this later - temp test message.");
     }
 
     /**
@@ -111,18 +126,18 @@ public class CreateEventActivity extends AppCompatActivity
     private void nextButtonClicked() {
         int currentItem = mViewPager.getCurrentItem();
 
-        if (currentItem == STEP_1_EVENT_INFO) {
+        mCreateEventActivityPresenter.handleNextClick(currentItem);
+
+        /*if (currentItem == STEP_1_EVENT_INFO) {
             // Event Info, validate the event info step 1 page
-            /*CreateEventInfoFragment mCreateEventInfoFragment = (CreateEventInfoFragment) mCreateEventActivityPresenter.getCurrentFragment(0);
-            mCreateEventInfoFragment.handleOnNextClick();*/
             mCreateEventActivityPresenter.handleNextClick(currentItem);
         } else if (currentItem == STEP_2_SELECT_ACTIVITY) {
             // Event Activities
-
+            mCreateEventActivityPresenter.handleNextClick(currentItem);
         } else if (currentItem == STEP_3_ADD_PARTICIPANTS) {
             // Add Participants
 
-        }
+        }*/
         DialogUtils.showToast(this, "current item: " + currentItem);
     }
 
@@ -136,7 +151,7 @@ public class CreateEventActivity extends AppCompatActivity
         } else if (currentItem == STEP_2_SELECT_ACTIVITY) {
             mCreateEventActivityPresenter.handleCancelClick(currentItem);
         } else if (currentItem == STEP_3_ADD_PARTICIPANTS) {
-
+            mCreateEventActivityPresenter.handleCancelClick(currentItem);
         }
         String cancelButtonText = mCancelButton.getText().toString().trim();
     }
@@ -148,6 +163,7 @@ public class CreateEventActivity extends AppCompatActivity
         // 2 - Step 3 Create Event Add Participants
         mViewPager.setCurrentItem(STEP_1_EVENT_INFO);
         mCancelButton.setText(getString(R.string.button_cancel));
+        mIWillDoThisLaterTV.setVisibility(View.GONE);
     }
 
     @Override
@@ -157,6 +173,8 @@ public class CreateEventActivity extends AppCompatActivity
         // 2 - Step 3 Create Event Add Participants
         mViewPager.setCurrentItem(STEP_2_SELECT_ACTIVITY);
         mCancelButton.setText(getString(R.string.button_back));
+        mNextButton.setText(getString(R.string.button_next));
+        mIWillDoThisLaterTV.setVisibility(View.GONE);
     }
 
     @Override
@@ -164,6 +182,7 @@ public class CreateEventActivity extends AppCompatActivity
         mViewPager.setCurrentItem(STEP_3_ADD_PARTICIPANTS);
         mCancelButton.setText(getString(R.string.button_back));
         mNextButton.setText(getString(R.string.button_done));
+        mIWillDoThisLaterTV.setVisibility(View.VISIBLE);
     }
 
 }

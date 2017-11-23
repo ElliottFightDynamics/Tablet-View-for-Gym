@@ -1,4 +1,4 @@
-package com.striketec.fanapp.view.signup.adapter;
+package com.striketec.fanapp.view.events.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,61 +10,62 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.striketec.fanapp.R;
-import com.striketec.fanapp.model.signup.dto.CompanyInfo;
+import com.striketec.fanapp.model.events.EventLocationInfo;
 
 import java.util.List;
 
 /**
- * Created by Sukhbirs on 10-11-2017.
- * This adapter class is used to display the list of companies on new user registration page.
+ * Created by Sukhbirs on 23-11-2017.
+ * This adapter class is used to display the list of event location on Create Event screen step 1.
  */
 
-public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.MyViewHolder> {
+public class EventLocationListAdapter extends RecyclerView.Adapter<EventLocationListAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<CompanyInfo> mCompanyInfoList;
+    private List<EventLocationInfo> mEventLocationInfoList;
     private OnItemClickListener mOnItemClickListener;
-    private CompanyInfo mLastSelectedCompanyInfo;
+    private EventLocationInfo mLastSelectedEventLocationInfo;
 
-    public CompanyListAdapter(Context mContext, List<CompanyInfo> mCompanyInfoList, CompanyInfo mLastSelectedCompanyInfo, OnItemClickListener mOnItemClickListener) {
+    public EventLocationListAdapter(Context mContext, List<EventLocationInfo> mEventLocationInfoList, EventLocationInfo mLastSelectedEventLocationInfo,
+                                    OnItemClickListener mOnItemClickListener) {
         this.mContext = mContext;
-        this.mCompanyInfoList = mCompanyInfoList;
+        this.mEventLocationInfoList = mEventLocationInfoList;
         this.mOnItemClickListener = mOnItemClickListener;
-        this.mLastSelectedCompanyInfo = mLastSelectedCompanyInfo;
+        this.mLastSelectedEventLocationInfo = mLastSelectedEventLocationInfo;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mItemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.company_list_row_item, parent, false);
+                .inflate(R.layout.event_location_list_row_item, parent, false);
 
         return new MyViewHolder(mItemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        final CompanyInfo mCompanyInfo = mCompanyInfoList.get(position);
-        holder.mCompanyNameText.setText(mCompanyInfo.getCompanyName());
+        final EventLocationInfo mEventLocationInfo = mEventLocationInfoList.get(position);
+        holder.mEventLocationName.setText(mEventLocationInfo.getLocationName());
         // initially no item selected
-        if (mLastSelectedCompanyInfo == null) {
-            holder.mCompanyNameText.setTextColor(mContext.getResources().getColor(R.color.label_text_color_1));
+        if (mLastSelectedEventLocationInfo == null) {
+            holder.mEventLocationName.setTextColor(mContext.getResources().getColor(R.color.label_text_color_1));
             holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.ic_menu_camera));
             holder.mRowOuterRelativeLayout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.layout_round_corner_with_outline_grey));
-        } else if (mCompanyInfo.getId() == mLastSelectedCompanyInfo.getId()) {
-            holder.mCompanyNameText.setTextColor(mContext.getResources().getColor(R.color.color_1));
+        } else if (mEventLocationInfo.getId() == mLastSelectedEventLocationInfo.getId()) {
+            holder.mEventLocationName.setTextColor(mContext.getResources().getColor(R.color.color_1));
             holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.ic_menu_add));
             holder.mRowOuterRelativeLayout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.layout_round_corner_with_outline_red));
         } else {
-            holder.mCompanyNameText.setTextColor(mContext.getResources().getColor(R.color.label_text_color_1));
+            holder.mEventLocationName.setTextColor(mContext.getResources().getColor(R.color.label_text_color_1));
             holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.ic_menu_camera));
             holder.mRowOuterRelativeLayout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.layout_round_corner_with_outline_grey));
         }
         holder.mRowOuterRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                DialogUtils.showToast(mContext, position + "-" + mCompanyInfo);
-                mOnItemClickListener.onItemClick(position, mCompanyInfo);
-                mLastSelectedCompanyInfo = mCompanyInfo;
+//                DialogUtils.showToast(mContext, position + "-" + mEventLocationInfo);
+                mOnItemClickListener.onItemClick(position, mEventLocationInfo);
+                mLastSelectedEventLocationInfo = mEventLocationInfo;
                 notifyDataSetChanged();
             }
         });
@@ -73,23 +74,23 @@ public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.
 
     @Override
     public int getItemCount() {
-        return mCompanyInfoList.size();
+        return mEventLocationInfoList.size();
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position, CompanyInfo companyInfo);
+        void onItemClick(int position, EventLocationInfo eventLocationInfo);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private RelativeLayout mRowOuterRelativeLayout;
         private ImageView mSelectUnselectImg;
-        private TextView mCompanyNameText;
+        private TextView mEventLocationName;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             mRowOuterRelativeLayout = itemView.findViewById(R.id.outer_linear_layout);
             mSelectUnselectImg = itemView.findViewById(R.id.img_select_unselect_icon);
-            mCompanyNameText = itemView.findViewById(R.id.tv_company_name);
+            mEventLocationName = itemView.findViewById(R.id.tv_event_location_name);
         }
     }
 }

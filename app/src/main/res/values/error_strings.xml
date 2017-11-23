@@ -30,4 +30,8 @@
     <string name="error_event_end_date_is_required">Please select event end date.</string>
     <string name="error_event_end_time_is_required">Please select event end time.</string>
     <string name="error_event_start_date_after_end_date">Start date should be before or equal to the end date.</string>
+    <string name="error_event_start_time_after_end_time">Start time should be before or equal to the end time if both date is same.</string>
+    <string name="toast_no_event_location_found">No event location received from server. Please try again.</string>
+    <!-- Create Event Step 2 - Select Activity -->
+    <string name="error_event_select_activity_is_required">Please select event activity.</string>
 </resources>

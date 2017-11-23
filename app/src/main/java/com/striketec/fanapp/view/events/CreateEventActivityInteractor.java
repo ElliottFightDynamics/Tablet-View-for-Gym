@@ -6,5 +6,6 @@ package com.striketec.fanapp.view.events;
 
 public interface CreateEventActivityInteractor {
     void navigateToCreateEventStep1();
+
     void navigateToCreateEventStep2();
 }

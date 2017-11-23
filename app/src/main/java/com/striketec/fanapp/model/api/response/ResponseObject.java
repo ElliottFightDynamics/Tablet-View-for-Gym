@@ -11,6 +11,8 @@ public class ResponseObject<T> {
     private String mError;
     @SerializedName("message")
     private String mMessage;
+    @SerializedName("token")
+    private String mToken;
     @SerializedName("data")
     private T mData;
 
@@ -30,6 +32,14 @@ public class ResponseObject<T> {
         this.mMessage = mMessage;
     }
 
+    public String getmToken() {
+        return mToken;
+    }
+
+    public void setmToken(String mToken) {
+        this.mToken = mToken;
+    }
+
     public T getmData() {
         return mData;
     }
@@ -43,6 +53,7 @@ public class ResponseObject<T> {
         return "ResponseObject{" +
                 "mError='" + mError + '\'' +
                 ", mMessage='" + mMessage + '\'' +
+                ", mToken='" + mToken + '\'' +
                 ", mData=" + mData +
                 '}';
     }

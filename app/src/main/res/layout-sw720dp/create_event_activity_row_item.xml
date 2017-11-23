@@ -27,6 +27,9 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/dimen_create_event_step_2_img_select_unselect_margin_left"
+            android:layout_marginStart="@dimen/dimen_create_event_step_2_img_select_unselect_margin_left"
+            android:layout_marginTop="@dimen/dimen_create_event_step_2_img_select_unselect_margin_top"
             android:background="@android:drawable/ic_menu_camera" />
 
         <ImageView

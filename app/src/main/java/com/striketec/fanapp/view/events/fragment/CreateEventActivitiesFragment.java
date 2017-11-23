@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.striketec.fanapp.R;
 import com.striketec.fanapp.presenter.events.fragment.CreateEventActivitiesFragmentPresenter;
 import com.striketec.fanapp.presenter.events.fragment.CreateEventActivitiesFragmentPresenterImpl;
+import com.striketec.fanapp.utils.DialogUtils;
 
 /**
  * This fragment is used to select the activity for the event to be created.
@@ -22,6 +23,7 @@ public class CreateEventActivitiesFragment extends Fragment implements CreateEve
     private OnFragmentInteractionListener mListener;
     private RecyclerView mActivitiesRecyclerView;
     private CreateEventActivitiesFragmentPresenter mActivitiesFragmentPresenter;
+    private String mSelectedActivity;
 
     public CreateEventActivitiesFragment() {
         // Required empty public constructor
@@ -45,6 +47,7 @@ public class CreateEventActivitiesFragment extends Fragment implements CreateEve
 
     /**
      * Method to set the layout references.
+     *
      * @param view
      */
     private void findViewByIds(View view) {
@@ -95,11 +98,29 @@ public class CreateEventActivitiesFragment extends Fragment implements CreateEve
         mListener = null;
     }
 
-    public interface OnFragmentInteractionListener {
+    @Override
+    public void setSelectedActivity(String selectedActivity) {
+        this.mSelectedActivity = selectedActivity;
     }
 
-    public void handleOnNextClick(){
-        /*String eventTitle = mEventTitleEdit.getText().toString().trim();
-        mCreateEventInfoFragmentPresenter.validateEventGeneralInfoOnNext(eventTitle);*/
+    @Override
+    public void navigateToCreateEventStep3() {
+        mListener.navigateToCreateEventStep3();
+    }
+
+    @Override
+    public void setSelectActivityError() {
+        DialogUtils.showToast(getActivity(), getString(R.string.error_event_select_activity_is_required));
+    }
+
+    /**
+     * Method to handle Next button click event if it is on Create Event Step 2 Select Activity screen.
+     */
+    public void handleOnNextClick() {
+        mActivitiesFragmentPresenter.validateEventSelectedActivity(mSelectedActivity);
+    }
+
+    public interface OnFragmentInteractionListener {
+        void navigateToCreateEventStep3();
     }
 }

@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import com.striketec.fanapp.R;
-import com.striketec.fanapp.model.users.dto.UserInfo;
 import com.striketec.fanapp.utils.constants.Constants;
 import com.striketec.fanapp.view.events.CreateEventActivity;
 import com.striketec.fanapp.view.events.CreateEventActivityInteractor;
@@ -12,8 +11,6 @@ import com.striketec.fanapp.view.events.adapter.ViewPagerAdapter;
 import com.striketec.fanapp.view.events.fragment.CreateEventActivitiesFragment;
 import com.striketec.fanapp.view.events.fragment.CreateEventInfoFragment;
 import com.striketec.fanapp.view.events.fragment.CreateEventParticipantsFragment;
-
-import java.util.List;
 
 /**
  * Created by Sukhbirs on 20-11-2017.
@@ -43,7 +40,7 @@ public class CreateEventActivityPresenterImpl implements CreateEventActivityPres
 
     @Override
     public Fragment getCurrentFragment(int position) {
-        if (mAdapter != null){
+        if (mAdapter != null) {
             return mAdapter.getItem(position);
         } else {
             return null;
@@ -52,20 +49,23 @@ public class CreateEventActivityPresenterImpl implements CreateEventActivityPres
 
     @Override
     public void handleNextClick(int position) {
-        if (position == Constants.STEP_1_EVENT_INFO){
+        if (position == Constants.STEP_1_EVENT_INFO) {
             CreateEventInfoFragment mCreateEventInfoFragment = (CreateEventInfoFragment) getCurrentFragment(Constants.STEP_1_EVENT_INFO);
             mCreateEventInfoFragment.handleOnNextClick();
-        } else {
-            CreateEventActivitiesFragment mCreateEventActivitiesFragment = (CreateEventActivitiesFragment) getCurrentFragment(Constants.STEP_1_EVENT_INFO);
+        } else if (position == Constants.STEP_2_SELECT_ACTIVITY) {
+            CreateEventActivitiesFragment mCreateEventActivitiesFragment = (CreateEventActivitiesFragment) getCurrentFragment(Constants.STEP_2_SELECT_ACTIVITY);
             mCreateEventActivitiesFragment.handleOnNextClick();
+        } else if (position == Constants.STEP_3_ADD_PARTICIPANTS) {
+            CreateEventParticipantsFragment mCreateEventParticipantsFragment = (CreateEventParticipantsFragment) getCurrentFragment(Constants.STEP_3_ADD_PARTICIPANTS);
+            mCreateEventParticipantsFragment.handleOnNextClick();
         }
     }
 
     @Override
     public void handleCancelClick(int position) {
-        if (position == Constants.STEP_2_SELECT_ACTIVITY){
+        if (position == Constants.STEP_2_SELECT_ACTIVITY) {
             mCreateEventActivityInteractor.navigateToCreateEventStep1();
-        } else if (position == Constants.STEP_3_ADD_PARTICIPANTS){
+        } else if (position == Constants.STEP_3_ADD_PARTICIPANTS) {
             mCreateEventActivityInteractor.navigateToCreateEventStep2();
         }
     }

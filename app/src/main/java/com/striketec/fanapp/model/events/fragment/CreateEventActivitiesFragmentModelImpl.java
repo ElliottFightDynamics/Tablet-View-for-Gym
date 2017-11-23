@@ -13,6 +13,7 @@ import java.util.List;
 
 public class CreateEventActivitiesFragmentModelImpl implements CreateEventActivitiesFragmentModel {
     private CreateEventActivitiesFragment mFragment;
+
     public CreateEventActivitiesFragmentModelImpl(CreateEventActivitiesFragment mFragment) {
         this.mFragment = mFragment;
     }
@@ -23,7 +24,7 @@ public class CreateEventActivitiesFragmentModelImpl implements CreateEventActivi
         String[] activityNamesArray = mFragment.getResources().getStringArray(R.array.create_event_activity_name_array);
         String[] activityDescriptionArray = mFragment.getResources().getStringArray(R.array.create_event_activity_description_array);
         int[] drawableArray = mFragment.getResources().getIntArray(R.array.create_event_activity_drawable_array);
-        for (int i = 0; i < activityNamesArray.length; i++){
+        for (int i = 0; i < activityNamesArray.length; i++) {
             CreateEventActivityInfo activityInfo = new CreateEventActivityInfo();
             activityInfo.setActivityName(activityNamesArray[i]);
             activityInfo.setDescription(activityDescriptionArray[i]);

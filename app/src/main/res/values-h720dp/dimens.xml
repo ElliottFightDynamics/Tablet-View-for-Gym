@@ -29,7 +29,11 @@
     <dimen name="horizontal_line_margin_bottom">10dp</dimen>
     <dimen name="dialog_company_list_layout_padding">30dp</dimen>
     <dimen name="ok_button_margin_left">30sp</dimen>
-    <dimen name="company_name_row_item_padding">15sp</dimen>
+    <dimen name="dimen_company_row_item_outer_layout_margin_top">5dp</dimen>
+    <dimen name="dimen_company_row_item_outer_layout_margin_bottom">5dp</dimen>
+    <dimen name="dimen_company_row_item_select_unselect_img_margin_left">25dp</dimen>
+    <dimen name="dimen_company_row_item_select_unselect_img_margin_right">20dp</dimen>
+    <dimen name="company_name_row_item_padding">15dp</dimen>
     <dimen name="company_name_text_size">20sp</dimen>
     <dimen name="cancel_ok_layout_margin_top">30dp</dimen>
 
@@ -92,7 +96,7 @@
     <dimen name="events_inner_layout_margin_left">30dp</dimen>
     <dimen name="events_inner_layout_margin_right">30dp</dimen>
     <dimen name="events_inner_layout_margin_bottom">5dp</dimen>
-    <dimen name="events_inner_layout_padding_bottom">55dp</dimen>
+    <dimen name="events_inner_layout_padding_bottom">80dp</dimen>
     <dimen name="events_inner_layout_2_margin_top">50dp</dimen>
     <dimen name="no_event_available_image_width">160dp</dimen>
     <dimen name="no_event_available_image_height">160dp</dimen>
@@ -106,9 +110,9 @@
     <dimen name="button_stroke_width">2dp</dimen>
 
     <!-- Create Event -->
-    <dimen name="bottom_layout_cancel_next_height">100dp</dimen>
+    <dimen name="bottom_layout_cancel_next_height">80dp</dimen>
     <dimen name="bottom_layout_next_button_margin_right">80dp</dimen>
-    <dimen name="top_layout_create_event_steps_margin_top">30dp</dimen>
+    <dimen name="top_layout_create_event_steps_margin_top">10dp</dimen>
     <dimen name="horizontal_line_height_1">1dp</dimen>
     <dimen name="create_event_horizontal_line_margin_left">35dp</dimen>
     <dimen name="create_event_horizontal_line_margin_right">35dp</dimen>
@@ -144,4 +148,11 @@
     <dimen name="dimen_create_event_activity_image_margin">30dp</dimen>
     <dimen name="dimen_create_event_activity_name_margin_bottom">10dp</dimen>
     <dimen name="dimen_create_event_activity_description_margin_top">10dp</dimen>
+    <dimen name="dimen_create_event_step_2_img_select_unselect_margin_left">5dp</dimen>
+    <dimen name="dimen_create_event_step_2_img_select_unselect_margin_top">5dp</dimen>
+
+    <!-- Create Event Step 3 Add Participants -->
+    <dimen name="dimen_button_add_users_to_db_margin_left">50dp</dimen>
+    <dimen name="dimen_button_search_margin_right">30dp</dimen>
+    <dimen name="dimen_participants_recycler_view_margin_bottom">2dp</dimen>
 </resources>

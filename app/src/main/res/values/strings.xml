@@ -100,6 +100,8 @@
     <string name="fragment_create_event_step_1_title">Event Info</string>
     <string name="fragment_create_event_step_2_title">Activities</string>
     <string name="fragment_create_event_step_3_title">Add Participants</string>
+    <string name="button_text_i_will_do_this_later">I\'ll do this later</string>
+    <string name="label_event_location">Event Location</string>
 
     <!-- Create Event Steps Header -->
     <string name="step_1">1</string>
@@ -132,5 +134,8 @@
         <item>@drawable/activity_icon_speed</item>
         <item>@drawable/activity_icon_power</item>
     </integer-array>
+
+    <!-- Create Event Step 3 Add Participants -->
+    <string name="button_text_add_users_to_db">+ Add Users To DB</string>
 
 </resources>

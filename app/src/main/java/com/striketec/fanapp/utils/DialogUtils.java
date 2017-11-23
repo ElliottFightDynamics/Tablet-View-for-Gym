@@ -23,8 +23,10 @@ public class DialogUtils {
      * @param message
      */
     public static void showToast(Context context, String message) {
-//        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        if (toast == null) {
+            return;
+        }
         View view = toast.getView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             view.setBackground(context.getResources().getDrawable(R.drawable.toast_layout_round_corner));

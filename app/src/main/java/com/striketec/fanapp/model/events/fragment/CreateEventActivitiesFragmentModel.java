@@ -11,6 +11,7 @@ import java.util.List;
 public interface CreateEventActivitiesFragmentModel {
     /**
      * Method to get the list of activities to select while creating the event.
+     *
      * @return
      */
     List<CreateEventActivityInfo> getActivityInfoList();

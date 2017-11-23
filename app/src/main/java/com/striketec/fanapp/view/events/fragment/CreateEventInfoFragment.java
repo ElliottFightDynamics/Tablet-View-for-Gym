@@ -7,13 +7,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.striketec.fanapp.R;
 import com.striketec.fanapp.model.events.EventGeneralInfo;
+import com.striketec.fanapp.model.events.EventLocationInfo;
 import com.striketec.fanapp.presenter.events.fragment.CreateEventInfoFragmentPresenterImpl;
+import com.striketec.fanapp.presenter.events.fragment.CreateEventInfoFragmentsPresenter;
 import com.striketec.fanapp.utils.DialogUtils;
+import com.striketec.fanapp.utils.SharedPrefUtils;
+
+import java.util.List;
 
 /**
  * This fragment is used to select the activity for the event to be created.
@@ -21,8 +27,12 @@ import com.striketec.fanapp.utils.DialogUtils;
 public class CreateEventInfoFragment extends Fragment implements CreateEventInfoFragmentInteractor, View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
-    private CreateEventInfoFragmentPresenterImpl mCreateEventInfoFragmentPresenter;
+    private CreateEventInfoFragmentsPresenter mCreateEventInfoFragmentPresenter;
     private EditText mEventTitleEdit, mLocationSpinnerEdit, mEventDescriptionEdit, mEventStartDateEdit, mEventStartTimeEdit, mEventEndDate, mEventEndTime;
+    private CheckBox mAllDayCheckBox;
+    private EventLocationInfo mSelectedEventLocationInfo;
+
+    private List<EventLocationInfo> mEventLocationInfoList;
 
     public CreateEventInfoFragment() {
         // Required empty public constructor
@@ -40,7 +50,20 @@ public class CreateEventInfoFragment extends Fragment implements CreateEventInfo
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_event_step_1, container, false);
         findViewByIds(view);
+        // isOpenDialogLater = false, means that Location spinner not got clicked. And no need to location dialog after getting response.
+        loadEventLocationsFromServer(false);
         return view;
+    }
+
+    /**
+     * * Method to load the event locations from server.
+     *
+     * @param isOpenDialogLater true, if location spinner got clicked.
+     *                          false, if location fetched initially without click on location spinner.
+     */
+    private void loadEventLocationsFromServer(boolean isOpenDialogLater) {
+        SharedPrefUtils sharedPrefUtils = new SharedPrefUtils(getActivity());
+        mCreateEventInfoFragmentPresenter.loadEventLocationsFromServer(sharedPrefUtils.getToken(), isOpenDialogLater);
     }
 
     /**
@@ -80,6 +103,9 @@ public class CreateEventInfoFragment extends Fragment implements CreateEventInfo
         // Event End Time
         mEventEndTime = view.findViewById(R.id.edit_spinner_to_time);
         mEventEndTime.setOnClickListener(this);
+
+        // All Day CheckBox
+        mAllDayCheckBox = view.findViewById(R.id.check_box_all_day);
     }
 
 
@@ -141,6 +167,53 @@ public class CreateEventInfoFragment extends Fragment implements CreateEventInfo
     }
 
     @Override
+    public void setEventStartTimeAfterEndTimeError() {
+        DialogUtils.showToast(getActivity(), getString(R.string.error_event_start_time_after_end_time));
+    }
+
+    @Override
+    public void showProgressBar() {
+        DialogUtils.showProgressDialog(getActivity(), getString(R.string.please_wait));
+    }
+
+    @Override
+    public void hideProgressBar() {
+        DialogUtils.dismissProgressDialog();
+    }
+
+    @Override
+    public void setEventLocationsList(List<EventLocationInfo> eventLocationsList) {
+        this.mEventLocationInfoList = eventLocationsList;
+        if (mEventLocationInfoList != null && eventLocationsList.size() > 0) {
+        } else {
+            DialogUtils.showToast(getActivity(), getString(R.string.toast_no_event_location_found));
+        }
+    }
+
+    @Override
+    public void setEventLocationsListAndOpenLocationDialog(List<EventLocationInfo> eventLocationsList) {
+        this.mEventLocationInfoList = eventLocationsList;
+        if (mEventLocationInfoList != null && eventLocationsList.size() > 0) {
+            showLocationListSpinner();
+        } else {
+            DialogUtils.showToast(getActivity(), getString(R.string.toast_no_event_location_found));
+        }
+    }
+
+    @Override
+    public void setSelectedEventLocationInfo(EventLocationInfo eventLocationInfo) {
+        this.mSelectedEventLocationInfo = eventLocationInfo;
+        if (eventLocationInfo != null) {
+            mLocationSpinnerEdit.setText(eventLocationInfo.getLocationName());
+        }
+    }
+
+    @Override
+    public void setWebApiError(String errorMessage) {
+        DialogUtils.showToast(getActivity(), errorMessage);
+    }
+
+    @Override
     public void navigateToCreateEventStep2() {
         mListener.navigateToCreateEventStep2();
     }
@@ -149,6 +222,7 @@ public class CreateEventInfoFragment extends Fragment implements CreateEventInfo
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.edit_spinner_location:
+                showLocationListSpinner();
                 break;
             case R.id.edit_spinner_from_date:
                 mCreateEventInfoFragmentPresenter.showDatePicker(mEventStartDateEdit);
@@ -167,8 +241,16 @@ public class CreateEventInfoFragment extends Fragment implements CreateEventInfo
         }
     }
 
-    public interface OnFragmentInteractionListener {
-        void navigateToCreateEventStep2();
+    /**
+     * Method to show the spinner of locations list to select the event location.
+     */
+    private void showLocationListSpinner() {
+        if (mEventLocationInfoList != null && mEventLocationInfoList.size() > 0) {
+            mCreateEventInfoFragmentPresenter.showEventLocationSpinner(mEventLocationInfoList);
+        } else {
+            // isOpenDialogLater = true, means that Location spinner got clicked and after getting location response, it should open the location dialog to select.
+            loadEventLocationsFromServer(true);
+        }
     }
 
     /**
@@ -191,5 +273,9 @@ public class CreateEventInfoFragment extends Fragment implements CreateEventInfo
         eventGeneralInfo.setEventEndDate(eventEndDate);
         eventGeneralInfo.setEventEndTime(eventEndTime);
         mCreateEventInfoFragmentPresenter.validateEventGeneralInfoOnNext(eventGeneralInfo);
+    }
+
+    public interface OnFragmentInteractionListener {
+        void navigateToCreateEventStep2();
     }
 }

@@ -46,7 +46,7 @@
             android:layout_marginTop="@dimen/email_edit_text_margin_top"
             android:hint="@string/hint_email_edit_text"
             android:singleLine="true"
-            android:text="a@b.com"
+            android:text="nov@test.com"
             android:textColor="@color/label_text_color_2"
             android:textColorHint="@color/label_text_color_2"
             android:textSize="@dimen/edit_text_size_1" />
@@ -65,7 +65,7 @@
             android:hint="@string/hint_password_edit_text"
             android:inputType="textPassword"
             android:singleLine="true"
-            android:text="xyz"
+            android:text="123456"
             android:textColor="@color/label_text_color_2"
             android:textColorHint="@color/label_text_color_2"
             android:textSize="@dimen/edit_text_size_1" />

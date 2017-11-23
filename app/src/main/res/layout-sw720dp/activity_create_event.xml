@@ -20,9 +20,21 @@
         android:layout_alignParentBottom="true"
         android:background="@color/screen_background_color">
 
+        <TextView
+            android:id="@+id/tv_i_will_do_this_later"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/events_inner_layout_margin_left"
+            android:text="@string/button_text_i_will_do_this_later"
+            android:textColor="@color/color_1"
+            android:textSize="@dimen/register_button_text_size"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/button_cancel"
-            style="@style/Style_ButtonTransparentBG_Outline"
+            style="@style/Style_ButtonTransparentBG_Outline_DarkGrey"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/button_next"
             android:text="@string/button_cancel" />

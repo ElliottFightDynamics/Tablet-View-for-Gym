@@ -103,7 +103,6 @@ public class SignUpPresenterImpl implements SignUpPresenter, SignUpModel.OnSignU
                     if (responseObject != null) {
                         ResponseObject<NewUserInfo> response = (ResponseObject<NewUserInfo>) responseObject;
                         if (response != null) {
-                            // save sign up user info
                             mSignUpActivityInteractor.navigateToLogin(response.getmMessage());
                         }
                     }

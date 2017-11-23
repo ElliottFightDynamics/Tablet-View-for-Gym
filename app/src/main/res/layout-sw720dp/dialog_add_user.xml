@@ -178,7 +178,7 @@
 
         <Button
             android:id="@+id/button_cancel"
-            style="@style/Style_ButtonTransparentBG_Outline"
+            style="@style/Style_ButtonTransparentBG_Outline_DarkGrey"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/button_register"
             android:text="@string/button_cancel" />

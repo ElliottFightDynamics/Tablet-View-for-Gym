@@ -16,6 +16,7 @@ import static android.support.v7.widget.LinearLayoutManager.HORIZONTAL;
 
 /**
  * Created by Sukhbirs on 21-11-2017.
+ * This is presenter implementation class for Create Event Step 2 Select Activity screen.
  */
 
 public class CreateEventActivitiesFragmentPresenterImpl implements CreateEventActivitiesFragmentPresenter {
@@ -36,12 +37,22 @@ public class CreateEventActivitiesFragmentPresenterImpl implements CreateEventAc
         CreateEventActivityAdapter mActivityAdapter = new CreateEventActivityAdapter(mFragment.getActivity(), activityInfoList, null, new CreateEventActivityAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, CreateEventActivityInfo activityInfo) {
-
+                mActivitiesFragmentInteractor.setSelectedActivity(activityInfo.getActivityName());
             }
         });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mFragment.getActivity(), HORIZONTAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(mActivityAdapter);
+    }
+
+    @Override
+    public void validateEventSelectedActivity(String selectedActivity) {
+        if (selectedActivity == null) {
+            mActivitiesFragmentInteractor.setSelectActivityError();
+        } else {
+            // navigate to next step on Create Event Screen
+            mActivitiesFragmentInteractor.navigateToCreateEventStep3();
+        }
     }
 
     @Override

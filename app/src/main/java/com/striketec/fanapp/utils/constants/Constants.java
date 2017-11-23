@@ -25,4 +25,5 @@ public interface Constants {
     int STEP_3_ADD_PARTICIPANTS = 2;
 
     String DATE_FORMAT_MM_DD_YYYY = "MM-dd-yyyy";
+    String TIME_FORMAT_HH_MM = "HH:mm";
 }

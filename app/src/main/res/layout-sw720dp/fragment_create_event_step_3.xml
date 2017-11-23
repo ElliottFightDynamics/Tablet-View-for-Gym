@@ -21,15 +21,74 @@
             android:id="@+id/steps_header_layout"
             layout="@layout/create_event_steps_header_layout" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_create_event_activities"
+        <RelativeLayout
+            android:id="@+id/layout_add_users_to_db"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/steps_header_layout"
             android:layout_marginEnd="@dimen/create_event_horizontal_line_margin_right"
             android:layout_marginLeft="@dimen/create_event_horizontal_line_margin_left"
             android:layout_marginRight="@dimen/create_event_horizontal_line_margin_right"
-            android:layout_marginStart="@dimen/create_event_horizontal_line_margin_left" />
+            android:layout_marginStart="@dimen/create_event_horizontal_line_margin_left">
 
+            <TextView
+                android:id="@+id/tv_create_event_step_3_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/instruction_create_event_select_activity_margin_bottom"
+                android:layout_marginTop="@dimen/instruction_create_event_select_activity_margin_top"
+                android:text="@string/title_users_database_screen"
+                android:textColor="@color/label_text_color_1"
+                android:textSize="@dimen/no_event_available_text_message_size" />
+
+            <Button
+                android:id="@+id/button_add_users_to_db"
+                style="@style/Style_ButtonTransparentBG_Outline_Red"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_button_add_users_to_db_margin_left"
+                android:layout_marginStart="@dimen/dimen_button_add_users_to_db_margin_left"
+                android:layout_toRightOf="@id/tv_create_event_step_3_label"
+                android:text="@string/button_text_add_users_to_db" />
+
+            <Button
+                android:id="@+id/button_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@android:drawable/ic_menu_search" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view_horizontal_line"
+            style="@style/Style_CreateEventHorizontalLine"
+            android:layout_below="@+id/layout_add_users_to_db"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="0dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/view_horizontal_line"
+            android:layout_marginBottom="@dimen/dimen_participants_recycler_view_margin_bottom"
+            android:layout_marginEnd="@dimen/create_event_horizontal_line_margin_right"
+            android:layout_marginLeft="@dimen/create_event_horizontal_line_margin_left"
+            android:layout_marginRight="@dimen/create_event_horizontal_line_margin_right"
+            android:layout_marginStart="@dimen/create_event_horizontal_line_margin_left">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_create_event_participants"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible" />
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

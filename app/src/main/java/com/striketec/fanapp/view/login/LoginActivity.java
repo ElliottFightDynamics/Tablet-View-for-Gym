@@ -10,6 +10,7 @@ import com.striketec.fanapp.R;
 import com.striketec.fanapp.presenter.login.LoginPresenter;
 import com.striketec.fanapp.presenter.login.LoginPresenterImpl;
 import com.striketec.fanapp.utils.DialogUtils;
+import com.striketec.fanapp.view.forgot_password.ForgotPasswordActivity;
 import com.striketec.fanapp.view.home.HomeActivity;
 import com.striketec.fanapp.view.signup.SignUpActivity;
 
@@ -43,8 +44,8 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityInt
      * @param view
      */
     public void forgotPasswordClicked(View view) {
-        /*Intent intent = new Intent(this, ForgotPasswordActivity.class);
-        startActivity(intent);*/
+        Intent intent = new Intent(this, ForgotPasswordActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -70,12 +71,12 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityInt
 
     @Override
     public void showProgress() {
-
+        DialogUtils.showProgressDialog(this, getString(R.string.please_wait));
     }
 
     @Override
     public void hideProgress() {
-
+        DialogUtils.dismissProgressDialog();
     }
 
     @Override
