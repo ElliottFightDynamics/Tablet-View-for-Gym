@@ -41,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/top_relative_layout"
+        android:layout_marginBottom="@dimen/dimen_participants_recycler_view_margin_bottom"
         android:layout_marginTop="@dimen/users_relative_layout_margin_top"
         android:background="@drawable/layout_round_corner_with_outline_grey"
         android:paddingLeft="@dimen/users_relative_layout_padding_left"
@@ -50,7 +51,9 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/users_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dimen_participants_recycler_view_margin_bottom"
+            android:scrollbars="vertical" />
     </RelativeLayout>
 
 

@@ -55,10 +55,10 @@ public class SimpleDropDownAdapter extends RecyclerView.Adapter<SimpleDropDownAd
         });
         if (mDropDownItemName.equals(mLastSelectedDropDownItem)) {
             holder.mDropDownRowItemTV.setTextColor(mContext.getResources().getColor(R.color.color_1));
-            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.ic_menu_add));
+            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.select_oval));
         } else {
             holder.mDropDownRowItemTV.setTextColor(mContext.getResources().getColor(R.color.label_text_color_1));
-            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.ic_menu_camera));
+            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.unselect_oval));
         }
     }
 

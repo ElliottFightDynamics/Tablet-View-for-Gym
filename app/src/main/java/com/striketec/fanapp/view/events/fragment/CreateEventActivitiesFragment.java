@@ -93,14 +93,9 @@ public class CreateEventActivitiesFragment extends Fragment implements CreateEve
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    @Override
     public void setSelectedActivity(String selectedActivity) {
         this.mSelectedActivity = selectedActivity;
+        mListener.setSelectedEventActivity(selectedActivity);
     }
 
     @Override
@@ -120,7 +115,16 @@ public class CreateEventActivitiesFragment extends Fragment implements CreateEve
         mActivitiesFragmentPresenter.validateEventSelectedActivity(mSelectedActivity);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mListener = null;
+        mActivitiesFragmentPresenter.onDestroy();
+    }
+
     public interface OnFragmentInteractionListener {
         void navigateToCreateEventStep3();
+
+        void setSelectedEventActivity(String selectedEventActivity);
     }
 }

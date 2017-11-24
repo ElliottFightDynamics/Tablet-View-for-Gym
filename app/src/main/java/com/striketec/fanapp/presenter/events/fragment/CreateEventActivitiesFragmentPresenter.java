@@ -12,5 +12,5 @@ public interface CreateEventActivitiesFragmentPresenter {
 
     void validateEventSelectedActivity(String selectedActivity);
 
-    void onDetach();
+    void onDestroy();
 }

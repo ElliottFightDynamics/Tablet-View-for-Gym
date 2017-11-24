@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.striketec.fanapp.R;
-import com.striketec.fanapp.model.events.EventGeneralInfo;
-import com.striketec.fanapp.model.events.EventLocationInfo;
+import com.striketec.fanapp.model.events.dto.EventGeneralInfo;
+import com.striketec.fanapp.model.events.dto.EventLocationInfo;
 import com.striketec.fanapp.presenter.events.fragment.CreateEventInfoFragmentPresenterImpl;
 import com.striketec.fanapp.presenter.events.fragment.CreateEventInfoFragmentsPresenter;
 import com.striketec.fanapp.utils.DialogUtils;
@@ -121,12 +121,6 @@ public class CreateEventInfoFragment extends Fragment implements CreateEventInfo
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    @Override
     public void setEventTitleError() {
         DialogUtils.showToast(getActivity(), getString(R.string.error_event_title_is_required));
     }
@@ -173,7 +167,7 @@ public class CreateEventInfoFragment extends Fragment implements CreateEventInfo
 
     @Override
     public void showProgressBar() {
-        DialogUtils.showProgressDialog(getActivity(), getString(R.string.please_wait));
+        DialogUtils.showProgressDialog(getActivity(), getString(R.string.loading_event_location));
     }
 
     @Override
@@ -206,6 +200,11 @@ public class CreateEventInfoFragment extends Fragment implements CreateEventInfo
         if (eventLocationInfo != null) {
             mLocationSpinnerEdit.setText(eventLocationInfo.getLocationName());
         }
+    }
+
+    @Override
+    public void setEnteredEventGeneralInfo(EventGeneralInfo eventGeneralInfo) {
+        mListener.setEventGeneralInfo(eventGeneralInfo);
     }
 
     @Override
@@ -266,7 +265,8 @@ public class CreateEventInfoFragment extends Fragment implements CreateEventInfo
         String eventEndTime = mEventEndTime.getText().toString().trim();
         EventGeneralInfo eventGeneralInfo = new EventGeneralInfo();
         eventGeneralInfo.setEventTitle(eventTitle);
-        eventGeneralInfo.setEventLocation(eventLocation);
+        eventGeneralInfo.setEventLocationInfo(mSelectedEventLocationInfo);
+        eventGeneralInfo.setEventLocationName(eventLocation);
         eventGeneralInfo.setEventDescription(eventDescription);
         eventGeneralInfo.setEventStartDate(eventStartDate);
         eventGeneralInfo.setEventStartTime(eventStartTime);
@@ -275,7 +275,16 @@ public class CreateEventInfoFragment extends Fragment implements CreateEventInfo
         mCreateEventInfoFragmentPresenter.validateEventGeneralInfoOnNext(eventGeneralInfo);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mListener = null;
+        mCreateEventInfoFragmentPresenter.onDestroy();
+    }
+
     public interface OnFragmentInteractionListener {
         void navigateToCreateEventStep2();
+
+        void setEventGeneralInfo(EventGeneralInfo eventGeneralInfo);
     }
 }

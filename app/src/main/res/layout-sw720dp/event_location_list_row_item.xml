@@ -18,7 +18,7 @@
         android:layout_marginLeft="@dimen/dimen_company_row_item_select_unselect_img_margin_left"
         android:layout_marginRight="@dimen/dimen_company_row_item_select_unselect_img_margin_right"
         android:layout_marginStart="@dimen/dimen_company_row_item_select_unselect_img_margin_left"
-        android:background="@android:drawable/ic_menu_camera" />
+        android:background="@drawable/unselect_oval" />
 
     <TextView
         android:id="@+id/tv_event_location_name"

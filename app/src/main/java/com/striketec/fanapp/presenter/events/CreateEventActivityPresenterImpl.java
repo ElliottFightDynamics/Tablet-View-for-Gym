@@ -57,7 +57,7 @@ public class CreateEventActivityPresenterImpl implements CreateEventActivityPres
             mCreateEventActivitiesFragment.handleOnNextClick();
         } else if (position == Constants.STEP_3_ADD_PARTICIPANTS) {
             CreateEventParticipantsFragment mCreateEventParticipantsFragment = (CreateEventParticipantsFragment) getCurrentFragment(Constants.STEP_3_ADD_PARTICIPANTS);
-            mCreateEventParticipantsFragment.handleOnNextClick();
+            mCreateEventParticipantsFragment.handleOnDoneClick();
         }
     }
 

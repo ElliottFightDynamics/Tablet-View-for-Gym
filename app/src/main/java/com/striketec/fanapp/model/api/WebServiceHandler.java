@@ -2,11 +2,14 @@ package com.striketec.fanapp.model.api;
 
 import com.striketec.fanapp.model.api.response.ResponseArray;
 import com.striketec.fanapp.model.api.response.ResponseObject;
-import com.striketec.fanapp.model.events.EventLocationInfo;
+import com.striketec.fanapp.model.events.dto.CreateEventInfo;
+import com.striketec.fanapp.model.events.dto.CreateEventResInfo;
+import com.striketec.fanapp.model.events.dto.EventLocationInfo;
 import com.striketec.fanapp.model.login.LoginReqInfo;
 import com.striketec.fanapp.model.signup.dto.CompanyInfo;
 import com.striketec.fanapp.model.signup.dto.NewUserInfo;
 import com.striketec.fanapp.model.signup.dto.SignUpReqInfo;
+import com.striketec.fanapp.model.users.dto.UserInfo;
 import com.striketec.fanapp.utils.constants.Constants;
 import com.striketec.fanapp.utils.constants.ErrorConstants;
 
@@ -76,6 +79,30 @@ public class WebServiceHandler {
         // call web API to get list of event locations
         Call<ResponseArray<EventLocationInfo>> call = RetrofitSingleton.getRestInterface().getEventLocationsList(token);
         call.enqueue(new ResponseArrayCallback<ResponseArray<EventLocationInfo>>(onWebResponseListener, RestUrl.GET_EVENT_LOCATIONS));
+    }
+
+    /**
+     * Method to call get users/participants list web API.
+     *
+     * @param onWebResponseListener
+     * @param token
+     */
+    public void getUsersList(final OnWebResponseListener onWebResponseListener, String token) {
+        // call web API to get list of users/participants
+        Call<ResponseArray<UserInfo>> call = RetrofitSingleton.getRestInterface().getUsersList(token);
+        call.enqueue(new ResponseArrayCallback<ResponseArray<UserInfo>>(onWebResponseListener, RestUrl.GET_USERS_LIST));
+    }
+
+    /**
+     * Method to call create event web API.
+     *
+     * @param onWebResponseListener
+     * @param token
+     * @param createEventInfo
+     */
+    public void createEvent(OnWebResponseListener onWebResponseListener, String token, CreateEventInfo createEventInfo) {
+        Call<ResponseObject<CreateEventResInfo>> call = RetrofitSingleton.getRestInterface().createEvent(token, createEventInfo);
+        call.enqueue(new ResponseObjectCallback<ResponseObject<CreateEventResInfo>>(onWebResponseListener, RestUrl.CREATE_EVENT));
     }
 
     private static class WebServiceHandlerHelper {

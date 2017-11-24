@@ -1,5 +1,7 @@
 package com.striketec.fanapp.model.events.fragment;
 
+import android.content.res.TypedArray;
+
 import com.striketec.fanapp.R;
 import com.striketec.fanapp.view.events.CreateEventActivityInfo;
 import com.striketec.fanapp.view.events.fragment.CreateEventActivitiesFragment;
@@ -23,12 +25,12 @@ public class CreateEventActivitiesFragmentModelImpl implements CreateEventActivi
         List<CreateEventActivityInfo> activityInfoList = new ArrayList<>();
         String[] activityNamesArray = mFragment.getResources().getStringArray(R.array.create_event_activity_name_array);
         String[] activityDescriptionArray = mFragment.getResources().getStringArray(R.array.create_event_activity_description_array);
-        int[] drawableArray = mFragment.getResources().getIntArray(R.array.create_event_activity_drawable_array);
+        TypedArray typedArray = mFragment.getResources().obtainTypedArray(R.array.create_event_activity_drawable_array);
         for (int i = 0; i < activityNamesArray.length; i++) {
             CreateEventActivityInfo activityInfo = new CreateEventActivityInfo();
             activityInfo.setActivityName(activityNamesArray[i]);
             activityInfo.setDescription(activityDescriptionArray[i]);
-            activityInfo.setActivityDrawable(drawableArray[i]);
+            activityInfo.setActivityDrawable(typedArray.getResourceId(i, -1));
             activityInfoList.add(activityInfo);
         }
         return activityInfoList;

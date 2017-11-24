@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginRight="20dp"
-        android:background="@android:drawable/ic_menu_camera" />
+        android:background="@drawable/unselect_oval" />
 
     <TextView
         android:id="@+id/tv_drop_down_item_name"

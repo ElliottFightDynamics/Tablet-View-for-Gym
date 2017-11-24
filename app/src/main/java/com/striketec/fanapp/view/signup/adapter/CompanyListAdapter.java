@@ -48,15 +48,15 @@ public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.
         // initially no item selected
         if (mLastSelectedCompanyInfo == null) {
             holder.mCompanyNameText.setTextColor(mContext.getResources().getColor(R.color.label_text_color_1));
-            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.ic_menu_camera));
+            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.unselect_oval));
             holder.mRowOuterRelativeLayout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.layout_round_corner_with_outline_grey));
         } else if (mCompanyInfo.getId() == mLastSelectedCompanyInfo.getId()) {
             holder.mCompanyNameText.setTextColor(mContext.getResources().getColor(R.color.color_1));
-            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.ic_menu_add));
+            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.select_oval));
             holder.mRowOuterRelativeLayout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.layout_round_corner_with_outline_red));
         } else {
             holder.mCompanyNameText.setTextColor(mContext.getResources().getColor(R.color.label_text_color_1));
-            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.ic_menu_camera));
+            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.unselect_oval));
             holder.mRowOuterRelativeLayout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.layout_round_corner_with_outline_grey));
         }
         holder.mRowOuterRelativeLayout.setOnClickListener(new View.OnClickListener() {

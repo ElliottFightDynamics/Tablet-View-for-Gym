@@ -16,6 +16,12 @@ public interface CreateEventParticipantsFragmentInteractor {
 
     void setUsersList(List<UserInfo> userInfoList);
 
+    void showProgressDialog();
+
+    void hideProgressDialog();
+
+    void navigateToPreviousScreen(String message);
+
     void setWebApiError(String errorMessage);
 }
 

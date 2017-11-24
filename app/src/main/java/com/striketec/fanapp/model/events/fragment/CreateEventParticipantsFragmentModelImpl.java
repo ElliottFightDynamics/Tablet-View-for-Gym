@@ -1,6 +1,8 @@
 package com.striketec.fanapp.model.events.fragment;
 
 import com.striketec.fanapp.model.api.OnWebResponseListener;
+import com.striketec.fanapp.model.api.WebServiceHandler;
+import com.striketec.fanapp.model.events.dto.CreateEventInfo;
 
 /**
  * Created by Sukhbirs on 23-11-2017.
@@ -16,8 +18,13 @@ public class CreateEventParticipantsFragmentModelImpl implements CreateEventPart
     }
 
     @Override
-    public void loadUsersListFromServer() {
+    public void loadUsersListFromServer(String token) {
+        WebServiceHandler.getInstance().getUsersList(this, token);
+    }
 
+    @Override
+    public void createEvent(String token, CreateEventInfo createEventInfo) {
+        WebServiceHandler.getInstance().createEvent(this, token, createEventInfo);
     }
 
     @Override

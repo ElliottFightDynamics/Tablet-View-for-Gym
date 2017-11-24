@@ -5,7 +5,8 @@ package com.striketec.fanapp.model.api;
  */
 
 public class RestUrl {
-    public static final String BASE_URL = "http://172.16.10.78:8080/";
+    //    public static final String BASE_URL = "http://172.16.10.78:8080/";
+    public static final String BASE_URL = "http://192.168.14.253/";
 
     public static final String AUTHORIZATION = "Authorization";
 
@@ -16,4 +17,6 @@ public class RestUrl {
     public static final String GET_EVENT_LOCATIONS = "/locations";
     public static final String GET_USERS_LIST = "/users/list";
     public static final String CREATE_EVENT = "/event";
+    public static final String START = "start";
+    public static final String LIMIT = "limit";
 }

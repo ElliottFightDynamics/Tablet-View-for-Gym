@@ -53,19 +53,19 @@ public class CreateEventActivityAdapter extends RecyclerView.Adapter<CreateEvent
         if (mLastSelectedActivityInfo != null && mActivityInfo.getActivityName() == mLastSelectedActivityInfo.getActivityName()) {
             holder.mActivityNameText.setTextColor(mContext.getResources().getColor(R.color.color_1));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                holder.mSelectUnselectImg.setBackground(mContext.getResources().getDrawable(android.R.drawable.ic_menu_add));
+                holder.mSelectUnselectImg.setBackground(mContext.getResources().getDrawable(R.drawable.select_oval));
                 holder.mRowInnerLayout.setBackground(mContext.getResources().getDrawable(R.drawable.layout_round_corner_with_outline_red));
             } else {
-                holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.ic_menu_add));
+                holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.select_oval));
                 holder.mRowInnerLayout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.layout_round_corner_with_outline_red));
             }
         } else {
             holder.mActivityNameText.setTextColor(mContext.getResources().getColor(R.color.label_text_color_1));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                holder.mSelectUnselectImg.setBackground(mContext.getResources().getDrawable(android.R.drawable.ic_menu_camera));
+                holder.mSelectUnselectImg.setBackground(mContext.getResources().getDrawable(R.drawable.unselect_oval));
                 holder.mRowInnerLayout.setBackground(mContext.getResources().getDrawable(R.drawable.layout_round_corner_with_outline_grey));
             } else {
-                holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.ic_menu_camera));
+                holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.unselect_oval));
                 holder.mRowInnerLayout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.layout_round_corner_with_outline_grey));
             }
         }

@@ -44,7 +44,7 @@
                     android:id="@+id/img_user_image_captured"
                     android:layout_width="@dimen/taken_picture_image_width"
                     android:layout_height="@dimen/taken_picture_image_height"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@drawable/avatar" />
 
                 <LinearLayout
                     android:id="@+id/outer_layout_take_picture"

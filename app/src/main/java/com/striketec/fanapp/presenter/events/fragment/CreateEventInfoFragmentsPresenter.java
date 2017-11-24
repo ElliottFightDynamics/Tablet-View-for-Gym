@@ -2,8 +2,8 @@ package com.striketec.fanapp.presenter.events.fragment;
 
 import android.widget.EditText;
 
-import com.striketec.fanapp.model.events.EventGeneralInfo;
-import com.striketec.fanapp.model.events.EventLocationInfo;
+import com.striketec.fanapp.model.events.dto.EventGeneralInfo;
+import com.striketec.fanapp.model.events.dto.EventLocationInfo;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface CreateEventInfoFragmentsPresenter {
 
     void validateEventGeneralInfoOnNext(EventGeneralInfo eventGeneralInfo);
 
-    void onDetach();
+    void onDestroy();
 
     void loadEventLocationsFromServer(String token, boolean isOpenDialogLater);
 

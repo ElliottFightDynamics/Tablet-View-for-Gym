@@ -56,7 +56,7 @@ public class CreateEventActivitiesFragmentPresenterImpl implements CreateEventAc
     }
 
     @Override
-    public void onDetach() {
+    public void onDestroy() {
         mCreateEventActivitiesModel = null;
         mActivitiesFragmentInteractor = null;
     }

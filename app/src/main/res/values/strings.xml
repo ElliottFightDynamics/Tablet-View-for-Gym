@@ -137,5 +137,6 @@
 
     <!-- Create Event Step 3 Add Participants -->
     <string name="button_text_add_users_to_db">+ Add Users To DB</string>
+    <string name="button_text_get_users">Get Users</string>
 
 </resources>

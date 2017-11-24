@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.striketec.fanapp.R;
-import com.striketec.fanapp.model.events.EventLocationInfo;
+import com.striketec.fanapp.model.events.dto.EventLocationInfo;
 
 import java.util.List;
 
@@ -49,15 +49,15 @@ public class EventLocationListAdapter extends RecyclerView.Adapter<EventLocation
         // initially no item selected
         if (mLastSelectedEventLocationInfo == null) {
             holder.mEventLocationName.setTextColor(mContext.getResources().getColor(R.color.label_text_color_1));
-            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.ic_menu_camera));
+            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.unselect_oval));
             holder.mRowOuterRelativeLayout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.layout_round_corner_with_outline_grey));
         } else if (mEventLocationInfo.getId() == mLastSelectedEventLocationInfo.getId()) {
             holder.mEventLocationName.setTextColor(mContext.getResources().getColor(R.color.color_1));
-            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.ic_menu_add));
+            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.select_oval));
             holder.mRowOuterRelativeLayout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.layout_round_corner_with_outline_red));
         } else {
             holder.mEventLocationName.setTextColor(mContext.getResources().getColor(R.color.label_text_color_1));
-            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.ic_menu_camera));
+            holder.mSelectUnselectImg.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.unselect_oval));
             holder.mRowOuterRelativeLayout.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.layout_round_corner_with_outline_grey));
         }
         holder.mRowOuterRelativeLayout.setOnClickListener(new View.OnClickListener() {

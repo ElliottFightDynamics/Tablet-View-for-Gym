@@ -1,7 +1,6 @@
 package com.striketec.fanapp.view.events;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -11,9 +10,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.striketec.fanapp.R;
+import com.striketec.fanapp.model.events.dto.CreateEventInfo;
+import com.striketec.fanapp.model.events.dto.EventGeneralInfo;
 import com.striketec.fanapp.presenter.events.CreateEventActivityPresenter;
 import com.striketec.fanapp.presenter.events.CreateEventActivityPresenterImpl;
 import com.striketec.fanapp.utils.DialogUtils;
+import com.striketec.fanapp.view.events.customview.CustomViewPager;
 import com.striketec.fanapp.view.events.fragment.CreateEventActivitiesFragment;
 import com.striketec.fanapp.view.events.fragment.CreateEventInfoFragment;
 import com.striketec.fanapp.view.events.fragment.CreateEventParticipantsFragment;
@@ -33,9 +35,11 @@ public class CreateEventActivity extends AppCompatActivity
 
     private CreateEventActivityPresenter mCreateEventActivityPresenter;
 
-    private ViewPager mViewPager;
+    private CustomViewPager mViewPager;
     private Button mCancelButton, mNextButton;
     private TextView mIWillDoThisLaterTV;
+    private EventGeneralInfo mEventGeneralInfo;
+    private String mSelectedEventActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,8 @@ public class CreateEventActivity extends AppCompatActivity
         setToolbar();
 
         mViewPager = findViewById(R.id.view_pager);
+        mViewPager.setPagingEnabled(false);
+
         mCancelButton = findViewById(R.id.button_cancel);
         mNextButton = findViewById(R.id.button_next);
         mIWillDoThisLaterTV = findViewById(R.id.tv_i_will_do_this_later);
@@ -61,6 +67,7 @@ public class CreateEventActivity extends AppCompatActivity
         mIWillDoThisLaterTV.setOnClickListener(this);
 
         mCreateEventActivityPresenter.setupViewPagerAdapter(mViewPager);
+        mViewPager.setCurrentItem(0);
     }
 
     /**
@@ -127,18 +134,7 @@ public class CreateEventActivity extends AppCompatActivity
         int currentItem = mViewPager.getCurrentItem();
 
         mCreateEventActivityPresenter.handleNextClick(currentItem);
-
-        /*if (currentItem == STEP_1_EVENT_INFO) {
-            // Event Info, validate the event info step 1 page
-            mCreateEventActivityPresenter.handleNextClick(currentItem);
-        } else if (currentItem == STEP_2_SELECT_ACTIVITY) {
-            // Event Activities
-            mCreateEventActivityPresenter.handleNextClick(currentItem);
-        } else if (currentItem == STEP_3_ADD_PARTICIPANTS) {
-            // Add Participants
-
-        }*/
-        DialogUtils.showToast(this, "current item: " + currentItem);
+//        DialogUtils.showToast(this, "current item: " + currentItem);
     }
 
     /**
@@ -153,7 +149,6 @@ public class CreateEventActivity extends AppCompatActivity
         } else if (currentItem == STEP_3_ADD_PARTICIPANTS) {
             mCreateEventActivityPresenter.handleCancelClick(currentItem);
         }
-        String cancelButtonText = mCancelButton.getText().toString().trim();
     }
 
     @Override
@@ -178,6 +173,11 @@ public class CreateEventActivity extends AppCompatActivity
     }
 
     @Override
+    public void setEventGeneralInfo(EventGeneralInfo eventGeneralInfo) {
+        this.mEventGeneralInfo = eventGeneralInfo;
+    }
+
+    @Override
     public void navigateToCreateEventStep3() {
         mViewPager.setCurrentItem(STEP_3_ADD_PARTICIPANTS);
         mCancelButton.setText(getString(R.string.button_back));
@@ -185,4 +185,27 @@ public class CreateEventActivity extends AppCompatActivity
         mIWillDoThisLaterTV.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void setSelectedEventActivity(String selectedEventActivity) {
+        this.mSelectedEventActivity = selectedEventActivity;
+    }
+
+    @Override
+    public void getCompleteEventDetails(CreateEventInfo createEventInfo) {
+        if (createEventInfo != null) {
+            // Step 1 Details
+            if (mEventGeneralInfo != null) {
+                createEventInfo.setEventTitle(mEventGeneralInfo.getEventTitle());
+                createEventInfo.setLocationId(mEventGeneralInfo.getEventLocationInfo().getId());
+                createEventInfo.setEventDescription(mEventGeneralInfo.getEventDescription());
+                createEventInfo.setFromDate(mEventGeneralInfo.getEventStartDate());
+                createEventInfo.setFromTime(mEventGeneralInfo.getEventStartTime());
+                createEventInfo.setToDate(mEventGeneralInfo.getEventEndDate());
+                createEventInfo.setToTime(mEventGeneralInfo.getEventEndTime());
+                createEventInfo.setAllDay(mEventGeneralInfo.isAllDay());
+            }
+            // Step 2 Details
+            createEventInfo.setEventActivityType(mSelectedEventActivity);
+        }
+    }
 }

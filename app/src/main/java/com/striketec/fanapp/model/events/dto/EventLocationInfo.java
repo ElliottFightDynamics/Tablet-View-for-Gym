@@ -1,4 +1,4 @@
-package com.striketec.fanapp.model.events;
+package com.striketec.fanapp.model.events.dto;
 
 import com.google.gson.annotations.SerializedName;
 

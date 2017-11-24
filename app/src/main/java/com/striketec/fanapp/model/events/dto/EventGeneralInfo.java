@@ -1,4 +1,4 @@
-package com.striketec.fanapp.model.events;
+package com.striketec.fanapp.model.events.dto;
 
 /**
  * Created by Sukhbirs on 22-11-2017.
@@ -6,13 +6,14 @@ package com.striketec.fanapp.model.events;
 
 public class EventGeneralInfo {
     private String eventTitle;
-    private int eventLocationId;
-    private String eventLocation;
+    private EventLocationInfo eventLocationInfo;
+    private String eventLocationName;
     private String eventDescription;
     private String eventStartDate;
     private String eventStartTime;
     private String eventEndDate;
     private String eventEndTime;
+    private boolean isAllDay;
 
     public String getEventTitle() {
         return eventTitle;
@@ -22,20 +23,20 @@ public class EventGeneralInfo {
         this.eventTitle = eventTitle;
     }
 
-    public int getEventLocationId() {
-        return eventLocationId;
+    public EventLocationInfo getEventLocationInfo() {
+        return eventLocationInfo;
     }
 
-    public void setEventLocationId(int eventLocationId) {
-        this.eventLocationId = eventLocationId;
+    public void setEventLocationInfo(EventLocationInfo eventLocationInfo) {
+        this.eventLocationInfo = eventLocationInfo;
     }
 
-    public String getEventLocation() {
-        return eventLocation;
+    public String getEventLocationName() {
+        return eventLocationName;
     }
 
-    public void setEventLocation(String eventLocation) {
-        this.eventLocation = eventLocation;
+    public void setEventLocationName(String eventLocationName) {
+        this.eventLocationName = eventLocationName;
     }
 
     public String getEventDescription() {
@@ -76,5 +77,13 @@ public class EventGeneralInfo {
 
     public void setEventEndTime(String eventEndTime) {
         this.eventEndTime = eventEndTime;
+    }
+
+    public boolean isAllDay() {
+        return isAllDay;
+    }
+
+    public void setAllDay(boolean allDay) {
+        isAllDay = allDay;
     }
 }

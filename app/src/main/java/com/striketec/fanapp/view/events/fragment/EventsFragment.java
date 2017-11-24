@@ -55,12 +55,6 @@ public class EventsFragment extends Fragment implements EventsFragmentInteractor
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_create_event:
@@ -75,6 +69,12 @@ public class EventsFragment extends Fragment implements EventsFragmentInteractor
     public void navigateToCreateEventScreen() {
         Intent intent = new Intent(getActivity(), CreateEventActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mListener = null;
     }
 
     public interface OnFragmentInteractionListener {

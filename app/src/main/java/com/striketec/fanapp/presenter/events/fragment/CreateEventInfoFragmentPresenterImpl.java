@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -20,8 +21,8 @@ import android.widget.TimePicker;
 import com.striketec.fanapp.R;
 import com.striketec.fanapp.model.api.RestUrl;
 import com.striketec.fanapp.model.api.response.ResponseArray;
-import com.striketec.fanapp.model.events.EventGeneralInfo;
-import com.striketec.fanapp.model.events.EventLocationInfo;
+import com.striketec.fanapp.model.events.dto.EventGeneralInfo;
+import com.striketec.fanapp.model.events.dto.EventLocationInfo;
 import com.striketec.fanapp.model.events.fragment.CreateEventInfoFragmentModel;
 import com.striketec.fanapp.model.events.fragment.CreateEventInfoFragmentModelImpl;
 import com.striketec.fanapp.utils.constants.Constants;
@@ -131,18 +132,17 @@ public class CreateEventInfoFragmentPresenterImpl implements CreateEventInfoFrag
     @Override
     public void validateEventGeneralInfoOnNext(EventGeneralInfo eventGeneralInfo) {
         // navigate to next step on Create Event Screen.
-        mCreateEventInfoFragmentInteractor.navigateToCreateEventStep2();
+//        mCreateEventInfoFragmentInteractor.navigateToCreateEventStep2();
 
-        /*if (TextUtils.isEmpty(eventGeneralInfo.getEventTitle())) {
+        if (TextUtils.isEmpty(eventGeneralInfo.getEventTitle())) {
             mCreateEventInfoFragmentInteractor.setEventTitleError();
-        }
-        *//*else if (TextUtils.isEmpty(eventGeneralInfo.getEventLocation())) {
+        } else if (TextUtils.isEmpty(eventGeneralInfo.getEventLocationName())) {
             mCreateEventInfoFragmentInteractor.setEventLocationError();
-        } *//*
-        *//*else if (TextUtils.isEmpty(eventGeneralInfo.getEventDescription())) {
+        } else if (eventGeneralInfo.getEventLocationInfo() == null) {
+            mCreateEventInfoFragmentInteractor.setEventLocationError();
+        } else if (TextUtils.isEmpty(eventGeneralInfo.getEventDescription())) {
             mCreateEventInfoFragmentInteractor.setEventDescriptionError();
-        } *//*
-        else if (TextUtils.isEmpty(eventGeneralInfo.getEventStartDate())) {
+        } else if (TextUtils.isEmpty(eventGeneralInfo.getEventStartDate())) {
             mCreateEventInfoFragmentInteractor.setEventStartDateError();
         } else if (TextUtils.isEmpty(eventGeneralInfo.getEventStartTime())) {
             mCreateEventInfoFragmentInteractor.setEventStartTimeError();
@@ -153,28 +153,30 @@ public class CreateEventInfoFragmentPresenterImpl implements CreateEventInfoFrag
         } else {
             SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat(Constants.DATE_FORMAT_MM_DD_YYYY, Locale.US);
             try {
-                if (mSimpleDateFormat.parse(eventGeneralInfo.getEventStartDate()).after(mSimpleDateFormat.parse(eventGeneralInfo.getEventEndDate()))){
+                if (mSimpleDateFormat.parse(eventGeneralInfo.getEventStartDate()).after(mSimpleDateFormat.parse(eventGeneralInfo.getEventEndDate()))) {
                     mCreateEventInfoFragmentInteractor.setEventStartDateAfterEndDateError();
-                } else if (mSimpleDateFormat.parse(eventGeneralInfo.getEventStartDate()).equals(mSimpleDateFormat.parse(eventGeneralInfo.getEventEndDate()))){
+                } else if (mSimpleDateFormat.parse(eventGeneralInfo.getEventStartDate()).equals(mSimpleDateFormat.parse(eventGeneralInfo.getEventEndDate()))) {
                     SimpleDateFormat mSTF = new SimpleDateFormat(Constants.TIME_FORMAT_HH_MM, Locale.US);
-                    if (mSTF.parse(eventGeneralInfo.getEventStartTime()).after(mSTF.parse(eventGeneralInfo.getEventEndTime()))){
+                    if (mSTF.parse(eventGeneralInfo.getEventStartTime()).after(mSTF.parse(eventGeneralInfo.getEventEndTime()))) {
                         mCreateEventInfoFragmentInteractor.setEventStartTimeAfterEndTimeError();
                     } else {
+                        mCreateEventInfoFragmentInteractor.setEnteredEventGeneralInfo(eventGeneralInfo);
                         // navigate to next step on Create Event Screen.
                         mCreateEventInfoFragmentInteractor.navigateToCreateEventStep2();
                     }
                 } else {
+                    mCreateEventInfoFragmentInteractor.setEnteredEventGeneralInfo(eventGeneralInfo);
                     // navigate to next step on Create Event Screen.
                     mCreateEventInfoFragmentInteractor.navigateToCreateEventStep2();
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
     }
 
     @Override
-    public void onDetach() {
+    public void onDestroy() {
         mCreateEventInfoFragmentInteractor = null;
         mCreateEventInfoFragment = null;
     }
@@ -211,7 +213,10 @@ public class CreateEventInfoFragmentPresenterImpl implements CreateEventInfoFrag
 
     @Override
     public void onResponseError(String errorMessage) {
-        mCreateEventInfoFragmentInteractor.setWebApiError(errorMessage);
+        if (mCreateEventInfoFragmentInteractor != null) {
+            mCreateEventInfoFragmentInteractor.hideProgressBar();
+            mCreateEventInfoFragmentInteractor.setWebApiError(errorMessage);
+        }
     }
 
     @Override

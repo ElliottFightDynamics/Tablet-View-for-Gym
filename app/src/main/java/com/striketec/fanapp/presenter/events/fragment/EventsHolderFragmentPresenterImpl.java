@@ -35,7 +35,7 @@ public class EventsHolderFragmentPresenterImpl implements EventsHolderFragmentPr
     }
 
     @Override
-    public void onDetach() {
+    public void onDestroy() {
         mEventsHolderFragmentInteractor = null;
     }
 }

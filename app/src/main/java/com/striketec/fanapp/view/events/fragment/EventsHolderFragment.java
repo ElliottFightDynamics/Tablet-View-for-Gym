@@ -64,10 +64,10 @@ public class EventsHolderFragment extends Fragment implements EventsHolderFragme
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
+        mEventsHolderFragmentPresenter.onDestroy();
         mListener = null;
-        mEventsHolderFragmentPresenter.onDetach();
     }
 
     @Override
@@ -86,4 +86,5 @@ public class EventsHolderFragment extends Fragment implements EventsHolderFragme
          */
         void setTabLayoutWithViewPager(ViewPager mViewPager);
     }
+
 }

@@ -62,8 +62,9 @@
     <!-- User List on Users Database Screen -->
     <dimen name="user_row_item_padding_top">15dp</dimen>
     <dimen name="user_row_item_padding_bottom">15dp</dimen>
-    <dimen name="user_row_item_padding_left">20dp</dimen>
-    <dimen name="user_row_item_padding_right">20dp</dimen>
+    <dimen name="user_row_item_padding_left">5dp</dimen>
+    <dimen name="user_row_item_padding_right">10dp</dimen>
+    <dimen name="user_row_item_text_layout_padding_right">5dp</dimen>
     <dimen name="user_list_item_image_width">70dp</dimen>
     <dimen name="user_list_item_image_height">70dp</dimen>
     <dimen name="user_list_item_image_margin_left">10dp</dimen>
@@ -114,8 +115,8 @@
     <dimen name="bottom_layout_next_button_margin_right">80dp</dimen>
     <dimen name="top_layout_create_event_steps_margin_top">10dp</dimen>
     <dimen name="horizontal_line_height_1">1dp</dimen>
-    <dimen name="create_event_horizontal_line_margin_left">35dp</dimen>
-    <dimen name="create_event_horizontal_line_margin_right">35dp</dimen>
+    <dimen name="create_event_horizontal_line_margin_left">20dp</dimen>
+    <dimen name="create_event_horizontal_line_margin_right">20dp</dimen>
     <dimen name="create_event_horizontal_line_margin_top">20dp</dimen>
     <dimen name="create_event_horizontal_line_margin_bottom">20dp</dimen>
 
@@ -148,11 +149,11 @@
     <dimen name="dimen_create_event_activity_image_margin">30dp</dimen>
     <dimen name="dimen_create_event_activity_name_margin_bottom">10dp</dimen>
     <dimen name="dimen_create_event_activity_description_margin_top">10dp</dimen>
-    <dimen name="dimen_create_event_step_2_img_select_unselect_margin_left">5dp</dimen>
-    <dimen name="dimen_create_event_step_2_img_select_unselect_margin_top">5dp</dimen>
+    <dimen name="dimen_create_event_step_2_img_select_unselect_margin_left">10dp</dimen>
+    <dimen name="dimen_create_event_step_2_img_select_unselect_margin_top">10dp</dimen>
 
     <!-- Create Event Step 3 Add Participants -->
     <dimen name="dimen_button_add_users_to_db_margin_left">50dp</dimen>
     <dimen name="dimen_button_search_margin_right">30dp</dimen>
-    <dimen name="dimen_participants_recycler_view_margin_bottom">2dp</dimen>
+    <dimen name="dimen_participants_recycler_view_margin_bottom">3dp</dimen>
 </resources>

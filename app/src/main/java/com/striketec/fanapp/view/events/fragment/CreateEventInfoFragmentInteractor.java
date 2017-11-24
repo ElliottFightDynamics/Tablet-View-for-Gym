@@ -1,6 +1,7 @@
 package com.striketec.fanapp.view.events.fragment;
 
-import com.striketec.fanapp.model.events.EventLocationInfo;
+import com.striketec.fanapp.model.events.dto.EventGeneralInfo;
+import com.striketec.fanapp.model.events.dto.EventLocationInfo;
 
 import java.util.List;
 
@@ -37,6 +38,8 @@ public interface CreateEventInfoFragmentInteractor {
     void setEventLocationsListAndOpenLocationDialog(List<EventLocationInfo> eventLocationsList);
 
     void setSelectedEventLocationInfo(EventLocationInfo eventLocationInfo);
+
+    void setEnteredEventGeneralInfo(EventGeneralInfo eventGeneralInfo);
 
     void setWebApiError(String errorMessage);
 

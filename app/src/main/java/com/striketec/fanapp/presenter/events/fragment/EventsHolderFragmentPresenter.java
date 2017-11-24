@@ -9,5 +9,5 @@ import android.support.v4.view.ViewPager;
 public interface EventsHolderFragmentPresenter {
     void setupViewPagerAdapter(ViewPager mViewPager);
 
-    void onDetach();
+    void onDestroy();
 }
